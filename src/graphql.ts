@@ -5,6 +5,7 @@ type LayerMetadataUnionType = LayerRasterRecord | Layer3DRecord;
 
 @Resolver()
 class LayerMetadataMixedResolver {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [LayerMetadataMixedUnion])
   public async search(): Promise<LayerMetadataUnionType[]> {
     // TODO: implement CSW client functionality
@@ -19,6 +20,7 @@ const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [LayerRasterRecord, Layer3DRecord] as const,
   resolveType: (value) => {
+    // TODO: determine record type by mc models enum
     if ('accuracyLE90' in value) {
       return Layer3DRecord;
     } else {
