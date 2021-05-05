@@ -7,9 +7,12 @@ import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
 import { container, inject, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import httpLogger from '@map-colonies/express-access-log-middleware';
+import { buildSchemaSync } from 'type-graphql';
+import { printSchema } from 'graphql';
+import { ApolloServer } from 'apollo-server-express';
 import { Services } from './common/constants';
 import { IConfig } from './common/interfaces';
-import { resourceNameRouterFactory } from './resourceName/routes/resourceNameRouter';
+import { getResolvers } from './graphql';
 
 @injectable()
 export class ServerBuilder {
@@ -22,6 +25,7 @@ export class ServerBuilder {
   public build(): express.Application {
     this.registerPreRoutesMiddleware();
     this.buildRoutes();
+    this.buildGraphQL();
     this.registerPostRoutesMiddleware();
 
     return this.serverInstance;
@@ -34,7 +38,6 @@ export class ServerBuilder {
   }
 
   private buildRoutes(): void {
-    this.serverInstance.use('/resourceName', resourceNameRouterFactory(container));
     this.buildDocsRoutes();
   }
 
@@ -54,5 +57,13 @@ export class ServerBuilder {
 
   private registerPostRoutesMiddleware(): void {
     this.serverInstance.use(getErrorHandlerMiddleware());
+  }
+
+  private buildGraphQL(): void {
+    const resolvers = getResolvers();
+    const schema = buildSchemaSync({ resolvers });
+    const server = new ApolloServer({ schema });
+    this.logger.info(`Started GraphQL server with schema: ${printSchema(schema)}`);
+    server.applyMiddleware({ app: this.serverInstance });
   }
 }

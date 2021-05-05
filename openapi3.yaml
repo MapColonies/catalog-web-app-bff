@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: service-name
-  description: basic template for map colonies service
+  title: Catalog Web App BFF
+  description: BFF API for catalog (web) UI
   version: 1.0.0
   license:
     name: MIT
@@ -9,57 +9,50 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /resourceName:
+  /graphql:
     get:
-      operationId: getResourceName
+      operationId: graphqlPlayground
       tags:
-        - resourceName
-      summary: gets the resource
+        - GraphQL
+      summary: retrieve the GraphQL playground
       responses:
         200:
           description: OK
           content:
-            application/json:
+            text/html:
               schema:
-                $ref: '#/components/schemas/resource'
+                $ref: '#/components/schemas/acceptall'
+
     post:
-      operationId: createResource
+      operationId: graphqlFetchData
       tags:
-        - resourceName
-      summary: creates a new record of type resource
+        - GraphQL
+      summary: fetch deta from GraphQL server
+      requestBody:
+        description: data to retrieve from server
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/graphqlBody'
       responses:
-        201:
-          description: created
+        200:
+          description: graphqlFetchData
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/resource'
-        400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
+                $ref: '#/components/schemas/acceptall'
 components:
   schemas:
-    error:
+    acceptall:
       type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
-    resource:
+      additionalProperties: {}
+    graphqlBody:
       type: object
-      required:
-        - id
-        - name
-        - description
       properties:
-        id:
-          type: number
-          format: int64
-        name:
+        operationName:
           type: string
-        description:
+        variables:
+          type: object
+        query:
           type: string
