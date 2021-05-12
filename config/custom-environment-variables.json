@@ -22,6 +22,11 @@
     }
   },
   "csw": {
-    "url": "CSW_URL"
+    "raster": {
+      "url": "CSW_RASTER_URL"
+    },
+    "3d": {
+      "url": "CSW_3D_URL"
+    }
   }
 }

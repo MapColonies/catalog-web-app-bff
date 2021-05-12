@@ -32,7 +32,7 @@ class LayerMetadataMixedResolver {
       return data;
     } catch (err) {
       this.logger.error(err);
-      return [];
+      throw err;
     }
   }
 }
