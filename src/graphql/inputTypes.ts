@@ -4,54 +4,57 @@ import { InputType, Field } from 'type-graphql';
 @InputType()
 export class BBOXImplementation extends BBOX {
   @Field({ nullable: false })
-  llat: number;
+  public llat: number;
   @Field({ nullable: false })
-  llon: number;
+  public llon: number;
   @Field({ nullable: false })
-  ulat: number;
+  public ulat: number;
   @Field({ nullable: false })
-  ulon: number;
+  public ulon: number;
 }
 
 @InputType()
 export class FilterFieldImplementation extends FilterField {
   @Field({ nullable: true })
-  or?: boolean;
+  public or?: boolean;
   @Field({ nullable: false })
-  field: string;
+  public field: string;
   @Field({ nullable: true })
-  like?: string;
+  public like?: string;
   @Field({ nullable: true })
-  eq?: string;
+  public eq?: string;
   @Field({ nullable: true })
-  neq?: string;
+  public neq?: string;
   @Field({ nullable: true })
-  gt?: string;
+  public gt?: string;
   @Field({ nullable: true })
-  lt?: string;
+  public lt?: string;
   @Field({ nullable: true })
-  gteq?: string;
+  public gteq?: string;
   @Field({ nullable: true })
-  lteq?: string;
+  public lteq?: string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [String, String], { nullable: true })
-  in?: [string, string];
+  public in?: [string, string];
   @Field({ nullable: true })
-  bbox?: BBOXImplementation;
+  public bbox?: BBOXImplementation;
 }
 
 @InputType()
 export class SortFieldImplementation extends SortField {
   @Field({ nullable: false })
-  field: string;
+  public field: string;
   @Field({ nullable: true })
-  desc?: boolean;
+  public desc?: boolean;
 }
 
 @InputType()
 export class GetRecordOptions {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [FilterFieldImplementation], { nullable: true })
-  filter?: FilterFieldImplementation[];
+  public filter?: FilterFieldImplementation[];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [SortFieldImplementation], { nullable: true })
-  sort?: SortFieldImplementation[];
+  public sort?: SortFieldImplementation[];
 }

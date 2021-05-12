@@ -9,3 +9,5 @@ export enum Services {
   TRACER = 'TRACER',
   METER = 'METER',
 }
+
+export type CatalogRecordType = Record<string, unknown>;
