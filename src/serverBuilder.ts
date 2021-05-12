@@ -12,7 +12,7 @@ import { printSchema } from 'graphql';
 import { ApolloServer } from 'apollo-server-express';
 import { Services } from './common/constants';
 import { IConfig } from './common/interfaces';
-import { getResolvers } from './graphql';
+import { getResolvers } from './graphql/resolvers';
 
 @injectable()
 export class ServerBuilder {

@@ -21,5 +21,13 @@
         "options": null
       }
     }
+  },
+  "csw": {
+    "raster": {
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+    },
+    "3d": {
+      "url": "http://pycsw-web-route-3d.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+    }
   }
 }
