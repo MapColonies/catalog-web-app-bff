@@ -1,8 +1,8 @@
-import { BBOX, FilterField, SortField } from '@map-colonies/csw-client';
+import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
-export class BBOXImplementation extends BBOX {
+export class BBOX extends BBOXCswClient {
   @Field({ nullable: false })
   public llat: number;
   @Field({ nullable: false })
@@ -14,7 +14,7 @@ export class BBOXImplementation extends BBOX {
 }
 
 @InputType()
-export class FilterFieldImplementation extends FilterField {
+export class FilterField extends FilterFieldCswClient {
   @Field({ nullable: true })
   public or?: boolean;
   @Field({ nullable: false })
@@ -37,11 +37,11 @@ export class FilterFieldImplementation extends FilterField {
   @Field((type) => [String, String], { nullable: true })
   public in?: [string, string];
   @Field({ nullable: true })
-  public bbox?: BBOXImplementation;
+  public bbox?: BBOX;
 }
 
 @InputType()
-export class SortFieldImplementation extends SortField {
+export class SortField extends SortFieldCswClient {
   @Field({ nullable: false })
   public field: string;
   @Field({ nullable: true })
@@ -49,12 +49,12 @@ export class SortFieldImplementation extends SortField {
 }
 
 @InputType()
-export class GetRecordOptions {
+export class SearchOptions {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Field((type) => [FilterFieldImplementation], { nullable: true })
-  public filter?: FilterFieldImplementation[];
+  @Field((type) => [FilterField], { nullable: true })
+  public filter?: FilterField[];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Field((type) => [SortFieldImplementation], { nullable: true })
-  public sort?: SortFieldImplementation[];
+  @Field((type) => [SortField], { nullable: true })
+  public sort?: SortField[];
 }
