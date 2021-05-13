@@ -3,7 +3,8 @@ import { LayerMetadata } from '@map-colonies/mc-model-types';
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { transform, mapKeys } from 'lodash';
 import { CatalogRecordType } from '../common/constants';
-import { GETRECORDS_START_INDEX, GETRECORDS_END_INDEX, GetRecordsOptions } from '../utils';
+import { SearchOptions } from '../graphql/inputTypes';
+import { GETRECORDS_START_INDEX, GETRECORDS_END_INDEX } from '../utils';
 
 export class CswClientWrapper {
   private readonly typename: string;
@@ -20,7 +21,7 @@ export class CswClientWrapper {
   public async getRecords(
     start: number = GETRECORDS_START_INDEX,
     end: number = GETRECORDS_END_INDEX,
-    opts: GetRecordsOptions = {}
+    opts: SearchOptions = {}
   ): Promise<CatalogRecordType[]> {
     // eslint-disable-next-line
     let data = (await this.cswClient.GetRecords(start, end, opts, this.outputSchema))?.[this.typename];

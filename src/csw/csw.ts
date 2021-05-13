@@ -2,7 +2,8 @@ import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig } from '../common/interfaces';
-import { CatalogRecordItems, GetRecordsOptions } from '../utils';
+import { SearchOptions } from '../graphql/inputTypes';
+import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 
 type CswClients = Record<CatalogRecordItems, CswClientWrapper>;
@@ -16,7 +17,7 @@ export class CSW {
     this.cswClients['3D'] = new CswClientWrapper('mc:MC3DRecord', 'http://schema.mapcolonies.com/3d', this.config.get('csw.3d.url'));
   }
 
-  public async getRecords(start?: number, end?: number, opts?: GetRecordsOptions): Promise<CatalogRecordType[]> {
+  public async getRecords(start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
     /*  TODO: range of elements (start-end) is per CSW-client-instance. */
     const getRecords = Object.values(this.cswClients).map(async (client) => client.getRecords(start, end, opts));
     const data = await Promise.all(getRecords);
