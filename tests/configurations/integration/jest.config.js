@@ -21,12 +21,12 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/src/**/*.{ts}', '!**/node_modules/**', '!**/vendor/**'],
   preset: 'ts-jest',
   testEnvironment: 'node',
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: -10,
-    },
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 80,
+  //     functions: 80,
+  //     lines: 80,
+  //     statements: -10,
+  //   },
+  // },
 };
