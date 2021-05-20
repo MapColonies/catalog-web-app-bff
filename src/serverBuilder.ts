@@ -59,7 +59,7 @@ export class ServerBuilder {
   }
 
   private registerPostRoutesMiddleware(): void {
-    this.serverInstance.use(getErrorHandlerMiddleware());
+    // this.serverInstance.use(getErrorHandlerMiddleware());
   }
 
   private buildGraphQL(): void {
