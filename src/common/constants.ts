@@ -1,3 +1,5 @@
+import { LayerMetadataUnionType } from '../graphql/resolvers';
+
 export const DEFAULT_SERVER_PORT = 80;
 
 export const IGNORED_OUTGOING_TRACE_ROUTES = [/^.*\/v1\/metrics.*$/];
@@ -10,4 +12,4 @@ export enum Services {
   METER = 'METER',
 }
 
-export type CatalogRecordType = Record<string, unknown>;
+export type CatalogRecordType = LayerMetadataUnionType;

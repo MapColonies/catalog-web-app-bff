@@ -6,8 +6,6 @@ import { Services } from '../common/constants';
 import { CSW } from '../csw/csw';
 import { SearchOptions } from './inputTypes';
 
-type LayerMetadataUnionType = Layer3DRecord | LayerRasterRecord;
-
 @Resolver()
 class LayerMetadataMixedResolver {
   private readonly csw: CSW;
@@ -54,3 +52,5 @@ const LayerMetadataMixedUnion = createUnionType({
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
   return [LayerMetadataMixedResolver];
 }
+
+export type LayerMetadataUnionType = Layer3DRecord | LayerRasterRecord;
