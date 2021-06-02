@@ -4,7 +4,7 @@
   "description": "This is template for map colonies typescript service",
   "main": "./src/index.ts",
   "scripts": {
-    "postinstall": "npm run patch:deps & patch-package",
+    "postinstall": "npm run patch:deps",
     "patch:deps": "patch-package --patch-dir ./node_modules/@map-colonies/csw-client/dist/patches",
     "test:unit": "jest --config=./tests/configurations/unit/jest.config.js",
     "test:integration": "jest --config=./tests/configurations/integration/jest.config.js",
@@ -38,7 +38,8 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
+    },
+    "unsafe-perm": true
   },
   "dependencies": {
     "@godaddy/terminus": "4.7.1",

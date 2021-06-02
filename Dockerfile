@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci --only=production --unsafe-perm
 
 COPY --chown=node:node --from=build /tmp/buildApp/dist .
 COPY --chown=node:node ./config ./config
