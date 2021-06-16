@@ -9,7 +9,7 @@
     "level": "info"
   },
   "server": {
-    "port": "8080",
+    "port": "8090",
     "request": {
       "payload": {
         "limit": "1mb"
@@ -24,12 +24,12 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
-      // "url": "http://pycsw-raster-dev-web-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+      // "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://pycsw-raster-dev-web-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
-      // "url": "http://pycsw-web-route-3d.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+      // "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://pycsw-web-route-3d.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     }
   }
 }
