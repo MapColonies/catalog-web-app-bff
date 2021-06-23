@@ -35,7 +35,6 @@ export class EntityDescriptorResolver {
     return {
       fieldName: field.prop,
       label: '**** NO TRANSLATION KEY ****',
-      // fullWidth?:boolean,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ...pycswCatalogRecordUIAspects[recordType][fieldUIApect],
       isManuallyEditable: field.isManuallyEditable,
@@ -46,7 +45,6 @@ export class EntityDescriptorResolver {
 
   private buildDescriptor(recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord): EntityDescriptor {
     const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
-    console.log('fieldConfigs--->', JSON.stringify(fieldConfigs));
 
     const categoriesMapped = fieldConfigs.map((categoryInfo: Group): CategoryConfig => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

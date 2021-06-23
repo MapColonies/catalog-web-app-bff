@@ -27,11 +27,6 @@ const pycsw3DCatalogRecordTranslation = {
   sensorType: {
     label: 'field-names.3d.sensor-type',
     isManuallyEditable: true,
-    translate: {
-      dictionary: {
-        VIS: 'field-values.raster.sensor-type.vis',
-      },
-    },
     fullWidth: true,
   },
   region: {
