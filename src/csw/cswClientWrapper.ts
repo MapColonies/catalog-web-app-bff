@@ -44,9 +44,9 @@ export class CswClientWrapper {
           return fixedKey;
         });
         const finalParsed = mapValues(parsedKeys, (val, key, obj) => {
+          const recordType = get(obj, 'type') as RecordType;
           switch (key) {
             case 'footprint': {
-              const recordType = get(obj, 'type') as RecordType;
               switch (recordType) {
                 case RecordType.RECORD_3D: {
                   const lowercorner = (get(obj, "['ows:BoundingBox']['ows:LowerCorner']") as string).split(' ');
@@ -58,6 +58,15 @@ export class CswClientWrapper {
                   const boxPolygon = bboxPolygon(bbox(line)).geometry;
                   return boxPolygon;
                 }
+                case RecordType.RECORD_RASTER:
+                  // eslint-disable-next-line
+                  return JSON.parse(val as string);
+                default:
+                  return {};
+              }
+            }
+            case 'layerPolygonParts': {
+              switch (recordType) {
                 case RecordType.RECORD_RASTER:
                   // eslint-disable-next-line
                   return JSON.parse(val as string);
@@ -84,6 +93,8 @@ export class CswClientWrapper {
               return new Date(val as string);
             case 'keywords':
               return val?.toString(); //might be an Array
+            case 'sensorType':
+              return val !== undefined ? (val as string).split(',') : [];
             default:
               return val;
           }
