@@ -53,9 +53,9 @@ export class EntityDescriptorResolver {
         category: category,
         categoryTitle: categoriesTranslation[category],
         fields: categoryInfo.items.map((field: IPropFieldConfigInfo) => {
-          const complexType = field.complexType ? field.complexType.value.toLowerCase() : undefined;
-          const fieldConfig = this.buildField(field, recordType.name, complexType);
+          const fieldConfig = this.buildField(field, recordType.name);
           if (field.subFields !== undefined) {
+            const complexType = field.complexType ? field.complexType.value.toLowerCase() : undefined;
             fieldConfig.subFields = field.subFields.fields.map((subField) => this.buildField(subField, recordType.name, complexType));
           }
           return fieldConfig;

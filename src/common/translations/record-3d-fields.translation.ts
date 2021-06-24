@@ -11,6 +11,9 @@ const pycsw3DCatalogRecordTranslation = {
   productType: {
     label: 'field-names.3d.productType',
   },
+  productName: {
+    label: 'field-names.3d.productName',
+  },
   type: {
     label: 'field-names.3d.type',
   },
@@ -80,6 +83,9 @@ const pycsw3DCatalogRecordTranslation = {
   },
   srsName: {
     label: 'field-names.3d.srs-name',
+  },
+  keywords: {
+    label: 'field-names.3d.keywords',
   },
 } as Record<string, any>;
 

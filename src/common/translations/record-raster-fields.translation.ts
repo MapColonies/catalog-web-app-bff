@@ -11,6 +11,9 @@ const pycswLayerCatalogRecordTranslation = {
   productType: {
     label: 'field-names.raster.productType',
   },
+  productName: {
+    label: 'field-names.raster.productName',
+  },
   type: {
     label: 'field-names.raster.type',
   },
@@ -82,6 +85,9 @@ const pycswLayerCatalogRecordTranslation = {
   },
   srsName: {
     label: 'field-names.raster.srs-name',
+  },
+  keywords: {
+    label: 'field-names.raster.keywords',
   },
 } as Record<string, any>;
 
