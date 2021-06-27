@@ -1,4 +1,4 @@
-import { LayerMetadataUnionType } from '../graphql/resolvers';
+import { LayerMetadataUnionType } from '../graphql/resolvers/csw.resolver';
 
 export const DEFAULT_SERVER_PORT = 80;
 
