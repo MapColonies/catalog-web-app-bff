@@ -2,15 +2,6 @@ const pycsw3DCatalogRecordTranslation = {
   id: {
     label: 'field-names.3d.id',
   },
-  productId: {
-    label: 'field-names.3d.productId',
-  },
-  productVersion: {
-    label: 'field-names.3d.productVersion',
-  },
-  productType: {
-    label: 'field-names.3d.productType',
-  },
   productName: {
     label: 'field-names.3d.productName',
   },
@@ -81,11 +72,38 @@ const pycsw3DCatalogRecordTranslation = {
   srsId: {
     label: 'field-names.3d.srs',
   },
-  srsName: {
-    label: 'field-names.3d.srs-name',
-  },
   keywords: {
     label: 'field-names.3d.keywords',
+  },
+  version: {
+    label: 'field-names.3d.version',
+  },
+  producerName: {
+    label: 'field-names.3d.producer-name',
+  },
+  projectName: {
+    label: 'field-names.3d.project-name',
+  },
+  validationDate: {
+    label: 'field-names.3d.validation-date',
+  },
+  centroid: {
+    label: 'field-names.3d.centroid',
+  },
+  relativeAccuracyCE90: {
+    label: 'field-names.3d.relativeAccuracyCE90',
+  },
+  estimatedPrecision: {
+    label: 'field-names.3d.estimated-precision',
+  },
+  measuredPrecision: {
+    label: 'field-names.3d.measured-precision',
+  },
+  nominalResolution: {
+    label: 'field-names.3d.nominal-resolution',
+  },
+  wktGeometry: {
+    label: 'field-names.3d.wktGeometry',
   },
 } as Record<string, any>;
 
