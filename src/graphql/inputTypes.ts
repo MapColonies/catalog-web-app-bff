@@ -1,4 +1,5 @@
 import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
+import { RecordType, SensorType } from '@map-colonies/mc-model-types';
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
@@ -57,4 +58,29 @@ export class SearchOptions {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [SortField], { nullable: true })
   public sort?: SortField[];
+}
+
+// TODO: might be auto-generated due to isManuallyEditable flag while decorated
+@InputType()
+export class RecordUpdatePartial {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type?: RecordType;
+
+  @Field({ nullable: true })
+  public productName?: string;
+
+  @Field({ nullable: true })
+  public description?: string;
+
+  @Field((type) => [SensorType], { nullable: true })
+  public sensorType?: SensorType[];
+
+  @Field({ nullable: true })
+  public classification?: string;
+
+  @Field({ nullable: true })
+  public keywords?: string;
 }

@@ -29,5 +29,13 @@
     "3d": {
       "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
     }
+  },
+  "catalogServices": {
+    "raster": {
+      "url": "http://localhost:8000/catalog-service-raster"
+    },
+    "3d": {
+      "url": "http://localhost:8000/catalog-service-3d"
+    }
   }
 }
