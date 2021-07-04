@@ -3,7 +3,7 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig } from '../interfaces';
-import { LayerMetadataUnionType } from '../../graphql/resolvers/csw.resolver';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { ICatalogManagerService } from './catalog-manager.interface';
 import { CatalogManagerRaster } from './catalog-manager-raster';
@@ -20,11 +20,16 @@ export class CatalogManager implements ICatalogManagerService {
     this.catalogServices['3D'] = new CatalogManager3D(this.config, this.logger);
   }
 
-  public async updateMetadata(record: LayerMetadataUnionType): Promise<LayerMetadataUnionType> {
+  public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
+    const updatedData = await catalogManagerInstance.updateMetadata(record);
+    return updatedData;
+  }
+
+  private getManagerInstance(recordType: RecordType): ICatalogManagerService {
     let catalogManagerInstance: ICatalogManagerService;
 
-    const fetchRecordType = record.type as RecordType;
-    switch (RecordType[fetchRecordType]) {
+    switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
         catalogManagerInstance = this.catalogServices['3D'];
         break;
@@ -33,7 +38,6 @@ export class CatalogManager implements ICatalogManagerService {
         break;
     }
 
-    const updatedData = await catalogManagerInstance.updateMetadata(record);
-    return updatedData;
+    return catalogManagerInstance;
   }
 }

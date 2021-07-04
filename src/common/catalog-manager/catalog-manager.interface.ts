@@ -1,6 +1,6 @@
-import { LayerMetadataUnionType } from '../../graphql/resolvers/csw.resolver';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 
 // eslint-disable-next-line import/exports-last
 export interface ICatalogManagerService {
-  updateMetadata: (data: LayerMetadataUnionType) => Promise<LayerMetadataUnionType>;
+  updateMetadata: (data: RecordUpdatePartial) => Promise<RecordUpdatePartial>;
 }

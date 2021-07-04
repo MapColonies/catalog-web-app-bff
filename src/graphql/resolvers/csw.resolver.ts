@@ -50,14 +50,14 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  @Mutation((type) => LayerMetadataMixedUnion)
+  @Mutation((type) => String)
   public async updateMetadata(
     @Arg('data')
     data: RecordUpdatePartial
-  ): Promise<LayerMetadataUnionType> {
+  ): Promise<string> {
     try {
-      const newRecord = await this.catalogManager.updateMetadata(data as LayerMetadataUnionType);
-      return newRecord;
+      const newRecord = await this.catalogManager.updateMetadata(data);
+      return 'ok';
     } catch (err) {
       this.logger.error(err);
       throw err;

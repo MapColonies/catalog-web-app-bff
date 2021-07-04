@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
-import { LayerMetadataUnionType } from '../../graphql/resolvers/csw.resolver';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
@@ -12,12 +12,12 @@ export class CatalogManager3D implements ICatalogManagerService {
     this.serviceURL = this.config.get('catalogServices.3d.url');
   }
 
-  public async updateMetadata(record: LayerMetadataUnionType): Promise<LayerMetadataUnionType> {
+  public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
     const res = await requestHandler(`${this.serviceURL}/metadata/${record.id}`, 'PATCH', this.buildPayload(record));
     return record;
   }
 
-  private buildPayload(data: LayerMetadataUnionType): AxiosRequestConfig {
+  private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
     const payloadData = {
       title: data.productName,
       description: data.description,
