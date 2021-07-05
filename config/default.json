@@ -37,5 +37,13 @@
     "3d": {
       "url": "http://localhost:8000/catalog-service-3d"
     }
+  },
+  "ingestionServices": {
+    "raster": {
+      "url": "http://localhost:8000/ingestion-service-raster"
+    },
+    "3d": {
+      "url": "http://localhost:8000/ingestion-service-3d"
+    }
   }
 }

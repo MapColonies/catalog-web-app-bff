@@ -36,5 +36,13 @@
     "3d": {
       "url": "CATALOG_SERVICE_3D_URL"
     }
+  },
+  "ingestionServices": {
+    "raster": {
+      "url": "INGESTION_SERVICE_RASTER_URL"
+    },
+    "3d": {
+      "url": "INGESTION_SERVICE_3D_URL"
+    }
   }
 }
