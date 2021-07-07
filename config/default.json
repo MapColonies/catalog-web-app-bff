@@ -31,5 +31,21 @@
       // "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
       "url": "http://pycsw-web-route-3d.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     }
+  },
+  "catalogServices": {
+    "raster": {
+      "url": "http://localhost:8000/catalog-service-raster"
+    },
+    "3d": {
+      "url": "http://localhost:8000/catalog-service-3d"
+    }
+  },
+  "ingestionServices": {
+    "raster": {
+      "url": "http://localhost:8000/ingestion-service-raster"
+    },
+    "3d": {
+      "url": "http://localhost:8000/ingestion-service-3d"
+    }
   }
 }

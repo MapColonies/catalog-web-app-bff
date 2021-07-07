@@ -28,5 +28,21 @@
     "3d": {
       "url": "CSW_3D_URL"
     }
+  },
+  "catalogServices": {
+    "raster": {
+      "url": "CATALOG_SERVICE_RASTER_URL"
+    },
+    "3d": {
+      "url": "CATALOG_SERVICE_3D_URL"
+    }
+  },
+  "ingestionServices": {
+    "raster": {
+      "url": "INGESTION_SERVICE_RASTER_URL"
+    },
+    "3d": {
+      "url": "INGESTION_SERVICE_3D_URL"
+    }
   }
 }
