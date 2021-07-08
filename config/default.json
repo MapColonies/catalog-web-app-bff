@@ -34,18 +34,30 @@
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster"
+      // "url": "http://localhost:8000/catalog-service-raster"
+      "url": "http://raster-dev-catalog-raster-catalog-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d"
+      // "url": "http://localhost:8000/catalog-service-3d"
+      "url": "http://ingestion-stack-3d-ingestion-catalog-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
     }
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster"
+      // "url": "http://localhost:8000/ingestion-service-raster"
+      "url": "https://discrete-ingestion-dev-overseer-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d"
+      "url": "http://localhost:8082"
+      // "url": "http://ingestion-stack-3d-model-ingestion-service-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
+    }
+  },
+  "jobServices": {
+    "raster": {
+      "url": "http://job-manager-dev-job-manager:80"
+    },
+    "3d": {
+      "url": "http://localhost:8081/jobs"
     }
   }
 }

@@ -9,7 +9,7 @@ export class IngestionManager3D implements IIngestionManagerService {
   private readonly serviceURL: string = '';
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
-    this.serviceURL = this.config.get('catalogServices.3d.url');
+    this.serviceURL = this.config.get('ingestionServices.3d.url');
   }
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
@@ -20,7 +20,18 @@ export class IngestionManager3D implements IIngestionManagerService {
   private buildPayload(data: IngestionData): AxiosRequestConfig {
     const payloadData = {
       modelPath: data.directory,
-      metadata: data.metadata,
+      metadata: {
+        ...data.metadata,
+        identifier: data.metadata.id,
+        typename: '3D',
+        schema: '3d_schema',
+        mdSource: '3d_mdSource',
+        xml: '3d_xml',
+        anytext: `${data.metadata.productName} ${data.metadata.description ?? ''} ${
+          data.metadata.sensorType ? data.metadata.sensorType.join(',') : ''
+        } ${data.metadata.version ?? ''}`,
+        insertDate: new Date().toISOString(),
+      },
       tilesetFilename: data.fileNames[0],
     };
     return {
