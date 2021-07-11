@@ -45,5 +45,13 @@
     "3d": {
       "url": "http://localhost:8000/ingestion-service-3d"
     }
+  },
+  "jobServices": {
+    "raster": {
+      "url": "http://job-manager-dev-job-manager:80"
+    },
+    "3d": {
+      "url": "http://localhost:8080/jobs"
+    }
   }
 }

@@ -88,6 +88,7 @@ export class CswClientWrapper {
             case 'sourceDateStart':
             case 'sourceDateEnd':
             case 'insertDate':
+            case 'validationDate':
               return new Date(val as string);
             case 'keywords':
               return val?.toString(); //might be an Array
