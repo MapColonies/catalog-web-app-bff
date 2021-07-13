@@ -33,14 +33,6 @@ const pycswLayerCatalogRecordTranslation = {
   sensorType: {
     label: 'field-names.raster.sensor-type',
     fullWidth: true,
-    // translate: {
-    //   dictionary: {
-    //     VIS: 'field-values.sensorType.vis',
-    //     RGB: 'field-values.sensorType.rgb',
-    //     Pan_Sharpen: 'field-values.sensorType.pan_sharpen',
-    //     OTHER: 'field-values.sensorType.other',
-    //   },
-    // },
   },
   region: {
     label: 'field-names.raster.region',
@@ -51,9 +43,7 @@ const pycswLayerCatalogRecordTranslation = {
     fullWidth: true,
     // translate: {
     //   dictionary: {
-    //     CONFIDENTIAL: 'field-values.classification.confidential',
-    //     SECRET: 'field-values.classification.secret',
-    //     TOP_SECRET: 'field-values.classification.top_secret',
+    //     "SHAMUR": 'lookups.classification.shamur',
     //   },
     // },
   },

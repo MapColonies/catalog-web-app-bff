@@ -7,7 +7,7 @@ export function updateDictionary(recordTranslation: Record<string, any>, propNam
   const dictionary: Record<string, string> = {};
   // eslint-disable-next-line @typescript-eslint/ban-types
   for (const value of enumKeys<object>(type)) {
-    dictionary[value] = `lookups.sensorType.${(value as string).toLowerCase()}`;
+    dictionary[value] = `lookups.${propName}.${(value as string).toLowerCase()}`;
   }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   recordTranslation[propName].translate.dictionary = dictionary;

@@ -24,14 +24,6 @@ const pycsw3DCatalogRecordTranslation = {
   sensorType: {
     label: 'field-names.3d.sensor-type',
     fullWidth: true,
-    // translate: {
-    //   dictionary: {
-    //     VIS: 'field-values.sensorType.vis',
-    //     RGB: 'field-values.sensorType.rgb',
-    //     Pan_Sharpen: 'field-values.sensorType.pan_sharpen',
-    //     OTHER: 'field-values.sensorType.other',
-    //   },
-    // },
   },
   region: {
     label: 'field-names.3d.region',
@@ -42,9 +34,7 @@ const pycsw3DCatalogRecordTranslation = {
     fullWidth: true,
     // translate: {
     //   dictionary: {
-    //     CONFIDENTIAL: 'field-values.classification.confidential',
-    //     SECRET: 'field-values.classification.secret',
-    //     TOP_SECRET: 'field-values.classification.top_secret',
+    //     "SHAMUR": 'lookups.classification.shamur',
     //   },
     // },
   },
