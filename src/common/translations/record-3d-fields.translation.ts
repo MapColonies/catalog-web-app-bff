@@ -115,6 +115,8 @@ const pycsw3DCatalogRecordTranslation = {
 } as Record<string, any>;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+pycsw3DCatalogRecordTranslation['sensorType'].translate = {};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 pycsw3DCatalogRecordTranslation['sensorType'].translate.dictionary = updateDictionary('sensorType', SensorType);
 
 export const pycsw3DCatalogRecordUIAspects = pycsw3DCatalogRecordTranslation;

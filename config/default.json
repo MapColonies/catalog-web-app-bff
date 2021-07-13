@@ -9,7 +9,7 @@
     "level": "info"
   },
   "server": {
-    "port": "8080",
+    "port": "8090",
     "request": {
       "payload": {
         "limit": "1mb"
@@ -24,26 +24,27 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://raster-dev-catalog-raster-catalog-pycsw-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://pycsw-web-route-3d.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster"
+      "url": "http://raster-dev-catalog-raster-catalog-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d"
+      "url": "http://ingestion-stack-3d-ingestion-catalog-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
     }
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster"
+      "url": "https://discrete-ingestion-dev-overseer-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d"
+      "url": "http://localhost:8082"
+      // "url": "http://ingestion-stack-3d-model-ingestion-service-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
     }
   },
   "jobServices": {
@@ -51,7 +52,7 @@
       "url": "http://job-manager-dev-job-manager:80"
     },
     "3d": {
-      "url": "http://localhost:8080"
+      "url": "http://job-manager-dev-job-manager:80"
     }
   }
 }

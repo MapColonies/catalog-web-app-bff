@@ -94,6 +94,8 @@ const pycswLayerCatalogRecordTranslation = {
 } as Record<string, any>;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+pycswLayerCatalogRecordTranslation['sensorType'].translate = {};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 pycswLayerCatalogRecordTranslation['sensorType'].translate.dictionary = updateDictionary('sensorType', SensorType);
 
 export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordTranslation;
