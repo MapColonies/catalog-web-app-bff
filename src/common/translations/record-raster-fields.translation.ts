@@ -1,5 +1,5 @@
 import { SensorType } from '@map-colonies/mc-model-types';
-import { updateDictionary } from '../../helpers/enums';
+import { updateDictionary } from './enum.translation';
 
 const pycswLayerCatalogRecordTranslation = {
   id: {
@@ -93,6 +93,7 @@ const pycswLayerCatalogRecordTranslation = {
   },
 } as Record<string, any>;
 
-updateDictionary(pycswLayerCatalogRecordTranslation, 'sensorType', SensorType);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+pycswLayerCatalogRecordTranslation['sensorType'].translate.dictionary = updateDictionary('sensorType', SensorType);
 
 export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordTranslation;
