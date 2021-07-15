@@ -4,6 +4,24 @@ import { FieldCategory } from '@map-colonies/mc-model-types';
 registerEnumType(FieldCategory, { name: 'FieldCategory' });
 
 @ObjectType()
+export class EnumDictionary {
+  @Field({ nullable: false })
+  public displayKey: string;
+
+  @Field({ nullable: true })
+  public tooltipKey?: string;
+
+  @Field({ nullable: true })
+  public icon?: string;
+}
+
+@ObjectType()
+export class EnumAspects {
+  @Field({ nullable: false })
+  public dictionary: EnumDictionary;
+}
+
+@ObjectType()
 export class FieldConfig {
   @Field({ nullable: false })
   public fieldName: string;
@@ -55,22 +73,4 @@ export class EntityDescriptor {
 
   @Field((type) => [CategoryConfig], { nullable: false })
   public categories: CategoryConfig[];
-}
-
-@ObjectType()
-export class EnumAspects {
-  @Field({ nullable: false })
-  public dictionary: EnumDictionary;
-}
-
-@ObjectType()
-export class EnumDictionary {
-  @Field({ nullable: false })
-  public displayKey: string;
-
-  @Field({ nullable: true })
-  public tooltipKey?: string;
-
-  @Field({ nullable: true })
-  public icon?: string;
 }
