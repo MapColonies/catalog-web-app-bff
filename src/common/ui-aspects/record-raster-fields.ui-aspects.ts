@@ -46,7 +46,7 @@ const pycswLayerCatalogRecordAspects = {
     fullWidth: true,
     // enumValues: {
     //   dictionary: {
-    //     "SHAMUR": 'lookups.classification.shamur',
+    //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
     //   },
     // },
   },
