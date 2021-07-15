@@ -8,7 +8,7 @@ export function updateDictionary(propName: string, type: any): Record<string, un
     dictionary[value] = {
       displayKey: `lookups.${propName}.${(value as string).toLowerCase()}`,
       tooltipKey: `lookups.${propName}.${(value as string).toLowerCase()}.tooltip`,
-      icon: `mc-icon-${camelize(value as string)}`,
+      icon: `mc-icon-${camelize(value)}`,
     };
   }
   return dictionary;
