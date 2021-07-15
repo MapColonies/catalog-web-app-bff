@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 import { Resolver, Query } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { pycswCatalogRecordUIAspects } from '../../common/pycswRecord.ui-aspect';
-import categoriesTranslation from '../../common/translations/category.trsanslation';
+import categoriesTranslation from '../../common/ui-aspects/category.trsanslation';
 import { Group, groupBy } from '../../helpers/group-by';
 import { CategoryConfig, EntityDescriptor, FieldConfig } from '../entityDescriptor';
 
