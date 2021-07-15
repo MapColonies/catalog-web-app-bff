@@ -6,8 +6,8 @@ export function updateDictionary(propName: string, type: any): Record<string, un
   for (const value of enumKeys<object>(type)) {
     dictionary[value] = {
       displayKey: `lookups.${propName}.${(value as string).toLowerCase()}`,
-      tooltipKey: '',
-      icon: '',
+      tooltipKey: `lookups.${propName}.${(value as string).toLowerCase()}.tooltip`,
+      icon: `mc-icon-${(value as string).toLowerCase()}`,
     };
   }
   return dictionary;

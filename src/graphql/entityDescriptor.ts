@@ -31,6 +31,9 @@ export class FieldConfig {
 
   @Field((type) => [FieldConfig], { nullable: true })
   public subFields?: FieldConfig[];
+
+  @Field((type) => EnumAspects, { nullable: true })
+  public enumValues?: EnumAspects;
 }
 
 @ObjectType()
@@ -52,4 +55,22 @@ export class EntityDescriptor {
 
   @Field((type) => [CategoryConfig], { nullable: false })
   public categories: CategoryConfig[];
+}
+
+@ObjectType()
+export class EnumAspects {
+  @Field({ nullable: false })
+  public dictionary: EnumDictionary;
+}
+
+@ObjectType()
+export class EnumDictionary {
+  @Field({ nullable: false })
+  public displayKey: string;
+
+  @Field({ nullable: true })
+  public tooltipKey?: string;
+
+  @Field({ nullable: true })
+  public icon?: string;
 }
