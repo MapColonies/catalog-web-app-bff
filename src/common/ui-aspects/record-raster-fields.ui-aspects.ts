@@ -1,4 +1,7 @@
-const pycswLayerCatalogRecordTranslation = {
+import { SensorType } from '@map-colonies/mc-model-types';
+import { updateDictionary } from './enum.translation';
+
+const pycswLayerCatalogRecordAspects = {
   id: {
     label: 'field-names.raster.id',
   },
@@ -29,8 +32,10 @@ const pycswLayerCatalogRecordTranslation = {
   },
   sensorType: {
     label: 'field-names.raster.sensor-type',
-    isManuallyEditable: true,
     fullWidth: true,
+    enumValues: {
+      dictionary: updateDictionary('sensorType', SensorType),
+    },
   },
   region: {
     label: 'field-names.raster.region',
@@ -39,11 +44,11 @@ const pycswLayerCatalogRecordTranslation = {
   classification: {
     label: 'field-names.raster.classification',
     fullWidth: true,
-    // translate: {
+    // enumValues: {
     //   dictionary: {
-    //     "SHAMUR": 'field-values.raster.classification.shamur'
-    //   }
-    // } ,
+    //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
+    //   },
+    // },
   },
   links: {
     label: 'field-names.raster.links',
@@ -91,4 +96,4 @@ const pycswLayerCatalogRecordTranslation = {
   },
 } as Record<string, any>;
 
-export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordTranslation;
+export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordAspects;

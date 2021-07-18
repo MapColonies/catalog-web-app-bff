@@ -1,4 +1,7 @@
-const pycsw3DCatalogRecordTranslation = {
+import { SensorType } from '@map-colonies/mc-model-types';
+import { updateDictionary } from './enum.translation';
+
+const pycsw3DCatalogRecordAspects = {
   id: {
     label: 'field-names.3d.id',
   },
@@ -20,8 +23,10 @@ const pycsw3DCatalogRecordTranslation = {
   },
   sensorType: {
     label: 'field-names.3d.sensor-type',
-    isManuallyEditable: true,
     fullWidth: true,
+    enumValues: {
+      dictionary: updateDictionary('sensorType', SensorType),
+    },
   },
   region: {
     label: 'field-names.3d.region',
@@ -30,6 +35,11 @@ const pycsw3DCatalogRecordTranslation = {
   classification: {
     label: 'field-names.3d.classification',
     fullWidth: true,
+    // enumValues: {
+    //   dictionary: {
+    //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
+    //   },
+    // },
   },
   links: {
     label: 'field-names.3d.links',
@@ -107,4 +117,4 @@ const pycsw3DCatalogRecordTranslation = {
   },
 } as Record<string, any>;
 
-export const pycsw3DCatalogRecordUIAspects = pycsw3DCatalogRecordTranslation;
+export const pycsw3DCatalogRecordUIAspects = pycsw3DCatalogRecordAspects;

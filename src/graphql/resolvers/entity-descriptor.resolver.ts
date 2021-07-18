@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 import { Resolver, Query } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { pycswCatalogRecordUIAspects } from '../../common/pycswRecord.ui-aspect';
-import categoriesTranslation from '../../common/translations/category.trsanslation';
+import categoriesTranslation from '../../common/ui-aspects/category.trsanslation';
 import { Group, groupBy } from '../../helpers/group-by';
 import { CategoryConfig, EntityDescriptor, FieldConfig } from '../entityDescriptor';
 
@@ -29,17 +29,16 @@ export class EntityDescriptorResolver {
     }
   }
 
-  private buildField(field: IPropFieldConfigInfo, recordType: string, complexType?: string): FieldConfig {
-    const fieldUIApect = complexType !== undefined ? `${complexType}.${field.prop}` : field.prop;
+  private buildField(field: IPropFieldConfigInfo, recordType: string, fieldComplexType?: string): FieldConfig {
+    const { prop, complexType, category, subFields, ...restFieldConfigProps } = field;
+    const fieldUIApect = fieldComplexType !== undefined ? `${fieldComplexType}.${prop}` : prop;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return {
-      fieldName: field.prop,
+      fieldName: prop,
       label: '**** NO TRANSLATION KEY ****',
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ...pycswCatalogRecordUIAspects[recordType][fieldUIApect],
-      isManuallyEditable: field.isManuallyEditable,
-      isFilterable: field.isFilterable,
-      isSortable: field.isSortable,
+      ...restFieldConfigProps,
     };
   }
 
@@ -51,7 +50,7 @@ export class EntityDescriptorResolver {
       const category = categoryInfo.key.category as FieldCategory;
       return {
         category: category,
-        categoryTitle: categoriesTranslation[category],
+        categoryTitle: categoriesTranslation[category].displayKey,
         fields: categoryInfo.items.map((field: IPropFieldConfigInfo) => {
           const fieldConfig = this.buildField(field, recordType.name);
           if (field.subFields !== undefined) {
