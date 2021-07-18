@@ -1,6 +1,6 @@
 import { FieldCategory } from '@map-colonies/mc-model-types';
-import { updateDictionary } from './enum.translation';
+import { IUIDisplayAspect, updateDictionary } from './enum.translation';
 
-const categoriesTranslation = updateDictionary('fieldCategory', FieldCategory) as Record<FieldCategory, string>;
+const categoriesTranslation = updateDictionary('fieldCategory', FieldCategory) as Record<FieldCategory, IUIDisplayAspect>;
 
 export default categoriesTranslation;

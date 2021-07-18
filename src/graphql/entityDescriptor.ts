@@ -1,7 +1,9 @@
 import { ObjectType, Field, registerEnumType } from 'type-graphql';
 import { FieldCategory } from '@map-colonies/mc-model-types';
+import { GraphQLScalarType } from 'graphql';
 
 registerEnumType(FieldCategory, { name: 'FieldCategory' });
+export const enumDictionary = new GraphQLScalarType({ name: 'enumDictionary' });
 
 @ObjectType()
 export class EnumDictionary {
@@ -17,8 +19,8 @@ export class EnumDictionary {
 
 @ObjectType()
 export class EnumAspects {
-  @Field({ nullable: false })
-  public dictionary: EnumDictionary;
+  @Field((type) => enumDictionary, { nullable: false })
+  public dictionary: Record<string, EnumDictionary>;
 }
 
 @ObjectType()

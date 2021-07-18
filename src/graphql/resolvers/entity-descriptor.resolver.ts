@@ -50,7 +50,7 @@ export class EntityDescriptorResolver {
       const category = categoryInfo.key.category as FieldCategory;
       return {
         category: category,
-        categoryTitle: categoriesTranslation[category],
+        categoryTitle: categoriesTranslation[category].displayKey,
         fields: categoryInfo.items.map((field: IPropFieldConfigInfo) => {
           const fieldConfig = this.buildField(field, recordType.name);
           if (field.subFields !== undefined) {

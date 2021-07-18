@@ -1,8 +1,14 @@
 import { enumKeys } from '../../helpers/enums';
 import { camelize } from '../../helpers/string';
 
-export function updateDictionary(propName: string, type: any): Record<string, unknown> {
-  const dictionary: Record<string, unknown> = {};
+export interface IUIDisplayAspect {
+  displayKey: string;
+  tooltipKey?: string;
+  icon?: string;
+}
+
+export function updateDictionary(propName: string, type: any): Record<string, IUIDisplayAspect> {
+  const dictionary: Record<string, IUIDisplayAspect> = {};
   // eslint-disable-next-line @typescript-eslint/ban-types
   for (const value of enumKeys<object>(type)) {
     dictionary[value] = {
