@@ -2,10 +2,11 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver, Query, Arg, Mutation } from 'type-graphql';
+import { transform, mapKeys, mapValues, get } from 'lodash';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
-import { JobsSearchParams } from '../inputTypes';
+import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job, Status } from '../job';
 
 const MOCK_JOBS_DATA = [
@@ -130,9 +131,26 @@ export class JobResolver {
   ): Promise<Job[]> {
     try {
       // TODO: use a real call
-      // const data = await Promise.resolve(this.getJobs(params));
-      const data = await Promise.resolve(MOCK_JOBS_DATA);
-      return data;
+      const data = await Promise.resolve(this.getJobs(params));
+      return this.transformRecordsToEntity(data);
+      // const data = await Promise.resolve(MOCK_JOBS_DATA);
+      // return data;
+    } catch (err) {
+      this.logger.error(err);
+      throw err;
+    }
+  }
+
+  @Mutation((type) => String)
+  public async updateJob(
+    @Arg('id')
+    id: string,
+    @Arg('data')
+    data: JobUpdateData
+  ): Promise<string> {
+    try {
+      const response = await this.updateJobHandler(id, data);
+      return 'ok';
     } catch (err) {
       this.logger.error(err);
       throw err;
@@ -148,4 +166,38 @@ export class JobResolver {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
   }
+
+  private async updateJobHandler(id: string, params: JobUpdateData): Promise<string> {
+    const res = await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
+      data: {
+        ...params,
+      },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return 'ok';
+  }
+
+  private readonly transformRecordsToEntity = (cswArray: Job[]): Job[] => {
+    const jobParsedArray = transform(
+      cswArray,
+      (result: Record<string, unknown>[], cswValue) => {
+        const parsedKeys = mapKeys(cswValue, (value, key) => key);
+        const finalParsed = mapValues(parsedKeys, (val, key, obj) => {
+          switch (key) {
+            case 'created':
+            case 'updated':
+              return new Date(val as string);
+            case 'tasks':
+              return this.transformRecordsToEntity(val as Job[]);
+            default:
+              return val;
+          }
+        });
+        result.push(finalParsed);
+      },
+      []
+    );
+    //@ts-ignore
+    return jobParsedArray;
+  };
 }
