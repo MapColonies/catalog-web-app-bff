@@ -28,10 +28,15 @@ export class IngestionManager3D implements IIngestionManagerService {
         schema: '3d_schema',
         mdSource: '3d_mdSource',
         xml: '3d_xml',
+        insertDate: new Date().toISOString(),
         anytext: `${data.metadata.productName} ${data.metadata.description ?? ''} ${
           data.metadata.sensorType ? data.metadata.sensorType.join(',') : ''
         } ${(data.metadata as Layer3DRecordInput).version ?? ''}`,
-        insertDate: new Date().toISOString(),
+        sensorType: data.metadata.sensorType ? data.metadata.sensorType.join(',') : '',
+        nominalResolution: String((data.metadata as Layer3DRecordInput).nominalResolution),
+        accuracyLE90: String((data.metadata as Layer3DRecordInput).accuracyLE90),
+        estimatedPrecision: String((data.metadata as Layer3DRecordInput).estimatedPrecision),
+        measuredPrecision: String((data.metadata as Layer3DRecordInput).measuredPrecision),
       },
       tilesetFilename: data.fileNames[0],
     };
