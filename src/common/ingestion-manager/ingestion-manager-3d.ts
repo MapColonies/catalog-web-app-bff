@@ -21,9 +21,11 @@ export class IngestionManager3D implements IIngestionManagerService {
   private buildPayload(data: IngestionData): AxiosRequestConfig {
     const payloadData = {
       modelPath: data.directory,
+      tilesetFilename: data.fileNames[0],
       metadata: {
         ...data.metadata,
         identifier: data.metadata.id,
+        title: data.metadata.productName,
         typename: '3D',
         schema: '3d_schema',
         mdSource: '3d_mdSource',
@@ -33,12 +35,23 @@ export class IngestionManager3D implements IIngestionManagerService {
           data.metadata.sensorType ? data.metadata.sensorType.join(',') : ''
         } ${(data.metadata as Layer3DRecordInput).version ?? ''}`,
         sensorType: data.metadata.sensorType ? data.metadata.sensorType.join(',') : '',
-        nominalResolution: String((data.metadata as Layer3DRecordInput).nominalResolution),
         accuracyLE90: String((data.metadata as Layer3DRecordInput).accuracyLE90),
-        estimatedPrecision: String((data.metadata as Layer3DRecordInput).estimatedPrecision),
-        measuredPrecision: String((data.metadata as Layer3DRecordInput).measuredPrecision),
+        nominalResolution:
+          (data.metadata as Layer3DRecordInput).nominalResolution !== undefined
+            ? String((data.metadata as Layer3DRecordInput).nominalResolution)
+            : undefined,
+        estimatedPrecision:
+          (data.metadata as Layer3DRecordInput).estimatedPrecision !== undefined
+            ? String((data.metadata as Layer3DRecordInput).estimatedPrecision)
+            : undefined,
+        measuredPrecision:
+          (data.metadata as Layer3DRecordInput).measuredPrecision !== undefined
+            ? String((data.metadata as Layer3DRecordInput).measuredPrecision)
+            : undefined,
+        // sourceDateStart: data.metadata.timeBegin,
+        // sourceDateEnd: data.metadata.timeEnd,
+        footprint: (data.metadata as Layer3DRecordInput).wktGeometry,
       },
-      tilesetFilename: data.fileNames[0],
     };
     return {
       data: {
