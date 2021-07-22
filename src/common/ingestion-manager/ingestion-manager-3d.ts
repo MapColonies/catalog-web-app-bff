@@ -26,6 +26,7 @@ export class IngestionManager3D implements IIngestionManagerService {
         ...data.metadata,
         identifier: data.metadata.id,
         title: data.metadata.productName,
+        producerName: 'IDFMU',
         typename: '3D',
         schema: '3d_schema',
         mdSource: '3d_mdSource',
