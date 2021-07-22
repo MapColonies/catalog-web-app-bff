@@ -90,9 +90,6 @@ const pycsw3DCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.3d.producer-name',
-    // enumValues: {
-    //   dictionary: updateDictionary('producerName', ProducerName),
-    // },
   },
   projectName: {
     label: 'field-names.3d.project-name',
