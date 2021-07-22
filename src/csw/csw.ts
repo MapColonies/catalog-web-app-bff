@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { PycswLayerCatalogRecord, Pycsw3DCatalogRecord, RecordType } from '@map-colonies/mc-model-types';
+import { PycswLayerCatalogRecord, PycswBestCatalogRecord, Pycsw3DCatalogRecord, RecordType, IPropPYCSWMapping } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { get } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
@@ -18,7 +18,7 @@ export class CSW {
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.cswClients.RASTER = new CswClientWrapper(
       'mc:MCRasterRecord',
-      PycswLayerCatalogRecord.getPyCSWMappings(),
+      [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(PycswBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
       'http://schema.mapcolonies.com/raster',
       this.config.get('csw.raster.url')
     );

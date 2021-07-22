@@ -2,7 +2,7 @@
 /* eslint-disable import/exports-last, @typescript-eslint/naming-convention */
 import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-graphql";
 import { GraphQLScalarType } from "graphql";
-import { RecordType, SensorType } from "@map-colonies/mc-model-types";
+import { RecordType, SensorType, ProductType } from "@map-colonies/mc-model-types";
 
 @InputType()
 export class LinkInput {
@@ -50,8 +50,8 @@ export class LayerRasterRecordInput {
     public productId: string;
     @Field({ nullable: true })
     public productVersion?: string;
-    @Field({ nullable: false })
-    public productType: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
     @Field({ nullable: true })
     public srsName?: string;
     @Field({ nullable: true })
@@ -64,6 +64,8 @@ export class LayerRasterRecordInput {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public includedInBests?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -139,6 +141,64 @@ export class Layer3DRecordInput {
     public links?: LinkInput[];
 }
 
+@InputType()
+export class BestRecordInput {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: true })
+    public classification?: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: true })
+    public srsId?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public ingestionDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: true })
+    public sourceDateStart?: Date;
+    @Field({ nullable: true })
+    public sourceDateEnd?: Date;
+    @Field({ nullable: true })
+    public accuracyCE90?: number;
+    @Field((type) => [SensorType], { nullable: true })
+    public sensorType?: SensorType[];
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
+    public srsName?: string;
+    @Field({ nullable: true })
+    public resolution?: number;
+    @Field({ nullable: true })
+    public rms?: number;
+    @Field({ nullable: true })
+    public scale?: string;
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field((type) => layerPolygonPartsObject, { nullable: true })
+    public layerPolygonParts?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public discretes?: string;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [LinkInput], { nullable: true })
+    public links?: LinkInput[];
+}
+
 @ObjectType()
 export class Link {
     @Field({ nullable: true })
@@ -185,8 +245,8 @@ export class LayerRasterRecord {
     public productId: string;
     @Field({ nullable: true })
     public productVersion?: string;
-    @Field({ nullable: false })
-    public productType: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
     @Field({ nullable: true })
     public srsName?: string;
     @Field({ nullable: true })
@@ -199,6 +259,8 @@ export class LayerRasterRecord {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public includedInBests?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -271,6 +333,64 @@ export class Layer3DRecord {
     public links?: Link[];
 }
 
+@ObjectType()
+export class BestRecord {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: true })
+    public classification?: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: true })
+    public srsId?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public ingestionDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: true })
+    public sourceDateStart?: Date;
+    @Field({ nullable: true })
+    public sourceDateEnd?: Date;
+    @Field({ nullable: true })
+    public accuracyCE90?: number;
+    @Field((type) => [SensorType], { nullable: true })
+    public sensorType?: SensorType[];
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
+    public srsName?: string;
+    @Field({ nullable: true })
+    public resolution?: number;
+    @Field({ nullable: true })
+    public rms?: number;
+    @Field({ nullable: true })
+    public scale?: string;
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field((type) => layerPolygonPartsObject, { nullable: true })
+    public layerPolygonParts?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public discretes?: string;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [Link], { nullable: true })
+    public links?: Link[];
+}
+
 @Resolver(Link)
 export class LinkResolver {
 }
@@ -283,5 +403,10 @@ export class LayerRasterRecordResolver {
 export class Layer3DRecordResolver {
 }
 
+@Resolver(BestRecord)
+export class BestRecordResolver {
+}
+
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});
 const SensorTypeRegister = registerEnumType(SensorType, {name: "SensorType"});
+const ProductTypeRegister = registerEnumType(ProductType, {name: "ProductType"});

@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Logger } from '@map-colonies/js-logger';
-import { FieldCategory, IPropFieldConfigInfo, Pycsw3DCatalogRecord, PycswLayerCatalogRecord } from '@map-colonies/mc-model-types';
+import {
+  FieldCategory,
+  IPropFieldConfigInfo,
+  Pycsw3DCatalogRecord,
+  PycswBestCatalogRecord,
+  PycswLayerCatalogRecord,
+} from '@map-colonies/mc-model-types';
 import { container } from 'tsyringe';
 import { Resolver, Query } from 'type-graphql';
 import { Services } from '../../common/constants';
@@ -42,7 +48,9 @@ export class EntityDescriptorResolver {
     };
   }
 
-  private buildDescriptor(recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord): EntityDescriptor {
+  private buildDescriptor(
+    recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswBestCatalogRecord
+  ): EntityDescriptor {
     const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
 
     const categoriesMapped = fieldConfigs.map((categoryInfo: Group): CategoryConfig => {
@@ -69,6 +77,6 @@ export class EntityDescriptorResolver {
   }
 
   private getDescriptors(): EntityDescriptor[] {
-    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord].map((recordType) => this.buildDescriptor(recordType));
+    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswBestCatalogRecord].map((recordType) => this.buildDescriptor(recordType));
   }
 }
