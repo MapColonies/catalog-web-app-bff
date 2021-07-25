@@ -49,8 +49,10 @@ export class IngestionManager3D implements IIngestionManagerService {
           (data.metadata as Layer3DRecordInput).measuredPrecision !== undefined
             ? String((data.metadata as Layer3DRecordInput).measuredPrecision)
             : undefined,
+        horizontalAccuracyCE90: data.metadata.accuracyCE90 !== undefined ? String(data.metadata.accuracyCE90) : undefined,
         timeBegin: data.metadata.sourceDateStart,
         timeEnd: data.metadata.sourceDateEnd,
+        srs: data.metadata.srsId,
         footprint: (data.metadata as Layer3DRecordInput).wktGeometry,
       },
     };
