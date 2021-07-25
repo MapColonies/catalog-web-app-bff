@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
+import { AxiosRequestConfig } from 'axios';
 import { IngestionData } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
@@ -21,10 +21,7 @@ export class IngestionManagerRaster implements IIngestionManagerService {
     const payloadData = {
       originDirectory: data.directory,
       fileNames: data.fileNames,
-      metadata: {
-        ...data.metadata,
-        producerName: 'IDFMU',
-      },
+      metadata: data.metadata,
     };
     return {
       data: {
