@@ -120,7 +120,7 @@ export class Layer3DRecordInput {
     @Field((type) => footprintObject, { nullable: true })
     public footprint?: Record<string, unknown>;
     @Field({ nullable: true })
-    public relativeAccuracyCE90?: number;
+    public relativeAccuracyLE90?: number;
     @Field({ nullable: true })
     public estimatedPrecision?: number;
     @Field({ nullable: true })
@@ -312,7 +312,7 @@ export class Layer3DRecord {
     @Field((type) => footprintObject, { nullable: true })
     public footprint?: Record<string, unknown>;
     @Field({ nullable: true })
-    public relativeAccuracyCE90?: number;
+    public relativeAccuracyLE90?: number;
     @Field({ nullable: true })
     public estimatedPrecision?: number;
     @Field({ nullable: true })

@@ -100,8 +100,8 @@ const pycsw3DCatalogRecordAspects = {
   centroid: {
     label: 'field-names.3d.centroid',
   },
-  relativeAccuracyCE90: {
-    label: 'field-names.3d.relativeAccuracyCE90',
+  relativeAccuracyLE90: {
+    label: 'field-names.3d.relativeAccuracyLE90',
   },
   estimatedPrecision: {
     label: 'field-names.3d.estimated-precision',
