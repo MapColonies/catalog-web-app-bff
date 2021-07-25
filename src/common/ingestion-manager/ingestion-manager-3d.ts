@@ -20,41 +20,34 @@ export class IngestionManager3D implements IIngestionManagerService {
   }
 
   private buildPayload(data: IngestionData): AxiosRequestConfig {
+    const metadata = data.metadata as Layer3DRecordInput;
     const payloadData = {
       modelPath: data.directory,
       tilesetFilename: data.fileNames[0],
       metadata: {
-        ...data.metadata,
+        ...metadata,
         identifier: uuid(),
-        title: data.metadata.productName,
+        title: metadata.productName,
         producerName: 'IDFMU',
         typename: '3D',
         schema: '3d_schema',
         mdSource: '3d_mdSource',
         xml: '3d_xml',
         insertDate: new Date().toISOString(),
-        anytext: `${data.metadata.productName} ${data.metadata.description ?? ''} ${
-          data.metadata.sensorType ? data.metadata.sensorType.join(',') : ''
-        } ${(data.metadata as Layer3DRecordInput).version ?? ''}`,
-        sensorType: data.metadata.sensorType ? data.metadata.sensorType.join(',') : '',
-        accuracyLE90: String((data.metadata as Layer3DRecordInput).accuracyLE90),
-        nominalResolution:
-          (data.metadata as Layer3DRecordInput).nominalResolution !== undefined
-            ? String((data.metadata as Layer3DRecordInput).nominalResolution)
-            : undefined,
-        estimatedPrecision:
-          (data.metadata as Layer3DRecordInput).estimatedPrecision !== undefined
-            ? String((data.metadata as Layer3DRecordInput).estimatedPrecision)
-            : undefined,
-        measuredPrecision:
-          (data.metadata as Layer3DRecordInput).measuredPrecision !== undefined
-            ? String((data.metadata as Layer3DRecordInput).measuredPrecision)
-            : undefined,
-        horizontalAccuracyCE90: data.metadata.accuracyCE90 !== undefined ? String(data.metadata.accuracyCE90) : undefined,
+        anytext: `${metadata.productName} ${metadata.description ?? ''} ${metadata.sensorType ? metadata.sensorType.join(',') : ''} ${
+          metadata.version ?? ''
+        }`,
+        sensorType: metadata.sensorType ? metadata.sensorType.join(',') : '',
+        accuracyLE90: String(metadata.accuracyLE90),
+        nominalResolution: metadata.nominalResolution !== undefined ? String(metadata.nominalResolution) : undefined,
+        estimatedPrecision: metadata.estimatedPrecision !== undefined ? String(metadata.estimatedPrecision) : undefined,
+        measuredPrecision: metadata.measuredPrecision !== undefined ? String(metadata.measuredPrecision) : undefined,
+        horizontalAccuracyCE90: metadata.accuracyCE90 !== undefined ? String(metadata.accuracyCE90) : undefined,
+        relativeAccuracyLE90: metadata.relativeAccuracyLE90 !== undefined ? String(metadata.relativeAccuracyLE90) : undefined,
         timeBegin: data.metadata.sourceDateStart,
         timeEnd: data.metadata.sourceDateEnd,
         srs: data.metadata.srsId,
-        footprint: (data.metadata as Layer3DRecordInput).wktGeometry,
+        footprint: metadata.wktGeometry,
       },
     };
     return {
