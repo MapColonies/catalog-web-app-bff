@@ -33,6 +33,17 @@ export class CswClientWrapper {
     return parsedData;
   }
 
+  public async getRecordsById(idList: string[]): Promise<CatalogRecordType[]> {
+    // eslint-disable-next-line
+    let data = (await this.cswClient.GetRecordsById(idList))?.[this.typename];
+    if (data === undefined) {
+      return [];
+    }
+    data = Array.isArray(data) ? data : [data];
+    const parsedData = this.transformRecordsToEntity(data);
+    return parsedData;
+  }
+
   private readonly transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
     const cswParsedArray = transform(
       cswArray,

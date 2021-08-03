@@ -67,4 +67,11 @@ export class CSW {
     const data = await Promise.all(getRecords);
     return data.flat();
   }
+
+  public async getRecordsById(idList: string[]): Promise<CatalogRecordType[]> {
+    const getRecords = [];
+    getRecords.push(...Object.values(this.cswClients).map(async (client) => client.getRecordsById(idList)));
+    const data = await Promise.all(getRecords);
+    return data.flat();
+  }
 }
