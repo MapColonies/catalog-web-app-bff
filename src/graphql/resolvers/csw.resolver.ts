@@ -6,7 +6,7 @@ import { CatalogManager } from '../../common/catalog-manager/catalog-manager';
 import { Services } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
 import { CSW } from '../../csw/csw';
-import { Ingestion3DData, IngestionRasterData, RecordUpdatePartial, SearchOptions } from '../inputTypes';
+import { Ingestion3DData, IngestionRasterData, RecordUpdatePartial, SearchOptions, StringArray } from '../inputTypes';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const LayerMetadataMixedUnion = createUnionType({
@@ -59,11 +59,11 @@ export class LayerMetadataMixedResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [LayerMetadataMixedUnion])
   public async searchById(
-    @Arg('idList', { nullable: true })
-    idList: string[]
+    @Arg('idList', { nullable: false })
+    idList: StringArray
   ): Promise<LayerMetadataUnionType[]> {
     try {
-      const data = await this.csw.getRecordsById(idList);
+      const data = await this.csw.getRecordsById(idList.array);
       return data;
     } catch (err) {
       this.logger.error(err);
