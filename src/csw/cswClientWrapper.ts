@@ -35,7 +35,7 @@ export class CswClientWrapper {
 
   public async getRecordsById(idList: string[]): Promise<CatalogRecordType[]> {
     // eslint-disable-next-line
-    let data = (await this.cswClient.GetRecordsById(idList))?.[this.typename];
+    let data = get(await this.cswClient.GetRecordsById(idList), '[csw:GetRecordByIdResponse].abstractRecord');
     if (data === undefined) {
       return [];
     }

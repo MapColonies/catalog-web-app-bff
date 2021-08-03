@@ -165,7 +165,7 @@ export class JobUpdateData {
 @InputType()
 export class StringArray {
   @Field((type) => [String])
-  public array: string[];
+  public value: string[];
 }
 
 export type IngestionData = Ingestion3DData | IngestionRasterData;

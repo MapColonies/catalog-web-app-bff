@@ -63,7 +63,7 @@ export class LayerMetadataMixedResolver {
     idList: StringArray
   ): Promise<LayerMetadataUnionType[]> {
     try {
-      const data = await this.csw.getRecordsById(idList.array);
+      const data = await this.csw.getRecordsById(idList.value);
       return data;
     } catch (err) {
       this.logger.error(err);
