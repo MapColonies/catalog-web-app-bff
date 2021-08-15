@@ -17,6 +17,14 @@ export class LinkInput {
 }
 
 @InputType()
+export class DiscreteOrderInput {
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: false })
+    public zOrder: number;
+}
+
+@InputType()
 export class LayerRasterRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
@@ -64,8 +72,8 @@ export class LayerRasterRecordInput {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public includedInBests?: string;
+    @Field((type) => [String], { nullable: true })
+    public includedInBests?: string[];
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -187,8 +195,8 @@ export class BestRecordInput {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public discretes?: string;
+    @Field((type) => [DiscreteOrderInput], { nullable: true })
+    public discretes?: DiscreteOrderInput[];
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -209,6 +217,14 @@ export class Link {
     public protocol: string;
     @Field({ nullable: false })
     public url: string;
+}
+
+@ObjectType()
+export class DiscreteOrder {
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: false })
+    public zOrder: number;
 }
 
 @ObjectType()
@@ -259,8 +275,8 @@ export class LayerRasterRecord {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public includedInBests?: string;
+    @Field((type) => [String], { nullable: true })
+    public includedInBests?: string[];
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -379,8 +395,8 @@ export class BestRecord {
     public footprint?: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public discretes?: string;
+    @Field((type) => [DiscreteOrder], { nullable: true })
+    public discretes?: DiscreteOrder[];
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -393,6 +409,10 @@ export class BestRecord {
 
 @Resolver(Link)
 export class LinkResolver {
+}
+
+@Resolver(DiscreteOrder)
+export class DiscreteOrderResolver {
 }
 
 @Resolver(LayerRasterRecord)
