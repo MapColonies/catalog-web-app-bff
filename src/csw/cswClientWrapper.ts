@@ -83,6 +83,15 @@ export class CswClientWrapper {
                   return {};
               }
             }
+            case 'discretes': {
+              switch (recordType) {
+                case RecordType.RECORD_RASTER:
+                  // eslint-disable-next-line
+                  return JSON.parse(val as string);
+                default:
+                  return undefined;
+              }
+            }
             case 'links': {
               const linksArr = Array.isArray(val) ? val : [val];
               const processedLinks = linksArr.map((item: any): Link => {
