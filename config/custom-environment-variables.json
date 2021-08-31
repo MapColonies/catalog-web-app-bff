@@ -49,5 +49,6 @@
     "raster": {
       "url": "JOB_SERVICE_RASTER_URL"
     }
-  }
+  },
+  "servedEntityTypes": "SERVED_ENTITY_TYPES"
 }

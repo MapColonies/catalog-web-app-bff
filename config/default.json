@@ -50,5 +50,6 @@
     "raster": {
       "url": "http://localhost:8000/job-manager-dev-job-manager"
     }
-  }
+  },
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D"
 }
