@@ -103,6 +103,12 @@ const pycswLayerCatalogRecordAspects = {
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
   },
+  scale: {
+    label: 'field-names.raster.scale',
+  },
+  footprint: {
+    label: 'field-names.raster.footprint',
+  },
 } as Record<string, any>;
 
 export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordAspects;
