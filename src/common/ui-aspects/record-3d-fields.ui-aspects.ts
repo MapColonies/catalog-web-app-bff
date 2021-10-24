@@ -68,10 +68,10 @@ const pycsw3DCatalogRecordAspects = {
     label: 'field-names.3d.ingestion-date',
   },
   sourceDateStart: {
-    label: 'field-names.3d.source-start-date',
+    label: 'field-names.3d.sourceDateStart',
   },
   sourceDateEnd: {
-    label: 'field-names.3d.source-end-date',
+    label: 'field-names.3d.sourceDateEnd',
   },
   accuracyCE90: {
     label: 'field-names.3d.accuracyCE90',
