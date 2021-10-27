@@ -74,8 +74,14 @@ export class RecordsEditableFields {
   @Field({ nullable: true })
   public description?: string;
 
-  @Field((type) => [SensorType], { nullable: true })
-  public sensorType?: SensorType[];
+  // @Field((type) => [SensorType], { nullable: true })
+  // public sensorType?: SensorType[];
+
+  @Field({ nullable: true })
+  public productSubType?: string;
+
+  @Field({ nullable: true })
+  public producerName?: string;
 
   @Field({ nullable: true })
   public classification?: string;

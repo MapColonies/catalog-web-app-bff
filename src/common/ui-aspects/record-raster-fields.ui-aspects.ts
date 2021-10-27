@@ -109,6 +109,9 @@ const pycswLayerCatalogRecordAspects = {
   footprint: {
     label: 'field-names.raster.footprint',
   },
+  producerName: {
+    label: 'field-names.raster.producerName',
+  },
 } as Record<string, any>;
 
 export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordAspects;
