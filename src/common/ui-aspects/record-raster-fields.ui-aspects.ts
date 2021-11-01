@@ -77,10 +77,10 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.ingestion-date',
   },
   sourceDateStart: {
-    label: 'field-names.raster.source-start-date',
+    label: 'field-names.raster.sourceDateStart',
   },
   sourceDateEnd: {
-    label: 'field-names.raster.source-end-date',
+    label: 'field-names.raster.sourceDateEnd',
   },
   accuracyCE90: {
     label: 'field-names.raster.accuracyCE90',
