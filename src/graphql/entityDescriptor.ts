@@ -69,6 +69,9 @@ export class ValidationConfig {
 
   @Field({ nullable: true })
   public pattern?: string;
+
+  @Field({ nullable: true })
+  public errorMsgTranslation: string;
 }
 
 @ObjectType()
