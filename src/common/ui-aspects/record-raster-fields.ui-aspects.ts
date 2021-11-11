@@ -96,6 +96,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
+    fullWidth: true,
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
@@ -108,9 +109,11 @@ const pycswLayerCatalogRecordAspects = {
   },
   footprint: {
     label: 'field-names.raster.footprint',
+    fullWidth: true,
   },
   producerName: {
     label: 'field-names.raster.producerName',
+    fullWidth: true,
   },
 } as Record<string, any>;
 

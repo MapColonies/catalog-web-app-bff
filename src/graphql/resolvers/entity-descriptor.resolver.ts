@@ -15,6 +15,8 @@ import categoriesTranslation from '../../common/ui-aspects/category.trsanslation
 import { Group, groupBy } from '../../helpers/group-by';
 import { CategoryConfig, EntityDescriptor, FieldConfig } from '../entityDescriptor';
 
+const FIRST_CATEGORY = 'MAIN';
+
 @Resolver()
 export class EntityDescriptorResolver {
   private readonly logger: Logger;
@@ -55,6 +57,17 @@ export class EntityDescriptorResolver {
     };
   }
 
+  private arrangeCategories(categories: CategoryConfig[]): CategoryConfig[] {
+    const fromIndex = categories.findIndex((cat) => cat.category === FIRST_CATEGORY);
+    const category = categories[fromIndex];
+    const arrangedArr = [...categories];
+
+    arrangedArr.splice(fromIndex, 1);
+    arrangedArr.splice(0, 0, category);
+
+    return arrangedArr;
+  }
+
   private buildDescriptor(
     recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswBestCatalogRecord
   ): EntityDescriptor {
@@ -77,9 +90,11 @@ export class EntityDescriptorResolver {
       };
     });
 
+    const arrangedCategories = this.arrangeCategories(categoriesMapped);
+
     return {
       type: recordType.name,
-      categories: categoriesMapped,
+      categories: arrangedCategories,
     };
   }
 
