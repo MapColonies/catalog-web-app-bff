@@ -13,7 +13,6 @@ registerEnumType(AutocomplitionType, { name: 'AutocomplitionType' });
 export enum ValidationType {
   VALUE = 'value',
   FIELD = 'field',
-  REQUIRED = 'required',
 }
 registerEnumType(ValidationType, { name: 'ValidationType' });
 
@@ -52,8 +51,8 @@ export class ValidationConfig {
   @Field({ nullable: false })
   public errorMsgCode: string;
 
-  @Field((type) => ValidationType, { nullable: false })
-  public type: ValidationType;
+  @Field((type) => ValidationType, { nullable: true })
+  public valueType: ValidationType;
 
   @Field({ nullable: true })
   public min?: string; //number | string | '$NOW';
@@ -72,6 +71,12 @@ export class ValidationConfig {
 
   @Field({ nullable: true })
   public errorMsgTranslation: string;
+
+  @Field({ nullable: true })
+  public required: boolean;
+
+  @Field({ nullable: true })
+  public json: boolean;
 }
 
 @ObjectType()
