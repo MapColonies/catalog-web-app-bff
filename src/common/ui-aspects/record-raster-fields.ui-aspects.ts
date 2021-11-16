@@ -115,6 +115,10 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.producerName',
     fullWidth: true,
   },
+  layerPolygonParts: {
+    label: 'field-names.raster.layerPolygonParts',
+    fullWidth: true,
+  },
 } as Record<string, any>;
 
 export const pycswLayerCatalogRecordUIAspects = pycswLayerCatalogRecordAspects;
