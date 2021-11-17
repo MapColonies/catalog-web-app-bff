@@ -15,7 +15,7 @@ const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, BestRecord] as const,
   resolveType: (value) => {
-    if ('accuracyLE90' in value) {
+    if ('accuracySE90' in value) {
       return Layer3DRecord;
     } else if ('discretes' in (value as BestRecord)) {
       return BestRecord;

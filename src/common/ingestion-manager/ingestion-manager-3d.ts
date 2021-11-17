@@ -15,40 +15,40 @@ export class IngestionManager3D implements IIngestionManagerService {
   }
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
-    const res = await requestHandler(`${this.serviceURL}/models`, 'POST', this.buildPayload(data));
-    return data;
+    // const res = await requestHandler(`${this.serviceURL}/models`, 'POST', this.buildPayload(data));
+    return Promise.resolve(data);
   }
 
   private buildPayload(data: IngestionData): AxiosRequestConfig {
     const metadata = data.metadata as Layer3DRecordInput;
     const payloadData = {
-      modelPath: data.directory,
-      tilesetFilename: data.fileNames[0],
-      metadata: {
-        ...metadata,
-        identifier: uuid(),
-        title: metadata.productName,
-        producerName: 'IDFMU',
-        typename: '3D',
-        schema: '3d_schema',
-        mdSource: '3d_mdSource',
-        xml: '3d_xml',
-        insertDate: new Date().toISOString(),
-        anytext: `${metadata.productName} ${metadata.description ?? ''} ${metadata.sensorType ? metadata.sensorType.join(',') : ''} ${
-          metadata.version ?? ''
-        }`,
-        sensorType: metadata.sensorType ? metadata.sensorType.join(',') : '',
-        accuracyLE90: String(metadata.accuracyLE90),
-        nominalResolution: metadata.nominalResolution !== undefined ? String(metadata.nominalResolution) : undefined,
-        estimatedPrecision: metadata.estimatedPrecision !== undefined ? String(metadata.estimatedPrecision) : undefined,
-        measuredPrecision: metadata.measuredPrecision !== undefined ? String(metadata.measuredPrecision) : undefined,
-        horizontalAccuracyCE90: metadata.accuracyCE90 !== undefined ? String(metadata.accuracyCE90) : undefined,
-        relativeAccuracyLE90: metadata.relativeAccuracyLE90 !== undefined ? String(metadata.relativeAccuracyLE90) : undefined,
-        timeBegin: data.metadata.sourceDateStart,
-        timeEnd: data.metadata.sourceDateEnd,
-        srs: data.metadata.srsId,
-        footprint: metadata.wktGeometry,
-      },
+      // modelPath: data.directory,
+      // tilesetFilename: data.fileNames[0],
+      // metadata: {
+      //   ...metadata,
+      //   identifier: uuid(),
+      //   title: metadata.productName,
+      //   producerName: 'IDFMU',
+      //   typename: '3D',
+      //   schema: '3d_schema',
+      //   mdSource: '3d_mdSource',
+      //   xml: '3d_xml',
+      //   insertDate: new Date().toISOString(),
+      //   anytext: `${metadata.productName} ${metadata.description ?? ''} ${metadata.sensorType ? metadata.sensorType.join(',') : ''} ${
+      //     metadata.version ?? ''
+      //   }`,
+      //   sensorType: metadata.sensorType ? metadata.sensorType.join(',') : '',
+      //   accuracyLE90: String(metadata.accuracyLE90),
+      //   nominalResolution: metadata.nominalResolution !== undefined ? String(metadata.nominalResolution) : undefined,
+      //   estimatedPrecision: metadata.estimatedPrecision !== undefined ? String(metadata.estimatedPrecision) : undefined,
+      //   measuredPrecision: metadata.measuredPrecision !== undefined ? String(metadata.measuredPrecision) : undefined,
+      //   horizontalAccuracyCE90: metadata.accuracyCE90 !== undefined ? String(metadata.accuracyCE90) : undefined,
+      //   relativeAccuracyLE90: metadata.relativeAccuracyLE90 !== undefined ? String(metadata.relativeAccuracyLE90) : undefined,
+      //   timeBegin: data.metadata.sourceDateStart,
+      //   timeEnd: data.metadata.sourceDateEnd,
+      //   srs: data.metadata.srsId,
+      //   footprint: metadata.wktGeometry,
+      // },
     };
     return {
       data: {

@@ -98,52 +98,72 @@ export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolyg
 export class Layer3DRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public productId: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public producerName?: string;
-    @Field({ nullable: true })
     public creationDate?: Date;
-    @Field({ nullable: true })
-    public ingestionDate?: Date;
-    @Field({ nullable: true })
-    public updateDate?: Date;
     @Field({ nullable: true })
     public sourceDateStart?: Date;
     @Field({ nullable: true })
     public sourceDateEnd?: Date;
     @Field({ nullable: true })
-    public accuracyCE90?: number;
-    @Field((type) => [SensorType], { nullable: true })
-    public sensorType?: SensorType[];
+    public minResolutionMeter?: number;
     @Field({ nullable: true })
-    public region?: string;
-    @Field({ nullable: true })
-    public projectName?: string;
-    @Field({ nullable: true })
-    public validationDate?: Date;
-    @Field({ nullable: true })
-    public version?: string;
-    @Field({ nullable: true })
-    public centroid?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public relativeAccuracyLE90?: number;
-    @Field({ nullable: true })
-    public estimatedPrecision?: number;
-    @Field({ nullable: true })
-    public measuredPrecision?: number;
+    public maxResolutionMeter?: number;
     @Field({ nullable: true })
     public nominalResolution?: number;
     @Field({ nullable: true })
-    public accuracyLE90?: number;
+    public maxAccuracyCE90?: number;
+    @Field({ nullable: true })
+    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public accuracySE90?: number;
+    @Field({ nullable: true })
+    public relativeAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public visualAccuracy?: number;
+    @Field((type) => [SensorType], { nullable: true })
+    public sensors?: SensorType[];
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field({ nullable: true })
+    public srsId?: string;
+    @Field({ nullable: true })
+    public srsName?: string;
+    @Field({ nullable: true })
+    public srsOrigin?: string;
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public classification?: string;
+    @Field({ nullable: true })
+    public productionSystem?: string;
+    @Field({ nullable: true })
+    public productionSystemVer?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public productionMethod?: string;
+    @Field({ nullable: true })
+    public minFlightAlt?: number;
+    @Field({ nullable: true })
+    public maxFlightAlt?: number;
+    @Field({ nullable: true })
+    public geographicArea?: string;
+    @Field({ nullable: true })
+    public productBoundingBox?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -304,52 +324,72 @@ export class LayerRasterRecord {
 export class Layer3DRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public productId: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public producerName?: string;
-    @Field({ nullable: true })
     public creationDate?: Date;
-    @Field({ nullable: true })
-    public ingestionDate?: Date;
-    @Field({ nullable: true })
-    public updateDate?: Date;
     @Field({ nullable: true })
     public sourceDateStart?: Date;
     @Field({ nullable: true })
     public sourceDateEnd?: Date;
     @Field({ nullable: true })
-    public accuracyCE90?: number;
-    @Field((type) => [SensorType], { nullable: true })
-    public sensorType?: SensorType[];
+    public minResolutionMeter?: number;
     @Field({ nullable: true })
-    public region?: string;
-    @Field({ nullable: true })
-    public projectName?: string;
-    @Field({ nullable: true })
-    public validationDate?: Date;
-    @Field({ nullable: true })
-    public version?: string;
-    @Field({ nullable: true })
-    public centroid?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public relativeAccuracyLE90?: number;
-    @Field({ nullable: true })
-    public estimatedPrecision?: number;
-    @Field({ nullable: true })
-    public measuredPrecision?: number;
+    public maxResolutionMeter?: number;
     @Field({ nullable: true })
     public nominalResolution?: number;
     @Field({ nullable: true })
-    public accuracyLE90?: number;
+    public maxAccuracyCE90?: number;
+    @Field({ nullable: true })
+    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public accuracySE90?: number;
+    @Field({ nullable: true })
+    public relativeAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public visualAccuracy?: number;
+    @Field((type) => [SensorType], { nullable: true })
+    public sensors?: SensorType[];
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field({ nullable: true })
+    public srsId?: string;
+    @Field({ nullable: true })
+    public srsName?: string;
+    @Field({ nullable: true })
+    public srsOrigin?: string;
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public classification?: string;
+    @Field({ nullable: true })
+    public productionSystem?: string;
+    @Field({ nullable: true })
+    public productionSystemVer?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public productionMethod?: string;
+    @Field({ nullable: true })
+    public minFlightAlt?: number;
+    @Field({ nullable: true })
+    public maxFlightAlt?: number;
+    @Field({ nullable: true })
+    public geographicArea?: string;
+    @Field({ nullable: true })
+    public productBoundingBox?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
