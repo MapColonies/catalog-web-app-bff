@@ -125,6 +125,7 @@ export class CswClientWrapper {
             case 'keywords':
               return val?.toString(); //might be an Array
             case 'sensorType':
+            case 'sensors':
               return val !== undefined ? (val as string).split(',') : [];
             default:
               return val;
