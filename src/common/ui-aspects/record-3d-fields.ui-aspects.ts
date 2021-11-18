@@ -80,6 +80,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   srsOrigin: {
     label: 'field-names.3d.srsOrigin',
+    fullWidth: true,
   },
   region: {
     label: 'field-names.3d.region',
