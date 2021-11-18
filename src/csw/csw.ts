@@ -102,6 +102,7 @@ export class CSW {
     }
 
     const data = await Promise.all(getRecords);
+    console.log('\n\n******** Response: ********\n', JSON.stringify(data.flat()), '\n\n\n\n');
     return data.flat();
   }
 
