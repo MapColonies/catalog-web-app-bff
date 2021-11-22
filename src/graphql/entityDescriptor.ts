@@ -10,11 +10,11 @@ export enum AutocomplitionType {
 registerEnumType(AutocomplitionType, { name: 'AutocomplitionType' });
 
 // eslint-disable-next-line import/exports-last
-export enum ValidationType {
+export enum ValidationValueType {
   VALUE = 'value',
   FIELD = 'field',
 }
-registerEnumType(ValidationType, { name: 'ValidationType' });
+registerEnumType(ValidationValueType, { name: 'ValidationValueType' });
 
 registerEnumType(FieldCategory, { name: 'FieldCategory' });
 export const enumDictionary = new GraphQLScalarType({ name: 'enumDictionary' });
@@ -51,8 +51,8 @@ export class ValidationConfig {
   @Field({ nullable: false })
   public errorMsgCode: string;
 
-  @Field((type) => ValidationType, { nullable: true })
-  public valueType: ValidationType;
+  @Field((type) => ValidationValueType, { nullable: true })
+  public valueType: ValidationValueType;
 
   @Field({ nullable: true })
   public min?: string; //number | string | '$NOW';
