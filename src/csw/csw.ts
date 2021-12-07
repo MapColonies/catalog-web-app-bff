@@ -3,6 +3,7 @@ import {
   PycswLayerCatalogRecord,
   PycswBestCatalogRecord,
   Pycsw3DCatalogRecord,
+  PycswDEMCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
   ProductType,
@@ -46,6 +47,16 @@ export class CSW {
         this.config.get('csw.3d.url')
       ),
       entities: [RecordType.RECORD_3D],
+    };
+
+    this.cswClients.DEM = {
+      instance: new CswClientWrapper(
+        'mc:MCDEMRecord',
+        PycswDEMCatalogRecord.getPyCSWMappings(),
+        'http://schema.mapcolonies.com/dem',
+        this.config.get('csw.dem.url')
+      ),
+      entities: [RecordType.RECORD_DEM],
     };
   }
 
@@ -95,6 +106,9 @@ export class CSW {
           break;
         case RecordType.RECORD_3D:
           getRecords.push(this.cswClients['3D'].instance.getRecords(start, end, newOpts));
+          break;
+        case RecordType.RECORD_DEM:
+          getRecords.push(this.cswClients.DEM.instance.getRecords(start, end, newOpts));
           break;
       }
     } else {

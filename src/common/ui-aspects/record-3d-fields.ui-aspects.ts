@@ -55,8 +55,8 @@ const pycsw3DCatalogRecordAspects = {
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
   },
-  sensors: {
-    label: 'field-names.3d.sensors',
+  sensorType: {
+    label: 'field-names.3d.sensorType',
     fullWidth: true,
     enumValues: {
       dictionary: updateDictionary('sensorType', SensorType),

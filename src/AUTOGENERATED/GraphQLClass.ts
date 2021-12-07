@@ -3,7 +3,7 @@
 /* tslint:disable */
 import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-graphql";
 import { GraphQLScalarType } from "graphql";
-import { RecordType, SensorType, ProductType } from "@map-colonies/mc-model-types";
+import { RecordType, SensorType, ProductType, VerticalDatum, Units, UndulationModel, DataType, NoDataValue } from "@map-colonies/mc-model-types";
 
 @InputType()
 export class LinkInput {
@@ -242,24 +242,24 @@ export class BestRecordInput {
 export class LayerDEMRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: false })
-    public classification: string;
+    @Field({ nullable: true })
+    public classification?: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
     public srsId?: string;
-    @Field({ nullable: false })
-    public srsName: string;
+    @Field({ nullable: true })
+    public srsName?: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: false })
-    public sourceDateStart: Date;
-    @Field({ nullable: false })
-    public sourceDateEnd: Date;
+    @Field({ nullable: true })
+    public sourceDateStart?: Date;
+    @Field({ nullable: true })
+    public sourceDateEnd?: Date;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
     @Field({ nullable: true })
@@ -268,12 +268,12 @@ export class LayerDEMRecordInput {
     public productId: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field((type) => footprintObject, { nullable: false })
-    public footprint: Record<string, unknown>;
-    @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
-    @Field({ nullable: false })
-    public relativeAccuracyLEP90: number;
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
     public resolutionDegree?: number;
     @Field({ nullable: false })
@@ -282,12 +282,22 @@ export class LayerDEMRecordInput {
     public layerPolygonParts?: Record<string, unknown>;
     @Field({ nullable: true })
     public productBoundingBox?: string;
-    @Field({ nullable: false })
-    public heightRangeFrom: number;
-    @Field({ nullable: false })
-    public heightRangeTo: number;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field((type) => VerticalDatum, { nullable: false })
+    public verticalDatum: VerticalDatum;
+    @Field((type) => Units, { nullable: true })
+    public units?: Units;
     @Field({ nullable: true })
     public geographicArea?: string;
+    @Field((type) => UndulationModel, { nullable: false })
+    public undulationModel: UndulationModel;
+    @Field((type) => DataType, { nullable: false })
+    public dataType: DataType;
+    @Field((type) => NoDataValue, { nullable: false })
+    public noDataValue: NoDataValue;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -534,24 +544,24 @@ export class BestRecord {
 export class LayerDEMRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: false })
-    public classification: string;
+    @Field({ nullable: true })
+    public classification?: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
     public srsId?: string;
-    @Field({ nullable: false })
-    public srsName: string;
+    @Field({ nullable: true })
+    public srsName?: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: false })
-    public sourceDateStart: Date;
-    @Field({ nullable: false })
-    public sourceDateEnd: Date;
+    @Field({ nullable: true })
+    public sourceDateStart?: Date;
+    @Field({ nullable: true })
+    public sourceDateEnd?: Date;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
     @Field({ nullable: true })
@@ -560,12 +570,12 @@ export class LayerDEMRecord {
     public productId: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field((type) => footprintObject, { nullable: false })
-    public footprint: Record<string, unknown>;
-    @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
-    @Field({ nullable: false })
-    public relativeAccuracyLEP90: number;
+    @Field((type) => footprintObject, { nullable: true })
+    public footprint?: Record<string, unknown>;
+    @Field({ nullable: true })
+    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: true })
+    public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
     public resolutionDegree?: number;
     @Field({ nullable: false })
@@ -574,12 +584,22 @@ export class LayerDEMRecord {
     public layerPolygonParts?: Record<string, unknown>;
     @Field({ nullable: true })
     public productBoundingBox?: string;
-    @Field({ nullable: false })
-    public heightRangeFrom: number;
-    @Field({ nullable: false })
-    public heightRangeTo: number;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field((type) => VerticalDatum, { nullable: false })
+    public verticalDatum: VerticalDatum;
+    @Field((type) => Units, { nullable: true })
+    public units?: Units;
     @Field({ nullable: true })
     public geographicArea?: string;
+    @Field((type) => UndulationModel, { nullable: false })
+    public undulationModel: UndulationModel;
+    @Field((type) => DataType, { nullable: false })
+    public dataType: DataType;
+    @Field((type) => NoDataValue, { nullable: false })
+    public noDataValue: NoDataValue;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -619,3 +639,8 @@ export class LayerDEMRecordResolver {
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});
 const SensorTypeRegister = registerEnumType(SensorType, {name: "SensorType"});
 const ProductTypeRegister = registerEnumType(ProductType, {name: "ProductType"});
+const VerticalDatumRegister = registerEnumType(VerticalDatum, {name: "VerticalDatum"});
+const UnitsRegister = registerEnumType(Units, {name: "Units"});
+const UndulationModelRegister = registerEnumType(UndulationModel, {name: "UndulationModel"});
+const DataTypeRegister = registerEnumType(DataType, {name: "DataType"});
+const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});

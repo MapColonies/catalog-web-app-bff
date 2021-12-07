@@ -80,6 +80,7 @@ export class CswClientWrapper {
                   return boxPolygon;
                 }
                 case RecordType.RECORD_RASTER:
+                case RecordType.RECORD_DEM:
                   // eslint-disable-next-line
                   return JSON.parse(val as string);
                 default:
@@ -89,6 +90,7 @@ export class CswClientWrapper {
             case 'layerPolygonParts': {
               switch (recordType) {
                 case RecordType.RECORD_RASTER:
+                case RecordType.RECORD_DEM:
                   // eslint-disable-next-line
                   return JSON.parse(val as string);
                 default:
