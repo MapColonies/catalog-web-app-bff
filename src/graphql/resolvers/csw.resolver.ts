@@ -15,7 +15,7 @@ const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, BestRecord, LayerDEMRecord] as const,
   resolveType: (value) => {
-    if ('absoluteAccuracyLEP90' in value) {
+    if ('maxAccuracyCE90' in value) {
       return Layer3DRecord;
     } else if ('verticalDatum' in (value as LayerDEMRecord)) {
       return LayerDEMRecord;
