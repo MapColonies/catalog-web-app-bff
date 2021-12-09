@@ -122,6 +122,9 @@ export class FieldConfig {
 
   @Field((type) => [FieldConfig], { nullable: true })
   public subFields?: FieldConfig[];
+
+  @Field((type) => String, { nullable: true })
+  public default?: string;
 }
 
 @ObjectType()

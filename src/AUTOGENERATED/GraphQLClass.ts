@@ -29,14 +29,14 @@ export class DiscreteOrderInput {
 export class LayerRasterRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
+    @Field({ nullable: false })
+    public srsId: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
@@ -45,10 +45,10 @@ export class LayerRasterRecordInput {
     public ingestionDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public accuracyCE90?: number;
     @Field((type) => [SensorType], { nullable: true })
@@ -63,8 +63,8 @@ export class LayerRasterRecordInput {
     public productType: ProductType;
     @Field({ nullable: true })
     public productSubType?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public resolution?: number;
     @Field({ nullable: true })
@@ -73,8 +73,8 @@ export class LayerRasterRecordInput {
     public rms?: number;
     @Field({ nullable: true })
     public scale?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field((type) => [String], { nullable: true })
@@ -112,10 +112,10 @@ export class Layer3DRecordInput {
     public creationDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public minResolutionMeter?: number;
     @Field({ nullable: true })
@@ -124,8 +124,8 @@ export class Layer3DRecordInput {
     public nominalResolution?: number;
     @Field({ nullable: true })
     public maxAccuracyCE90?: number;
-    @Field({ nullable: true })
-    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: false })
+    public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
     public accuracySE90?: number;
     @Field({ nullable: true })
@@ -134,22 +134,22 @@ export class Layer3DRecordInput {
     public visualAccuracy?: number;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field({ nullable: true })
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public srsOrigin?: string;
     @Field({ nullable: true })
     public region?: string;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: true })
     public productionSystem?: string;
     @Field({ nullable: true })
@@ -182,14 +182,14 @@ export class Layer3DRecordInput {
 export class BestRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
+    @Field({ nullable: false })
+    public srsId: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
@@ -198,10 +198,10 @@ export class BestRecordInput {
     public ingestionDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public accuracyCE90?: number;
     @Field((type) => [SensorType], { nullable: true })
@@ -214,16 +214,16 @@ export class BestRecordInput {
     public productVersion?: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public resolution?: number;
     @Field({ nullable: true })
     public rms?: number;
     @Field({ nullable: true })
     public scale?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field((type) => [DiscreteOrderInput], { nullable: true })
@@ -242,24 +242,24 @@ export class BestRecordInput {
 export class LayerDEMRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
     @Field({ nullable: true })
@@ -268,10 +268,10 @@ export class LayerDEMRecordInput {
     public productId: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public absoluteAccuracyLEP90?: number;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: false })
+    public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
     public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
@@ -334,14 +334,14 @@ export class DiscreteOrder {
 export class LayerRasterRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
+    @Field({ nullable: false })
+    public srsId: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
@@ -350,10 +350,10 @@ export class LayerRasterRecord {
     public ingestionDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public accuracyCE90?: number;
     @Field((type) => [SensorType], { nullable: true })
@@ -368,8 +368,8 @@ export class LayerRasterRecord {
     public productType: ProductType;
     @Field({ nullable: true })
     public productSubType?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public resolution?: number;
     @Field({ nullable: true })
@@ -378,8 +378,8 @@ export class LayerRasterRecord {
     public rms?: number;
     @Field({ nullable: true })
     public scale?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field((type) => [String], { nullable: true })
@@ -414,10 +414,10 @@ export class Layer3DRecord {
     public creationDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public minResolutionMeter?: number;
     @Field({ nullable: true })
@@ -426,8 +426,8 @@ export class Layer3DRecord {
     public nominalResolution?: number;
     @Field({ nullable: true })
     public maxAccuracyCE90?: number;
-    @Field({ nullable: true })
-    public absoluteAccuracyLEP90?: number;
+    @Field({ nullable: false })
+    public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
     public accuracySE90?: number;
     @Field({ nullable: true })
@@ -436,22 +436,22 @@ export class Layer3DRecord {
     public visualAccuracy?: number;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field({ nullable: true })
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public srsOrigin?: string;
     @Field({ nullable: true })
     public region?: string;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: true })
     public productionSystem?: string;
     @Field({ nullable: true })
@@ -484,14 +484,14 @@ export class Layer3DRecord {
 export class BestRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
+    @Field({ nullable: false })
+    public srsId: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
@@ -500,10 +500,10 @@ export class BestRecord {
     public ingestionDate?: Date;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field({ nullable: true })
     public accuracyCE90?: number;
     @Field((type) => [SensorType], { nullable: true })
@@ -516,16 +516,16 @@ export class BestRecord {
     public productVersion?: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public resolution?: number;
     @Field({ nullable: true })
     public rms?: number;
     @Field({ nullable: true })
     public scale?: string;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field((type) => [DiscreteOrder], { nullable: true })
@@ -544,24 +544,24 @@ export class BestRecord {
 export class LayerDEMRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: true })
-    public classification?: string;
+    @Field({ nullable: false })
+    public classification: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: true })
-    public srsId?: string;
-    @Field({ nullable: true })
-    public srsName?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
     public updateDate?: Date;
-    @Field({ nullable: true })
-    public sourceDateStart?: Date;
-    @Field({ nullable: true })
-    public sourceDateEnd?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
     @Field((type) => [SensorType], { nullable: true })
     public sensorType?: SensorType[];
     @Field({ nullable: true })
@@ -570,10 +570,10 @@ export class LayerDEMRecord {
     public productId: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
-    @Field((type) => footprintObject, { nullable: true })
-    public footprint?: Record<string, unknown>;
-    @Field({ nullable: true })
-    public absoluteAccuracyLEP90?: number;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: false })
+    public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
     public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
