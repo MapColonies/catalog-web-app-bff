@@ -27,6 +27,9 @@
     },
     "3d": {
       "url": "CSW_3D_URL"
+    },
+    "dem": {
+      "url": "CSW_DEM_URL"
     }
   },
   "catalogServices": {
