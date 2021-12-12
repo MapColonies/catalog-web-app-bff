@@ -135,6 +135,8 @@ export class CSW {
 
   private recordTypeToEntity(recType: RecordType): CatalogRecordItems {
     switch (recType) {
+      case RecordType.RECORD_DEM:
+        return CatalogRecordItems.DEM;
       case RecordType.RECORD_3D:
         return CatalogRecordItems['3D'];
       default:
