@@ -144,4 +144,4 @@ export class LayerMetadataMixedResolver {
   }
 }
 
-export type LayerMetadataUnionType = Layer3DRecord | LayerRasterRecord | BestRecord;
+export type LayerMetadataUnionType = LayerDEMRecord | Layer3DRecord | LayerRasterRecord | BestRecord;
