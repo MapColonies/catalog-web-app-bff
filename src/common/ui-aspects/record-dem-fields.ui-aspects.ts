@@ -11,9 +11,6 @@ const pycswDemCatalogRecordAspects = {
   productName: {
     label: 'field-names.dem.productName',
   },
-  productVersion: {
-    label: 'field-names.dem.productVersion',
-  },
   productType: {
     label: 'field-names.dem.productType',
   },
@@ -21,9 +18,8 @@ const pycswDemCatalogRecordAspects = {
     label: 'field-names.dem.description',
     fullWidth: true,
   },
-  creationDate: {
-    label: 'field-names.dem.creationDate',
-    fullWidth: true,
+  updateDate: {
+    label: 'field-names.dem.updateDate',
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
@@ -31,29 +27,17 @@ const pycswDemCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
   },
-  minResolutionMeter: {
-    label: 'field-names.dem.minResolutionMeter',
+  resolutionDegree: {
+    label: 'field-names.dem.resolutionDegree',
   },
-  maxResolutionMeter: {
-    label: 'field-names.dem.maxResolutionMeter',
-  },
-  nominalResolution: {
-    label: 'field-names.dem.nominalResolution',
-  },
-  maxAccuracyCE90: {
-    label: 'field-names.dem.maxAccuracyCE90',
+  resolutionMeter: {
+    label: 'field-names.dem.resolutionMeter',
   },
   absoluteAccuracyLEP90: {
     label: 'field-names.dem.absoluteAccuracyLEP90',
   },
-  accuracySE90: {
-    label: 'field-names.dem.accuracySE90',
-  },
   relativeAccuracyLEP90: {
     label: 'field-names.dem.relativeAccuracyLEP90',
-  },
-  visualAccuracy: {
-    label: 'field-names.dem.visualAccuracy',
   },
   sensorType: {
     label: 'field-names.dem.sensorType',
@@ -64,6 +48,10 @@ const pycswDemCatalogRecordAspects = {
   },
   footprint: {
     label: 'field-names.dem.footprint',
+    fullWidth: true,
+  },
+  layerPolygonParts: {
+    label: 'field-names.dem.layerPolygonParts',
     fullWidth: true,
   },
   heightRangeFrom: {
@@ -78,10 +66,6 @@ const pycswDemCatalogRecordAspects = {
   srsName: {
     label: 'field-names.dem.srsName',
   },
-  srsOrigin: {
-    label: 'field-names.dem.srsOrigin',
-    fullWidth: true,
-  },
   region: {
     label: 'field-names.dem.region',
     fullWidth: true,
@@ -95,29 +79,29 @@ const pycswDemCatalogRecordAspects = {
     //   },
     // },
   },
-  productionSystem: {
-    label: 'field-names.dem.productionSystem',
-  },
-  productionSystemVer: {
-    label: 'field-names.dem.productionSystemVer',
-  },
   producerName: {
     label: 'field-names.dem.producerName',
-  },
-  productionMethod: {
-    label: 'field-names.dem.productionMethod',
-  },
-  minFlightAlt: {
-    label: 'field-names.dem.minFlightAlt',
-  },
-  maxFlightAlt: {
-    label: 'field-names.dem.maxFlightAlt',
   },
   geographicArea: {
     label: 'field-names.dem.geographicArea',
   },
   productBoundingBox: {
     label: 'field-names.dem.productBoundingBox',
+  },
+  verticalDatum: {
+    label: 'field-names.dem.verticalDatum',
+  },
+  units: {
+    label: 'field-names.dem.units',
+  },
+  undulationModel: {
+    label: 'field-names.dem.undulationModel',
+  },
+  dataType: {
+    label: 'field-names.dem.dataType',
+  },
+  noDateValue: {
+    label: 'field-names.dem.noDateValue',
   },
   links: {
     label: 'field-names.dem.links',
