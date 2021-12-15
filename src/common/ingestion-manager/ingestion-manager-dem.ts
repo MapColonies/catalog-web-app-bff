@@ -11,6 +11,6 @@ export class IngestionManagerDem implements IIngestionManagerService {
   }
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
-    return Promise.reject('Unimplemented service!');
+    return Promise.reject('Unimplemented service');
   }
 }

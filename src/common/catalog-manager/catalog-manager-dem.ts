@@ -11,6 +11,6 @@ export class CatalogManagerDem implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    return Promise.reject('Unimplemented service!');
+    return Promise.reject('Unimplemented service');
   }
 }
