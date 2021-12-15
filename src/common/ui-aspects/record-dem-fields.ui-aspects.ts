@@ -81,6 +81,7 @@ const pycswDEMCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.dem.producerName',
+    fullWidth: true,
   },
   geographicArea: {
     label: 'field-names.dem.geographicArea',
@@ -100,8 +101,8 @@ const pycswDEMCatalogRecordAspects = {
   dataType: {
     label: 'field-names.dem.dataType',
   },
-  noDateValue: {
-    label: 'field-names.dem.noDateValue',
+  noDataValue: {
+    label: 'field-names.dem.noDataValue',
   },
   links: {
     label: 'field-names.dem.links',
