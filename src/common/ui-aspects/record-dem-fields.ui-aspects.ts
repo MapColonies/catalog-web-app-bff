@@ -1,7 +1,7 @@
 import { SensorType } from '@map-colonies/mc-model-types';
 import { updateDictionary } from './enum.translation';
 
-const pycswDemCatalogRecordAspects = {
+const pycswDEMCatalogRecordAspects = {
   id: {
     label: 'field-names.dem.id',
   },
@@ -152,4 +152,4 @@ const pycswDemCatalogRecordAspects = {
   },
 } as Record<string, any>;
 
-export const pycswDemCatalogRecordUIAspects = pycswDemCatalogRecordAspects;
+export const pycswDEMCatalogRecordUIAspects = pycswDEMCatalogRecordAspects;
