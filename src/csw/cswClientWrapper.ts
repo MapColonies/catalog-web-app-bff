@@ -111,6 +111,8 @@ export class CswClientWrapper {
               const processedLinks = linksArr.map((item: any): Link => {
                 return {
                   protocol: get(item, '$.scheme') as string,
+                  name: get(item, '$.name') as string,
+                  description: get(item, '$.description') as string,
                   url: get(item, '_') as string,
                 };
               });

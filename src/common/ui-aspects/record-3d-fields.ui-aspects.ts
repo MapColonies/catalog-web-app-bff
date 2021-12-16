@@ -125,6 +125,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   'link.name': {
     label: 'field-names.3d.link.name',
+    isCopyable: true,
     fullWidth: true,
   },
   'link.description': {

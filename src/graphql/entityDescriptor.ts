@@ -108,6 +108,9 @@ export class FieldConfig {
   @Field({ nullable: true })
   public isCreationEssential?: boolean; // // is field should participate in entity creation
 
+  @Field({ nullable: true })
+  public isCopyable?: boolean; // is field might be copied
+
   @Field((type) => Autocompletion, { nullable: true })
   public autocomplete?: Autocompletion;
 

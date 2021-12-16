@@ -56,6 +56,7 @@ const pycswBestCatalogRecordAspects = {
   },
   'link.name': {
     label: 'field-names.raster.link.name',
+    isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
