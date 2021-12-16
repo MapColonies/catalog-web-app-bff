@@ -79,6 +79,21 @@ export class Job {
   @Field({ nullable: true })
   public priority?: number;
 
+  @Field({ nullable: true })
+  public expirationDate?: Date;
+
+  @Field({ nullable: true })
+  public internalId?: string;
+
+  @Field({ nullable: true })
+  public producerName?: string;
+
+  @Field({ nullable: true })
+  public productName?: string;
+
+  @Field({ nullable: true })
+  public productType?: string;
+
   @Field((type) => [Task], { nullable: false })
   public tasks: Task[];
 
@@ -87,6 +102,24 @@ export class Job {
 
   @Field({ nullable: true })
   public updated?: Date;
+
+  @Field({ nullable: true })
+  public taskCount?: number;
+
+  @Field({ nullable: true })
+  public completedTasks?: number;
+
+  @Field({ nullable: true })
+  public failedTasks?: number;
+
+  @Field({ nullable: true })
+  public expiredTasks?: number;
+
+  @Field({ nullable: true })
+  public pendingTasks?: number;
+
+  @Field({ nullable: true })
+  public inProgressTasks?: number;
 
   @Field({ nullable: true })
   public isCleaned?: boolean;

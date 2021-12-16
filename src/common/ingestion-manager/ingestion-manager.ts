@@ -8,6 +8,7 @@ import { CatalogRecordItems } from '../../utils';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 import { IngestionManagerRaster } from './ingestion-manager-raster';
 import { IngestionManager3D } from './ingestion-manager-3d';
+import { IngestionManagerDem } from './ingestion-manager-dem';
 
 type IngestionServices = Record<CatalogRecordItems, IIngestionManagerService>;
 
@@ -18,6 +19,7 @@ export class IngestionManager implements IIngestionManagerService {
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.ingestionServices.RASTER = new IngestionManagerRaster(this.config, this.logger);
     this.ingestionServices['3D'] = new IngestionManager3D(this.config, this.logger);
+    this.ingestionServices.DEM = new IngestionManagerDem(this.config, this.logger);
   }
 
   public async ingest(record: IngestionData): Promise<IngestionData> {
@@ -30,6 +32,9 @@ export class IngestionManager implements IIngestionManagerService {
     let catalogManagerInstance: IIngestionManagerService;
 
     switch (RecordType[recordType]) {
+      case RecordType.RECORD_DEM:
+        catalogManagerInstance = this.ingestionServices.DEM;
+        break;
       case RecordType.RECORD_3D:
         catalogManagerInstance = this.ingestionServices['3D'];
         break;

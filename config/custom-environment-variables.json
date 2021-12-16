@@ -38,6 +38,9 @@
     },
     "3d": {
       "url": "CATALOG_SERVICE_3D_URL"
+    },
+    "dem": {
+      "url": "CATALOG_SERVICE_DEM_URL"
     }
   },
   "ingestionServices": {
@@ -46,6 +49,9 @@
     },
     "3d": {
       "url": "INGESTION_SERVICE_3D_URL"
+    },
+    "dem": {
+      "url": "INGESTION_SERVICE_DEM_URL"
     }
   },
   "jobServices": {

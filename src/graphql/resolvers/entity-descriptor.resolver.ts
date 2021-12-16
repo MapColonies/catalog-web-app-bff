@@ -5,6 +5,7 @@ import {
   IPropFieldConfigInfo,
   Pycsw3DCatalogRecord,
   PycswBestCatalogRecord,
+  PycswDEMCatalogRecord,
   PycswLayerCatalogRecord,
 } from '@map-colonies/mc-model-types';
 import { container } from 'tsyringe';
@@ -69,7 +70,7 @@ export class EntityDescriptorResolver {
   }
 
   private buildDescriptor(
-    recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswBestCatalogRecord
+    recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswDEMCatalogRecord | typeof PycswBestCatalogRecord
   ): EntityDescriptor {
     const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
 
@@ -99,6 +100,8 @@ export class EntityDescriptorResolver {
   }
 
   private getDescriptors(): EntityDescriptor[] {
-    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswBestCatalogRecord].map((recordType) => this.buildDescriptor(recordType));
+    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDEMCatalogRecord, PycswBestCatalogRecord].map((recordType) =>
+      this.buildDescriptor(recordType)
+    );
   }
 }
