@@ -126,4 +126,5 @@ export class Job {
   public isCleaned?: boolean;
 }
 
+const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' });
 const StatusRegister = registerEnumType(Status, { name: 'Status' });
