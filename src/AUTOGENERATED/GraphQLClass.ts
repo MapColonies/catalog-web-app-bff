@@ -239,7 +239,7 @@ export class BestRecordInput {
 }
 
 @InputType()
-export class LayerDEMRecordInput {
+export class LayerDemRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
     @Field({ nullable: false })
