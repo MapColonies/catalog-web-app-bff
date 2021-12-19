@@ -92,7 +92,7 @@ export class Job {
   @Field({ nullable: true })
   public productName?: string;
 
-  @Field({ nullable: true })
+  @Field((type) => ProductType, { nullable: true })
   public productType?: ProductType;
 
   @Field((type) => [Task], { nullable: false })
