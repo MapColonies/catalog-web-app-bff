@@ -100,7 +100,7 @@ export class RecordUpdatePartial extends RecordsEditableFields {
 }
 
 @InputType()
-export class IngestionDEMData {
+export class IngestionDemData {
   @Field({ nullable: false })
   public directory: string;
 
@@ -189,4 +189,4 @@ export class StringArray {
   public value: string[];
 }
 
-export type IngestionData = Ingestion3DData | IngestionRasterData;
+export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

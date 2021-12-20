@@ -7,7 +7,7 @@ import { CatalogManager } from '../../common/catalog-manager/catalog-manager';
 import { Services } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
 import { CSW } from '../../csw/csw';
-import { Ingestion3DData, IngestionDEMData, IngestionRasterData, RecordUpdatePartial, SearchOptions, StringArray } from '../inputTypes';
+import { Ingestion3DData, IngestionDemData, IngestionRasterData, RecordUpdatePartial, SearchOptions, StringArray } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -145,9 +145,9 @@ export class LayerMetadataMixedResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
-  public async startDEMIngestion(
+  public async startDemIngestion(
     @Arg('data')
-    data: IngestionDEMData
+    data: IngestionDemData
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
