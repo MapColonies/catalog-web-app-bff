@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ObjectType, Field, registerEnumType } from 'type-graphql';
 import { FieldCategory } from '@map-colonies/mc-model-types';
 import { GraphQLScalarType } from 'graphql';

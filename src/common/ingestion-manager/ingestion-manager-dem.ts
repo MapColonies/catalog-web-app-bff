@@ -10,6 +10,7 @@ export class IngestionManagerDem implements IIngestionManagerService {
     this.serviceURL = this.config.get('ingestionServices.dem.url');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async ingest(data: IngestionData): Promise<IngestionData> {
     return Promise.reject('Unimplemented service');
   }

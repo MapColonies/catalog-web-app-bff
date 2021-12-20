@@ -14,11 +14,13 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const res = await requestHandler(`${this.serviceURL}/records/${record.id}`, 'PUT', this.buildPayload(record));
     return record;
   }
 
   private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const payloadData: Record<string, any> = {};
     const editableFields = PycswLayerCatalogRecord.getFieldConfigs().filter((field) => field.isManuallyEditable === true);
 

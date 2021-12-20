@@ -7,6 +7,7 @@ export interface IUIDisplayAspect {
   icon?: string;
 }
 
+// eslint-disable-next-line
 export function updateDictionary(propName: string, type: any): Record<string, IUIDisplayAspect> {
   const dictionary: Record<string, IUIDisplayAspect> = {};
   // eslint-disable-next-line @typescript-eslint/ban-types

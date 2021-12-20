@@ -167,6 +167,7 @@ const pycsw3DCatalogRecordAspects = {
   keywords: {
     label: 'field-names.3d.keywords',
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as Record<string, any>;
 
 export const pycsw3DCatalogRecordUIAspects = pycsw3DCatalogRecordAspects;
