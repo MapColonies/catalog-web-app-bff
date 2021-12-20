@@ -3,7 +3,7 @@ import {
   PycswLayerCatalogRecord,
   PycswBestCatalogRecord,
   Pycsw3DCatalogRecord,
-  PycswDEMCatalogRecord,
+  PycswDemCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
   ProductType,
@@ -52,7 +52,7 @@ export class CSW {
     this.cswClients.DEM = {
       instance: new CswClientWrapper(
         'mc:MCDEMRecord',
-        PycswDEMCatalogRecord.getPyCSWMappings(),
+        PycswDemCatalogRecord.getPyCSWMappings(),
         'http://schema.mapcolonies.com/dem',
         this.config.get('csw.dem.url')
       ),

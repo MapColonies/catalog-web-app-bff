@@ -239,7 +239,7 @@ export class BestRecordInput {
 }
 
 @InputType()
-export class LayerDEMRecordInput {
+export class LayerDemRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
     @Field({ nullable: false })
@@ -541,7 +541,7 @@ export class BestRecord {
 }
 
 @ObjectType()
-export class LayerDEMRecord {
+export class LayerDemRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
     @Field({ nullable: false })
@@ -632,8 +632,8 @@ export class Layer3DRecordResolver {
 export class BestRecordResolver {
 }
 
-@Resolver(LayerDEMRecord)
-export class LayerDEMRecordResolver {
+@Resolver(LayerDemRecord)
+export class LayerDemRecordResolver {
 }
 
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});

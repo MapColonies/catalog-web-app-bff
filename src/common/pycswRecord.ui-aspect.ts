@@ -7,6 +7,6 @@ import { pycswLayerCatalogRecordUIAspects } from './ui-aspects/record-raster-fie
 export const pycswCatalogRecordUIAspects = {
   PycswLayerCatalogRecord: pycswLayerCatalogRecordUIAspects,
   Pycsw3DCatalogRecord: pycsw3DCatalogRecordUIAspects,
-  PycswDEMCatalogRecord: pycswDEMCatalogRecordUIAspects,
+  PycswDemCatalogRecord: pycswDEMCatalogRecordUIAspects,
   PycswBestCatalogRecord: pycswBestCatalogRecordUIAspects,
 } as Record<string, any>;
