@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
 import { RecordType, SensorType } from '@map-colonies/mc-model-types';
 import { GraphQLScalarType } from 'graphql';
