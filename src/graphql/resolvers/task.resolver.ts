@@ -4,11 +4,11 @@ import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg } from 'type-graphql';
 import { transform, mapKeys, mapValues } from 'lodash';
-import { MOCK_TASKS_DATA } from './MOCK_TASKS_DATA';
 import { TasksSearchParams } from '../inputTypes';
 import { Task } from '../job';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
+import { MOCK_TASKS_DATA } from './MOCK_TASKS_DATA';
 
 @Resolver()
 export class TaskResolver {
