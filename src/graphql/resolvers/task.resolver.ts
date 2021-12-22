@@ -2,12 +2,12 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { transform, mapKeys, mapValues, get } from 'lodash';
+import { Resolver, Query, Arg } from 'type-graphql';
+import { transform, mapKeys, mapValues } from 'lodash';
+import { TasksSearchParams } from '../inputTypes';
+import { Task } from '../job';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
-import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../inputTypes';
-import { Job, Task } from '../job';
 import { MOCK_TASKS_DATA } from './MOCK_TASKS_DATA';
 
 @Resolver()
@@ -30,27 +30,41 @@ export class TaskResolver {
   ): Promise<Task[]> {
     try {
       const data = await Promise.resolve(this.getTasks(params));
+      return this.transformRecordsToEntity(data);
       // const data = await Promise.resolve(MOCK_TASKS_DATA);
-      //   return this.transformRecordsToEntity(data);
-      return data;
+      // return data;
     } catch (err) {
       this.logger.error(err as string);
       throw err;
     }
   }
 
-  private async getTasks(params: TasksSearchParams): Promise<Job[]> {
-    const res = await requestHandler(`${this.serviceURL}/tasks`, 'GET', {
-      data: {
-        ...params,
-      },
-    });
+  private async getTasks(params: TasksSearchParams): Promise<Task[]> {
+    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {});
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
   }
 
-  // TODO: Tasks grouping process here (?)
-  //   private readonly transformRecordsToEntity = (cswArray: Job[]): Job[] => {
-  //     return [{}] as Job[];
-  //   };
+  private readonly transformRecordsToEntity = (cswArray: Task[]): Task[] => {
+    const taskParsedArray = transform(
+      cswArray,
+      (result: Record<string, unknown>[], cswValue) => {
+        const parsedKeys = mapKeys(cswValue, (value, key) => key);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const finalParsed = mapValues(parsedKeys, (val, key, obj) => {
+          switch (key) {
+            case 'created':
+            case 'updated':
+              return new Date(val as string);
+            default:
+              return val;
+          }
+        });
+        result.push(finalParsed);
+      },
+      []
+    );
+    //@ts-ignore
+    return taskParsedArray;
+  };
 }

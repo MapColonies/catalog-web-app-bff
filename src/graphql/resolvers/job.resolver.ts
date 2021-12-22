@@ -40,6 +40,7 @@ export class JobResolver {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateJob(
     @Arg('id')
@@ -48,6 +49,7 @@ export class JobResolver {
     data: JobUpdateData
   ): Promise<string> {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await this.updateJobHandler(id, data);
       return 'ok';
     } catch (err) {
@@ -68,6 +70,7 @@ export class JobResolver {
   }
 
   private async updateJobHandler(id: string, params: JobUpdateData): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const res = await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
       data: {
         ...params,
