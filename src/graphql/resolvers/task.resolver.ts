@@ -80,7 +80,7 @@ export class TaskResolver {
       }
 
       dates.minDate = moment.min(dates.createdDates as unknown as moment.Moment[]);
-      dates.maxDate = moment.min(dates.updatedDates as unknown as moment.Moment[]);
+      dates.maxDate = moment.max(dates.updatedDates as unknown as moment.Moment[]);
 
       const groupRepresentor: TasksGroup = taskGroup[0];
 
