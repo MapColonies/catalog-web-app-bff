@@ -12,7 +12,7 @@ export enum Status {
   Failed = 'Failed',
 }
 
-@ObjectType()
+// @ObjectType()
 export class Task {
   @Field({ nullable: false })
   public id: string;

@@ -3,12 +3,12 @@ import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
-import { transform, mapKeys, mapValues, get } from 'lodash';
+import { transform, mapKeys, mapValues } from 'lodash';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
 import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
-import { MOCK_JOBS_DATA } from './MOCK_JOBS_DATA';
+import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
 
 @Resolver()
 export class JobResolver {
