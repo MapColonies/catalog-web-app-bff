@@ -25,6 +25,9 @@ const pycsw3DCatalogRecordAspects = {
     label: 'field-names.3d.creationDate',
     fullWidth: true,
   },
+  updateDate: {
+    label: 'field-names.3d.updateDate',
+  },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
   },
