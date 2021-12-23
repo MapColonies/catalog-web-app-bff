@@ -110,6 +110,7 @@ const pycswDemCatalogRecordAspects = {
   },
   'link.name': {
     label: 'field-names.dem.link.name',
+    isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
