@@ -310,6 +310,48 @@ export class LayerDemRecordInput {
     public links?: LinkInput[];
 }
 
+@InputType()
+export class VectorBestRecordInput {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public ingestionDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: false })
+    public srsName: string;
+    @Field({ nullable: true })
+    public scale?: string;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [LinkInput], { nullable: true })
+    public links?: LinkInput[];
+}
+
 @ObjectType()
 export class Link {
     @Field({ nullable: true })
@@ -612,6 +654,48 @@ export class LayerDemRecord {
     public links?: Link[];
 }
 
+@ObjectType()
+export class VectorBestRecord {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public ingestionDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: true })
+    public region?: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: false })
+    public srsName: string;
+    @Field({ nullable: true })
+    public scale?: string;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [Link], { nullable: true })
+    public links?: Link[];
+}
+
 @Resolver(Link)
 export class LinkResolver {
 }
@@ -634,6 +718,10 @@ export class BestRecordResolver {
 
 @Resolver(LayerDemRecord)
 export class LayerDemRecordResolver {
+}
+
+@Resolver(VectorBestRecord)
+export class VectorBestRecordResolver {
 }
 
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});
