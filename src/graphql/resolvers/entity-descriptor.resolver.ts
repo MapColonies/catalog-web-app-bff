@@ -7,6 +7,7 @@ import {
   PycswBestCatalogRecord,
   PycswDemCatalogRecord,
   PycswLayerCatalogRecord,
+  PycswVectorBestCatalogRecord,
 } from '@map-colonies/mc-model-types';
 import { container } from 'tsyringe';
 import { Resolver, Query } from 'type-graphql';
@@ -70,7 +71,12 @@ export class EntityDescriptorResolver {
   }
 
   private buildDescriptor(
-    recordType: typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswDemCatalogRecord | typeof PycswBestCatalogRecord
+    recordType:
+      | typeof PycswLayerCatalogRecord
+      | typeof Pycsw3DCatalogRecord
+      | typeof PycswDemCatalogRecord
+      | typeof PycswBestCatalogRecord
+      | typeof PycswVectorBestCatalogRecord
   ): EntityDescriptor {
     const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
 
@@ -100,8 +106,8 @@ export class EntityDescriptorResolver {
   }
 
   private getDescriptors(): EntityDescriptor[] {
-    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswBestCatalogRecord].map((recordType) =>
-      this.buildDescriptor(recordType)
+    return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswBestCatalogRecord, PycswVectorBestCatalogRecord].map(
+      (recordType) => this.buildDescriptor(recordType)
     );
   }
 }
