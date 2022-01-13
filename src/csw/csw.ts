@@ -4,6 +4,7 @@ import {
   PycswBestCatalogRecord,
   Pycsw3DCatalogRecord,
   PycswDemCatalogRecord,
+  PycswVectorBestCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
   ProductType,
@@ -32,7 +33,11 @@ export class CSW {
     this.cswClients.RASTER = {
       instance: new CswClientWrapper(
         'mc:MCRasterRecord',
-        [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(PycswBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
+        [
+          ...PycswLayerCatalogRecord.getPyCSWMappings(),
+          ...(PycswBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[]),
+          ...(PycswVectorBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[]),
+        ],
         'http://schema.mapcolonies.com/raster',
         this.config.get('csw.raster.url')
       ),
@@ -117,6 +122,7 @@ export class CSW {
 
     const data = await Promise.all(getRecords);
     // console.log('\n\n******** Response: ********\n', JSON.stringify(data.flat()), '\n\n\n\n');
+
     return data.flat();
   }
 
