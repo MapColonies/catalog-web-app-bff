@@ -58,6 +58,20 @@ export class JobResolver {
     }
   }
 
+  @Mutation((type) => String)
+  public async jobRetry(
+    @Arg('id')
+    id: string
+  ): Promise<string> {
+    try {
+      const response = await Promise.resolve(`Ok! Mutate job retry! Job Id: ${id}`);
+      return response;
+    } catch (err) {
+      this.logger.error(err as string);
+      throw err;
+    }
+  }
+
   private async getJobs(params?: JobsSearchParams): Promise<Job[]> {
     const res = await requestHandler(`${this.serviceURL}/jobs`, 'GET', {
       data: {
