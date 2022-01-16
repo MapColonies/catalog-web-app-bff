@@ -39,6 +39,9 @@
     },
     "3d": {
       "url": "http://localhost:8000/catalog-service-3d"
+    },
+    "dem": {
+      "url": "http://localhost:8000/catalog-service-dem"
     }
   },
   "ingestionServices": {
@@ -47,6 +50,9 @@
     },
     "3d": {
       "url": "http://localhost:8000/ingestion-service-3d"
+    },
+    "dem": {
+      "url": "http://localhost:8000/ingestion-service-dem"
     }
   },
   "jobServices": {
@@ -54,5 +60,5 @@
       "url": "http://localhost:8000/job-manager-dev-job-manager"
     }
   },
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D"
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }
