@@ -10,6 +10,7 @@ export enum Status {
   InProgress = 'In-Progress',
   Completed = 'Completed',
   Failed = 'Failed',
+  Expired = 'Expired',
 }
 
 // @ObjectType()
