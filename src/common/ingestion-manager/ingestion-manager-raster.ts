@@ -14,7 +14,7 @@ export class IngestionManagerRaster implements IIngestionManagerService {
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const res = await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data));
+    await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data));
     return data;
   }
 

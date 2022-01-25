@@ -105,7 +105,7 @@ export class LayerMetadataMixedResolver {
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newRecord = await this.catalogManager.updateMetadata(data);
+      await this.catalogManager.updateMetadata(data);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -121,7 +121,7 @@ export class LayerMetadataMixedResolver {
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newRecord = await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -137,7 +137,7 @@ export class LayerMetadataMixedResolver {
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newRecord = await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -153,7 +153,7 @@ export class LayerMetadataMixedResolver {
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newRecord = await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data);
       return 'ok';
     } catch (err) {
       this.logger.error(err);

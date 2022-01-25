@@ -8,7 +8,7 @@ import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
 import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
-import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
+//import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
 
 @Resolver()
 export class JobResolver {
@@ -50,7 +50,7 @@ export class JobResolver {
   ): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const response = await this.updateJobHandler(id, data);
+      await this.updateJobHandler(id, data);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
@@ -85,7 +85,7 @@ export class JobResolver {
 
   private async updateJobHandler(id: string, params: JobUpdateData): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const res = await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
+    await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
       data: {
         ...params,
         shouldReturnTasks: false,

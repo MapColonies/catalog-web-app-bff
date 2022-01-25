@@ -124,5 +124,5 @@ export class Job {
   public isCleaned?: boolean;
 }
 
-const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' });
-const StatusRegister = registerEnumType(Status, { name: 'Status' });
+const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' }); // lgtm [js/unused-local-variable]
+const StatusRegister = registerEnumType(Status, { name: 'Status' }); // lgtm [js/unused-local-variable]

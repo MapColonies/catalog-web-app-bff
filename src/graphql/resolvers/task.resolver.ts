@@ -8,8 +8,8 @@ import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
 import { TasksSearchParams } from '../inputTypes';
 import { TasksGroup } from '../tasksGroup';
-import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
 import { Task } from '../job';
+//import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
 
 @Resolver()
 export class TaskResolver {
