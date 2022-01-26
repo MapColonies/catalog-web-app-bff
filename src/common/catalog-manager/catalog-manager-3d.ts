@@ -13,7 +13,6 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await requestHandler(`${this.serviceURL}/metadata/${record.id}`, 'PATCH', this.buildPayload(record));
     return record;
   }

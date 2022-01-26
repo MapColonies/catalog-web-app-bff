@@ -14,7 +14,6 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await requestHandler(`${this.serviceURL}/records/${record.id}`, 'PUT', this.buildPayload(record));
     return record;
   }
@@ -24,7 +23,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     const payloadData: Record<string, any> = {};
     const editableFields = PycswLayerCatalogRecord.getFieldConfigs().filter((field) => field.isManuallyEditable === true);
 
-    // mapping one to one can be performed becuase of payload properties derived from mc-models YAML(managed)
+    // mapping one to one can be performed because of payload properties derived from mc-models YAML(managed)
     editableFields.forEach((field) => {
       payloadData[field.prop] = data[field.prop as keyof RecordUpdatePartial];
     });

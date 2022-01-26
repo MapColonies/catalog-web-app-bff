@@ -49,7 +49,6 @@ export class JobResolver {
     data: JobUpdateData
   ): Promise<string> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       await this.updateJobHandler(id, data);
       return 'ok';
     } catch (err) {
@@ -84,7 +83,6 @@ export class JobResolver {
   }
 
   private async updateJobHandler(id: string, params: JobUpdateData): Promise<string> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
       data: {
         ...params,
