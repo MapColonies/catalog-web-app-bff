@@ -195,4 +195,49 @@ export class StringArray {
   public value: string[];
 }
 
+@InputType()
+export class ExplorerGetDirectory {
+  @Field((type) => String, { nullable: false })
+  public pathSuffix!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
+export class ExplorerGetDirectoryById {
+  @Field((type) => String, { nullable: false })
+  public id!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
+export class ExplorerGetFile {
+  @Field((type) => String, { nullable: false })
+  public pathSuffix!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
+export class ExplorerGetFileById {
+  @Field((type) => String, { nullable: false })
+  public id!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
+export class ExplorerGetDecryptedId {
+  @Field((type) => String, { nullable: false })
+  public id!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
