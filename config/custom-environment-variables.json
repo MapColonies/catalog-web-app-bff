@@ -59,5 +59,13 @@
       "url": "JOB_SERVICE_RASTER_URL"
     }
   },
+  "storageExplorerServices": {
+    "raster": {
+      "url": "STORAGE_EXPLORER_RASTER_URL"
+    },
+    "3d": {
+      "url": "STORAGE_EXPLORER_3D_URL"
+    }
+  },
   "servedEntityTypes": "SERVED_ENTITY_TYPES"
 }
