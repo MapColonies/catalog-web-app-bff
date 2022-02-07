@@ -15,19 +15,22 @@ export class File {
   @Field((type) => String, { nullable: true })
   public ext?: string;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Boolean, { nullable: true })
   public isDir?: boolean;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Boolean, { nullable: true })
   public isHidden?: boolean;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Number, { nullable: true })
   public size?: number;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Date, { nullable: true })
   public modDate?: Date | string;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => [String], { defaultValue: [] })
+  public childrenIds?: string[];
+
+  @Field((type) => Number, { defaultValue: 0 })
   public childrenCount?: number;
 }
 

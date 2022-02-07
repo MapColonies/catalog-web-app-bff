@@ -65,10 +65,10 @@
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "http://localhost:3000/raster/explorer"
+      "url": "NOT_AVAILABLE"
     },
     "3d": {
-      "url": "http://localhost:3000/3d/explorer"
+      "url": "NOT_AVAILABLE"
     }
   },
 

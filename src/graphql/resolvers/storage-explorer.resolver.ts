@@ -23,7 +23,6 @@ export class StorageExplorerResolver {
   public async getDirectory(@Arg('data') data: ExplorerGetDirectory): Promise<File[]> {
     const { pathSuffix, type } = data;
     const dirContent = await this.storageExplorerManager.getDirectory({ pathSuffix, type });
-    console.log(dirContent);
 
     return dirContent;
   }
