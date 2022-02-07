@@ -4,13 +4,7 @@ import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
-import {
-  ExplorerGetDecryptedId,
-  ExplorerGetDirectory,
-  ExplorerGetDirectoryById,
-  ExplorerGetFile,
-  ExplorerGetFileById,
-} from '../../graphql/inputTypes';
+import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
 import { IFile, IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
@@ -26,35 +20,35 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     this.explorerServices['3D'] = new StorageExplorerManager3D(this.config, this.logger);
   }
 
-  public async getDirectory(data: ExplorerGetDirectory): Promise<IFile[]> {
+  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<IFile[]> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data);
 
     return directoryContent;
   }
 
-  public async getDirectoryById(data: ExplorerGetDirectoryById): Promise<IFile[]> {
+  public async getDirectoryById(data: ExplorerGetById): Promise<IFile[]> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data);
 
     return directoryContent;
   }
 
-  public async getFile(data: ExplorerGetFile): Promise<{ data: Record<any, any> }> {
+  public async getFile(data: ExplorerGetByPathSuffix): Promise<{ data: Record<string, unknown> }> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
     return fileContent;
   }
 
-  public async getFileById(data: ExplorerGetFileById): Promise<{ data: Record<any, any> }> {
+  public async getFileById(data: ExplorerGetById): Promise<{ data: Record<string, unknown> }> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data);
 
     return fileContent;
   }
 
-  public async getDecryptedId(data: ExplorerGetDecryptedId): Promise<{ data: string }> {
+  public async getDecryptedId(data: ExplorerGetById): Promise<{ data: string }> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data);
 

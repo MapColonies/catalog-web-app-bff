@@ -37,7 +37,7 @@ export class File {
 @ObjectType()
 export class FileJsonResponse {
   @Field((type) => GraphQLJSON)
-  public data: Record<any, any>;
+  public data: Record<string, unknown>;
 }
 
 @ObjectType()

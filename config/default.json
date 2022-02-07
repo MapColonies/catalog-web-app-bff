@@ -24,54 +24,49 @@
   },
   "csw": {
     "raster": {
-      "url_raster": "http://catalog-dev-raster-catalog-pycsw-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw",
-      "url_qa-sync": "http://catalog-qa-sync-raster-catalog-pycsw-route-raster-qa.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw",
-      "url": "http://catalog-qa-raster-catalog-pycsw-route-raster.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
     },
     "3d": {
-      "url": "http://pycsw-pycsw-web-route-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
     },
     "dem": {
-      "url": "http://dem-dev-catalog-development-dem-catalog-pycsw-route-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://catalog-dev-raster-catalog-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
+      "url": "http://localhost:8000/catalog-service-raster"
     },
     "3d": {
-      "url": "http://ingestion-stack-3d-ingestion-catalog-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
+      "url": "http://localhost:8000/catalog-service-3d"
     },
     "dem": {
-      "url": "NOT_AVAILABLE"
+      "url": "http://localhost:8000/catalog-service-dem"
     }
   },
   "ingestionServices": {
     "raster": {
-      "url": "https://discrete-ingestion-dev-overseer-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
+      "url": "http://localhost:8000/ingestion-service-raster"
     },
     "3d": {
-      "url": "http://ingestion-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io"
+      "url": "http://localhost:8000/ingestion-service-3d"
     },
     "dem": {
-      "url": "NOT_AVAILABLE"
+      "url": "http://localhost:8000/ingestion-service-dem"
     }
   },
   "jobServices": {
     "raster": {
-      "url_old": "http://job-manager-dev-job-manager:80",
-      "url": "https://job-manager-qa-job-manager-route-raster.apps.v0h0bdx6.eastus.aroapp.io"
+      "url": "http://localhost:8000/job-manager-dev-job-manager"
     }
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "NOT_AVAILABLE"
+      "url": "http://localhost:8000/storage-explorer-raster"
     },
     "3d": {
-      "url": "NOT_AVAILABLE"
+      "url": "http://localhost:8000/storage-explorer-3d"
     }
   },
-
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
-  "servedEntityTypes_old": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }

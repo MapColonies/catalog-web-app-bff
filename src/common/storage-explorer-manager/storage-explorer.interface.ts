@@ -1,17 +1,11 @@
-import {
-  ExplorerGetDecryptedId,
-  ExplorerGetDirectory,
-  ExplorerGetDirectoryById,
-  ExplorerGetFile,
-  ExplorerGetFileById,
-} from '../../graphql/inputTypes';
+import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
 
 export interface IStorageExplorerManagerService {
-  getDirectory: (data: ExplorerGetDirectory) => Promise<IFile[]>;
-  getDirectoryById: (data: ExplorerGetDirectoryById) => Promise<IFile[]>;
-  getFile: (data: ExplorerGetFile) => Promise<{ data: Record<any, any> }>;
-  getFileById: (data: ExplorerGetFileById) => Promise<{ data: Record<any, any> }>;
-  getDecryptedId: (data: ExplorerGetDecryptedId) => Promise<{ data: string }>;
+  getDirectory: (data: ExplorerGetByPathSuffix) => Promise<IFile[]>;
+  getDirectoryById: (data: ExplorerGetById) => Promise<IFile[]>;
+  getFile: (data: ExplorerGetByPathSuffix) => Promise<{ data: Record<string, unknown> }>;
+  getFileById: (data: ExplorerGetById) => Promise<{ data: Record<string, unknown> }>;
+  getDecryptedId: (data: ExplorerGetById) => Promise<{ data: string }>;
 }
 
 export interface IFile {

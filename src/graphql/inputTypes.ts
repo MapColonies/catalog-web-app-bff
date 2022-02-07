@@ -194,18 +194,8 @@ export class StringArray {
   @Field((type) => [String])
   public value: string[];
 }
-
 @InputType()
-export class ExplorerGetDirectory {
-  @Field((type) => String, { nullable: false })
-  public pathSuffix!: string;
-
-  @Field((type) => RecordType, { nullable: false })
-  public type!: RecordType;
-}
-
-@InputType()
-export class ExplorerGetDirectoryById {
+export class ExplorerGetById {
   @Field((type) => String, { nullable: false })
   public id!: string;
 
@@ -214,25 +204,7 @@ export class ExplorerGetDirectoryById {
 }
 
 @InputType()
-export class ExplorerGetFile {
-  @Field((type) => String, { nullable: false })
-  public pathSuffix!: string;
-
-  @Field((type) => RecordType, { nullable: false })
-  public type!: RecordType;
-}
-
-@InputType()
-export class ExplorerGetFileById {
-  @Field((type) => String, { nullable: false })
-  public id!: string;
-
-  @Field((type) => RecordType, { nullable: false })
-  public type!: RecordType;
-}
-
-@InputType()
-export class ExplorerGetDecryptedId {
+export class ExplorerGetByPathSuffix {
   @Field((type) => String, { nullable: false })
   public id!: string;
 
