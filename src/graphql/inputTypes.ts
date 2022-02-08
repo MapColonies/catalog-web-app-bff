@@ -206,7 +206,7 @@ export class ExplorerGetById {
 @InputType()
 export class ExplorerGetByPathSuffix {
   @Field((type) => String, { nullable: false })
-  public id!: string;
+  public pathSuffix!: string;
 
   @Field((type) => RecordType, { nullable: false })
   public type!: RecordType;

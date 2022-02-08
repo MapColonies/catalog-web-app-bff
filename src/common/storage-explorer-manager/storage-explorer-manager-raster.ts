@@ -3,7 +3,8 @@ import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
 import RASTER_MOCK_DATA, { MOCK_FILE } from '../../graphql/MOCKS/storage-explorer/RASTER/MOCK_DATA';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
-import { IFile, IFileMap, IStorageExplorerManagerService } from './storage-explorer.interface';
+import { File } from '../../graphql/storage-explorer';
+import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 export class StorageExplorerManagerRaster implements IStorageExplorerManagerService {
   private readonly serviceURL: string = '';
@@ -12,25 +13,25 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     this.serviceURL = this.config.get('storageExplorerServices.raster.url');
   }
 
-  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<IFile[]> {
+  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
     // REAL LOGIC
     // const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
-    //   .then((res) => (res.data as IFileMap<IFile>).data)
+    //   .then((res) => res.data as File[])
     //   .then((files) => {
-    //     return Object.values(files) as IFile[];
+    //     return Object.values(files);
     //   });
 
     // return res;
 
     // MOCK DATA
-    return Promise.resolve(Object.values(RASTER_MOCK_DATA) as IFile[]);
+    return Promise.resolve(Object.values(RASTER_MOCK_DATA));
   }
 
-  public async getDirectoryById(data: ExplorerGetById): Promise<IFile[]> {
+  public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
     const res = await requestHandler(`${this.serviceURL}/directorybyid?id=${data.id}`, 'GET', {})
-      .then((res) => (res.data as IFileMap<IFile>).data)
+      .then((res) => res.data as File[])
       .then((files) => {
-        return Object.values(files) as IFile[];
+        return Object.values(files);
       });
 
     return res;
@@ -38,9 +39,8 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
   public async getFile(data: ExplorerGetByPathSuffix): Promise<{ data: Record<string, unknown> }> {
     // REAL LOGIC
-    // const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {}).then(
-    //   (res) => res.data as { data: Record<string, unknown> }
-    // );
+    // const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {})
+    // .then( (res) => res.data as { data: Record<string, unknown> });
 
     // return { data: res };
 

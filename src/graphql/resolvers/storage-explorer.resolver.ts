@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 import { Resolver, Query, Arg } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
-import { ExplorerGetDecryptedId, ExplorerGetDirectory, ExplorerGetDirectoryById, ExplorerGetFile, ExplorerGetFileById } from '../inputTypes';
+import { ExplorerGetById, ExplorerGetByPathSuffix } from '../inputTypes';
 import { DecryptedId, File, FileJsonResponse } from '../storage-explorer';
 
 @Resolver()
@@ -20,7 +20,7 @@ export class StorageExplorerResolver {
   }
 
   @Query((type) => [File])
-  public async getDirectory(@Arg('data') data: ExplorerGetDirectory): Promise<File[]> {
+  public async getDirectory(@Arg('data') data: ExplorerGetByPathSuffix): Promise<File[]> {
     const { pathSuffix, type } = data;
     const dirContent = await this.storageExplorerManager.getDirectory({ pathSuffix, type });
 
@@ -28,7 +28,7 @@ export class StorageExplorerResolver {
   }
 
   @Query((type) => [File])
-  public async getDirectoryById(@Arg('data') data: ExplorerGetDirectoryById): Promise<File[]> {
+  public async getDirectoryById(@Arg('data') data: ExplorerGetById): Promise<File[]> {
     const { id, type } = data;
     const dirContent = await this.storageExplorerManager.getDirectoryById({ id, type });
 
@@ -36,14 +36,14 @@ export class StorageExplorerResolver {
   }
 
   @Query((type) => FileJsonResponse)
-  public async getFile(@Arg('data') data: ExplorerGetFile): Promise<FileJsonResponse> {
+  public async getFile(@Arg('data') data: ExplorerGetByPathSuffix): Promise<FileJsonResponse> {
     const { pathSuffix, type } = data;
     const fileContent = await this.storageExplorerManager.getFile({ pathSuffix, type });
 
     return fileContent;
   }
   @Query((type) => FileJsonResponse)
-  public async getFileById(@Arg('data') data: ExplorerGetFileById): Promise<FileJsonResponse> {
+  public async getFileById(@Arg('data') data: ExplorerGetById): Promise<FileJsonResponse> {
     const { id, type } = data;
     const fileContent = await this.storageExplorerManager.getFileById({ id, type });
 
@@ -51,7 +51,7 @@ export class StorageExplorerResolver {
   }
 
   @Query((type) => DecryptedId)
-  public async getDecryptedId(@Arg('data') data: ExplorerGetDecryptedId): Promise<DecryptedId> {
+  public async getDecryptedId(@Arg('data') data: ExplorerGetById): Promise<DecryptedId> {
     const { id, type } = data;
     const decryptedId = await this.storageExplorerManager.getDecryptedId({ id, type });
 

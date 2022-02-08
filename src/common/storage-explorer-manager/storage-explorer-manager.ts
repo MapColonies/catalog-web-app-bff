@@ -5,7 +5,8 @@ import { Services } from '../constants';
 import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
-import { IFile, IStorageExplorerManagerService } from './storage-explorer.interface';
+import { File } from '../../graphql/storage-explorer';
+import { IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
 
@@ -20,14 +21,14 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     this.explorerServices['3D'] = new StorageExplorerManager3D(this.config, this.logger);
   }
 
-  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<IFile[]> {
+  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data);
 
     return directoryContent;
   }
 
-  public async getDirectoryById(data: ExplorerGetById): Promise<IFile[]> {
+  public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data);
 
