@@ -4,6 +4,7 @@ import { IConfig } from '../interfaces';
 import RASTER_MOCK_DATA, { MOCK_FILE } from '../../graphql/MOCKS/storage-explorer/RASTER/MOCK_DATA';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
+import searchMockData from '../../graphql/MOCKS/storage-explorer/mock_utils';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 export class StorageExplorerManagerRaster implements IStorageExplorerManagerService {
@@ -24,7 +25,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // return res;
 
     // MOCK DATA
-    return Promise.resolve(Object.values(RASTER_MOCK_DATA));
+    return Promise.resolve(searchMockData(data.pathSuffix, RASTER_MOCK_DATA));
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {

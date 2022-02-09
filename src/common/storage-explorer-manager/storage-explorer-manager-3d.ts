@@ -4,6 +4,7 @@ import { File } from '../../graphql/storage-explorer';
 import { ExplorerGetByPathSuffix, ExplorerGetById } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
+import searchMockData from '../../graphql/MOCKS/storage-explorer/mock_utils';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 export class StorageExplorerManager3D implements IStorageExplorerManagerService {
@@ -24,7 +25,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
     // return res;
 
     // MOCK DATA
-    return Promise.resolve(Object.values(MOCK_3D_DATA));
+    return Promise.resolve(searchMockData(data.pathSuffix, MOCK_3D_DATA));
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
