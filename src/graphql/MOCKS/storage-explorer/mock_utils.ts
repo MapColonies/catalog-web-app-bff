@@ -2,7 +2,7 @@ import { File } from '../../storage-explorer';
 
 export default function searchMockData(path: string, mockData: Record<string, File>): File[] {
   const isRoot = path === '/';
-  const rootDir = Object.values(mockData).filter((file) => file.name.startsWith('\\\\'));
+  const rootDir = Object.values(mockData).filter((file) => file.name.startsWith('\\'));
 
   if (isRoot) {
     return rootDir.map((file) => {

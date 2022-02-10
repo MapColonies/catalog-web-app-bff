@@ -6,7 +6,8 @@ import { Resolver, Query, Arg } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../inputTypes';
-import { DecryptedId, File, FileJsonResponse } from '../storage-explorer';
+import { DecryptedId, File } from '../storage-explorer';
+import { LayerMetadataMixedUnion } from './csw.resolver';
 
 @Resolver()
 export class StorageExplorerResolver {
@@ -35,15 +36,15 @@ export class StorageExplorerResolver {
     return dirContent;
   }
 
-  @Query((type) => FileJsonResponse)
-  public async getFile(@Arg('data') data: ExplorerGetByPathSuffix): Promise<FileJsonResponse> {
+  @Query((type) => LayerMetadataMixedUnion)
+  public async getFile(@Arg('data') data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
     const { pathSuffix, type } = data;
     const fileContent = await this.storageExplorerManager.getFile({ pathSuffix, type });
 
     return fileContent;
   }
-  @Query((type) => FileJsonResponse)
-  public async getFileById(@Arg('data') data: ExplorerGetById): Promise<FileJsonResponse> {
+  @Query((type) => LayerMetadataMixedUnion)
+  public async getFileById(@Arg('data') data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
     const { id, type } = data;
     const fileContent = await this.storageExplorerManager.getFileById({ id, type });
 

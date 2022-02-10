@@ -11,7 +11,7 @@ import { Ingestion3DData, IngestionDemData, IngestionRasterData, RecordUpdatePar
 import { StringArrayObjectType } from '../simpleTypes';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const LayerMetadataMixedUnion = createUnionType({
+export const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, BestRecord, LayerDemRecord, VectorBestRecord] as const,
   resolveType: (value) => {

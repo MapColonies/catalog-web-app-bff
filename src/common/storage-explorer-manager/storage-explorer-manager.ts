@@ -6,6 +6,7 @@ import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
+import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
@@ -35,14 +36,14 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     return directoryContent;
   }
 
-  public async getFile(data: ExplorerGetByPathSuffix): Promise<{ data: Record<string, unknown> }> {
+  public async getFile(data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
     return fileContent;
   }
 
-  public async getFileById(data: ExplorerGetById): Promise<{ data: Record<string, unknown> }> {
+  public async getFileById(data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data);
 

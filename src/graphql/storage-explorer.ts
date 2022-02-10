@@ -32,12 +32,6 @@ export class File {
 }
 
 @ObjectType()
-export class FileJsonResponse {
-  @Field((type) => GraphQLJSON)
-  public data: Record<string, unknown>;
-}
-
-@ObjectType()
 export class DecryptedId {
   @Field((type) => String)
   public data: string;
