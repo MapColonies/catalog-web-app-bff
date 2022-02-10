@@ -14,6 +14,9 @@ export class File {
   @Field((type) => Boolean, { nullable: true })
   public isDir!: boolean;
 
+  @Field((type) => Boolean, { nullable: true })
+  public selectable?: boolean;
+
   @Field((type) => Date, { nullable: true })
   public modDate!: Date | string;
 

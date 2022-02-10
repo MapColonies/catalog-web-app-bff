@@ -8,7 +8,7 @@ export default function searchMockData(path: string, mockData: Record<string, Fi
     return rootDir.map((file) => {
       if ('childrenCount' in file && 'childrenIds' in file) {
         const { childrenCount, childrenIds, ...restFile } = file;
-        return restFile;
+        return { ...restFile, selectable: !restFile.isDir };
       }
     }) as File[];
   }
@@ -22,10 +22,10 @@ export default function searchMockData(path: string, mockData: Record<string, Fi
 
   if (typeof selected !== 'undefined' && 'childrenIds' in selected) {
     const childs = selected.childrenIds?.map((child) => {
-      return Object.values(mockData).find((file) => file.id === child);
+      return { ...Object.values(mockData).find((file) => file.id === child) };
     }) as File[];
 
-    return childs;
+    return childs.map((child) => ({ ...child, selectable: !child.isDir }));
   }
 
   return [] as File[];
