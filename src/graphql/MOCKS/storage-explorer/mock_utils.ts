@@ -25,7 +25,7 @@ export default function searchMockData(path: string, mockData: Record<string, Fi
       return { ...Object.values(mockData).find((file) => file.id === child) };
     }) as File[];
 
-    return childs.map((child) => ({ ...child, selectable: !child.isDir }));
+    return childs;
   }
 
   return [] as File[];

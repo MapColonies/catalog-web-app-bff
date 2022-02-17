@@ -20,13 +20,15 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
     //   .then((res) => res.data as File[])
     //   .then((files) => {
-    //     return Object.values(files);
+    //     return Object.values(files.map((file)=> ({...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
     //   });
 
     // return res;
 
     // MOCK DATA
-    return Promise.resolve(searchMockData(data.pathSuffix, RASTER_MOCK_DATA));
+    return Promise.resolve(searchMockData(data.pathSuffix, RASTER_MOCK_DATA)).then((data) => {
+      return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
+    });
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
@@ -48,6 +50,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     // MOCK DATA
 
+    //@ts-ignore
     return Promise.resolve(MOCK_FILE);
   }
 

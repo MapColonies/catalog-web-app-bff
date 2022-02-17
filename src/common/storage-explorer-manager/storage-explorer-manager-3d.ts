@@ -20,13 +20,15 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
     // const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
     //   .then((res) => res.data as File[])
     //   .then((files) => {
-    //     return Object.values(files);
+    //     return Object.values(files.map((file)=> ({...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
     //   });
 
     // return res;
 
     // MOCK DATA
-    return Promise.resolve(searchMockData(data.pathSuffix, MOCK_3D_DATA));
+    return Promise.resolve(searchMockData(data.pathSuffix, MOCK_3D_DATA)).then((data) => {
+      return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
+    });
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
