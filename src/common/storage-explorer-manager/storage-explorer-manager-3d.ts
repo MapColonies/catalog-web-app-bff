@@ -17,18 +17,18 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
 
   public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
     // REAL LOGIC
-    // const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
-    //   .then((res) => res.data as File[])
-    //   .then((files) => {
-    //     return Object.values(files.map((file)=> ({...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
-    //   });
+    const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
+      .then((res) => res.data as File[])
+      .then((files) => {
+        return Object.values(files.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
+      });
 
-    // return res;
+    return res;
 
     // MOCK DATA
-    return Promise.resolve(searchMockData(data.pathSuffix, MOCK_3D_DATA)).then((data) => {
-      return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
-    });
+    // return Promise.resolve(searchMockData(data.pathSuffix, MOCK_3D_DATA)).then((data) => {
+    //   return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
+    // });
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
@@ -43,14 +43,12 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
 
   public async getFile(data: ExplorerGetByPathSuffix): Promise<Layer3DRecord> {
     // REAL LOGIC
-    // const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {}).then(
-    //   (res) => res.data as { data: Record<string, unknown> }
-    // );
+    const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {}).then((res) => res.data as Layer3DRecord);
 
-    // return { data: res };
+    return res;
 
     // MOCK DATA
-    return Promise.resolve(MOCK_FILE);
+    // return Promise.resolve(MOCK_FILE);
   }
 
   public async getFileById(data: ExplorerGetById): Promise<Layer3DRecord> {
