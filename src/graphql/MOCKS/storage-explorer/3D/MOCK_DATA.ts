@@ -10,7 +10,7 @@ export default {
     parentId: 'ROOT',
     isDir: true,
     modDate: new Date('2021-05-24T05:33:22.199Z'),
-    childrenIds: ['6O9tWfu2AFl5qKuO.fnzLw--', '0_vitBLfGwxTOFL5ambnmw--'],
+    childrenIds: ['6O9tWfu2AFl5qKuO.fnzLw--', '0_vitBLfGwxTOFL5ambnmw--', '0_vitBLfGwxTOFL5ambn876w--'],
     childrenCount: 2,
   },
   '/\\3D_mount_dir/1a': {
@@ -126,6 +126,22 @@ export default {
     isDir: false,
     modDate: new Date('2022-02-09T16:21:48.662Z'),
     size: 980,
+  },
+  '/\\3D_second_mount_dir/3a': {
+    id: '0_vitBLfGwxTOFL5ambn876w--',
+    name: '3a',
+    parentId: '4dt.yTVSoCcyvIqAxvCeeA--',
+    isDir: true,
+    modDate: new Date('2022-02-09T16:21:48.662Z'),
+    childrenIds: ['iun2EwJYqsXQ0cfzGvJTpvpttiWhZlc1OW.plYzYbX1-'],
+    childrenCount: 1,
+  },
+  '/\\3D_second_mount_dir/3a/product.json': {
+    id: 'iun2EwJYqsXQ0cfzGvJTpvpttiWhZlc1OW.plYzYbX1-',
+    name: '3a',
+    parentId: '4dt.yTVSoCcyvIqAxvCeeA--',
+    isDir: false,
+    modDate: new Date('2022-02-09T16:21:48.662Z'),
   },
 };
 
