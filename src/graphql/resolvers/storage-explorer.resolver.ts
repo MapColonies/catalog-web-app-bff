@@ -2,14 +2,14 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver, Query, Arg, FieldResolver, Root } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../inputTypes';
 import { DecryptedId, File } from '../storage-explorer';
 import { LayerMetadataMixedUnion } from './csw.resolver';
 
-@Resolver()
+@Resolver((of) => File)
 export class StorageExplorerResolver {
   private readonly logger: Logger;
   private readonly config: IConfig;
@@ -57,5 +57,18 @@ export class StorageExplorerResolver {
     const decryptedId = await this.storageExplorerManager.getDecryptedId({ id, type });
 
     return decryptedId;
+  }
+
+  @FieldResolver()
+  public modDate(@Root() file: File): Date | null {
+    if (file.modDate instanceof Date) {
+      return file.modDate;
+    }
+
+    if (typeof file.modDate === 'string') {
+      return new Date(file.modDate);
+    }
+
+    return null;
   }
 }
