@@ -73,7 +73,7 @@ export class JobResolver {
 
   private async getJobs(params?: JobsSearchParams): Promise<Job[]> {
     const res = await requestHandler(`${this.serviceURL}/jobs`, 'GET', {
-      data: {
+      params: {
         ...params,
         shouldReturnTasks: false,
       },
@@ -86,7 +86,6 @@ export class JobResolver {
     await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
       data: {
         ...params,
-        shouldReturnTasks: false,
       },
     });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
