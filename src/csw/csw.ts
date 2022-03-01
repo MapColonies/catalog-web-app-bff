@@ -27,7 +27,7 @@ const NOT_FOUND = -1;
 
 @singleton()
 export class CSW {
-  private readonly cswClients: CswClients = {} as CswClients;
+  public readonly cswClients: CswClients = {} as CswClients;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.cswClients.RASTER = {

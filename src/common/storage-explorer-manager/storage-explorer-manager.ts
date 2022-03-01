@@ -6,6 +6,7 @@ import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
+import { CSW } from '../../csw/csw';
 import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
@@ -17,7 +18,11 @@ type ExplorerServices = Record<CatalogRecordItems, IStorageExplorerManagerServic
 export class StorageExplorerManager implements IStorageExplorerManagerService {
   private readonly explorerServices: ExplorerServices = {} as ExplorerServices;
 
-  public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
+  public constructor(
+    @inject(Services.CONFIG) private readonly config: IConfig,
+    @inject(Services.LOGGER) private readonly logger: Logger,
+    @inject(CSW) private readonly csw: CSW
+  ) {
     this.explorerServices.RASTER = new StorageExplorerManagerRaster(this.config, this.logger);
     this.explorerServices['3D'] = new StorageExplorerManager3D(this.config, this.logger);
   }
@@ -40,7 +45,9 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
-    return fileContent;
+    // transformRecordsToEntity is entity agnostic, chose RASTER arbitrarily.
+    const transformedMetadata = this.csw.cswClients.RASTER.instance.transformRecordsToEntity([fileContent])[0];
+    return transformedMetadata;
   }
 
   public async getFileById(data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {

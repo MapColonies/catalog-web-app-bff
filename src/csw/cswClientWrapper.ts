@@ -56,7 +56,7 @@ export class CswClientWrapper {
     return parsedData;
   }
 
-  private readonly transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
+  public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
     const cswParsedArray = transform(
       cswArray,
       (result: Record<string, unknown>[], cswValue) => {
