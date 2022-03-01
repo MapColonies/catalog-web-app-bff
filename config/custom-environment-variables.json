@@ -67,5 +67,10 @@
       "url": "STORAGE_EXPLORER_3D_URL"
     }
   },
+  "accessToken": {
+    "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
+    "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
+    "tokenValue": "ACCESS_TOKEN_VALUE"
+  },
   "servedEntityTypes": "SERVED_ENTITY_TYPES"
 }
