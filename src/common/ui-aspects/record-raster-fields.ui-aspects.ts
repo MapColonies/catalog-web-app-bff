@@ -1,4 +1,5 @@
 import { SensorType } from '@map-colonies/mc-model-types';
+import { DateGranularity } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
 const pycswLayerCatalogRecordAspects = {
@@ -79,9 +80,11 @@ const pycswLayerCatalogRecordAspects = {
   },
   sourceDateStart: {
     label: 'field-names.raster.sourceDateStart',
+    dateGranularity: DateGranularity.DATE,
   },
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
+    dateGranularity: DateGranularity.DATE,
   },
   accuracyCE90: {
     label: 'field-names.raster.accuracyCE90',

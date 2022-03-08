@@ -1,4 +1,5 @@
 import { SensorType } from '@map-colonies/mc-model-types';
+import { DateGranularity } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
 const pycswDemCatalogRecordAspects = {
@@ -23,9 +24,11 @@ const pycswDemCatalogRecordAspects = {
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
+    dateGranularity: DateGranularity.DATE,
   },
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
+    dateGranularity: DateGranularity.DATE,
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',

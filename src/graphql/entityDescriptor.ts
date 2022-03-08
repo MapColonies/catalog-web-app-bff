@@ -17,6 +17,13 @@ export enum ValidationValueType {
 }
 registerEnumType(ValidationValueType, { name: 'ValidationValueType' });
 
+// eslint-disable-next-line import/exports-last
+export enum DateGranularity {
+  DATE = 'date',
+  DATE_AND_TIME = 'dateAndTime',
+}
+registerEnumType(DateGranularity, { name: 'DateGranularityType' });
+
 registerEnumType(FieldCategory, { name: 'FieldCategory' });
 export const enumDictionary = new GraphQLScalarType({ name: 'enumDictionary' });
 
@@ -129,6 +136,9 @@ export class FieldConfig {
 
   @Field((type) => String, { nullable: true })
   public default?: string;
+
+  @Field((type) => DateGranularity, { nullable: true })
+  public dateGranularity?: DateGranularity;
 }
 
 @ObjectType()
