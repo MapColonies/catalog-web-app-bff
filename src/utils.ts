@@ -37,3 +37,10 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 
   return requestHandler(url, method, reqConfig);
 };
+
+export const absoluteToRelativePath = (path: string): string => {
+  const pathArr = path.split('/');
+  pathArr.shift();
+
+  return pathArr.join('/');
+};
