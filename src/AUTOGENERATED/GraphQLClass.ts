@@ -98,8 +98,8 @@ export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolyg
 export class Layer3DRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: false })
-    public productId: string;
+    @Field({ nullable: true })
+    public productId?: string;
     @Field({ nullable: false })
     public productName: string;
     @Field({ nullable: true })
