@@ -44,3 +44,7 @@ export const absoluteToRelativePath = (path: string): string => {
 
   return pathArr.join('/');
 };
+
+export const absolutePathToNfs = (path: string): string => {
+  return path.replace(/\//g, '\\');
+};
