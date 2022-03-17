@@ -15,8 +15,7 @@ export class ServiceDiscoveryResolver {
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    //this.serviceURL = this.config.get('serviceDiscovery.url');
-    this.serviceURL = 'http://k8s-services-list-dev-service-discovery-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/getDeploymentsAndServices';
+    this.serviceURL = this.config.get('serviceDiscovery.url');
   }
 
   @Query((type) => [DeploymentWithServices])

@@ -68,5 +68,8 @@
       "url": "http://localhost:8000/storage-explorer-3d"
     }
   },
+  "serviceDiscovery": {
+    "url": "http://localhost:8000/service-discovery"
+  },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }
