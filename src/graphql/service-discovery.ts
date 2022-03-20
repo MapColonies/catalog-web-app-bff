@@ -5,8 +5,8 @@ export class DeploymentWithServices {
   @Field((type) => String, { nullable: true })
   public name?: string;
 
-  @Field((type) => String, { nullable: true })
-  public status?: string;
+  @Field((type) => Boolean, { nullable: true })
+  public status?: boolean;
 
   @Field((type) => String, { nullable: true })
   public image?: string;

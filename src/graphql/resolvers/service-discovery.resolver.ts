@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import { Query, Resolver } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
+import { MOCK_DEPS_AND_SERVICES } from '../MOCKS/service-discovery/depAndServicesMock';
 import { DeploymentWithServices } from '../service-discovery';
 
 @Resolver((of) => DeploymentWithServices)
@@ -34,5 +35,6 @@ export class ServiceDiscoveryResolver {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return depsAndServices.data;
+    // return Promise.resolve(MOCK_DEPS_AND_SERVICES);
   }
 }
