@@ -68,5 +68,15 @@
       "url": "http://localhost:8000/storage-explorer-3d"
     }
   },
+  "serviceDiscovery": {
+    "url": "http://localhost:8000/service-discovery"
+  },
+  "externalServices": {
+    "PYCSW-RECORD_RASTER-URL": "https://pycsw_raster.com",
+    "PYCSW-RECORD_3D-URL": "https://pycsw_3d.com",
+    "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
+    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
+    "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
+  },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }
