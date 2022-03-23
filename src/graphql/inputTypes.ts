@@ -161,6 +161,12 @@ export class JobsSearchParams {
 
   @Field({ nullable: true })
   public type?: string;
+
+  @Field((type) => Date, { nullable: true })
+  public fromDate?: Date;
+
+  @Field((type) => Date, { nullable: true })
+  public tillDate?: Date;
 }
 @InputType()
 export class TasksSearchParams {
