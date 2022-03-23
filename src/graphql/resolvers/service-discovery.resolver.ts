@@ -31,6 +31,8 @@ export class ServiceDiscoveryResolver {
   }
 
   private async discoverClusterServices(): Promise<DeploymentWithServices[]> {
+    this.logger.info(`[ServiceDiscoveryResolver][discoverClusterServices] fetching services from cluster.`);
+
     const depsAndServices = await requestHandler(this.serviceURL, 'GET', {});
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

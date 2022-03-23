@@ -23,6 +23,8 @@ export class IngestionManager implements IIngestionManagerService {
   }
 
   public async ingest(record: IngestionData): Promise<IngestionData> {
+    this.logger.info(`[IngestionManager][ingest] start ingestion for entity ${record.type as RecordType}.`);
+
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
     const updatedData = await catalogManagerInstance.ingest(record);
     return updatedData;

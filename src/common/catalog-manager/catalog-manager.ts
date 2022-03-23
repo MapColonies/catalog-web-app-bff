@@ -23,6 +23,8 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    this.logger.info(`[CatalogManager][updateMetadata] starting update for entity ${record.type as RecordType}.`);
+
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
     const updatedData = await catalogManagerInstance.updateMetadata(record);
     return updatedData;

@@ -25,6 +25,9 @@ export class CatalogManager3D implements ICatalogManagerService {
       classification: data.classification,
       keywords: data.keywords,
     };
+
+    this.logger.info(`[CatalogManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         ...payloadData,

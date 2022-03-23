@@ -24,6 +24,9 @@ export class IngestionManagerRaster implements IIngestionManagerService {
       fileNames: data.fileNames,
       metadata: cleanedData,
     };
+
+    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         ...payloadData,

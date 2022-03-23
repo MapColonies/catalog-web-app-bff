@@ -29,6 +29,8 @@ export class JobResolver {
     params?: JobsSearchParams
   ): Promise<Job[]> {
     try {
+      this.logger.info(`[JobResolver][jobs] searching jobs with params: ${JSON.stringify(params)}`);
+
       // TODO: use a real call
       const data = await Promise.resolve(this.getJobs(params));
       // const data = await Promise.resolve(MOCK_JOBS_DATA);
@@ -49,6 +51,8 @@ export class JobResolver {
     data: JobUpdateData
   ): Promise<string> {
     try {
+      this.logger.info(`[JobResolver][updateJob] updating job with id: ${id}, data: ${JSON.stringify(data)} `);
+
       await this.updateJobHandler(id, data);
       return 'ok';
     } catch (err) {
@@ -63,6 +67,8 @@ export class JobResolver {
     id: string
   ): Promise<string> {
     try {
+      this.logger.info(`[JobResolver][jobRetry] retrying job with id: ${id}`);
+
       const response = await Promise.resolve(`Ok! Mutate job retry! Job Id: ${id}`);
       return response;
     } catch (err) {

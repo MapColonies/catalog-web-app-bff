@@ -16,6 +16,8 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager3D][getDirectory] fetching directory with data: ${JSON.stringify(data)}.`);
+
     // REAL LOGIC
     const res = await requestHandler(`${this.serviceURL}/directory?pathSuffix=${data.pathSuffix}`, 'GET', {})
       .then((res) => res.data as File[])
@@ -32,6 +34,8 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager3D][getDirectoryById] fetching directory by id with data: ${JSON.stringify(data)}.`);
+
     const res = await requestHandler(`${this.serviceURL}/directorybyid?id=${data.id}`, 'GET', {})
       .then((res) => res.data as File[])
       .then((files) => {
@@ -42,6 +46,8 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getFile(data: ExplorerGetByPathSuffix): Promise<Layer3DRecord> {
+    this.logger.info(`[StorageExplorerManager3D][getFile] fetching file with data: ${JSON.stringify(data)}.`);
+
     // REAL LOGIC
     const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {}).then((res) => res.data as Layer3DRecord);
 
@@ -52,12 +58,16 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getFileById(data: ExplorerGetById): Promise<Layer3DRecord> {
+    this.logger.info(`[StorageExplorerManager3D][getFileById] fetching file by id with data: ${JSON.stringify(data)}.`);
+
     const res = await requestHandler(`${this.serviceURL}/filebyid?id=${data.id}`, 'GET', {}).then((res) => res.data as Layer3DRecord);
 
     return res;
   }
 
   public async getDecryptedId(data: ExplorerGetById): Promise<{ data: string }> {
+    this.logger.info(`[StorageExplorerManager3D][getDecryptedId] decrypting id with data: ${JSON.stringify(data)}.`);
+
     const res = await requestHandler(`${this.serviceURL}/decryptid?id=${data.id}`, 'GET', {}).then((res) => res.data as { data: string });
 
     return res;
