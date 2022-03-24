@@ -32,6 +32,14 @@
       "url": "CSW_DEM_URL"
     }
   },
+  "mapServices": {
+    "raster": {
+      "url": "MAP_SERVICE_RASTER_URL"
+    },
+    "dem": {
+      "url": "MAP_SERVICE_DEM_URL"
+    }
+  },
   "catalogServices": {
     "raster": {
       "url": "CATALOG_SERVICE_RASTER_URL"
