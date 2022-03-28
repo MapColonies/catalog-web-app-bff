@@ -68,6 +68,11 @@
       "url": "http://localhost:8000/storage-explorer-3d"
     }
   },
+  "accessToken": {
+    "attributeName": "ATT-NAME",
+    "injectionType": "queryParam",
+    "tokenValue": "TOKEN"
+  },
   "serviceDiscovery": {
     "url": "http://localhost:8000/service-discovery"
   },
