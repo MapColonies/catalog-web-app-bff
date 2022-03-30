@@ -66,6 +66,9 @@ export class CSW {
   }
 
   public async getRecords(start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
+    this.logger.info(
+      `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
+    );
     /*  TODO: range of elements (start-end) is per CSW-client-instance. */
     const getRecords = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
@@ -127,6 +130,8 @@ export class CSW {
   }
 
   public async getRecordsById(idList: string[]): Promise<CatalogRecordType[]> {
+    this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
+
     const getRecords = [];
     getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList)));
     const data = await Promise.all(getRecords);
@@ -134,6 +139,8 @@ export class CSW {
   }
 
   public async getDomain(domain: string, recType: RecordType): Promise<string[]> {
+    this.logger.info(`[CSW][getDomain] getting domain ${domain}, for entity ${recType}`);
+
     const clientType = this.recordTypeToEntity(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain);
     return data;

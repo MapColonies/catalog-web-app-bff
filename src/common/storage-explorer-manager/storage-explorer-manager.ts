@@ -28,6 +28,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager][getDirectory] start getting directory for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data);
 
@@ -35,6 +37,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager][getDirectoryById] start getting directory by id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data);
 
@@ -42,6 +46,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getFile(data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
+    this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
@@ -51,6 +57,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getFileById(data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
+    this.logger.info(`[StorageExplorerManager][getFileById] start getting file by id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data);
 
@@ -58,6 +66,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDecryptedId(data: ExplorerGetById): Promise<{ data: string }> {
+    this.logger.info(`[StorageExplorerManager][getFileById] start decrypting id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data);
 

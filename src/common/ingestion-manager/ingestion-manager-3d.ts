@@ -30,6 +30,9 @@ export class IngestionManager3D implements IIngestionManagerService {
         sensors: metadata.sensorType ? metadata.sensorType.join(',') : '',
       },
     };
+
+    this.logger.info(`[IngestionManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         ...payloadData,

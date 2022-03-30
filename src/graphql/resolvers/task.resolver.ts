@@ -42,6 +42,8 @@ export class TaskResolver {
   }
 
   private async getTasks(params: TasksSearchParams): Promise<Task[]> {
+    this.logger.info(`[TaskResolver][getTasks] fetching tasks with params: ${JSON.stringify(params)}`);
+
     const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {});
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
