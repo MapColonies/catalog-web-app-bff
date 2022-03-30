@@ -75,6 +75,8 @@ export class JobResolver {
     const res = await requestHandler(`${this.serviceURL}/jobs`, 'GET', {
       params: {
         ...params,
+        fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
+        tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
         shouldReturnTasks: false,
       },
     });
