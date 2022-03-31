@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
+import { LayerMetadata, RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
+import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
@@ -51,8 +51,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
-    // transformRecordsToEntity is entity agnostic, chose RASTER arbitrarily.
-    const transformedMetadata = this.csw.cswClients.RASTER.instance.transformRecordsToEntity([fileContent])[0];
+    const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
+
     return transformedMetadata;
   }
 
@@ -87,5 +87,22 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     }
 
     return storageExplorerManagerInstance;
+  }
+
+  private transformMetadataJsonToEntity(metadata: CatalogRecordType): CatalogRecordType {
+    const { isDate } = fieldTypes;
+
+    const metadataWithFakeId: Record<string, unknown> = { ...metadata, id: 'NOT_DEFINED' };
+    const SHOULD_SPECIAL_TREAT_FIELD = true;
+
+    for (const [fieldName, val] of Object.entries(metadata)) {
+      switch (SHOULD_SPECIAL_TREAT_FIELD) {
+        case isDate(fieldName):
+          metadataWithFakeId[fieldName] = new Date(val as string);
+          break;
+      }
+    }
+
+    return metadataWithFakeId as unknown as CatalogRecordType;
   }
 }
