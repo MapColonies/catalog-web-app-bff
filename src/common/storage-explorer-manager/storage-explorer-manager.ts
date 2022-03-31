@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { LayerMetadata, RecordType } from '@map-colonies/mc-model-types';
+import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig } from '../interfaces';
