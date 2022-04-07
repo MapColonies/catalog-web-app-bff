@@ -212,4 +212,13 @@ export class ExplorerGetByPathSuffix {
   public type!: RecordType;
 }
 
+@InputType()
+export class LayerSearchParams {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type?: RecordType;
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

@@ -24,40 +24,48 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://catalog-qa-raster-catalog-pycsw-route-raster.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://pycsw-pycsw-web-route-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "dem": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://dem-dev-catalog-development-dem-catalog-pycsw-route-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
+    }
+  },
+  "mapServices": {
+    "raster": {
+      "url": "https://mapproxy-raster-dev-map-proxy-map-proxy-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/wmts/1.0.0/WMTSCapabilities.xml"
+    },
+    "dem": {
+      "url": "http://dem-dev-geoserver-development-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/geoserver/gwc/service/wmts?REQUEST=GetCapabilities"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster"
+      "url": "http://catalog-dev-raster-catalog-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d"
+      "url": "http://ingestion-stack-3d-ingestion-catalog-route-3d.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "dem": {
-      "url": "http://localhost:8000/catalog-service-dem"
+      "url": "NOT_AVAILABLE"
     }
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster"
+      "url": "https://discrete-ingestion-dev-overseer-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d"
+      "url": "http://ingestion-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "dem": {
-      "url": "http://localhost:8000/ingestion-service-dem"
+      "url": "NOT_AVAILABLE"
     }
   },
   "jobServices": {
     "raster": {
-      "url": "http://localhost:8000/job-manager-dev-job-manager"
+      "url": "https://job-manager-dev-job-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     }
   },
   "storageExplorerServices": {
@@ -77,6 +85,11 @@
     "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
     "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
+  },
+  "accessToken": {
+    "attributeName": "X-API-KEY",
+    "injectionType": "queryParam",
+    "tokenValue": "TOKEN"
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }
