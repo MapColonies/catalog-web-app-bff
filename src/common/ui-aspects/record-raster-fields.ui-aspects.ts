@@ -1,4 +1,3 @@
-import { SensorType } from '@map-colonies/mc-model-types';
 import { DateGranularity } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
@@ -21,8 +20,8 @@ const pycswLayerCatalogRecordAspects = {
   type: {
     label: 'field-names.raster.type',
   },
-  resolution: {
-    label: 'field-names.raster.resolution',
+  maxResolutionDeg: {
+    label: 'field-names.raster.maxResolutionDeg',
   },
   updateDate: {
     label: 'field-names.raster.update-date',
@@ -31,12 +30,9 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.description',
     fullWidth: true,
   },
-  sensorType: {
-    label: 'field-names.raster.sensor-type',
+  sensors: {
+    label: 'field-names.raster.sensors',
     fullWidth: true,
-    enumValues: {
-      dictionary: updateDictionary('sensorType', SensorType),
-    },
   },
   region: {
     label: 'field-names.raster.region',
@@ -86,8 +82,8 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.sourceDateEnd',
     dateGranularity: DateGranularity.DATE,
   },
-  accuracyCE90: {
-    label: 'field-names.raster.accuracyCE90',
+  minHorizontalAccuracyCE90: {
+    label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
   srsId: {
     label: 'field-names.raster.srs',

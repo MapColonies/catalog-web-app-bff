@@ -1,4 +1,3 @@
-import { SensorType } from '@map-colonies/mc-model-types';
 import { DateGranularity } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
@@ -61,12 +60,9 @@ const pycsw3DCatalogRecordAspects = {
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
   },
-  sensorType: {
-    label: 'field-names.3d.sensorType',
+  sensors: {
+    label: 'field-names.3d.sensors',
     fullWidth: true,
-    enumValues: {
-      dictionary: updateDictionary('sensorType', SensorType),
-    },
   },
   footprint: {
     label: 'field-names.3d.footprint',

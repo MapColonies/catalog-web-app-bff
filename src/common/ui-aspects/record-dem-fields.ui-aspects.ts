@@ -1,4 +1,3 @@
-import { SensorType } from '@map-colonies/mc-model-types';
 import { DateGranularity } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
@@ -42,12 +41,9 @@ const pycswDemCatalogRecordAspects = {
   relativeAccuracyLEP90: {
     label: 'field-names.dem.relativeAccuracyLEP90',
   },
-  sensorType: {
-    label: 'field-names.dem.sensorType',
+  sensors: {
+    label: 'field-names.dem.sensors',
     fullWidth: true,
-    enumValues: {
-      dictionary: updateDictionary('sensorType', SensorType),
-    },
   },
   footprint: {
     label: 'field-names.dem.footprint',

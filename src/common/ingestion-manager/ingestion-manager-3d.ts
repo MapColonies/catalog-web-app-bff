@@ -27,7 +27,6 @@ export class IngestionManager3D implements IIngestionManagerService {
         ...metadata,
         producerName: 'IDFMU',
         srsId: Number(metadata.srsId),
-        sensors: metadata.sensorType ? metadata.sensorType.join(',') : '',
       },
     };
 
