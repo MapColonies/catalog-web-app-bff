@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
+import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix } from '../../graphql/inputTypes';
@@ -28,6 +28,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager][getDirectory] start getting directory for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data);
 
@@ -35,6 +37,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
+    this.logger.info(`[StorageExplorerManager][getDirectoryById] start getting directory by id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data);
 
@@ -42,15 +46,19 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getFile(data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
+    this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data);
 
-    // transformRecordsToEntity is entity agnostic, chose RASTER arbitrarily.
-    const transformedMetadata = this.csw.cswClients.RASTER.instance.transformRecordsToEntity([fileContent])[0];
+    const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
+
     return transformedMetadata;
   }
 
   public async getFileById(data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
+    this.logger.info(`[StorageExplorerManager][getFileById] start getting file by id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data);
 
@@ -58,6 +66,8 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDecryptedId(data: ExplorerGetById): Promise<{ data: string }> {
+    this.logger.info(`[StorageExplorerManager][getFileById] start decrypting id for type ${data.type}.`);
+
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data);
 
@@ -77,5 +87,22 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     }
 
     return storageExplorerManagerInstance;
+  }
+
+  private transformMetadataJsonToEntity(metadata: CatalogRecordType): CatalogRecordType {
+    const { isDate } = fieldTypes;
+
+    const metadataWithFakeId: Record<string, unknown> = { ...metadata, id: 'NOT_DEFINED' };
+    const SHOULD_SPECIAL_TREAT_FIELD = true;
+
+    for (const [fieldName, val] of Object.entries(metadata)) {
+      switch (SHOULD_SPECIAL_TREAT_FIELD) {
+        case isDate(fieldName):
+          metadataWithFakeId[fieldName] = new Date(val as string);
+          break;
+      }
+    }
+
+    return metadataWithFakeId as unknown as CatalogRecordType;
   }
 }

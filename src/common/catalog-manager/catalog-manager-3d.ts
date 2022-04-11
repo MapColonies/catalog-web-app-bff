@@ -21,10 +21,13 @@ export class CatalogManager3D implements ICatalogManagerService {
     const payloadData = {
       title: data.productName,
       description: data.description,
-      // sensorType: data.sensorType?.join(','),
+      //sensorType: data.sensorType?.join(','),
       classification: data.classification,
       keywords: data.keywords,
     };
+
+    this.logger.info(`[CatalogManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         ...payloadData,

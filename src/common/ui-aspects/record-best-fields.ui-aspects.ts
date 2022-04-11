@@ -1,4 +1,3 @@
-import { SensorType } from '@map-colonies/mc-model-types';
 import { updateDictionary } from './enum.translation';
 
 const pycswBestCatalogRecordAspects = {
@@ -20,8 +19,8 @@ const pycswBestCatalogRecordAspects = {
   type: {
     label: 'field-names.raster.type',
   },
-  resolution: {
-    label: 'field-names.raster.resolution',
+  maxResolutionDeg: {
+    label: 'field-names.raster.maxResolutionDeg',
   },
   updateDate: {
     label: 'field-names.raster.update-date',
@@ -30,12 +29,9 @@ const pycswBestCatalogRecordAspects = {
     label: 'field-names.raster.description',
     fullWidth: true,
   },
-  sensorType: {
-    label: 'field-names.raster.sensor-type',
+  sensors: {
+    label: 'field-names.raster.sensors',
     fullWidth: true,
-    enumValues: {
-      dictionary: updateDictionary('sensorType', SensorType),
-    },
   },
   region: {
     label: 'field-names.raster.region',
@@ -83,8 +79,11 @@ const pycswBestCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
   },
-  accuracyCE90: {
-    label: 'field-names.raster.accuracyCE90',
+  insertDate: {
+    label: 'field-names.raster.insertDate',
+  },
+  minHorizontalAccuracyCE90: {
+    label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
   srsId: {
     label: 'field-names.raster.srs',

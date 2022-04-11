@@ -28,6 +28,8 @@ export class CatalogManagerRaster implements ICatalogManagerService {
       payloadData[field.prop] = data[field.prop as keyof RecordUpdatePartial];
     });
 
+    this.logger.info(`[CatalogManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         metadata: {

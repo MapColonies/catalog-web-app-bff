@@ -76,6 +76,11 @@
       "url": "http://localhost:8000/storage-explorer-3d"
     }
   },
+  "accessToken": {
+    "attributeName": "X-API-KEY",
+    "injectionType": "queryParam",
+    "tokenValue": "TOKEN"
+  },
   "serviceDiscovery": {
     "url": "http://localhost:8000/service-discovery"
   },
@@ -85,11 +90,6 @@
     "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
     "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
-  },
-  "accessToken": {
-    "attributeName": "X-API-KEY",
-    "injectionType": "queryParam",
-    "tokenValue": "TOKEN"
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
 }

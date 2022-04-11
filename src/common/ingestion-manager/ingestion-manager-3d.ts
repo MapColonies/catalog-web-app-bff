@@ -27,9 +27,11 @@ export class IngestionManager3D implements IIngestionManagerService {
         ...metadata,
         producerName: 'IDFMU',
         srsId: Number(metadata.srsId),
-        sensors: metadata.sensorType ? metadata.sensorType.join(',') : '',
       },
     };
+
+    this.logger.info(`[IngestionManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
     return {
       data: {
         ...payloadData,
