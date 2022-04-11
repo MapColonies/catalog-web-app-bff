@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import he from 'he';
 import { LayerMetadataUnionType } from '../graphql/resolvers/csw.resolver';
 
 export const DEFAULT_SERVER_PORT = 80;
@@ -23,4 +27,27 @@ export const fieldTypes = {
   isLinks: (fieldName: string): boolean => fieldName === 'links',
   isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
   isSensor: (fieldName: string): boolean => ['sensorType', 'sensors'].includes(fieldName),
+};
+
+export const options = {
+  attributeNamePrefix: '',
+  attrNodeName: 'attr',
+  textNodeName: '#text',
+  ignoreAttributes: false,
+  ignoreNameSpace: false,
+  allowBooleanAttributes: false,
+  parseNodeValue: true,
+  parseAttributeValue: false,
+  trimValues: true,
+  cdataTagName: '__cdata',
+  cdataPositionChar: '\\c',
+  parseTrueNumberOnly: false,
+  numParseOptions: {
+    hex: true,
+    leadingZeros: true,
+  },
+  arrayMode: (name: string): boolean => name === 'mc:MCDEMRecord',
+  attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
+  tagValueProcessor: (val: string): string => he.decode(val),
+  alwaysCreateTextNode: false,
 };

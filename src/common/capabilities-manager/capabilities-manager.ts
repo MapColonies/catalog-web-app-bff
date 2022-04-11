@@ -1,10 +1,13 @@
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
-import { RecordUpdatePartial } from '../../graphql/inputTypes';
+import { Capability } from '../../graphql/capability';
+import { LayerSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IConfig } from '../interfaces';
 import { Services } from '../constants';
+import { CapabilitiesManagerDem } from './capabilities-manager-dem';
+import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
 import { ICapabilitiesManagerService } from './capabilities-manager.interface';
 
 type MapServices = Record<CatalogRecordItems, ICapabilitiesManagerService>;
@@ -18,24 +21,24 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
-  public async getCapabilities(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
-    const updatedData = await catalogManagerInstance.updateMetadata(record);
-    return updatedData;
+  public async getCapabilities(layer: LayerSearchParams): Promise<Capability> {
+    const capabilitiesManagerInstance = this.getManagerInstance(layer.type as RecordType);
+    const capability = await capabilitiesManagerInstance.getCapabilities(layer);
+    return capability;
   }
 
-  private getManagerInstance(recordType: RecordType): ICatalogManagerService {
-    let catalogManagerInstance: ICatalogManagerService;
+  private getManagerInstance(recordType: RecordType): ICapabilitiesManagerService {
+    let capabilitiesManagerInstance: ICapabilitiesManagerService;
 
     switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
-        catalogManagerInstance = this.mapServices.DEM;
+        capabilitiesManagerInstance = this.mapServices.DEM;
         break;
       default:
-        catalogManagerInstance = this.mapServices.RASTER;
+        capabilitiesManagerInstance = this.mapServices.RASTER;
         break;
     }
 
-    return catalogManagerInstance;
+    return capabilitiesManagerInstance;
   }
 }

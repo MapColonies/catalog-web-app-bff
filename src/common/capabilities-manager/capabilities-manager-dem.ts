@@ -1,9 +1,10 @@
-import { getTraversalObj, convertToJson } from 'fast-xml-parser';
+//import { getTraversalObj, convertToJson } from 'fast-xml-parser';
 import { Logger } from '@map-colonies/js-logger';
 import { Capability } from '../../graphql/capability';
 import { LayerSearchParams } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
+//import { options } from '../constants';
 import { ICapabilitiesManagerService } from './capabilities-manager.interface';
 
 export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
@@ -15,9 +16,9 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
 
   public async getCapabilities(params: LayerSearchParams): Promise<Capability> {
     const response = await requestHandler(`${this.serviceURL}`, 'GET', {});
-    const traversalObj = getTraversalObj(response.data as string, options);
-    const jsonObj = convertToJson(traversalObj, options);
-    const result = jsonObj['csw:GetRecordsResponse']['csw:SearchResults'];
+    // const traversalObj = getTraversalObj(response.data as string, options);
+    // const jsonObj = convertToJson(traversalObj, options);
+    // const result = jsonObj['csw:GetRecordsResponse']['csw:SearchResults'];
     // const records =
     //   result['mc:MCDEMRecord'] === undefined
     //     ? []
@@ -33,10 +34,10 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
     //         // }),
     //       }));
     return {
-      id: result['attr']['Identifier'],
-      style: result['attr']['Style'],
-      format: result['attr']['Format'],
-      tileMatrixSet: result['attr']['TileMatrixSetId'],
+      id: '',//result['attr']['Identifier'],
+      style: '',//result['attr']['Style'],
+      format: [''],//result['attr']['Format'],
+      tileMatrixSet: [''],//result['attr']['TileMatrixSetId'],
     };
   }
 }
