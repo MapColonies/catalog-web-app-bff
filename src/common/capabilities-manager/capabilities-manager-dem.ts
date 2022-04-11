@@ -34,10 +34,10 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
     //         // }),
     //       }));
     return {
-      id: '',//result['attr']['Identifier'],
-      style: '',//result['attr']['Style'],
-      format: [''],//result['attr']['Format'],
-      tileMatrixSet: [''],//result['attr']['TileMatrixSetId'],
+      id: '', //result['attr']['Identifier'],
+      style: '', //result['attr']['Style'],
+      format: [''], //result['attr']['Format'],
+      tileMatrixSet: [''], //result['attr']['TileMatrixSetId'],
     };
   }
 }

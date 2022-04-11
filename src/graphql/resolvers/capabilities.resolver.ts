@@ -17,12 +17,13 @@ export class CapabilitiesResolver {
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    this.capabilitiesManager = await this.capabilitiesManager.getCapabilities();
+    this.capabilitiesManager = container.resolve(CapabilitiesManager);
   }
 
   @Query((type) => Capability)
   public async capabilities(@Arg('params') params: LayerSearchParams): Promise<Capability> {
     try {
+      this.logger.info(`[CapabilitiesResolver][capabilities] fetching layer details: ${JSON.stringify(params)}`);
       const capability = await this.capabilitiesManager.getCapabilities(params);
       return capability;
     } catch (err) {
