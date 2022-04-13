@@ -1,10 +1,14 @@
-//import { getTraversalObj, convertToJson } from 'fast-xml-parser';
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { getTraversalObj, convertToJson } from 'fast-xml-parser';
 import { Logger } from '@map-colonies/js-logger';
 import { Capability } from '../../graphql/capability';
 import { LayerSearchParams } from '../../graphql/inputTypes';
-import { requestHandler } from '../../utils';
+import { requestHandlerWithToken } from '../../utils';
 import { IConfig } from '../interfaces';
-//import { options } from '../constants';
+import { options } from '../constants';
 import { ICapabilitiesManagerService } from './capabilities-manager.interface';
 
 export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
@@ -14,30 +18,19 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
     this.serviceURL = this.config.get('mapServices.dem.url');
   }
 
-  public async getCapabilities(params: LayerSearchParams): Promise<Capability> {
-    const response = await requestHandler(`${this.serviceURL}`, 'GET', {});
-    // const traversalObj = getTraversalObj(response.data as string, options);
-    // const jsonObj = convertToJson(traversalObj, options);
-    // const result = jsonObj['csw:GetRecordsResponse']['csw:SearchResults'];
-    // const records =
-    //   result['mc:MCDEMRecord'] === undefined
-    //     ? []
-    //     : // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    //       result['mc:MCDEMRecord'].map((record: any) => ({
-    //         coverageId: record['mc:coverageID'],
-    //         resolution: record['mc:resolutionMeter'],
-    //         imagingEndDate: record['mc:imagingTimeEndUTC'],
-    //         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    //         // bbox: owsBoundingBoxToBbox({
-    //         //   lowerCorner: record['ows:BoundingBox']['ows:LowerCorner'],
-    //         //   upperCorner: record['ows:BoundingBox']['ows:UpperCorner'],
-    //         // }),
-    //       }));
+  public async getCapabilities(params: LayerSearchParams): Promise<Capability | undefined> {
+    const response = await requestHandlerWithToken(`${this.serviceURL}`, 'GET', {});
+    const traversalObj = getTraversalObj(response.data as string, options);
+    const jsonObj = convertToJson(traversalObj, options);
+    const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string; }) => layer['ows:Title'] === params.id);
+    if (layer === undefined) {
+      return undefined;
+    }
     return {
-      id: '', //result['attr']['Identifier'],
-      style: '', //result['attr']['Style'],
-      format: [''], //result['attr']['Format'],
-      tileMatrixSet: [''], //result['attr']['TileMatrixSetId'],
+      id: layer['ows:Title'],
+      style: layer['Style']['ows:Identifier'],
+      format: layer['Format'],
+      tileMatrixSet: layer['TileMatrixSetLink'].map((link: { TileMatrixSet: string; }) => link.TileMatrixSet),
     };
   }
 }

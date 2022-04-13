@@ -46,7 +46,7 @@ export const options = {
     hex: true,
     leadingZeros: true,
   },
-  arrayMode: (name: string): boolean => name === 'mc:MCDEMRecord',
+  arrayMode: false,
   attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
   tagValueProcessor: (val: string): string => he.decode(val),
   alwaysCreateTextNode: false,

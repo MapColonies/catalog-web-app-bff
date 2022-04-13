@@ -3,5 +3,5 @@ import { LayerSearchParams } from '../../graphql/inputTypes';
 
 // eslint-disable-next-line import/exports-last
 export interface ICapabilitiesManagerService {
-  getCapabilities: (data: LayerSearchParams) => Promise<Capability>;
+  getCapabilities: (data: LayerSearchParams) => Promise<Capability | undefined>;
 }

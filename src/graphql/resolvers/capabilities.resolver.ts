@@ -21,7 +21,7 @@ export class CapabilitiesResolver {
   }
 
   @Query((type) => Capability)
-  public async capabilities(@Arg('params') params: LayerSearchParams): Promise<Capability> {
+  public async capabilities(@Arg('params') params: LayerSearchParams): Promise<Capability | undefined> {
     try {
       this.logger.info(`[CapabilitiesResolver][capabilities] fetching layer details: ${JSON.stringify(params)}`);
       const capability = await this.capabilitiesManager.getCapabilities(params);

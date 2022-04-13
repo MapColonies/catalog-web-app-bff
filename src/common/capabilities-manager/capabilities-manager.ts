@@ -21,7 +21,7 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
-  public async getCapabilities(layer: LayerSearchParams): Promise<Capability> {
+  public async getCapabilities(layer: LayerSearchParams): Promise<Capability | undefined> {
     this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities for layer ${layer.id} (${layer.type as RecordType}).`);
     const capabilitiesManagerInstance = this.getManagerInstance(layer.type as RecordType);
     const capability = await capabilitiesManagerInstance.getCapabilities(layer);
