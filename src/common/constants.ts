@@ -23,4 +23,5 @@ export const fieldTypes = {
   isLinks: (fieldName: string): boolean => fieldName === 'links',
   isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
   isSensor: (fieldName: string): boolean => ['sensorType', 'sensors'].includes(fieldName),
+  isRegion: (fieldName: string): boolean => ['region'].includes(fieldName),
 };
