@@ -46,7 +46,7 @@ export const options = {
     hex: true,
     leadingZeros: true,
   },
-  arrayMode: false,
+  arrayMode: (name: string): boolean => name === 'Format' || name === 'TileMatrixSetLink',
   attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
   tagValueProcessor: (val: string): string => he.decode(val),
   alwaysCreateTextNode: false,

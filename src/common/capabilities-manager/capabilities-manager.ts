@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Capability } from '../../graphql/capability';
-import { LayerSearchParams } from '../../graphql/inputTypes';
+import { CapabilitiesLayerSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IConfig } from '../interfaces';
 import { Services } from '../constants';
@@ -21,7 +21,7 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
-  public async getCapabilities(layer: LayerSearchParams): Promise<Capability | undefined> {
+  public async getCapabilities(layer: CapabilitiesLayerSearchParams): Promise<Capability | undefined> {
     this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities for layer ${layer.id} (${layer.type as RecordType}).`);
     const capabilitiesManagerInstance = this.getManagerInstance(layer.type as RecordType);
     const capability = await capabilitiesManagerInstance.getCapabilities(layer);

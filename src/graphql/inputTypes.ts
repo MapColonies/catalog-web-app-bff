@@ -219,7 +219,7 @@ export class ExplorerGetByPathSuffix {
 }
 
 @InputType()
-export class LayerSearchParams {
+export class CapabilitiesLayerSearchParams {
   @Field({ nullable: false })
   public id: string;
 

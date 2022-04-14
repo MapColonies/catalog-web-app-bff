@@ -25,12 +25,12 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
         return Object.values(files.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
       });
 
-    // return res;
+    return res;
 
     // MOCK DATA
-    return Promise.resolve(searchMockData(data.pathSuffix, RASTER_MOCK_DATA)).then((data) => {
-      return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
-    });
+    // return Promise.resolve(searchMockData(data.pathSuffix, RASTER_MOCK_DATA)).then((data) => {
+    //   return data.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
+    // });
   }
 
   public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
@@ -51,10 +51,10 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // REAL LOGIC
     const res = await requestHandler(`${this.serviceURL}/file?pathSuffix=${data.pathSuffix}`, 'GET', {}).then((res) => res.data as LayerRasterRecord);
 
-    // return res;
+    return res;
 
     // MOCK DATA
-    return Promise.resolve(MOCK_FILE);
+    // return Promise.resolve(MOCK_FILE);
   }
 
   public async getFileById(data: ExplorerGetById): Promise<LayerRasterRecord> {
