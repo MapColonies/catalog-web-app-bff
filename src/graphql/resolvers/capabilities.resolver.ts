@@ -6,7 +6,6 @@ import { CapabilitiesManager } from '../../common/capabilities-manager/capabilit
 import { Services } from '../../common/constants';
 import { Capability } from '../capability';
 import { LayerSearchParams } from '../inputTypes';
-//import { MOCK_CAPABILITIES_DATA } from '../MOCKS/MOCK_CAPABILITIES_DATA';
 
 @Resolver()
 export class CapabilitiesResolver {
@@ -21,10 +20,13 @@ export class CapabilitiesResolver {
   }
 
   @Query((type) => Capability)
-  public async capabilities(@Arg('params') params: LayerSearchParams): Promise<Capability | undefined> {
+  public async capabilities(@Arg('params') params: LayerSearchParams): Promise<Capability> {
     try {
       this.logger.info(`[CapabilitiesResolver][capabilities] fetching layer details: ${JSON.stringify(params)}`);
       const capability = await this.capabilitiesManager.getCapabilities(params);
+      if (capability === undefined) {
+        throw new Error('Layer was not found')
+      }
       return capability;
     } catch (err) {
       this.logger.error(err as string);
