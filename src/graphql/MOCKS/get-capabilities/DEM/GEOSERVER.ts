@@ -5842,5 +5842,5 @@ export default {
   </Contents>
   <ServiceMetadataURL xlink:href="http://dem-dev-geoserver-development-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/geoserver/gwc/service/wmts?SERVICE=wmts&REQUEST=getcapabilities&VERSION=1.0.0"/>
   <ServiceMetadataURL xlink:href="http://dem-dev-geoserver-development-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/geoserver/gwc/service/wmts/rest/WMTSCapabilities.xml"/>
-  </Capabilities>`
-}
+  </Capabilities>`,
+};

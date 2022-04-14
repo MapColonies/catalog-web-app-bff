@@ -507,5 +507,5 @@ export default {
   </TileMatrixSet>
   </Contents>
   <ServiceMetadataURL xlink:href="https://mapproxy-raster-dev-map-proxy-map-proxy-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/wmts/1.0.0/WMTSCapabilities.xml"/>
-  </Capabilities>`
-}
+  </Capabilities>`,
+};

@@ -27,7 +27,7 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
     // MOCK DATA - end
     const traversalObj = getTraversalObj(response.data as string, options);
     const jsonObj = convertToJson(traversalObj, options);
-    const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string; }) => layer['ows:Title'] === params.id);
+    const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string }) => layer['ows:Title'] === params.id);
     if (layer === undefined) {
       return undefined;
     }
@@ -35,7 +35,7 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
       id: layer['ows:Title'],
       style: layer['Style']['ows:Identifier'],
       format: layer['Format'],
-      tileMatrixSet: layer['TileMatrixSetLink'].map((link: { TileMatrixSet: string; }) => link.TileMatrixSet),
+      tileMatrixSet: layer['TileMatrixSetLink'].map((link: { TileMatrixSet: string }) => link.TileMatrixSet),
     };
   }
 }

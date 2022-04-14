@@ -27,15 +27,15 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerService {
     // MOCK DATA - end
     const traversalObj = getTraversalObj(response.data as string, options);
     const jsonObj = convertToJson(traversalObj, options);
-    const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string; }) => layer['ows:Title'] === params.id);
+    const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string }) => layer['ows:Title'] === params.id);
     if (layer === undefined) {
       return undefined;
     }
     return {
       id: layer['ows:Title'],
       style: layer['Style']['ows:Identifier'],
-      format: [ layer['Format'] ],
-      tileMatrixSet: [ layer['TileMatrixSetLink']['TileMatrixSet'] ],
+      format: [layer['Format']],
+      tileMatrixSet: [layer['TileMatrixSetLink']['TileMatrixSet']],
     };
   }
 }
