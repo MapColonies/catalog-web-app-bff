@@ -10,7 +10,7 @@ import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/DEM/
 import { CapabilitiesLayerSearchParams } from '../../graphql/inputTypes';
 import { requestHandlerWithToken } from '../../utils';
 import { IConfig } from '../interfaces';
-import { options } from '../constants';
+import { xmlParserOptions } from '../constants';
 import { ICapabilitiesManagerService } from './capabilities-manager.interface';
 
 export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
@@ -25,8 +25,8 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end
-    const traversalObj = getTraversalObj(response.data as string, options);
-    const jsonObj = convertToJson(traversalObj, options);
+    const traversalObj = getTraversalObj(response.data as string, xmlParserOptions);
+    const jsonObj = convertToJson(traversalObj, xmlParserOptions);
     const layer = jsonObj.Capabilities.Contents.Layer.find((layer: { [x: string]: string }) => layer['ows:Identifier'] === params.id);
     if (layer === undefined) {
       return undefined;

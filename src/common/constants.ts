@@ -29,7 +29,7 @@ export const fieldTypes = {
   isSensor: (fieldName: string): boolean => ['sensorType', 'sensors'].includes(fieldName),
 };
 
-export const options = {
+export const xmlParserOptions = {
   attributeNamePrefix: '',
   attrNodeName: 'attr',
   textNodeName: '#text',
