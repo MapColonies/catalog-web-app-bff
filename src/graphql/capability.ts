@@ -14,5 +14,5 @@ export class Capability {
   @Field((type) => [String], { nullable: false })
   public tileMatrixSet!: [string];
 
-  // The format is partial and may be extended according to full OWS format of Capabilities
+  // Partial and can be extended according to the full OWS format of getCapabilities
 }

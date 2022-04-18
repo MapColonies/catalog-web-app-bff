@@ -38,7 +38,7 @@
       "url": "http://localhost:8000/map-service-raster"
     },
     "dem": {
-      "url": "http://localhost:8000/map-service-raster"
+      "url": "http://localhost:8000/map-service-dem"
     }
   },
   "catalogServices": {
@@ -46,7 +46,7 @@
       "url": "http://localhost:8000/catalog-service-raster"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-dem"
+      "url": "http://localhost:8000/catalog-service-3d"
     },
     "dem": {
       "url": "NOT_AVAILABLE"

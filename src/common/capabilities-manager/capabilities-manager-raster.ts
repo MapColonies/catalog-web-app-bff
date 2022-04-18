@@ -6,7 +6,7 @@
 import { getTraversalObj, convertToJson } from 'fast-xml-parser';
 import { Logger } from '@map-colonies/js-logger';
 import { Capability } from '../../graphql/capability';
-import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
+// import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
 import { CapabilitiesLayerSearchParams } from '../../graphql/inputTypes';
 import { requestHandlerWithToken } from '../../utils';
 import { IConfig } from '../interfaces';
