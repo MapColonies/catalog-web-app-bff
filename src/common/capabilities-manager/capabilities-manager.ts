@@ -1,8 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Capability } from '../../graphql/capability';
-import { CapabilitiesLayerSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IConfig } from '../interfaces';
 import { Services } from '../constants';
@@ -21,25 +19,10 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
-  public async getCapabilities(layer: CapabilitiesLayerSearchParams): Promise<Capability | undefined> {
-    this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities for layer ${layer.id} (${layer.type as RecordType}).`);
-    const capabilitiesManagerInstance = this.getManagerInstance(layer.type as RecordType);
-    const capability = await capabilitiesManagerInstance.getCapabilities(layer);
-    return capability;
-  }
-
-  private getManagerInstance(recordType: RecordType): ICapabilitiesManagerService {
-    let capabilitiesManagerInstance: ICapabilitiesManagerService;
-
-    switch (RecordType[recordType]) {
-      case RecordType.RECORD_DEM:
-        capabilitiesManagerInstance = this.mapServices.DEM;
-        break;
-      default:
-        capabilitiesManagerInstance = this.mapServices.RASTER;
-        break;
-    }
-
-    return capabilitiesManagerInstance;
+  public async getCapabilities(idList: string[]): Promise<Capability[]> {
+    this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities`);
+    const rasterCapabilities = await this.mapServices.RASTER.getCapabilities(idList);
+    const demCapabilities = await this.mapServices.DEM.getCapabilities(idList);
+    return [...rasterCapabilities, ...demCapabilities];
   }
 }

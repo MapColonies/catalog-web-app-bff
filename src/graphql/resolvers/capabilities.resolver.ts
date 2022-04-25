@@ -5,7 +5,7 @@ import { Resolver, Query, Arg } from 'type-graphql';
 import { CapabilitiesManager } from '../../common/capabilities-manager/capabilities-manager';
 import { Services } from '../../common/constants';
 import { Capability } from '../capability';
-import { CapabilitiesLayerSearchParams } from '../inputTypes';
+import { StringArray } from '../inputTypes';
 
 @Resolver()
 export class CapabilitiesResolver {
@@ -19,15 +19,15 @@ export class CapabilitiesResolver {
     this.capabilitiesManager = container.resolve(CapabilitiesManager);
   }
 
-  @Query((type) => Capability)
-  public async capabilities(@Arg('params') params: CapabilitiesLayerSearchParams): Promise<Capability> {
+  @Query((type) => [Capability])
+  public async capabilities(
+    @Arg('idList', { nullable: false })
+    idList: StringArray
+  ): Promise<Capability[]> {
     try {
-      this.logger.info(`[CapabilitiesResolver][capabilities] fetching layer details: ${JSON.stringify(params)}`);
-      const capability = await this.capabilitiesManager.getCapabilities(params);
-      if (capability === undefined) {
-        throw new Error('Layer was not found');
-      }
-      return capability;
+      this.logger.info(`[CapabilitiesResolver][capabilities] fetching layers capabilities`);
+      const capabilityList = await this.capabilitiesManager.getCapabilities(idList.value);
+      return capabilityList;
     } catch (err) {
       this.logger.error(err as string);
       throw err;
