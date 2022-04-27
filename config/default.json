@@ -24,29 +24,29 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://catalog-qa-raster-catalog-pycsw-route-raster.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://pycsw-3d-3d-catalog-pycsw-route-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     },
     "dem": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://dem-dev-catalog-development-dem-catalog-pycsw-route-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/pycsw/version=2.0.0&service=csw"
     }
   },
   "mapServices": {
     "raster": {
-      "url": "http://localhost:8000/map-service-raster"
+      "url": "https://mapproxy-raster-dev-map-proxy-map-proxy-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/wmts/1.0.0/WMTSCapabilities.xml"
     },
     "dem": {
-      "url": "http://localhost:8000/map-service-dem"
+      "url": "http://dem-dev-geoserver-development-dem-dev.apps.v0h0bdx6.eastus.aroapp.io/geoserver/gwc/service/wmts?REQUEST=GetCapabilities"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster"
+      "url": "http://catalog-dev-raster-catalog-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d"
+      "url": "http://model-ingestion-dev-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "dem": {
       "url": "NOT_AVAILABLE"
@@ -54,10 +54,10 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster"
+      "url": "https://discrete-ingestion-dev-overseer-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d"
+      "url": "http://model-ingestion-dev-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io"
     },
     "dem": {
       "url": "NOT_AVAILABLE"
@@ -65,16 +65,26 @@
   },
   "jobServices": {
     "raster": {
-      "url": "http://localhost:8000/job-manager-service"
+      "url": "https://job-manager-raster-dev-discrete-ingestion-db-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io"
     }
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "http://localhost:8000/storage-explorer-raster"
+      "url": "https://overseer-dev-discrete-overseer-creator-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/explorer"
     },
     "3d": {
-      "url": "http://localhost:8000/storage-explorer-3d"
+      "url": "http://model-ingestion-dev-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/explorer"
     }
+  },
+  "serviceDiscovery": {
+    "url": "http://k8s-services-list-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/getDeploymentsAndServices"
+  },
+  "externalServices": {
+    "PYCSW-RECORD_RASTER-URL": "https://pycsw_raster.com",
+    "PYCSW-RECORD_3D-URL": "https://pycsw_3d.com",
+    "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
+    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
+    "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
   },
   "accessToken": {
     "attributeName": "x-api-key",
