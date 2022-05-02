@@ -223,7 +223,7 @@ export class BestRecordInput {
     @Field({ nullable: true })
     public rms?: number;
     @Field({ nullable: true })
-    public scale?: string;
+    public scale?: number;
     @Field((type) => footprintObject, { nullable: false })
     public footprint: Record<string, unknown>;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
