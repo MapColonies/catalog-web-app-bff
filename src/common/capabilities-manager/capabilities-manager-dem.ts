@@ -10,9 +10,9 @@ import { Capability } from '../../graphql/capability';
 import { requestHandlerWithToken } from '../../utils';
 import { IConfig } from '../interfaces';
 import { xmlParserOptions } from '../constants';
-import { ICapabilitiesManagerService } from './capabilities-manager.interface';
+import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';
 
-export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
+export class CapabilitiesManagerDem implements ICapabilitiesManagerInstance {
   private readonly serviceURL: string = '';
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {

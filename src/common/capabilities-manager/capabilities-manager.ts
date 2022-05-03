@@ -1,14 +1,16 @@
-import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
+import { RecordType } from '@map-colonies/mc-model-types';
 import { Capability } from '../../graphql/capability';
+import { CapabilitiesLayersSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IConfig } from '../interfaces';
 import { Services } from '../constants';
 import { CapabilitiesManagerDem } from './capabilities-manager-dem';
 import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
-import { ICapabilitiesManagerService } from './capabilities-manager.interface';
+import { ICapabilitiesManagerInstance, ICapabilitiesManagerService } from './capabilities-manager.interface';
 
-type MapServices = Record<CatalogRecordItems, ICapabilitiesManagerService>;
+type MapServices = Record<CatalogRecordItems, ICapabilitiesManagerInstance>;
 
 @singleton()
 export class CapabilitiesManager implements ICapabilitiesManagerService {
@@ -18,11 +20,31 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.RASTER = new CapabilitiesManagerRaster(this.config, this.logger);
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
-
-  public async getCapabilities(idList: string[]): Promise<Capability[]> {
+  public async getCapabilities(params: CapabilitiesLayersSearchParams): Promise<Capability[]> {
     this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities`);
-    const rasterCapabilities = await this.mapServices.RASTER.getCapabilities(idList);
-    const demCapabilities = await this.mapServices.DEM.getCapabilities(idList);
-    return [...rasterCapabilities, ...demCapabilities];
+    let capabilities: Capability[] = [];
+    await Promise.all(
+      Object.keys(params).map(async (key) => {
+        const capabilitiesManagerInstance = this.getManagerInstance(key as RecordType);
+        // @ts-ignore
+        capabilities = [...capabilities, ...(await capabilitiesManagerInstance.getCapabilities(params[key]))];
+      })
+    );
+    return capabilities;
+  }
+
+  private getManagerInstance(recordType: RecordType): ICapabilitiesManagerInstance {
+    let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
+
+    switch (RecordType[recordType]) {
+      case RecordType.RECORD_DEM:
+        capabilitiesManagerInstance = this.mapServices.DEM;
+        break;
+      default:
+        capabilitiesManagerInstance = this.mapServices.RASTER;
+        break;
+    }
+
+    return capabilitiesManagerInstance;
   }
 }
