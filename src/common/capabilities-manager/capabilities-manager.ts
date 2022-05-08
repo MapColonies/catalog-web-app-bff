@@ -24,10 +24,9 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities`);
     let capabilities: Capability[] = [];
     await Promise.all(
-      Object.keys(params).map(async (key) => {
-        const capabilitiesManagerInstance = this.getManagerInstance(key as RecordType);
-        // @ts-ignore
-        capabilities = [...capabilities, ...(await capabilitiesManagerInstance.getCapabilities(params[key]))];
+      params.data.map(async (item) => {
+        const capabilitiesManagerInstance = this.getManagerInstance(item.recordType);
+        capabilities = [...capabilities, ...(await capabilitiesManagerInstance.getCapabilities(item.idList))];
       })
     );
     return capabilities;

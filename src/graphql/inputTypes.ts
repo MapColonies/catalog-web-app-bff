@@ -219,14 +219,18 @@ export class ExplorerGetByPathSuffix {
 }
 
 @InputType()
-export class CapabilitiesLayersSearchParams {
-  @Field((type) => [String], { nullable: true })
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  public RECORD_RASTER?: string[];
+export class CapabilitiesLayersSearchParam {
+  @Field((type) => RecordType)
+  public recordType: RecordType;
 
-  @Field((type) => [String], { nullable: true })
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  public RECORD_DEM?: string[];
+  @Field((type) => [String])
+  public idList: string[];
+}
+
+@InputType()
+export class CapabilitiesLayersSearchParams {
+  @Field((type) => [CapabilitiesLayersSearchParam])
+  public data: CapabilitiesLayersSearchParam[];
 }
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
