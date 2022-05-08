@@ -5,23 +5,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { getTraversalObj, convertToJson } from 'fast-xml-parser';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { Capability } from '../../graphql/capability';
 // import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/DEM/GEOSERVER';
 import { requestHandlerWithToken } from '../../utils';
 import { IConfig } from '../interfaces';
 import { xmlParserOptions } from '../constants';
-import { ICapabilitiesManagerService } from './capabilities-manager.interface';
+import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';
 
-export class CapabilitiesManagerDem implements ICapabilitiesManagerService {
+export class CapabilitiesManagerDem implements ICapabilitiesManagerInstance {
   private readonly serviceURL: string = '';
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.serviceURL = this.config.get('mapServices.dem.url');
   }
 
-  public async getCapabilities(recordType: RecordType, idList: string[]): Promise<Capability[]> {
-    this.logger.info(`[CapabilitiesManagerDem][getCapabilities] fetching ${recordType.split('_')[1]} xml`);
+  public async getCapabilities(idList: string[]): Promise<Capability[]> {
     const response = await requestHandlerWithToken(`${this.serviceURL}`, 'GET', {});
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
