@@ -6,6 +6,7 @@ export enum CatalogRecordItems {
   '3D' = '3D',
   DEM = 'DEM',
   VECTOR_BEST = 'VECTOR_BEST',
+  QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
 export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig): Promise<AxiosResponse> => {

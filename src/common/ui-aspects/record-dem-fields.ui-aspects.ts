@@ -1,5 +1,4 @@
 import { DateGranularity } from '../../graphql/entityDescriptor';
-import { updateDictionary } from './enum.translation';
 
 const pycswDemCatalogRecordAspects = {
   id: {

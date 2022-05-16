@@ -1,5 +1,3 @@
-import { updateDictionary } from './enum.translation';
-
 const pycswBestCatalogRecordAspects = {
   id: {
     label: 'field-names.raster.id',
