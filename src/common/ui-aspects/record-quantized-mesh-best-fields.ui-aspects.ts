@@ -41,23 +41,8 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   maxResolutionMeter: {
     label: 'field-names.quantized-mesh.maxResolutionMeter',
   },
-  nominalResolution: {
-    label: 'field-names.quantized-mesh.nominalResolution',
-  },
   maxAccuracyCE90: {
     label: 'field-names.quantized-mesh.maxAccuracyCE90',
-  },
-  absoluteAccuracyLEP90: {
-    label: 'field-names.quantized-mesh.absoluteAccuracyLEP90',
-  },
-  accuracySE90: {
-    label: 'field-names.quantized-mesh.accuracySE90',
-  },
-  relativeAccuracyLEP90: {
-    label: 'field-names.quantized-mesh.relativeAccuracyLEP90',
-  },
-  visualAccuracy: {
-    label: 'field-names.quantized-mesh.visualAccuracy',
   },
   sensors: {
     label: 'field-names.quantized-mesh.sensors',
@@ -78,10 +63,6 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   srsName: {
     label: 'field-names.quantized-mesh.srsName',
-  },
-  srsOrigin: {
-    label: 'field-names.quantized-mesh.srsOrigin',
-    fullWidth: true,
   },
   region: {
     label: 'field-names.quantized-mesh.region',
@@ -107,12 +88,6 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productionMethod: {
     label: 'field-names.quantized-mesh.productionMethod',
-  },
-  minFlightAlt: {
-    label: 'field-names.quantized-mesh.minFlightAlt',
-  },
-  maxFlightAlt: {
-    label: 'field-names.quantized-mesh.maxFlightAlt',
   },
   geographicArea: {
     label: 'field-names.quantized-mesh.geographicArea',
