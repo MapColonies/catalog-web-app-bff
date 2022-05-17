@@ -381,17 +381,7 @@ export class QuantizedMeshBestRecordInput {
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
     @Field({ nullable: true })
-    public nominalResolution?: number;
-    @Field({ nullable: true })
     public maxAccuracyCE90?: number;
-    @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
-    @Field({ nullable: true })
-    public accuracySE90?: number;
-    @Field({ nullable: true })
-    public relativeAccuracyLEP90?: number;
-    @Field({ nullable: true })
-    public visualAccuracy?: number;
     @Field((type) => [String], { nullable: true })
     public sensors?: string[];
     @Field((type) => footprintObject, { nullable: false })
@@ -404,8 +394,6 @@ export class QuantizedMeshBestRecordInput {
     public srsId: string;
     @Field({ nullable: false })
     public srsName: string;
-    @Field({ nullable: true })
-    public srsOrigin?: string;
     @Field((type) => [String], { nullable: true })
     public region?: string[];
     @Field({ nullable: false })
@@ -418,10 +406,6 @@ export class QuantizedMeshBestRecordInput {
     public producerName?: string;
     @Field({ nullable: true })
     public productionMethod?: string;
-    @Field({ nullable: true })
-    public minFlightAlt?: number;
-    @Field({ nullable: true })
-    public maxFlightAlt?: number;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field({ nullable: true })
@@ -809,17 +793,7 @@ export class QuantizedMeshBestRecord {
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
     @Field({ nullable: true })
-    public nominalResolution?: number;
-    @Field({ nullable: true })
     public maxAccuracyCE90?: number;
-    @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
-    @Field({ nullable: true })
-    public accuracySE90?: number;
-    @Field({ nullable: true })
-    public relativeAccuracyLEP90?: number;
-    @Field({ nullable: true })
-    public visualAccuracy?: number;
     @Field((type) => [String], { nullable: true })
     public sensors?: string[];
     @Field((type) => footprintObject, { nullable: false })
@@ -832,8 +806,6 @@ export class QuantizedMeshBestRecord {
     public srsId: string;
     @Field({ nullable: false })
     public srsName: string;
-    @Field({ nullable: true })
-    public srsOrigin?: string;
     @Field((type) => [String], { nullable: true })
     public region?: string[];
     @Field({ nullable: false })
@@ -846,10 +818,6 @@ export class QuantizedMeshBestRecord {
     public producerName?: string;
     @Field({ nullable: true })
     public productionMethod?: string;
-    @Field({ nullable: true })
-    public minFlightAlt?: number;
-    @Field({ nullable: true })
-    public maxFlightAlt?: number;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field({ nullable: true })
