@@ -20,7 +20,7 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerInstance {
   }
 
   public async getCapabilities(idList: string[]): Promise<Capability[]> {
-    const response = await requestHandlerWithToken(`${this.serviceURL}`, 'GET', {});
+    const response = await requestHandlerWithToken(`${this.serviceURL}/gwc/service/wmts?REQUEST=GetCapabilities`, 'GET', {});
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end
