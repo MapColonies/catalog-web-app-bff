@@ -91,6 +91,8 @@ export class CswClientWrapper {
                   // eslint-disable-next-line
                   return JSON.parse(val as string);
                 case RecordType.RECORD_DEM:
+                  // NOTE: In current solution QMESHBest is stored in 3D catalog.
+                  // In 3D entity footprint is a binary data (geometry)
                   try {
                     // eslint-disable-next-line
                     return JSON.parse(val as string);
