@@ -1,4 +1,4 @@
-import { DateGranularity } from '../../graphql/entityDescriptor';
+import { DateGranularity, FractionType, OperationType } from '../../graphql/entityDescriptor';
 import { updateDictionary } from './enum.translation';
 
 const pycswLayerCatalogRecordAspects = {
@@ -7,9 +7,27 @@ const pycswLayerCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.raster.productId',
+    updateRules: {
+      freeze: true,
+      value: {
+        operation: {
+          type: OperationType.COPY,
+        },
+      },
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
+    updateRules: {
+      freeze: true,
+      value: {
+        operation: {
+          type: OperationType.INCREMENT,
+          fraction: FractionType.MAJOR,
+          value: 1,
+        },
+      },
+    },
   },
   productType: {
     label: 'field-names.raster.productType',
