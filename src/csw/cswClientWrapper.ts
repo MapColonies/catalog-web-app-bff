@@ -9,6 +9,8 @@ import { CatalogRecordType, fieldTypes } from '../common/constants';
 import { SearchOptions } from '../graphql/inputTypes';
 import { requestHandlerWithToken } from '../utils';
 
+const MINUS_NINETY = -90;
+
 export class CswClientWrapper {
   private readonly typename: string;
   private readonly outputSchema: string;
@@ -70,6 +72,18 @@ export class CswClientWrapper {
       return boxPolygon;
     };
 
+    const fixFootprint = (obj: Record<string, unknown>): Record<string, unknown> => {
+      // @ts-ignore
+      // eslint-disable-next-line
+      obj.coordinates[0] = obj.coordinates[0].map((tuple: number[]): number[] => {
+        if (tuple[1] === MINUS_NINETY) {
+          tuple[1] += 0.0001;
+        }
+        return tuple;
+      });
+      return obj;
+    };
+
     const cswParsedArray = transform(
       cswArray,
       (result: Record<string, unknown>[], cswValue) => {
@@ -84,18 +98,17 @@ export class CswClientWrapper {
           switch (SHOULD_SPECIAL_TREAT_FIELD) {
             case isFootprint(key): {
               switch (recordType) {
-                case RecordType.RECORD_3D: {
+                case RecordType.RECORD_3D:
                   return bboxToFootprint(obj);
-                }
                 case RecordType.RECORD_RASTER:
                   // eslint-disable-next-line
-                  return JSON.parse(val as string);
+                  return fixFootprint(JSON.parse(val as string));
                 case RecordType.RECORD_DEM:
                   // NOTE: In current solution QMESHBest is stored in 3D catalog.
                   // In 3D entity footprint is a binary data (geometry)
                   try {
                     // eslint-disable-next-line
-                    return JSON.parse(val as string);
+                    return fixFootprint(JSON.parse(val as string));
                   } catch (e) {
                     return bboxToFootprint(obj);
                   }

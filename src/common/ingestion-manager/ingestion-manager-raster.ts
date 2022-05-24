@@ -1,7 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
 import { IngestionData } from '../../graphql/inputTypes';
-import { absoluteToRelativePath, requestHandler } from '../../utils';
+import { absoluteToRelativePath } from '../../helpers/string';
+import { requestHandler } from '../../utils';
 import { IConfig } from '../interfaces';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 
