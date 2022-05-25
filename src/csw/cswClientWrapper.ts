@@ -1,5 +1,5 @@
 import { transform, mapKeys, mapValues, get } from 'lodash';
-import { lineString, Polygon } from '@turf/helpers';
+import { GeometryObject, lineString, Polygon, Position } from '@turf/helpers';
 import bbox from '@turf/bbox';
 import bboxPolygon from '@turf/bbox-polygon';
 import { CswClient, IRequestExecutor } from '@map-colonies/csw-client';
@@ -10,6 +10,7 @@ import { SearchOptions } from '../graphql/inputTypes';
 import { requestHandlerWithToken } from '../utils';
 
 const MINUS_NINETY = -90;
+const DELTA = 0.0001;
 
 export class CswClientWrapper {
   private readonly typename: string;
@@ -72,16 +73,22 @@ export class CswClientWrapper {
       return boxPolygon;
     };
 
-    const fixFootprint = (obj: Record<string, unknown>): Record<string, unknown> => {
-      // @ts-ignore
-      // eslint-disable-next-line
-      obj.coordinates[0] = obj.coordinates[0].map((tuple: number[]): number[] => {
-        if (tuple[1] === MINUS_NINETY) {
-          tuple[1] += 0.0001;
-        }
-        return tuple;
-      });
-      return obj;
+    const fixFootprint = (footprint: GeometryObject): GeometryObject => {
+      switch (footprint.type) {
+        case 'Polygon':
+          (footprint as Polygon).coordinates.forEach((tupleArray: Position[]): void => {
+            tupleArray.forEach((tuple: Position): void => {
+              if (tuple[1] === MINUS_NINETY) {
+                tuple[1] += DELTA;
+              }
+            });
+          });
+          break;
+        default:
+          // Decided not to fix other types, assuming in MultiPolygon we will not have -90 values
+          break;
+      }
+      return footprint;
     };
 
     const cswParsedArray = transform(
@@ -101,13 +108,11 @@ export class CswClientWrapper {
                 case RecordType.RECORD_3D:
                   return bboxToFootprint(obj);
                 case RecordType.RECORD_RASTER:
-                  // eslint-disable-next-line
                   return fixFootprint(JSON.parse(val as string));
                 case RecordType.RECORD_DEM:
                   // NOTE: In current solution QMESHBest is stored in 3D catalog.
                   // In 3D entity footprint is a binary data (geometry)
                   try {
-                    // eslint-disable-next-line
                     return fixFootprint(JSON.parse(val as string));
                   } catch (e) {
                     return bboxToFootprint(obj);
