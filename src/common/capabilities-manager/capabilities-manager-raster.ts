@@ -20,7 +20,10 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
   }
 
   public async getCapabilities(idList: string[]): Promise<Capability[]> {
-    const response = await requestHandlerWithToken(`${this.serviceURL}`, 'GET', {});
+    this.logger.info(
+      `[CapabilitiesManagerRaster][getCapabilities] calling RASTER getCapabilities: ${this.serviceURL}/service?REQUEST=GetCapabilities&SERVICE=WMTS`
+    );
+    const response = await requestHandlerWithToken(`${this.serviceURL}/service?REQUEST=GetCapabilities&SERVICE=WMTS`, 'GET', {});
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end

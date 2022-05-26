@@ -6,6 +6,7 @@ export enum CatalogRecordItems {
   '3D' = '3D',
   DEM = 'DEM',
   VECTOR_BEST = 'VECTOR_BEST',
+  QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
 export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig): Promise<AxiosResponse> => {
@@ -36,15 +37,4 @@ export const requestHandlerWithToken = async (url: string, method: string, param
   }
 
   return requestHandler(url, method, reqConfig);
-};
-
-export const absoluteToRelativePath = (path: string): string => {
-  const pathArr = path.split('/');
-  pathArr.shift();
-
-  return pathArr.join('/');
-};
-
-export const absolutePathToNfs = (path: string): string => {
-  return path.replace(/\//g, '\\');
 };

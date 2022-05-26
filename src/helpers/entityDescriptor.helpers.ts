@@ -6,6 +6,7 @@ import {
   PycswDemCatalogRecord,
   PycswLayerCatalogRecord,
   PycswVectorBestCatalogRecord,
+  PycswQuantizedMeshBestCatalogRecord,
 } from '@map-colonies/mc-model-types';
 import { pycswCatalogRecordUIAspects } from '../common/pycswRecord.ui-aspect';
 import categoriesTranslation from '../common/ui-aspects/category.trsanslation';
@@ -52,6 +53,7 @@ export function buildDescriptor(
     | typeof PycswDemCatalogRecord
     | typeof PycswBestCatalogRecord
     | typeof PycswVectorBestCatalogRecord
+    | typeof PycswQuantizedMeshBestCatalogRecord
 ): EntityDescriptor {
   const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
 
@@ -81,7 +83,12 @@ export function buildDescriptor(
 }
 
 export function getDescriptors(): EntityDescriptor[] {
-  return [PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswBestCatalogRecord, PycswVectorBestCatalogRecord].map(
-    (recordType) => buildDescriptor(recordType)
-  );
+  return [
+    PycswLayerCatalogRecord,
+    Pycsw3DCatalogRecord,
+    PycswDemCatalogRecord,
+    PycswBestCatalogRecord,
+    PycswVectorBestCatalogRecord,
+    PycswQuantizedMeshBestCatalogRecord,
+  ].map((recordType) => buildDescriptor(recordType));
 }

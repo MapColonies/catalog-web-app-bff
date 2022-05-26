@@ -5,6 +5,7 @@ import {
   Pycsw3DCatalogRecord,
   PycswDemCatalogRecord,
   PycswVectorBestCatalogRecord,
+  PycswQuantizedMeshBestCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
   ProductType,
@@ -47,7 +48,7 @@ export class CSW {
     this.cswClients['3D'] = {
       instance: new CswClientWrapper(
         'mc:MC3DRecord',
-        Pycsw3DCatalogRecord.getPyCSWMappings(),
+        [...Pycsw3DCatalogRecord.getPyCSWMappings(), ...(PycswQuantizedMeshBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
         'http://schema.mapcolonies.com/3d',
         this.config.get('csw.3d.url')
       ),

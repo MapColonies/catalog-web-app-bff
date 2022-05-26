@@ -354,6 +354,74 @@ export class VectorBestRecordInput {
     public links?: LinkInput[];
 }
 
+@InputType()
+export class QuantizedMeshBestRecordInput {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: false })
+    public productId: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
+    @Field({ nullable: true })
+    public minResolutionMeter?: number;
+    @Field({ nullable: true })
+    public maxResolutionMeter?: number;
+    @Field({ nullable: true })
+    public maxAccuracyCE90?: number;
+    @Field((type) => [String], { nullable: true })
+    public sensors?: string[];
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
+    @Field((type) => [String], { nullable: true })
+    public region?: string[];
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: true })
+    public productionSystem?: string;
+    @Field({ nullable: true })
+    public productionSystemVer?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public productionMethod?: string;
+    @Field({ nullable: true })
+    public geographicArea?: string;
+    @Field({ nullable: true })
+    public productBoundingBox?: string;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public wktGeometry?: string;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [LinkInput], { nullable: true })
+    public links?: LinkInput[];
+}
+
 @ObjectType()
 export class Link {
     @Field({ nullable: true })
@@ -698,6 +766,74 @@ export class VectorBestRecord {
     public links?: Link[];
 }
 
+@ObjectType()
+export class QuantizedMeshBestRecord {
+    @Field((type) => RecordType, { nullable: true })
+    public type?: RecordType;
+    @Field({ nullable: false })
+    public productId: string;
+    @Field({ nullable: false })
+    public productName: string;
+    @Field({ nullable: true })
+    public productVersion?: string;
+    @Field((type) => ProductType, { nullable: false })
+    public productType: ProductType;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: true })
+    public creationDate?: Date;
+    @Field({ nullable: true })
+    public updateDate?: Date;
+    @Field({ nullable: false })
+    public sourceDateStart: Date;
+    @Field({ nullable: false })
+    public sourceDateEnd: Date;
+    @Field({ nullable: true })
+    public minResolutionMeter?: number;
+    @Field({ nullable: true })
+    public maxResolutionMeter?: number;
+    @Field({ nullable: true })
+    public maxAccuracyCE90?: number;
+    @Field((type) => [String], { nullable: true })
+    public sensors?: string[];
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
+    @Field({ nullable: true })
+    public heightRangeFrom?: number;
+    @Field({ nullable: true })
+    public heightRangeTo?: number;
+    @Field({ nullable: false })
+    public srsId: string;
+    @Field({ nullable: false })
+    public srsName: string;
+    @Field((type) => [String], { nullable: true })
+    public region?: string[];
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: true })
+    public productionSystem?: string;
+    @Field({ nullable: true })
+    public productionSystemVer?: string;
+    @Field({ nullable: true })
+    public producerName?: string;
+    @Field({ nullable: true })
+    public productionMethod?: string;
+    @Field({ nullable: true })
+    public geographicArea?: string;
+    @Field({ nullable: true })
+    public productBoundingBox?: string;
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: true })
+    public insertDate?: Date;
+    @Field({ nullable: true })
+    public wktGeometry?: string;
+    @Field({ nullable: true })
+    public keywords?: string;
+    @Field((type) => [Link], { nullable: true })
+    public links?: Link[];
+}
+
 @Resolver(Link)
 export class LinkResolver {
 }
@@ -724,6 +860,10 @@ export class LayerDemRecordResolver {
 
 @Resolver(VectorBestRecord)
 export class VectorBestRecordResolver {
+}
+
+@Resolver(QuantizedMeshBestRecord)
+export class QuantizedMeshBestRecordResolver {
 }
 
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});

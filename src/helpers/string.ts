@@ -6,3 +6,14 @@ export const camelize = (value: string): string => {
     return p1.toLowerCase();
   });
 };
+
+export const absoluteToRelativePath = (path: string): string => {
+  const pathArr = path.split('/');
+  pathArr.shift();
+
+  return pathArr.join('/');
+};
+
+export const absolutePathToNfs = (path: string): string => {
+  return path.replace(/\//g, '\\');
+};

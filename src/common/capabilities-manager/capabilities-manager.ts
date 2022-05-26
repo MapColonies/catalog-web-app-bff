@@ -20,16 +20,15 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.RASTER = new CapabilitiesManagerRaster(this.config, this.logger);
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
+
   public async getCapabilities(params: CapabilitiesLayersSearchParams): Promise<Capability[]> {
-    this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities`);
-    let capabilities: Capability[] = [];
-    await Promise.all(
+    this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities manager`);
+    const capabilities = await Promise.all(
       params.data.map(async (item) => {
-        const capabilitiesManagerInstance = this.getManagerInstance(item.recordType);
-        capabilities = [...capabilities, ...(await capabilitiesManagerInstance.getCapabilities(item.idList))];
+        return this.getManagerInstance(item.recordType).getCapabilities(item.idList);
       })
     );
-    return capabilities;
+    return capabilities.flat(1);
   }
 
   private getManagerInstance(recordType: RecordType): ICapabilitiesManagerInstance {
