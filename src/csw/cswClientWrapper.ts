@@ -62,17 +62,6 @@ export class CswClientWrapper {
   public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
     const { isDate, isDiscrete, isFootprint, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion } = fieldTypes;
 
-    const bboxToFootprint = (obj: Record<string, unknown>): Polygon => {
-      const lowercorner = (get(obj, "['ows:BoundingBox']['ows:LowerCorner']") as string).split(' ');
-      const uppercorner = (get(obj, "['ows:BoundingBox']['ows:UpperCorner']") as string).split(' ');
-      const line = lineString([
-        [parseFloat(lowercorner[1]), parseFloat(lowercorner[0])],
-        [parseFloat(uppercorner[1]), parseFloat(uppercorner[0])],
-      ]);
-      const boxPolygon = bboxPolygon(bbox(line)).geometry;
-      return boxPolygon;
-    };
-
     const fixFootprint = (footprint: GeometryObject): GeometryObject => {
       switch (footprint.type) {
         case 'Polygon':
@@ -104,22 +93,7 @@ export class CswClientWrapper {
 
           switch (SHOULD_SPECIAL_TREAT_FIELD) {
             case isFootprint(key): {
-              switch (recordType) {
-                case RecordType.RECORD_3D:
-                  return bboxToFootprint(obj);
-                case RecordType.RECORD_RASTER:
-                  return fixFootprint(JSON.parse(val as string));
-                case RecordType.RECORD_DEM:
-                  // NOTE: In current solution QMESHBest is stored in 3D catalog.
-                  // In 3D entity footprint is a binary data (geometry)
-                  try {
-                    return fixFootprint(JSON.parse(val as string));
-                  } catch (e) {
-                    return bboxToFootprint(obj);
-                  }
-                default:
-                  return {};
-              }
+              return fixFootprint(JSON.parse(val as string));
             }
             case isLayerPolygonParts(key): {
               switch (recordType) {
