@@ -60,7 +60,7 @@ export class CswClientWrapper {
   }
 
   public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
-    const { isDate, isDiscrete, isFootprint, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion } = fieldTypes;
+    const { isDate, isDiscrete, isFootprint, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion } = fieldTypes;
 
     const fixFootprint = (footprint: GeometryObject): GeometryObject => {
       switch (footprint.type) {
@@ -135,6 +135,13 @@ export class CswClientWrapper {
               return val !== undefined ? (val as string).split(',') : [];
             case isRegion(key):
               return val !== undefined ? (val as string).split(',') : [];
+            case isProductVersion(key):
+              switch (recordType) {
+                case RecordType.RECORD_3D:
+                  return val?.toString();
+                default:
+                  return val;
+              }
             default:
               return val;
           }

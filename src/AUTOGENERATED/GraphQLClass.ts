@@ -104,6 +104,7 @@ export class Layer3DRecordInput {
     public productId?: string;
     @Field({ nullable: false })
     public productName: string;
+    // ASSAF: SHOULD REMAIN STRING
     @Field({ nullable: true })
     public productVersion?: string;
     @Field((type) => ProductType, { nullable: false })
@@ -516,6 +517,7 @@ export class Layer3DRecord {
     public productId: string;
     @Field({ nullable: false })
     public productName: string;
+    // ASSAF: SHOULD REMAIN STRING
     @Field({ nullable: true })
     public productVersion?: string;
     @Field((type) => ProductType, { nullable: false })

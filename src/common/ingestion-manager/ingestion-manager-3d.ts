@@ -28,6 +28,7 @@ export class IngestionManager3D implements IIngestionManagerService {
         ...metadata,
         producerName: 'IDFMU',
         srsId: Number(metadata.srsId),
+        productVersion: Number(metadata.productVersion),
       },
     };
 

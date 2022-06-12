@@ -28,6 +28,7 @@ export const fieldTypes = {
   isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
   isSensor: (fieldName: string): boolean => ['sensorType', 'sensors'].includes(fieldName),
   isRegion: (fieldName: string): boolean => ['region'].includes(fieldName),
+  isProductVersion: (fieldName: string): boolean => fieldName === 'productVersion',
 };
 
 export const xmlParserOptions = {
