@@ -190,4 +190,6 @@ export const MOCK_FILE: Layer3DRecord = {
   minResolutionMeter: 10,
   srsOrigin: '(1;2;3)',
   maxAccuracyCE90: 22,
+  productionSystem: 'system',
+  productionSystemVer: 'version',
 };
