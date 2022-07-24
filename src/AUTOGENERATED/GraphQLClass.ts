@@ -97,9 +97,6 @@ export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolyg
 export class Layer3DRecordInput {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    // Edited manually till generate function fixed.
-    // @Field({ nullable: false })
-    // public productId: string;
     @Field({ nullable: true })
     public productId?: string;
     @Field({ nullable: false })
@@ -125,8 +122,8 @@ export class Layer3DRecordInput {
     public maxResolutionMeter?: number;
     @Field({ nullable: true })
     public nominalResolution?: number;
-    @Field({ nullable: true })
-    public maxAccuracyCE90?: number;
+    @Field({ nullable: false })
+    public maxAccuracyCE90: number;
     @Field({ nullable: false })
     public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
@@ -135,8 +132,8 @@ export class Layer3DRecordInput {
     public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
     public visualAccuracy?: number;
-    @Field((type) => [String], { nullable: true })
-    public sensors?: string[];
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
     @Field((type) => footprintObject, { nullable: false })
     public footprint: Record<string, unknown>;
     @Field({ nullable: true })
@@ -149,16 +146,16 @@ export class Layer3DRecordInput {
     public srsName: string;
     @Field({ nullable: true })
     public srsOrigin?: string;
-    @Field((type) => [String], { nullable: true })
-    public region?: string[];
+    @Field((type) => [String], { nullable: false })
+    public region: string[];
     @Field({ nullable: false })
     public classification: string;
-    @Field({ nullable: true })
-    public productionSystem?: string;
-    @Field({ nullable: true })
-    public productionSystemVer?: string;
-    @Field({ nullable: true })
-    public producerName?: string;
+    @Field({ nullable: false })
+    public productionSystem: string;
+    @Field({ nullable: false })
+    public productionSystemVer: string;
+    @Field({ nullable: false })
+    public producerName: string;
     @Field({ nullable: true })
     public productionMethod?: string;
     @Field({ nullable: true })
@@ -381,8 +378,8 @@ export class QuantizedMeshBestRecordInput {
     public minResolutionMeter?: number;
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
-    @Field({ nullable: true })
-    public maxAccuracyCE90?: number;
+    @Field({ nullable: false })
+    public maxAccuracyCE90: number;
     @Field((type) => [String], { nullable: true })
     public sensors?: string[];
     @Field((type) => footprintObject, { nullable: false })
@@ -399,10 +396,10 @@ export class QuantizedMeshBestRecordInput {
     public region?: string[];
     @Field({ nullable: false })
     public classification: string;
-    @Field({ nullable: true })
-    public productionSystem?: string;
-    @Field({ nullable: true })
-    public productionSystemVer?: string;
+    @Field({ nullable: false })
+    public productionSystem: string;
+    @Field({ nullable: false })
+    public productionSystemVer: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
@@ -513,8 +510,8 @@ export class LayerRasterRecord {
 export class Layer3DRecord {
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
-    @Field({ nullable: false })
-    public productId: string;
+    @Field({ nullable: true })
+    public productId?: string;
     @Field({ nullable: false })
     public productName: string;
     // ASSAF: SHOULD REMAIN STRING
@@ -538,8 +535,8 @@ export class Layer3DRecord {
     public maxResolutionMeter?: number;
     @Field({ nullable: true })
     public nominalResolution?: number;
-    @Field({ nullable: true })
-    public maxAccuracyCE90?: number;
+    @Field({ nullable: false })
+    public maxAccuracyCE90: number;
     @Field({ nullable: false })
     public absoluteAccuracyLEP90: number;
     @Field({ nullable: true })
@@ -548,8 +545,8 @@ export class Layer3DRecord {
     public relativeAccuracyLEP90?: number;
     @Field({ nullable: true })
     public visualAccuracy?: number;
-    @Field((type) => [String], { nullable: true })
-    public sensors?: string[];
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
     @Field((type) => footprintObject, { nullable: false })
     public footprint: Record<string, unknown>;
     @Field({ nullable: true })
@@ -562,16 +559,16 @@ export class Layer3DRecord {
     public srsName: string;
     @Field({ nullable: true })
     public srsOrigin?: string;
-    @Field((type) => [String], { nullable: true })
-    public region?: string[];
+    @Field((type) => [String], { nullable: false })
+    public region: string[];
     @Field({ nullable: false })
     public classification: string;
-    @Field({ nullable: true })
-    public productionSystem?: string;
-    @Field({ nullable: true })
-    public productionSystemVer?: string;
-    @Field({ nullable: true })
-    public producerName?: string;
+    @Field({ nullable: false })
+    public productionSystem: string;
+    @Field({ nullable: false })
+    public productionSystemVer: string;
+    @Field({ nullable: false })
+    public producerName: string;
     @Field({ nullable: true })
     public productionMethod?: string;
     @Field({ nullable: true })
@@ -794,8 +791,8 @@ export class QuantizedMeshBestRecord {
     public minResolutionMeter?: number;
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
-    @Field({ nullable: true })
-    public maxAccuracyCE90?: number;
+    @Field({ nullable: false })
+    public maxAccuracyCE90: number;
     @Field((type) => [String], { nullable: true })
     public sensors?: string[];
     @Field((type) => footprintObject, { nullable: false })
@@ -812,10 +809,10 @@ export class QuantizedMeshBestRecord {
     public region?: string[];
     @Field({ nullable: false })
     public classification: string;
-    @Field({ nullable: true })
-    public productionSystem?: string;
-    @Field({ nullable: true })
-    public productionSystemVer?: string;
+    @Field({ nullable: false })
+    public productionSystem: string;
+    @Field({ nullable: false })
+    public productionSystemVer: string;
     @Field({ nullable: true })
     public producerName?: string;
     @Field({ nullable: true })
