@@ -20,7 +20,8 @@ export class IngestionManager3D implements IIngestionManagerService {
   }
 
   private buildPayload(data: IngestionData): AxiosRequestConfig {
-    const metadata = data.metadata as Layer3DRecordInput;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...metadata } = data.metadata as Layer3DRecordInput;
     const payloadData = {
       modelPath: absolutePathToNfs(data.directory),
       tilesetFilename: data.fileNames[0],
