@@ -19,11 +19,7 @@ export class CatalogManager3D implements ICatalogManagerService {
 
   private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
     const payloadData = {
-      title: data.productName,
-      description: data.description,
-      //sensorType: data.sensorType?.join(','),
-      classification: data.classification,
-      keywords: data.keywords,
+      ...data.partialRecordData,
     };
 
     this.logger.info(`[CatalogManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);

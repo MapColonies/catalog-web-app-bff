@@ -67,35 +67,16 @@ export class SearchOptions {
   public sort?: SortField[];
 }
 
-// TODO: might be auto-generated due to isManuallyEditable flag while decorated
 @InputType()
-export class RecordsEditableFields {
-  @Field({ nullable: true })
-  public productName?: string;
-
-  @Field({ nullable: true })
-  public description?: string;
-
-  @Field({ nullable: true })
-  public productSubType?: string;
-
-  @Field({ nullable: true })
-  public producerName?: string;
-
-  @Field({ nullable: true })
-  public classification?: string;
-
-  @Field({ nullable: true })
-  public keywords?: string;
-}
-
-@InputType()
-export class RecordUpdatePartial extends RecordsEditableFields {
+export class RecordUpdatePartial {
   @Field({ nullable: false })
   public id: string;
 
   @Field((type) => RecordType, { nullable: false })
-  public type?: RecordType;
+  public type: RecordType;
+
+  @Field((type) => paramsObject, { nullable: false })
+  public partialRecordData: Record<string, unknown>;
 }
 
 @InputType()
