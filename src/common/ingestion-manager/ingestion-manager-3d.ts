@@ -15,8 +15,7 @@ export class IngestionManager3D implements IIngestionManagerService {
   }
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
-    const payloadData = this.buildPayload(data);
-    await requestHandler(`${this.serviceURL}/models`, 'POST', payloadData);
+    await requestHandler(`${this.serviceURL}/models`, 'POST', this.buildPayload(data));
     return data;
   }
 
