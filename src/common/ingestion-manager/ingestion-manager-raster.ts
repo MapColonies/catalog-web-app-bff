@@ -19,11 +19,12 @@ export class IngestionManagerRaster implements IIngestionManagerService {
   }
 
   private buildPayload(data: IngestionData): AxiosRequestConfig {
-    const { id, ...cleanedData } = data.metadata;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...metadata } = data.metadata;
     const payloadData = {
       originDirectory: absoluteToRelativePath(data.directory),
       fileNames: data.fileNames,
-      metadata: cleanedData,
+      metadata,
     };
 
     this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
