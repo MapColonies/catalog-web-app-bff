@@ -19,14 +19,9 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   }
 
   private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payloadData: Record<string, any> = {};
-    const editableFields = PycswLayerCatalogRecord.getFieldConfigs().filter((field) => field.isManuallyEditable === true);
-
-    // mapping one to one can be performed because of payload properties derived from mc-models YAML(managed)
-    editableFields.forEach((field) => {
-      payloadData[field.prop] = data[field.prop as keyof RecordUpdatePartial];
-    });
+    const payloadData = {
+      ...data.partialRecordData,
+    };
 
     this.logger.info(`[CatalogManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
 
