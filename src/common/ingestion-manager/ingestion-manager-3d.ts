@@ -15,7 +15,8 @@ export class IngestionManager3D implements IIngestionManagerService {
   }
 
   public async ingest(data: IngestionData): Promise<IngestionData> {
-    await requestHandler(`${this.serviceURL}/models`, 'POST', this.buildPayload(data));
+    const payloadData = this.buildPayload(data);
+    await requestHandler(`${this.serviceURL}/models`, 'POST', payloadData);
     return data;
   }
 
@@ -27,7 +28,6 @@ export class IngestionManager3D implements IIngestionManagerService {
       tilesetFilename: data.fileNames[0],
       metadata: {
         ...metadata,
-        producerName: 'IDFMU',
         productVersion: Number(metadata.productVersion),
       },
     };
