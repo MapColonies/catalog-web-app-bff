@@ -4,8 +4,8 @@ import { container } from 'tsyringe';
 import { Query, Resolver } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
-import { MOCK_DEPS_AND_SERVICES } from '../MOCKS/service-discovery/depAndServicesMock';
 import { DeploymentWithServices } from '../service-discovery';
+// import { MOCK_DEPS_AND_SERVICES } from '../MOCKS/service-discovery/depAndServicesMock';
 
 @Resolver((of) => DeploymentWithServices)
 export class ServiceDiscoveryResolver {

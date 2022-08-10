@@ -1,5 +1,4 @@
 import { Logger } from '@map-colonies/js-logger';
-import { PycswLayerCatalogRecord } from '@map-colonies/mc-model-types';
 import { AxiosRequestConfig } from 'axios';
 import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';

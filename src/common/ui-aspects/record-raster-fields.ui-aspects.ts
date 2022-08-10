@@ -1,5 +1,4 @@
 import { DateGranularity, FractionType, OperationType } from '../../graphql/entityDescriptor';
-import { updateDictionary } from './enum.translation';
 
 const pycswLayerCatalogRecordAspects = {
   id: {
