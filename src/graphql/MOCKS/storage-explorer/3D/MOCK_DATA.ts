@@ -184,12 +184,12 @@ export const MOCK_FILE: Layer3DRecord = {
   //   "features": []
   // }
   keywords: '3D_MOCK',
-  absoluteAccuracyLEP90: 0,
+  absoluteAccuracyLE90: 0,
   accuracySE90: 1,
   geographicArea: 'geographicArea',
   minResolutionMeter: 10,
-  srsOrigin: '(1;2;3)',
   maxAccuracyCE90: 22,
   productionSystem: 'system',
   productionSystemVer: 'version',
+  productStatus: 'UNPUBLISHED',
 };

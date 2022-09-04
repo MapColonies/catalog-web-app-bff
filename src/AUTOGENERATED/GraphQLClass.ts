@@ -120,16 +120,14 @@ export class Layer3DRecordInput {
     public minResolutionMeter?: number;
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
-    @Field({ nullable: true })
-    public nominalResolution?: number;
     @Field({ nullable: false })
     public maxAccuracyCE90: number;
     @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
+    public absoluteAccuracyLE90: number;
     @Field({ nullable: true })
     public accuracySE90?: number;
     @Field({ nullable: true })
-    public relativeAccuracyLEP90?: number;
+    public relativeAccuracySE90?: number;
     @Field({ nullable: true })
     public visualAccuracy?: number;
     @Field((type) => [String], { nullable: false })
@@ -144,8 +142,6 @@ export class Layer3DRecordInput {
     public srsId: string;
     @Field({ nullable: false })
     public srsName: string;
-    @Field({ nullable: true })
-    public srsOrigin?: string;
     @Field((type) => [String], { nullable: false })
     public region: string[];
     @Field({ nullable: false })
@@ -157,8 +153,6 @@ export class Layer3DRecordInput {
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
-    public productionMethod?: string;
-    @Field({ nullable: true })
     public minFlightAlt?: number;
     @Field({ nullable: true })
     public maxFlightAlt?: number;
@@ -166,6 +160,10 @@ export class Layer3DRecordInput {
     public geographicArea?: string;
     @Field({ nullable: true })
     public productBoundingBox?: string;
+    @Field({ nullable: true })
+    public productSource?: string;
+    @Field({ nullable: true })
+    public productStatus?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -533,16 +531,14 @@ export class Layer3DRecord {
     public minResolutionMeter?: number;
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
-    @Field({ nullable: true })
-    public nominalResolution?: number;
     @Field({ nullable: false })
     public maxAccuracyCE90: number;
     @Field({ nullable: false })
-    public absoluteAccuracyLEP90: number;
+    public absoluteAccuracyLE90: number;
     @Field({ nullable: true })
     public accuracySE90?: number;
     @Field({ nullable: true })
-    public relativeAccuracyLEP90?: number;
+    public relativeAccuracySE90?: number;
     @Field({ nullable: true })
     public visualAccuracy?: number;
     @Field((type) => [String], { nullable: false })
@@ -557,8 +553,6 @@ export class Layer3DRecord {
     public srsId: string;
     @Field({ nullable: false })
     public srsName: string;
-    @Field({ nullable: true })
-    public srsOrigin?: string;
     @Field((type) => [String], { nullable: false })
     public region: string[];
     @Field({ nullable: false })
@@ -570,8 +564,6 @@ export class Layer3DRecord {
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
-    public productionMethod?: string;
-    @Field({ nullable: true })
     public minFlightAlt?: number;
     @Field({ nullable: true })
     public maxFlightAlt?: number;
@@ -579,6 +571,10 @@ export class Layer3DRecord {
     public geographicArea?: string;
     @Field({ nullable: true })
     public productBoundingBox?: string;
+    @Field({ nullable: true })
+    public productSource?: string;
+    @Field({ nullable: true })
+    public productStatus?: string;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
