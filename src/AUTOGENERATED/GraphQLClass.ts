@@ -172,8 +172,8 @@ export class Layer3DRecordInput {
     public wktGeometry?: string;
     @Field({ nullable: true })
     public keywords?: string;
-    @Field((type) => [Link], { nullable: true })
-    public links?: Link[];
+    @Field((type) => [LinkInput], { nullable: true })
+    public links?: LinkInput[];
 }
 
 @InputType()
