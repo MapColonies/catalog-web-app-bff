@@ -88,6 +88,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.raster.creation-date',
+    fullWidth: true,
   },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
@@ -111,6 +112,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   keywords: {
     label: 'field-names.raster.keywords',
+    fullWidth: true,
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
