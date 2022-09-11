@@ -51,8 +51,8 @@ const pycsw3DCatalogRecordAspects = {
   accuracySE90: {
     label: 'field-names.3d.accuracySE90',
   },
-  relativeAccuracyLE90: {
-    label: 'field-names.3d.relativeAccuracyLE90',
+  relativeAccuracySE90: {
+    label: 'field-names.3d.relativeAccuracySE90',
   },
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
