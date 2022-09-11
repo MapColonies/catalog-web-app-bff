@@ -87,11 +87,14 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   producerName: {
     label: 'field-names.quantized-mesh.producerName',
   },
-  productionMethod: {
-    label: 'field-names.quantized-mesh.productionMethod',
-  },
   geographicArea: {
     label: 'field-names.quantized-mesh.geographicArea',
+  },
+  productSource: {
+    label: 'field-names.quantized-mesh.productSource',
+  },
+  productStatus: {
+    label: 'field-names.quantized-mesh.productStatus',
   },
   productBoundingBox: {
     label: 'field-names.quantized-mesh.productBoundingBox',

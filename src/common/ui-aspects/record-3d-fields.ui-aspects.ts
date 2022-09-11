@@ -42,20 +42,17 @@ const pycsw3DCatalogRecordAspects = {
   maxResolutionMeter: {
     label: 'field-names.3d.maxResolutionMeter',
   },
-  nominalResolution: {
-    label: 'field-names.3d.nominalResolution',
-  },
   maxAccuracyCE90: {
     label: 'field-names.3d.maxAccuracyCE90',
   },
-  absoluteAccuracyLEP90: {
-    label: 'field-names.3d.absoluteAccuracyLEP90',
+  absoluteAccuracyLE90: {
+    label: 'field-names.3d.absoluteAccuracyLE90',
   },
   accuracySE90: {
     label: 'field-names.3d.accuracySE90',
   },
-  relativeAccuracyLEP90: {
-    label: 'field-names.3d.relativeAccuracyLEP90',
+  relativeAccuracyLE90: {
+    label: 'field-names.3d.relativeAccuracyLE90',
   },
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
@@ -80,10 +77,6 @@ const pycsw3DCatalogRecordAspects = {
   srsName: {
     label: 'field-names.3d.srsName',
   },
-  srsOrigin: {
-    label: 'field-names.3d.srsOrigin',
-    fullWidth: true,
-  },
   region: {
     label: 'field-names.3d.region',
     fullWidth: true,
@@ -106,9 +99,6 @@ const pycsw3DCatalogRecordAspects = {
   producerName: {
     label: 'field-names.3d.producerName',
   },
-  productionMethod: {
-    label: 'field-names.3d.productionMethod',
-  },
   minFlightAlt: {
     label: 'field-names.3d.minFlightAlt',
   },
@@ -117,6 +107,12 @@ const pycsw3DCatalogRecordAspects = {
   },
   geographicArea: {
     label: 'field-names.3d.geographicArea',
+  },
+  productSource: {
+    label: 'field-names.3d.productSource',
+  },
+  productStatus: {
+    label: 'field-names.3d.productStatus',
   },
   productBoundingBox: {
     label: 'field-names.3d.productBoundingBox',
