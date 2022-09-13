@@ -12,6 +12,11 @@ export class CatalogManager3D implements ICatalogManagerService {
     this.serviceURL = this.config.get('catalogServices.3d.url');
   }
 
+  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    await requestHandler(`${this.serviceURL}/metadata/ChangeStatus/${record.id}`, 'PATCH', this.buildPayload(record));
+    return record;
+  }
+
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
     await requestHandler(`${this.serviceURL}/metadata/${record.id}`, 'PATCH', this.buildPayload(record));
     return record;

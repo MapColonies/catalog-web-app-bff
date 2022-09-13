@@ -12,6 +12,11 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     this.serviceURL = this.config.get('catalogServices.raster.url');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    return Promise.reject('Unimplemented service');
+  }
+
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
     await requestHandler(`${this.serviceURL}/records/${record.id}`, 'PUT', this.buildPayload(record));
     return record;

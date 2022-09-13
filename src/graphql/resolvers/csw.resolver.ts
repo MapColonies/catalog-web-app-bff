@@ -107,6 +107,21 @@ export class LayerMetadataMixedResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
+  public async updateStatus(
+    @Arg('data')
+    data: RecordUpdatePartial
+  ): Promise<string> {
+    try {
+      await this.catalogManager.updateStatus(data);
+      return 'ok';
+    } catch (err) {
+      this.logger.error(err);
+      throw err;
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation((type) => String)
   public async updateMetadata(
     @Arg('data')
     data: RecordUpdatePartial

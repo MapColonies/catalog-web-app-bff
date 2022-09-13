@@ -22,8 +22,16 @@ export class CatalogManager implements ICatalogManagerService {
     this.catalogServices.DEM = new CatalogManagerDem(this.config, this.logger);
   }
 
+  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    this.logger.info(`[CatalogManager][updateStatus] starting status update for entity ${record.type}.`);
+
+    const catalogManagerInstance = this.getManagerInstance(record.type);
+    const updatedData = await catalogManagerInstance.updateStatus(record);
+    return updatedData;
+  }
+
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    this.logger.info(`[CatalogManager][updateMetadata] starting update for entity ${record.type}.`);
+    this.logger.info(`[CatalogManager][updateMetadata] starting metadata update for entity ${record.type}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const updatedData = await catalogManagerInstance.updateMetadata(record);

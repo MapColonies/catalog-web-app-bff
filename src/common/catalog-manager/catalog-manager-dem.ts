@@ -11,6 +11,11 @@ export class CatalogManagerDem implements ICatalogManagerService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+    return Promise.reject('Unimplemented service');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
     return Promise.reject('Unimplemented service');
   }
