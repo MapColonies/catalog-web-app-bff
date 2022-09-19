@@ -22,7 +22,7 @@ export const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, BestRecord, LayerDemRecord, VectorBestRecord, QuantizedMeshBestRecord] as const,
   resolveType: (value) => {
-    if ('maxAccuracyCE90' in value) {
+    if (value.productType === ProductType.PHOTO_REALISTIC_3D) {
       return Layer3DRecord;
     } else if ('verticalDatum' in (value as LayerDemRecord)) {
       return LayerDemRecord;
