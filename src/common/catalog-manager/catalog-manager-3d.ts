@@ -13,7 +13,7 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    await requestHandler(`${this.serviceURL}/metadata/ChangeStatus/${record.id}`, 'PATCH', this.buildPayload(record));
+    await requestHandler(`${this.serviceURL}/metadata/status/${record.id}`, 'PATCH', this.buildPayload(record));
     return record;
   }
 
