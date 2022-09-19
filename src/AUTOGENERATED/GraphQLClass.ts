@@ -407,8 +407,8 @@ export class QuantizedMeshBestRecordInput {
     public productBoundingBox?: string;
     @Field({ nullable: true })
     public productSource?: string;
-    @Field((type) => RecordStatus, { nullable: false })
-    public productStatus: RecordStatus;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -821,8 +821,8 @@ export class QuantizedMeshBestRecord {
     public productBoundingBox?: string;
     @Field({ nullable: true })
     public productSource?: string;
-    @Field((type) => RecordStatus, { nullable: false })
-    public productStatus: RecordStatus;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
