@@ -26,6 +26,8 @@ export class DiscreteOrderInput {
 
 @InputType()
 export class LayerRasterRecordInput {
+    @Field({ nullable: false })
+    public id: string;
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
     @Field({ nullable: false })
@@ -80,8 +82,6 @@ export class LayerRasterRecordInput {
     public includedInBests?: string[];
     @Field({ nullable: true })
     public productBoundingBox?: string;
-    @Field({ nullable: false })
-    public id: string;
     @Field({ nullable: true })
     public insertDate?: Date;
     @Field({ nullable: true })
@@ -443,6 +443,8 @@ export class DiscreteOrder {
 
 @ObjectType()
 export class LayerRasterRecord {
+    @Field({ nullable: false })
+    public id: string;
     @Field((type) => RecordType, { nullable: true })
     public type?: RecordType;
     @Field({ nullable: false })
@@ -497,8 +499,6 @@ export class LayerRasterRecord {
     public includedInBests?: string[];
     @Field({ nullable: true })
     public productBoundingBox?: string;
-    @Field({ nullable: false })
-    public id: string;
     @Field({ nullable: true })
     public insertDate?: Date;
     @Field({ nullable: true })
