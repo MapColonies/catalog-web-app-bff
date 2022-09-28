@@ -77,6 +77,22 @@ export class JobResolver {
     }
   }
 
+  @Mutation((type) => String)
+  public async jobAbort(
+    @Arg('id')
+    id: string
+  ): Promise<string> {
+    try {
+      this.logger.info(`[JobResolver][jobAbort] aborting job with id: ${id}`);
+
+      await this.abortJobHandler(id);
+      return 'ok';
+    } catch (err) {
+      this.logger.error(err as string);
+      throw err;
+    }
+  }
+
   private async getJobs(params?: JobsSearchParams): Promise<Job[]> {
     const res = await requestHandler(`${this.serviceURL}/jobs`, 'GET', {
       params: {
@@ -97,6 +113,11 @@ export class JobResolver {
       },
     });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return 'ok';
+  }
+
+  private async abortJobHandler(id: string): Promise<string> {
+    await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {});
     return 'ok';
   }
 
