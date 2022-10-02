@@ -887,6 +887,7 @@ export interface TMCEnums {
         icon: string,
         translationKey: string,
         parent: string,
+        internal: boolean,
         properties: Record<string, unknown>,
     }
 };
@@ -901,6 +902,7 @@ export const mcEnums = Object.values({ ...enumUnionValues }).reduce((enumValues,
                 icon: "",
                 translationKey: "",
                 parent: "",
+                internal: false,
                 properties: {}
             }
         };
