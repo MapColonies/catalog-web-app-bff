@@ -469,8 +469,8 @@ export class LayerRasterRecord {
     public sourceDateEnd: Date;
     @Field({ nullable: true })
     public minHorizontalAccuracyCE90?: number;
-    @Field((type) => [String], { nullable: false })
-    public sensors: string[];
+    @Field((type) => [String], { nullable: true })
+    public sensors?: string[];
     @Field((type) => [String], { nullable: false })
     public region: string[];
     @Field({ nullable: true })
