@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.11.1...v1.12.0) (2022-10-03)
+
+
+### Features
+
+* 3D profile 2.0 ([#103](https://github.com/MapColonies/catalog-web-app-bff/issues/103)) ([fa24b25](https://github.com/MapColonies/catalog-web-app-bff/commit/fa24b2533b4a6fde1dc5bf1688218106bd1acb0a))
+* resolve raw enums for client base concept ([#107](https://github.com/MapColonies/catalog-web-app-bff/issues/107)) ([9e44912](https://github.com/MapColonies/catalog-web-app-bff/commit/9e449126539a54ede8063f50d673d252457b1df4))
+
+
+### Bug Fixes
+
+* abort job status support + disable job actions ([#108](https://github.com/MapColonies/catalog-web-app-bff/issues/108)) ([e1c262c](https://github.com/MapColonies/catalog-web-app-bff/commit/e1c262c484bef60c3437e5ba67ea81ab5a085f99))
+* mc models version ([#105](https://github.com/MapColonies/catalog-web-app-bff/issues/105)) ([8e49fd5](https://github.com/MapColonies/catalog-web-app-bff/commit/8e49fd55efdd79551e180e7bc17860b6c1d65e20))
+* missing internal prop ([12c0777](https://github.com/MapColonies/catalog-web-app-bff/commit/12c07772e4d5b0c618c1fef7acf5e37e9514a514))
+* missing internal prop ([#109](https://github.com/MapColonies/catalog-web-app-bff/issues/109)) ([95e793f](https://github.com/MapColonies/catalog-web-app-bff/commit/95e793fd5143ece2f558844f333990760f52f34c))
+
 ### [1.11.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.11.0...v1.11.1) (2022-09-05)
 
 
