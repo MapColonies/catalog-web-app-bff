@@ -59,6 +59,7 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   links: {
     label: 'field-names.vector-raster.links',
+    fullWidth: true,
   },
   'link.name': {
     label: 'field-names.vector-raster.link.name',
