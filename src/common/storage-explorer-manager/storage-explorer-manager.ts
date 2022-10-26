@@ -103,7 +103,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   private transformMetadataJsonToEntity(metadata: CatalogRecordType): CatalogRecordType {
     const { isDate } = fieldTypes;
 
-    const metadataWithFakeId: Record<string, unknown> = { ...metadata, id: 'NOT_DEFINED' };
+    const metadataWithFakeId: Record<string, unknown> = { ...metadata, id: 'UNDEFINED' };
     const SHOULD_SPECIAL_TREAT_FIELD = true;
 
     for (const [fieldName, val] of Object.entries(metadata)) {

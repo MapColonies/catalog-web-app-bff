@@ -29,13 +29,14 @@ export class CapabilitiesManagerDem implements ICapabilitiesManagerInstance {
     // MOCK DATA - end
     const traversalObj = getTraversalObj(response.data as string, xmlParserOptions);
     const jsonObj = convertToJson(traversalObj, xmlParserOptions);
-    const layerList = jsonObj.Capabilities.Contents.Layer.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
-    const capabilityList: Capability[] = layerList.map((layer: { [x: string]: any }) => ({
+    const layerList = jsonObj?.Capabilities?.Contents?.Layer?.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
+    const capabilityList: Capability[] = layerList?.map((layer: { [x: string]: any }) => ({
       id: layer['ows:Identifier'],
       style: layer['Style']['ows:Identifier'],
       format: layer['Format'],
       tileMatrixSet: layer['TileMatrixSetLink'].map((link: { TileMatrixSet: string }) => link.TileMatrixSet),
     }));
-    return capabilityList;
+    // eslint-disable-next-line
+    return capabilityList ?? [];
   }
 }
