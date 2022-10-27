@@ -28,8 +28,9 @@ export const LayerMetadataMixedUnion = createUnionType({
       return LayerDemRecord;
     } else if ('discretes' in (value as BestRecord)) {
       return BestRecord;
-    } else if (value.productType === ProductType.RASTER_VECTOR_BEST) {
-      return VectorBestRecord;
+      // else if (value.productType === ProductType.RASTER_VECTOR_BEST) {
+      //   return VectorBestRecord;
+      // }
     } else if (value.productType === ProductType.QUANTIZED_MESH_DTM_BEST) {
       return QuantizedMeshBestRecord;
     } else {
