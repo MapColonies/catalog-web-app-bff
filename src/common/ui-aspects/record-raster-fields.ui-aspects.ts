@@ -40,6 +40,9 @@ const pycswLayerCatalogRecordAspects = {
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
   },
+  insertDate: {
+    label: 'field-names.raster.insertDate',
+  },
   updateDate: {
     label: 'field-names.raster.update-date',
   },
