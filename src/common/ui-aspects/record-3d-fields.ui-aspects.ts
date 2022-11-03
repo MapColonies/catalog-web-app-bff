@@ -24,18 +24,20 @@ const pycsw3DCatalogRecordAspects = {
   creationDate: {
     label: 'field-names.3d.creationDate',
     fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.3d.updateDate',
     fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
@@ -160,6 +162,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.3d.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',

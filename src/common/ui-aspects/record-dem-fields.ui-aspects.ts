@@ -20,14 +20,15 @@ const pycswDemCatalogRecordAspects = {
   },
   updateDate: {
     label: 'field-names.dem.updateDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
@@ -144,6 +145,7 @@ const pycswDemCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.dem.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   wktGeometry: {
     label: 'field-names.dem.wktGeometry',

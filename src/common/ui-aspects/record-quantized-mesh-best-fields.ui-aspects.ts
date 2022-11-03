@@ -24,18 +24,20 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   creationDate: {
     label: 'field-names.quantized-mesh.creationDate',
     fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.quantized-mesh.updateDate',
     fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   minResolutionMeter: {
     label: 'field-names.quantized-mesh.minResolutionMeter',
@@ -142,6 +144,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.quantized-mesh.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   wktGeometry: {
     label: 'field-names.quantized-mesh.wktGeometry',
