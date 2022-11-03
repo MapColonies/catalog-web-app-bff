@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import config from 'config';
+import { IContext } from './common/interfaces';
 
 export enum CatalogRecordItems {
   RASTER = 'RASTER',
@@ -9,16 +10,23 @@ export enum CatalogRecordItems {
   QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
-export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig): Promise<AxiosResponse> => {
+export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
   return axios
-    .request({ url, method: method as Method, ...params })
+    .request({
+      url,
+      method: method as Method,
+      ...params,
+      headers: {
+        ...({ ...params.headers, origin: ctx.requestHeaders.origin } ?? { origin: ctx.requestHeaders.origin }),
+      } as Record<string, unknown>,
+    })
     .then((res) => res)
     .catch((error) => {
       throw error;
     });
 };
 
-export const requestHandlerWithToken = async (url: string, method: string, params: AxiosRequestConfig): Promise<AxiosResponse> => {
+export const requestHandlerWithToken = async (url: string, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
   const injectionType = config.get<string>('accessToken.injectionType');
   const attributeName = config.get<string>('accessToken.attributeName');
   const tokenValue = config.get<string>('accessToken.tokenValue');
@@ -36,5 +44,5 @@ export const requestHandlerWithToken = async (url: string, method: string, param
     } as Record<string, unknown>;
   }
 
-  return requestHandler(url, method, reqConfig);
+  return requestHandler(url, method, reqConfig, ctx);
 };

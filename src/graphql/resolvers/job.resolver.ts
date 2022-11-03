@@ -2,12 +2,13 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg, Mutation } from 'type-graphql';
+import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
 import { transform, mapKeys, mapValues } from 'lodash';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
 import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
+import { IContext } from '../../common/interfaces';
 //import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
 
 @Resolver()
@@ -25,6 +26,8 @@ export class JobResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [Job])
   public async jobs(
+    @Ctx()
+    ctx: IContext,
     @Arg('params', { nullable: true })
     params?: JobsSearchParams
   ): Promise<Job[]> {
@@ -32,7 +35,7 @@ export class JobResolver {
       this.logger.info(`[JobResolver][jobs] searching jobs with params: ${JSON.stringify(params)}`);
 
       // TODO: use a real call
-      const data = await Promise.resolve(this.getJobs(params));
+      const data = await Promise.resolve(this.getJobs(ctx, params));
       // const data = await Promise.resolve(MOCK_JOBS_DATA);
       return this.transformRecordsToEntity(data);
       // return data;
@@ -48,12 +51,14 @@ export class JobResolver {
     @Arg('id')
     id: string,
     @Arg('data')
-    data: JobUpdateData
+    data: JobUpdateData,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
       this.logger.info(`[JobResolver][updateJob] updating job with id: ${id}, data: ${JSON.stringify(data)} `);
 
-      await this.updateJobHandler(id, data);
+      await this.updateJobHandler(id, data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
@@ -80,12 +85,14 @@ export class JobResolver {
   @Mutation((type) => String)
   public async jobAbort(
     @Arg('id')
-    id: string
+    id: string,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
       this.logger.info(`[JobResolver][jobAbort] aborting job with id: ${id}`);
 
-      await this.abortJobHandler(id);
+      await this.abortJobHandler(id, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
@@ -93,31 +100,41 @@ export class JobResolver {
     }
   }
 
-  private async getJobs(params?: JobsSearchParams): Promise<Job[]> {
-    const res = await requestHandler(`${this.serviceURL}/jobs`, 'GET', {
-      params: {
-        ...params,
-        fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
-        tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
-        shouldReturnTasks: false,
+  private async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
+    const res = await requestHandler(
+      `${this.serviceURL}/jobs`,
+      'GET',
+      {
+        params: {
+          ...params,
+          fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
+          tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
+          shouldReturnTasks: false,
+        },
       },
-    });
+      ctx
+    );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
   }
 
-  private async updateJobHandler(id: string, params: JobUpdateData): Promise<string> {
-    await requestHandler(`${this.serviceURL}/jobs/${id}`, 'PUT', {
-      data: {
-        ...params,
+  private async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
+    await requestHandler(
+      `${this.serviceURL}/jobs/${id}`,
+      'PUT',
+      {
+        data: {
+          ...params,
+        },
       },
-    });
+      ctx
+    );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return 'ok';
   }
 
-  private async abortJobHandler(id: string): Promise<string> {
-    await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {});
+  private async abortJobHandler(id: string, ctx: IContext): Promise<string> {
+    await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {}, ctx);
     return 'ok';
   }
 
