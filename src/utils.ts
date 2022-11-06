@@ -17,7 +17,7 @@ export const requestHandler = async (url: string, method: string, params: AxiosR
       method: method as Method,
       ...params,
       headers: {
-        ...({ ...params.headers, origin: ctx.requestHeaders.origin } ?? { origin: ctx.requestHeaders.origin }),
+        ...{ ...(params.headers ?? {}), origin: ctx.requestHeaders.origin },
       } as Record<string, unknown>,
     })
     .then((res) => res)
