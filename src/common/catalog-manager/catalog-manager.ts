@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { ICatalogManagerService } from './catalog-manager.interface';
@@ -22,19 +22,19 @@ export class CatalogManager implements ICatalogManagerService {
     this.catalogServices.DEM = new CatalogManagerDem(this.config, this.logger);
   }
 
-  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+  public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     this.logger.info(`[CatalogManager][updateStatus] starting status update for entity ${record.type}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
-    const updatedData = await catalogManagerInstance.updateStatus(record);
+    const updatedData = await catalogManagerInstance.updateStatus(record, ctx);
     return updatedData;
   }
 
-  public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+  public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     this.logger.info(`[CatalogManager][updateMetadata] starting metadata update for entity ${record.type}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
-    const updatedData = await catalogManagerInstance.updateMetadata(record);
+    const updatedData = await catalogManagerInstance.updateMetadata(record, ctx);
     return updatedData;
   }
 

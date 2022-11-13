@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
 import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestHandler } from '../../utils';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
 export class CatalogManagerRaster implements ICatalogManagerService {
@@ -13,12 +13,12 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async updateStatus(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
+  public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     return Promise.reject('Unimplemented service');
   }
 
-  public async updateMetadata(record: RecordUpdatePartial): Promise<RecordUpdatePartial> {
-    await requestHandler(`${this.serviceURL}/records/${record.id}`, 'PUT', this.buildPayload(record));
+  public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
+    await requestHandler(`${this.serviceURL}/records/${record.id}`, 'PUT', this.buildPayload(record), ctx);
     return record;
   }
 

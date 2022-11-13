@@ -12,7 +12,7 @@ import { buildSchemaSync } from 'type-graphql';
 import { printSchema } from 'graphql';
 import { ApolloServer } from 'apollo-server-express';
 import { Services } from './common/constants';
-import { IConfig } from './common/interfaces';
+import { IConfig, IContext } from './common/interfaces';
 import { getResolvers } from './graphql/resolvers';
 
 @injectable()
@@ -65,7 +65,12 @@ export class ServerBuilder {
   private buildGraphQL(): void {
     const resolvers = getResolvers();
     const schema = buildSchemaSync({ resolvers });
-    const server = new ApolloServer({ schema });
+    const server = new ApolloServer({
+      schema,
+      context: ({ req }): IContext => ({
+        requestHeaders: req.headers,
+      }),
+    });
     this.logger.info(`Started GraphQL server with schema: ${printSchema(schema)}`);
     server.applyMiddleware({ app: this.serverInstance });
   }

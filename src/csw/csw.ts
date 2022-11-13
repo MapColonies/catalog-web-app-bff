@@ -13,7 +13,7 @@ import {
 import { inject, singleton } from 'tsyringe';
 import { get, intersection } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
-import { IConfig } from '../common/interfaces';
+import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
@@ -66,7 +66,7 @@ export class CSW {
     };
   }
 
-  public async getRecords(start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
+  public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
     this.logger.info(
       `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
     );
@@ -105,23 +105,23 @@ export class CSW {
           getRecords.push(
             ...this.getEntitiesCswInstances().map(async (client) => {
               return client.entities.includes(RecordType.RECORD_RASTER)
-                ? client.instance.getRecords(start, end, rasterOpts)
-                : client.instance.getRecords(start, end, newOpts);
+                ? client.instance.getRecords(ctx, start, end, rasterOpts)
+                : client.instance.getRecords(ctx, start, end, newOpts);
             })
           );
           break;
         case RecordType.RECORD_RASTER:
-          getRecords.push(this.cswClients.RASTER.instance.getRecords(start, end, rasterOpts));
+          getRecords.push(this.cswClients.RASTER.instance.getRecords(ctx, start, end, rasterOpts));
           break;
         case RecordType.RECORD_3D:
-          getRecords.push(this.cswClients['3D'].instance.getRecords(start, end, newOpts));
+          getRecords.push(this.cswClients['3D'].instance.getRecords(ctx, start, end, newOpts));
           break;
         case RecordType.RECORD_DEM:
-          getRecords.push(this.cswClients.DEM.instance.getRecords(start, end, newOpts));
+          getRecords.push(this.cswClients.DEM.instance.getRecords(ctx, start, end, newOpts));
           break;
       }
     } else {
-      getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecords(start, end, newOpts)));
+      getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecords(ctx, start, end, newOpts)));
     }
 
     const data = await Promise.all(getRecords);
@@ -130,20 +130,20 @@ export class CSW {
     return data.flat();
   }
 
-  public async getRecordsById(idList: string[]): Promise<CatalogRecordType[]> {
+  public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
     this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
 
     const getRecords = [];
-    getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList)));
+    getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList, ctx)));
     const data = await Promise.all(getRecords);
     return data.flat();
   }
 
-  public async getDomain(domain: string, recType: RecordType): Promise<string[]> {
+  public async getDomain(domain: string, recType: RecordType, ctx: IContext): Promise<string[]> {
     this.logger.info(`[CSW][getDomain] getting domain ${domain}, for entity ${recType}`);
 
     const clientType = this.recordTypeToEntity(recType);
-    const data = await this.cswClients[clientType].instance.getDomain(domain);
+    const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);
     return data;
   }
 

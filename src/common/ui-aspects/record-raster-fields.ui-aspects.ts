@@ -42,6 +42,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.raster.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.raster.update-date',

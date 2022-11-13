@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { ProductType, RecordType } from '@map-colonies/mc-model-types';
 import { container } from 'tsyringe';
-import { Resolver, Query, Mutation, createUnionType, Arg } from 'type-graphql';
+import { Resolver, Query, Mutation, createUnionType, Arg, Ctx } from 'type-graphql';
 import {
   BestRecord,
   Layer3DRecord,
@@ -13,6 +13,7 @@ import {
 import { CatalogManager } from '../../common/catalog-manager/catalog-manager';
 import { Services } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
+import { IContext } from '../../common/interfaces';
 import { CSW } from '../../csw/csw';
 import { Ingestion3DData, IngestionDemData, IngestionRasterData, RecordUpdatePartial, SearchOptions, StringArray } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
@@ -56,6 +57,8 @@ export class LayerMetadataMixedResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [LayerMetadataMixedUnion])
   public async search(
+    @Ctx()
+    ctx: IContext,
     @Arg('start', { nullable: true })
     start?: number,
     @Arg('end', { nullable: true })
@@ -64,7 +67,7 @@ export class LayerMetadataMixedResolver {
     opts?: SearchOptions
   ): Promise<LayerMetadataUnionType[]> {
     try {
-      const data = await this.csw.getRecords(start, end, opts);
+      const data = await this.csw.getRecords(ctx, start, end, opts);
       return data;
     } catch (err) {
       this.logger.error(err);
@@ -76,10 +79,12 @@ export class LayerMetadataMixedResolver {
   @Query((type) => [LayerMetadataMixedUnion])
   public async searchById(
     @Arg('idList', { nullable: false })
-    idList: StringArray
+    idList: StringArray,
+    @Ctx()
+    ctx: IContext
   ): Promise<LayerMetadataUnionType[]> {
     try {
-      const data = await this.csw.getRecordsById(idList.value);
+      const data = await this.csw.getRecordsById(idList.value, ctx);
       return data;
     } catch (err) {
       this.logger.error(err);
@@ -93,10 +98,12 @@ export class LayerMetadataMixedResolver {
     @Arg('domain', { nullable: false })
     domain: string,
     @Arg('recordType', { nullable: false })
-    recordType: RecordType
+    recordType: RecordType,
+    @Ctx()
+    ctx: IContext
   ): Promise<StringArrayObjectType> {
     try {
-      const data = await this.csw.getDomain(domain, recordType);
+      const data = await this.csw.getDomain(domain, recordType, ctx);
       return {
         value: data,
       };
@@ -110,10 +117,12 @@ export class LayerMetadataMixedResolver {
   @Mutation((type) => String)
   public async updateStatus(
     @Arg('data')
-    data: RecordUpdatePartial
+    data: RecordUpdatePartial,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      await this.catalogManager.updateStatus(data);
+      await this.catalogManager.updateStatus(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -125,10 +134,12 @@ export class LayerMetadataMixedResolver {
   @Mutation((type) => String)
   public async updateMetadata(
     @Arg('data')
-    data: RecordUpdatePartial
+    data: RecordUpdatePartial,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      await this.catalogManager.updateMetadata(data);
+      await this.catalogManager.updateMetadata(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -140,10 +151,12 @@ export class LayerMetadataMixedResolver {
   @Mutation((type) => String)
   public async startRasterIngestion(
     @Arg('data')
-    data: IngestionRasterData
+    data: IngestionRasterData,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -155,10 +168,12 @@ export class LayerMetadataMixedResolver {
   @Mutation((type) => String)
   public async start3DIngestion(
     @Arg('data')
-    data: Ingestion3DData
+    data: Ingestion3DData,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
@@ -170,10 +185,12 @@ export class LayerMetadataMixedResolver {
   @Mutation((type) => String)
   public async startDemIngestion(
     @Arg('data')
-    data: IngestionDemData
+    data: IngestionDemData,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      await this.ingestionManager.ingest(data);
+      await this.ingestionManager.ingest(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);
