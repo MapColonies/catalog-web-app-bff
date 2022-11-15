@@ -5,14 +5,13 @@ import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { JobsSearchParams, JobUpdateData } from '../../graphql/inputTypes';
 import { Job } from '../../graphql/job';
-import { IJobManagerService } from './job-manager.interface';
+import { IJobManagerService, JobWithRecordType } from './job-manager.interface';
 import { JobManagerRaster } from './job-manager-raster';
 import { JobManager3D } from './job-manager-3d';
 
 type JobManagerServices = { [key in RecordType]?: IJobManagerService };
-
 @singleton()
-export class JobManager implements IJobManagerService {
+export class JobManager implements Omit<IJobManagerService, 'transformRecordToEntity'> {
   private readonly jobManagers: JobManagerServices = {} as JobManagerServices;
   private readonly servedEntities: RecordType[] = [] as RecordType[];
 
@@ -27,30 +26,54 @@ export class JobManager implements IJobManagerService {
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
+    const NESTED_ARR_LEVEL = 2;
+
     const combinedJobs = await Promise.all(
       Object.values(this.jobManagers).map(async (jobManager) => {
         return jobManager.getJobs(ctx, params);
       })
     );
 
-    return combinedJobs.flat(1);
+    return combinedJobs.flat(NESTED_ARR_LEVEL);
   }
 
-  //   public transformRecordsToEntity(cswArray: Job[]): Job[] {
+  public transformRecordsToEntity(cswArray: Job[]): Job[] {
+    return cswArray.map((job) => {
+      const jobRecordType = (job as JobWithRecordType).domain;
+      const jobManagerByType = this.jobManagers[jobRecordType] as IJobManagerService;
 
-  //   }
+      return jobManagerByType.transformRecordToEntity(job);
+    });
+  }
 
-  //   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
+  public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext, domain?: RecordType): Promise<string> {
+    if (typeof this.jobManagers[domain as RecordType]?.updateJobHandler !== 'undefined') {
+      const jobManagerByType = this.jobManagers[domain as RecordType] as IJobManagerService;
+      const response = await jobManagerByType.updateJobHandler?.(id, params, ctx);
 
-  //   }
+      return response as string;
+    }
 
-  //   public async abortJobHandler(id: string, ctx: IContext): Promise<string> {}
+    return 'NOT_IMPLEMENTED';
+  }
+
+  public async abortJobHandler(id: string, ctx: IContext, domain?: RecordType): Promise<string> {
+    if (typeof this.jobManagers[domain as RecordType]?.abortJobHandler !== 'undefined') {
+      const jobManagerByType = this.jobManagers[domain as RecordType] as IJobManagerService;
+      const response = await jobManagerByType.abortJobHandler?.(id, ctx);
+
+      return response as string;
+    }
+
+    return 'NOT_IMPLEMENTED';
+  }
 
   private getJobManagers(jobManagersOptions: JobManagerServices): JobManagerServices {
     return this.servedEntities.reduce((jobManagers, currentEntity) => {
+      const jobManager = jobManagersOptions[currentEntity];
       return {
         ...jobManagers,
-        [currentEntity]: jobManagersOptions[currentEntity],
+        ...(jobManager ? { [currentEntity]: jobManagersOptions[currentEntity] } : {}),
       };
     }, {} as JobManagerServices);
   }

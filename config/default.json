@@ -66,6 +66,9 @@
   "jobServices": {
     "raster": {
       "url": "http://localhost:8000/job-manager-service"
+    },
+    "3d": {
+      "url": "http://localhost:8000/job-manager-3d-service"
     }
   },
   "storageExplorerServices": {
