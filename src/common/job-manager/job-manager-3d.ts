@@ -1,8 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { isEmpty } from 'lodash';
-import { JobsSearchParams } from '../../graphql/inputTypes';
-import { Job } from '../../graphql/job';
+import { JobsSearchParams, TasksSearchParams } from '../../graphql/inputTypes';
+import { Job, Task } from '../../graphql/job';
 import { requestHandler } from '../../utils';
 import { IConfig, IContext } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
@@ -48,4 +48,10 @@ export class JobManager3D implements IJobManagerService {
       }
     }, {} as Job);
   };
+
+  public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {}, ctx);
+
+    return res.data as Task[];
+  }
 }

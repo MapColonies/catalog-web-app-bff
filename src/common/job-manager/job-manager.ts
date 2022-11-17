@@ -3,8 +3,8 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { JobsSearchParams, JobUpdateData } from '../../graphql/inputTypes';
-import { Job } from '../../graphql/job';
+import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { Job, Task } from '../../graphql/job';
 import { IJobManagerService, JobWithRecordType } from './job-manager.interface';
 import { JobManagerRaster } from './job-manager-raster';
 import { JobManager3D } from './job-manager-3d';
@@ -66,6 +66,13 @@ export class JobManager implements Omit<IJobManagerService, 'transformRecordToEn
     }
 
     return 'NOT_IMPLEMENTED';
+  }
+
+  public async getTasks(params: TasksSearchParams, ctx: IContext, domain?: RecordType): Promise<Task[]> {
+    const jobManagerByType = this.jobManagers[domain as RecordType] as IJobManagerService;
+    const response = await jobManagerByType.getTasks(params, ctx);
+
+    return response;
   }
 
   private getJobManagers(jobManagersOptions: JobManagerServices): JobManagerServices {

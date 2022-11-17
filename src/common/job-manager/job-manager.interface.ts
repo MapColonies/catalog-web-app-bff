@@ -1,10 +1,11 @@
 import { RecordType } from '@map-colonies/mc-model-types';
-import { JobsSearchParams, JobUpdateData } from '../../graphql/inputTypes';
-import { Job } from '../../graphql/job';
+import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { Job, Task } from '../../graphql/job';
 import { IContext } from '../interfaces';
 
 export interface IJobManagerService {
   getJobs: (ctx: IContext, params?: JobsSearchParams) => Promise<Job[]>;
+  getTasks: (params: TasksSearchParams, ctx: IContext, domain?: RecordType) => Promise<Task[]>;
   updateJobHandler?: (id: string, params: JobUpdateData, ctx: IContext, domain?: RecordType) => Promise<string>;
   abortJobHandler?: (id: string, ctx: IContext, domain?: RecordType) => Promise<string>;
   transformRecordsToEntity?: (cswArray: Job[]) => Job[];
