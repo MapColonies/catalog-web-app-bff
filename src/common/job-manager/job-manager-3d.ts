@@ -1,6 +1,10 @@
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { isEmpty } from 'lodash';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import MOCK_JOBS from '../../graphql/MOCKS/job-manager/3d/MOCK_JOBS';
+
 import { JobsSearchParams, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { requestHandler } from '../../utils';
@@ -32,6 +36,9 @@ export class JobManager3D implements IJobManagerService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const result = (!isEmpty(res.data) ? res.data : []) as Job[];
+
+    // Mock Jobs
+    // const result = await Promise.resolve(MOCK_JOBS);
 
     return result.map((job) => ({ ...job, domain: this.jobManagerType }));
   }
