@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
@@ -9,7 +7,6 @@ import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
-//import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
 
 @Resolver()
 export class JobResolver {
@@ -23,7 +20,6 @@ export class JobResolver {
     this.jobManager = container.resolve(JobManager);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [Job])
   public async jobs(
     @Ctx()
@@ -32,35 +28,25 @@ export class JobResolver {
     params?: JobsSearchParams
   ): Promise<Job[]> {
     try {
-      this.logger.info(`[JobResolver][jobs] searching jobs with params: ${JSON.stringify(params)}`);
-
-      // TODO: use a real call
       const data = await Promise.resolve(this.jobManager.getJobs(ctx, params));
-      // const data = await Promise.resolve(MOCK_JOBS_DATA);
       return this.jobManager.transformRecordsToEntity(data);
-      // return data;
     } catch (err) {
       this.logger.error(err as string);
       throw err;
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateJob(
     @Arg('id')
     id: string,
     @Arg('data')
     data: JobUpdateData,
-    @Arg('domain')
-    domain: RecordType,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][updateJob] updating job with id: ${id}, domain: ${domain}, data: ${JSON.stringify(data)} `);
-
-      await this.jobManager.updateJobHandler(id, data, ctx, domain);
+      await this.jobManager.updateJobHandler(id, data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
@@ -71,12 +57,12 @@ export class JobResolver {
   @Mutation((type) => String)
   public async jobRetry(
     @Arg('id')
-    id: string
+    id: string,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][jobRetry] retrying job with id: ${id}`);
-
-      const response = await Promise.resolve(`Ok! Mutate job retry! Job Id: ${id}`);
+      const response = await this.jobManager.resetJobHandler(id, ctx);
       return response;
     } catch (err) {
       this.logger.error(err as string);
@@ -88,15 +74,11 @@ export class JobResolver {
   public async jobAbort(
     @Arg('id')
     id: string,
-    @Arg('domain')
-    domain: RecordType,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][jobAbort] aborting job with id: ${id}, domain: ${domain}`);
-
-      await this.jobManager.abortJobHandler(id, ctx, domain);
+      await this.jobManager.abortJobHandler(id, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);

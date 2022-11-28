@@ -5,9 +5,10 @@ import { IContext } from '../interfaces';
 
 export interface IJobManagerService {
   getJobs: (ctx: IContext, params?: JobsSearchParams) => Promise<Job[]>;
-  getTasks: (params: TasksSearchParams, ctx: IContext, domain?: RecordType) => Promise<Task[]>;
-  updateJobHandler?: (id: string, params: JobUpdateData, ctx: IContext, domain?: RecordType) => Promise<string>;
-  abortJobHandler?: (id: string, ctx: IContext, domain?: RecordType) => Promise<string>;
+  getTasks: (params: TasksSearchParams, ctx: IContext) => Promise<Task[]>;
+  updateJobHandler: (id: string, params: JobUpdateData, ctx: IContext) => Promise<string>;
+  abortJobHandler: (id: string, ctx: IContext) => Promise<string>;
+  resetJobHandler: (id: string, ctx: IContext) => Promise<string>;
   transformRecordsToEntity?: (cswArray: Job[]) => Job[];
   transformRecordToEntity: (cswJob: Job) => Job;
 }

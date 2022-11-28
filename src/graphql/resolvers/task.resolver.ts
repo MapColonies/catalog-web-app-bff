@@ -30,13 +30,11 @@ export class TaskResolver {
   public async tasks(
     @Arg('params', { nullable: true })
     params: TasksSearchParams,
-    @Arg('domain')
-    domain: RecordType,
     @Ctx()
     ctx: IContext
   ): Promise<TasksGroup[]> {
     try {
-      const data: Task[] = await Promise.resolve(this.getTasks(params, ctx, domain));
+      const data: Task[] = await this.jobManager.getTasks(params, ctx);
 
       return this.groupTasks(data);
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
@@ -45,13 +43,6 @@ export class TaskResolver {
       this.logger.error(err as string);
       throw err;
     }
-  }
-
-  private async getTasks(params: TasksSearchParams, ctx: IContext, domain: RecordType): Promise<Task[]> {
-    this.logger.info(`[TaskResolver][getTasks] fetching ${domain} tasks with params: ${JSON.stringify(params)}`);
-    const res = await this.jobManager.getTasks(params, ctx, domain);
-
-    return res;
   }
 
   /*

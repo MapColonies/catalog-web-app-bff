@@ -3,7 +3,7 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { isEmpty } from 'lodash';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import MOCK_JOBS from '../../graphql/MOCKS/job-manager/raster/MOCK_JOBS';
+import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
@@ -11,12 +11,12 @@ import { requestHandler } from '../../utils';
 import { IConfig, IContext } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 
-export class JobManagerRaster implements IJobManagerService {
+export default class JobManagerCommon implements IJobManagerService {
   private readonly serviceURL: string = '';
   private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
-    this.serviceURL = this.config.get('jobServices.raster.url');
+    this.serviceURL = this.config.get('jobServices.common.url');
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
@@ -60,6 +60,11 @@ export class JobManagerRaster implements IJobManagerService {
 
   public async abortJobHandler(id: string, ctx: IContext): Promise<string> {
     await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {}, ctx);
+    return 'ok';
+  }
+
+  public async resetJobHandler(id: string, ctx: IContext): Promise<string> {
+    await requestHandler(`${this.serviceURL}/jobs/${id}/reset`, 'POST', {}, ctx);
     return 'ok';
   }
 
