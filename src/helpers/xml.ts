@@ -11,12 +11,12 @@ import { Capability, ResourceURL } from '../graphql/capability';
 export const xmlToCapabilities = (idList: string[], xmlData: string): Capability[] => {
   const traversalObj = getTraversalObj(xmlData, xmlParserOptions);
   const jsonObj = convertToJson(traversalObj, xmlParserOptions);
-  const tileMatrixSet = jsonObj?.Capabilities?.Contents?.TileMatrixSet?.map((tileMatrix: { [x: string]: any }) => {
-    return {
-      TileMatrixSetID: tileMatrix['ows:Identifier'],
-      SupportedCRS: tileMatrix['ows:SupportedCRS'],
-      TileMatrixLabels: tileMatrix.TileMatrix,
-    };
+  const tileMatrixSet = new Map();
+  jsonObj?.Capabilities?.Contents?.TileMatrixSet?.forEach((tileMatrix: { [x: string]: any }) => {
+    tileMatrixSet.set(
+      tileMatrix['ows:Identifier'],
+      tileMatrix.TileMatrix.map((t: { [x: string]: any }) => String(t['ows:Identifier']))
+    );
   });
   const layerList = jsonObj?.Capabilities?.Contents?.Layer?.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
   const capabilityList: Capability[] = layerList?.map((layer: { [x: string]: any }) => ({
@@ -24,13 +24,11 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
     style: layer['Style']['ows:Identifier'],
     format: layer['Format'],
     tileMatrixSet: layer['TileMatrixSetLink'].map((link: { TileMatrixSet: string; TileMatrixSetLimits: Record<string, unknown> }) => {
-      const TileMatrixSetID = link.TileMatrixSet;
-      const TileMatrixLabels =
-        link.TileMatrixSetLimits?.TileMatrixLimits ??
-        tileMatrixSet.find((tileMatrix: { [x: string]: any }) => tileMatrix.TileMatrixSetID === TileMatrixSetID)?.TileMatrixLabels;
+      const tileMatrixSetID = link.TileMatrixSet;
+      const tileMatrixLabels = tileMatrixSet.get(tileMatrixSetID);
       return {
-        TileMatrixSetID,
-        TileMatrixLabels,
+        tileMatrixSetID,
+        tileMatrixLabels,
       };
     }),
     url: layer['ResourceURL']
