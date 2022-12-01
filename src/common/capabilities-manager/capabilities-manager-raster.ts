@@ -3,7 +3,7 @@ import { Capability } from '../../graphql/capability';
 import { xmlToCapabilities } from '../../helpers/xml';
 // import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
 import { requestHandlerWithToken } from '../../utils';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';
 
 export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
@@ -13,11 +13,11 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     this.serviceURL = this.config.get('mapServices.raster.url');
   }
 
-  public async getCapabilities(idList: string[]): Promise<Capability[]> {
+  public async getCapabilities(idList: string[], ctx: IContext): Promise<Capability[]> {
     this.logger.info(
       `[CapabilitiesManagerRaster][getCapabilities] calling RASTER getCapabilities: ${this.serviceURL}/wmts/1.0.0/WMTSCapabilities.xml`
     );
-    const response = await requestHandlerWithToken(`${this.serviceURL}/wmts/1.0.0/WMTSCapabilities.xml`, 'GET', {});
+    const response = await requestHandlerWithToken(`${this.serviceURL}/wmts/1.0.0/WMTSCapabilities.xml`, 'GET', {}, ctx);
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end

@@ -2,13 +2,14 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver, Query, Arg, Ctx } from 'type-graphql';
 import moment from 'moment';
 import { Services } from '../../common/constants';
 import { requestHandler } from '../../utils';
 import { TasksSearchParams } from '../inputTypes';
 import { TasksGroup } from '../tasksGroup';
 import { Task } from '../job';
+import { IContext } from '../../common/interfaces';
 //import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
 
 @Resolver()
@@ -27,10 +28,12 @@ export class TaskResolver {
   @Query((type) => [TasksGroup])
   public async tasks(
     @Arg('params', { nullable: true })
-    params: TasksSearchParams
+    params: TasksSearchParams,
+    @Ctx()
+    ctx: IContext
   ): Promise<TasksGroup[]> {
     try {
-      const data: Task[] = await Promise.resolve(this.getTasks(params));
+      const data: Task[] = await Promise.resolve(this.getTasks(params, ctx));
 
       return this.groupTasks(data);
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
@@ -41,10 +44,10 @@ export class TaskResolver {
     }
   }
 
-  private async getTasks(params: TasksSearchParams): Promise<Task[]> {
+  private async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     this.logger.info(`[TaskResolver][getTasks] fetching tasks with params: ${JSON.stringify(params)}`);
 
-    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {});
+    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {}, ctx);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
   }

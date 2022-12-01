@@ -40,8 +40,13 @@ const pycswLayerCatalogRecordAspects = {
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
   },
+  insertDate: {
+    label: 'field-names.raster.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
+  },
   updateDate: {
     label: 'field-names.raster.update-date',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   description: {
     label: 'field-names.raster.description',
@@ -89,17 +94,19 @@ const pycswLayerCatalogRecordAspects = {
   creationDate: {
     label: 'field-names.raster.creation-date',
     fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.raster.sourceDateStart',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
-    dateGranularity: DateGranularity.DATE,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',

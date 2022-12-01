@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { CatalogRecordType, fieldTypes, Services } from '../constants';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
@@ -27,60 +27,60 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     this.explorerServices['3D'] = new StorageExplorerManager3D(this.config, this.logger);
   }
 
-  public async getDirectory(data: ExplorerGetByPathSuffix): Promise<File[]> {
+  public async getDirectory(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<File[]> {
     this.logger.info(`[StorageExplorerManager][getDirectory] start getting directory for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const directoryContent = await storageExplorerManagerInstance.getDirectory(data);
+    const directoryContent = await storageExplorerManagerInstance.getDirectory(data, ctx);
 
     return directoryContent;
   }
 
-  public async getDirectoryById(data: ExplorerGetById): Promise<File[]> {
+  public async getDirectoryById(data: ExplorerGetById, ctx: IContext): Promise<File[]> {
     this.logger.info(`[StorageExplorerManager][getDirectoryById] start getting directory by id for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data);
+    const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data, ctx);
 
     return directoryContent;
   }
 
-  public async getFile(data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
+  public async getFile(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
     this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const fileContent = await storageExplorerManagerInstance.getFile(data);
+    const fileContent = await storageExplorerManagerInstance.getFile(data, ctx);
 
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
 
     return transformedMetadata;
   }
 
-  public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel): Promise<typeof LayerMetadataMixedUnion> {
+  public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
     this.logger.info(`[StorageExplorerManager][resolveMetadataAsModel] resolving metadata for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const fileContent = await storageExplorerManagerInstance.resolveMetadataAsModel(data);
+    const fileContent = await storageExplorerManagerInstance.resolveMetadataAsModel(data, ctx);
 
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
 
     return transformedMetadata;
   }
 
-  public async getFileById(data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
+  public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
     this.logger.info(`[StorageExplorerManager][getFileById] start getting file by id for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const fileContent = await storageExplorerManagerInstance.getFileById(data);
+    const fileContent = await storageExplorerManagerInstance.getFileById(data, ctx);
 
     return fileContent;
   }
 
-  public async getDecryptedId(data: ExplorerGetById): Promise<{ data: string }> {
+  public async getDecryptedId(data: ExplorerGetById, ctx: IContext): Promise<{ data: string }> {
     this.logger.info(`[StorageExplorerManager][getFileById] start decrypting id for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-    const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data);
+    const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data, ctx);
 
     return decryptedId;
   }
