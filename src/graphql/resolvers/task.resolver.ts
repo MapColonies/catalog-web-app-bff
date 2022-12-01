@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
