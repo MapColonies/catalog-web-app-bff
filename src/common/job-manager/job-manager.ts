@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { ProductType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
@@ -6,7 +7,6 @@ import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphq
 import { Job, Task } from '../../graphql/job';
 import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
-import { ProductType } from '@map-colonies/mc-model-types';
 
 type JobManagerType = Omit<IJobManagerService, 'transformRecordToEntity'>;
 @singleton()
