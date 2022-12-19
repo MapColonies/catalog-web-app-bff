@@ -1,31 +1,11 @@
-import { AxiosError } from 'axios';
+import { Logger } from '@map-colonies/js-logger';
+import { getJsonixContext, getQueryPointXMLBody } from './constants';
 import { IDescribeFeatureResponse } from './interfaces';
 
-/* eslint-disable */
-const WFS_2_0 = require('ogc-schemas').WFS_2_0;
-const GML_3_1_1 = require('ogc-schemas').GML_3_1_1;
-const XLink_2_0 = require('w3c-schemas').XLink_2_0;
-const XLink_1_0 = require('w3c-schemas').XLink_1_0;
-const XSD_1_0 = require('w3c-schemas').XSD_1_0;
-const SMIL_2_0_Language = require('ogc-schemas').SMIL_2_0_Language;
-const SMIL_2_0 = require('ogc-schemas').SMIL_2_0;
-const Filter_2_0 = require('ogc-schemas').Filter_2_0;
-const OWS_2_0 = require('ogc-schemas').OWS_2_0;
-const OWS_1_1_0 = require('ogc-schemas').OWS_1_1_0;
+const jsonixContext = getJsonixContext();
 
-const Jsonix = require('jsonix').Jsonix;
-const jsonixContext = new Jsonix.Context([
-  XSD_1_0,
-  OWS_1_1_0,
-  XLink_1_0,
-  OWS_2_0,
-  Filter_2_0,
-  SMIL_2_0,
-  SMIL_2_0_Language,
-  XLink_2_0,
-  GML_3_1_1,
-  WFS_2_0,
-]);
+/* eslint-disable */
+// @ts-ignore
 const jsonixUnmarshaller = jsonixContext.createUnmarshaller();
 /* eslint-enable */
 
@@ -37,36 +17,106 @@ export interface IRequestExecutor {
 interface IRequestOptions {
   request: string;
   method?: string;
-  params?: Record<string, unknown>;
+  config?: Record<string, unknown>;
 }
 
-class WfsClient {
+type OutputFormat = 'GML3' | 'application/json';
+
+interface IWFSClientOptions {
   /**
-   * Client-side API for OGC's WFS services
+   * @param baseUrl WFS service to query with this client.
    */
-  private readonly wfsServiceUrl: string; // Base wfs service url
+  baseUrl: string;
+
+  /**
+   * @param requestExecutor Used for fetching the data.
+   */
+  requestExecutor: IRequestExecutor;
+
+  /**
+   * @param count The default number of features to fetch for each query.
+   * @defaultValue `100`
+   */
+  count?: number;
+
+  /**
+   * @param srsName The default srsName to use for each query.
+   * @defaultValue `EPSG:4326`
+   */
+  srsName?: string;
+
+  /**
+   * @param version The default version of WFS protocol to use for each query.
+   * @defaultValue `2.0.0`
+   */
+  version?: string;
+}
+
+interface IGetFeatureOptions {
+  pointCoordinates: [string, string];
+  typeNames: string[];
+  count?: number;
+  outputFormat?: OutputFormat;
+  filter?: string;
+}
+
+const DEFAULT_OUTPUT_FORMAT = 'GML3';
+
+class WfsClient {
+  private readonly baseUrl: string;
   private readonly requestExecutor: IRequestExecutor;
-  private readonly version?: string;
+  private readonly version: string;
+  private readonly count: number;
+  private readonly srsName: string;
+  private readonly logger: Logger;
 
-  public constructor(wfsServiceUrl: string, requestExecutor: IRequestExecutor, version = '2.0.0') {
-    this.version = version;
-    this.wfsServiceUrl = wfsServiceUrl;
+  /**
+   *
+   * A client-side API for OGC's WFS services, resolves to a JSON format
+   * @param options of interface IWFSClientOptions
+   * @param logger Used for logging functionalities
+   */
+  public constructor({ baseUrl, requestExecutor, count, srsName, version }: IWFSClientOptions, logger?: Logger) {
+    const DEFAULT_COUNT = 100;
+    const DEFAULT_SRS_NAME = 'EPSG:4326';
+    const DEFAULT_VERSION = '2.0.0';
+
+    this.baseUrl = baseUrl;
     this.requestExecutor = requestExecutor;
+    this.count = count ?? DEFAULT_COUNT;
+    this.srsName = srsName ?? DEFAULT_SRS_NAME;
+    this.version = version ?? DEFAULT_VERSION;
+    this.logger = logger ?? (console.log as unknown as Logger);
   }
 
-  //     private readonly featureTypes?: string[]; // Empty means all features.
-  //     private readonly bbox?: number[]; // [lat(bottom left), lon(bottom left), lat(top right), lon(top right)]
-  // //
-
+  /**
+   * Performs a getCapabilities request
+   * @returns Promise of the response from the getCapabilities request of the WFS service
+   */
   public async getCapabilities(): Promise<unknown> {
-    return this.request({ request: 'getCapabilities' });
+    const getCapabilitiesRes = await this.request({ request: 'getCapabilities' });
+    const jsonXmlData = this.xmlToJson(getCapabilitiesRes as string);
+
+    return jsonXmlData;
   }
 
+  /**
+   * Performs a DescribeFeatureType request
+   * @returns Promise of a processed list of typeNames
+   */
   public async getFeatureTypeList(typeNames?: string): Promise<string[]> {
     const typeNamesList = typeof typeNames !== 'undefined' ? { typeNames } : {};
-    const describeFeaureData = (await this.request({ request: 'DescribeFeatureType', params: { ...typeNamesList } })) as IDescribeFeatureResponse;
+    const describeFeatureData = await this.request({
+      request: 'DescribeFeatureType',
+      config: {
+        params: { ...typeNamesList },
+      },
+    });
 
-    const featuresArr = describeFeaureData.value?.element?.map((el) => el.name as string);
+    const jsonXmlData = this.xmlToJson(describeFeatureData as string) as IDescribeFeatureResponse;
+
+    const featuresArr = jsonXmlData.value?.element?.map((el) => el.name as string);
+
     if (!featuresArr) {
       throw new Error('There was an error parsing featureTypes data');
     }
@@ -74,21 +124,69 @@ class WfsClient {
     return featuresArr;
   }
 
-  private async request({ request, method = 'get', params = {} }: IRequestOptions): Promise<unknown> {
-    try {
-      const xmlRes = (await this.requestExecutor(this.wfsServiceUrl, method, {
-        params: { service: 'WFS', version: this.version, request, ...params },
-      })) as { data: unknown };
+  /**
+   * Performs a getFeatures request, filtering by point geometry intersection
+   * @param options of type IGetFeatureOptions
+   * @returns Promise of the WFS service getFeatures response
+   */
+  public async getFeature({
+    pointCoordinates,
+    typeNames,
+    count = this.count,
+    outputFormat = DEFAULT_OUTPUT_FORMAT,
+  }: // filter,
+  IGetFeatureOptions): Promise<unknown> {
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, outputFormat, typeNames.join(','), pointCoordinates.join(','));
 
-      return this.xmlToJson(xmlRes.data as string);
+    const getFeatureData = await this.request({
+      request: 'GetFeature',
+      method: 'POST',
+      config: {
+        // eslint-disable-next-line
+        headers: { 'Content-Type': 'application/xml' },
+        data: XML_BODY_TEMPLATE,
+      },
+    });
+
+    if (!(getFeatureData as boolean)) {
+      throw new Error('There was an error targeting the WFS features');
+    }
+
+    return getFeatureData;
+  }
+
+  private async request({ request, method = 'GET', config = {} }: IRequestOptions): Promise<unknown> {
+    try {
+      const { params, ...restConf } = config;
+
+      const baseParams = {
+        service: 'WFS',
+        version: this.version,
+        request,
+        count: this.count,
+        srsName: this.srsName,
+      };
+
+      const requestConfig = {
+        params: { ...baseParams, ...((params as Record<string, unknown> | undefined) ?? {}) },
+        ...restConf,
+      };
+
+      const res = (await this.requestExecutor(this.baseUrl, method, requestConfig)) as { data: unknown };
+
+      return res.data;
     } catch (e) {
-      throw new Error(`Failed to fetch WFS data. status: ${(e as AxiosError).response?.status.toString() as string}`);
+      throw new Error(`Failed to fetch WFS data. error: ${(e as Error).message}`);
     }
   }
 
   private xmlToJson(xml: string): Record<string, unknown> {
-    // eslint-disable-next-line
-    return jsonixUnmarshaller.unmarshalString(xml) as Record<string, unknown>;
+    try {
+      // eslint-disable-next-line
+      return jsonixUnmarshaller.unmarshalString(xml) as Record<string, unknown>;
+    } catch (e) {
+      throw new Error(`Could not parse the XML for this request. ${(e as Error).message}`);
+    }
   }
 }
 

@@ -10,16 +10,18 @@ export enum CatalogRecordItems {
   QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
-export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
+export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig, ctx?: IContext): Promise<AxiosResponse> => {
+  const requestConfig: AxiosRequestConfig = {
+    url,
+    method: method as Method,
+    ...params,
+    headers: {
+      ...{ ...(params.headers ?? {}), ...(ctx ? { origin: ctx.requestHeaders.origin } : {}) },
+    } as Record<string, unknown>,
+  };
+
   return axios
-    .request({
-      url,
-      method: method as Method,
-      ...params,
-      headers: {
-        ...{ ...(params.headers ?? {}), origin: ctx.requestHeaders.origin },
-      } as Record<string, unknown>,
-    })
+    .request(requestConfig)
     .then((res) => res)
     .catch((error) => {
       throw error;
