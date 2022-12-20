@@ -1,3 +1,5 @@
+import { OutputFormat } from './interfaces';
+
 /* eslint-disable */
 const WFS_2_0 = require('ogc-schemas').WFS_2_0;
 const GML_3_1_1 = require('ogc-schemas').GML_3_1_1;
@@ -57,3 +59,8 @@ export const getQueryPointXMLBody = (
                             </fes:Filter>
                         </wfs:Query>
              </wfs:GetFeature>`;
+
+export const DEFAULT_OUTPUT_FORMAT: OutputFormat = 'application/json';
+export const DEFAULT_COUNT = 100;
+export const DEFAULT_SRS_NAME = 'EPSG:4326';
+export const DEFAULT_VERSION = '2.0.0';

@@ -68,3 +68,65 @@ export interface IDescribeFeatureResponse {
   name?: Name;
   value?: Value;
 }
+
+export interface IRequestExecutor {
+  (url: string, method: string, params: Record<string, unknown>): Promise<unknown>;
+}
+
+export interface IRequestOptions {
+  request: string;
+  method?: string;
+  config?: Record<string, unknown>;
+}
+
+export type OutputFormat = 'GML3' | 'application/json';
+
+export interface IWFSClientOptions {
+  /**
+   * @param baseUrl WFS service to query with this client.
+   */
+  baseUrl: string;
+
+  /**
+   * @param requestExecutor Used for fetching the data.
+   */
+  requestExecutor: IRequestExecutor;
+
+  /**
+   * @param count The default maximum number of features to fetch for each query.
+   * @defaultValue `100`
+   */
+  count?: number;
+
+  /**
+   * @param srsName The default srsName to use for each query.
+   * @defaultValue `EPSG:4326`
+   */
+  srsName?: string;
+
+  /**
+   * @param version The default version of WFS protocol to use for each query.
+   * @defaultValue `2.0.0`
+   */
+  version?: string;
+}
+
+export interface IGetFeatureOptions {
+  /**
+   * @param pointCoordinates Coordinates to search features at intersection.
+   */
+  pointCoordinates: [string, string];
+
+  /**
+   * @param typeNames Feature types to query.
+   */
+  typeNames: string[];
+
+  /**
+   * @param count The maximum number of features to fetch.
+   * @defaultValue `100`
+   */
+  count?: number;
+
+  // filter?: string;
+}

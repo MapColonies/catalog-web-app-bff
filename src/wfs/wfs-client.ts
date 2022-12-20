@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
-import { getJsonixContext, getQueryPointXMLBody } from './constants';
-import { IDescribeFeatureResponse } from './interfaces';
+import { DEFAULT_COUNT, DEFAULT_OUTPUT_FORMAT, DEFAULT_SRS_NAME, DEFAULT_VERSION, getJsonixContext, getQueryPointXMLBody } from './constants';
+import { IDescribeFeatureResponse, IGetFeatureOptions, IRequestExecutor, IRequestOptions, IWFSClientOptions } from './interfaces';
 
 const jsonixContext = getJsonixContext();
 
@@ -8,59 +8,6 @@ const jsonixContext = getJsonixContext();
 // @ts-ignore
 const jsonixUnmarshaller = jsonixContext.createUnmarshaller();
 /* eslint-enable */
-
-/* eslint-disable import/exports-last */
-export interface IRequestExecutor {
-  (url: string, method: string, params: Record<string, unknown>): Promise<unknown>;
-}
-
-interface IRequestOptions {
-  request: string;
-  method?: string;
-  config?: Record<string, unknown>;
-}
-
-type OutputFormat = 'GML3' | 'application/json';
-
-interface IWFSClientOptions {
-  /**
-   * @param baseUrl WFS service to query with this client.
-   */
-  baseUrl: string;
-
-  /**
-   * @param requestExecutor Used for fetching the data.
-   */
-  requestExecutor: IRequestExecutor;
-
-  /**
-   * @param count The default number of features to fetch for each query.
-   * @defaultValue `100`
-   */
-  count?: number;
-
-  /**
-   * @param srsName The default srsName to use for each query.
-   * @defaultValue `EPSG:4326`
-   */
-  srsName?: string;
-
-  /**
-   * @param version The default version of WFS protocol to use for each query.
-   * @defaultValue `2.0.0`
-   */
-  version?: string;
-}
-
-interface IGetFeatureOptions {
-  pointCoordinates: [string, string];
-  typeNames: string[];
-  count?: number;
-  outputFormat?: OutputFormat;
-  filter?: string;
-}
-
-const DEFAULT_OUTPUT_FORMAT = 'GML3';
 
 class WfsClient {
   private readonly baseUrl: string;
@@ -77,16 +24,12 @@ class WfsClient {
    * @param logger Used for logging functionalities
    */
   public constructor({ baseUrl, requestExecutor, count, srsName, version }: IWFSClientOptions, logger?: Logger) {
-    const DEFAULT_COUNT = 100;
-    const DEFAULT_SRS_NAME = 'EPSG:4326';
-    const DEFAULT_VERSION = '2.0.0';
-
     this.baseUrl = baseUrl;
     this.requestExecutor = requestExecutor;
     this.count = count ?? DEFAULT_COUNT;
     this.srsName = srsName ?? DEFAULT_SRS_NAME;
     this.version = version ?? DEFAULT_VERSION;
-    this.logger = logger ?? (console.log as unknown as Logger);
+    this.logger = logger ?? (console as unknown as Logger);
   }
 
   /**
@@ -94,6 +37,8 @@ class WfsClient {
    * @returns Promise of the response from the getCapabilities request of the WFS service
    */
   public async getCapabilities(): Promise<unknown> {
+    this.logger.info('[WfsClient][getCapabilities] Fetching WFS getCapabilites data');
+
     const getCapabilitiesRes = await this.request({ request: 'getCapabilities' });
     const jsonXmlData = this.xmlToJson(getCapabilitiesRes as string);
 
@@ -104,14 +49,10 @@ class WfsClient {
    * Performs a DescribeFeatureType request
    * @returns Promise of a processed list of typeNames
    */
-  public async getFeatureTypeList(typeNames?: string): Promise<string[]> {
-    const typeNamesList = typeof typeNames !== 'undefined' ? { typeNames } : {};
-    const describeFeatureData = await this.request({
-      request: 'DescribeFeatureType',
-      config: {
-        params: { ...typeNamesList },
-      },
-    });
+  public async getFeatureTypeList(): Promise<string[]> {
+    this.logger.info(`[WfsClient][getFeatureTypeList] Attempting query featureTypes.`);
+
+    const describeFeatureData = await this.request({ request: 'DescribeFeatureType' });
 
     const jsonXmlData = this.xmlToJson(describeFeatureData as string) as IDescribeFeatureResponse;
 
@@ -133,10 +74,14 @@ class WfsClient {
     pointCoordinates,
     typeNames,
     count = this.count,
-    outputFormat = DEFAULT_OUTPUT_FORMAT,
   }: // filter,
   IGetFeatureOptions): Promise<unknown> {
-    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, outputFormat, typeNames.join(','), pointCoordinates.join(','));
+    const typeNamesStr = typeNames.join(',');
+    const pointCoordinatesStr = pointCoordinates.join(',');
+
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeNamesStr, pointCoordinatesStr);
+
+    this.logger.info(`[WfsClient][getFeature] Attempting query features of types ${typeNamesStr} at point ${pointCoordinatesStr}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -149,7 +94,10 @@ class WfsClient {
     });
 
     if (!(getFeatureData as boolean)) {
-      throw new Error('There was an error targeting the WFS features');
+      const error = 'There was an error targeting the WFS features';
+      this.logger.error(`[WfsClient][getFeature] ${error}`);
+
+      throw new Error(error);
     }
 
     return getFeatureData;
@@ -176,16 +124,24 @@ class WfsClient {
 
       return res.data;
     } catch (e) {
-      throw new Error(`Failed to fetch WFS data. error: ${(e as Error).message}`);
+      const error = `Failed to fetch WFS data. error: ${(e as Error).message}`;
+      this.logger.error(`[WfsClient][request] ${error}`);
+
+      throw new Error(error);
     }
   }
 
   private xmlToJson(xml: string): Record<string, unknown> {
     try {
+      this.logger.info('[WfsClient][xmlToJson] Attempting parse XML to JSON.');
+
       // eslint-disable-next-line
       return jsonixUnmarshaller.unmarshalString(xml) as Record<string, unknown>;
     } catch (e) {
-      throw new Error(`Could not parse the XML for this request. ${(e as Error).message}`);
+      const error = `Could not parse the XML for this request. ${(e as Error).message}`;
+      this.logger.error(`[WfsClient][xmlToJson] ${error}`);
+
+      throw new Error(error);
     }
   }
 }
