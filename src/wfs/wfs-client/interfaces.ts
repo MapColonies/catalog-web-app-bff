@@ -130,3 +130,35 @@ export interface IGetFeatureOptions {
 
   // filter?: string;
 }
+
+export interface IGetFeatureResponse {
+  type: string;
+  features: Feature[];
+  totalFeatures: number;
+  numberMatched: number;
+  numberReturned: number;
+  timeStamp: Date;
+  crs: CRS;
+}
+
+export interface CRS {
+  type: string;
+  properties: CRSProperties;
+}
+
+export interface CRSProperties {
+  name: string;
+}
+
+export interface Feature {
+  type: string;
+  id: string;
+  geometry: Geometry;
+  geometry_name: string;
+  properties: Record<string, unknown>;
+}
+
+export interface Geometry {
+  type: string;
+  coordinates: [number, number][];
+}
