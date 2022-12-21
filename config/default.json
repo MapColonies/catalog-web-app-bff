@@ -86,6 +86,9 @@
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
     "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
   },
+  "wfs": {
+    "url": "http://localhost:8000/wfs"
+  },
   "accessToken": {
     "attributeName": "x-api-key",
     "injectionType": "header",
