@@ -2,8 +2,9 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg, FieldResolver, Root } from 'type-graphql';
+import { Resolver, Query, Arg, FieldResolver, Root, Ctx } from 'type-graphql';
 import { Services } from '../../common/constants';
+import { IContext } from '../../common/interfaces';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
 import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../inputTypes';
 import { DecryptedId, File } from '../storage-explorer';
@@ -21,48 +22,78 @@ export class StorageExplorerResolver {
   }
 
   @Query((type) => [File])
-  public async getDirectory(@Arg('data') data: ExplorerGetByPathSuffix): Promise<File[]> {
+  public async getDirectory(
+    @Arg('data')
+    data: ExplorerGetByPathSuffix,
+    @Ctx()
+    ctx: IContext
+  ): Promise<File[]> {
     const { pathSuffix, type } = data;
-    const dirContent = await this.storageExplorerManager.getDirectory({ pathSuffix, type });
+    const dirContent = await this.storageExplorerManager.getDirectory({ pathSuffix, type }, ctx);
 
     return dirContent;
   }
 
   @Query((type) => [File])
-  public async getDirectoryById(@Arg('data') data: ExplorerGetById): Promise<File[]> {
+  public async getDirectoryById(
+    @Arg('data')
+    data: ExplorerGetById,
+    @Ctx()
+    ctx: IContext
+  ): Promise<File[]> {
     const { id, type } = data;
-    const dirContent = await this.storageExplorerManager.getDirectoryById({ id, type });
+    const dirContent = await this.storageExplorerManager.getDirectoryById({ id, type }, ctx);
 
     return dirContent;
   }
 
   @Query((type) => LayerMetadataMixedUnion)
-  public async getFile(@Arg('data') data: ExplorerGetByPathSuffix): Promise<typeof LayerMetadataMixedUnion> {
+  public async getFile(
+    @Arg('data')
+    data: ExplorerGetByPathSuffix,
+    @Ctx()
+    ctx: IContext
+  ): Promise<typeof LayerMetadataMixedUnion> {
     const { pathSuffix, type } = data;
-    const fileContent = await this.storageExplorerManager.getFile({ pathSuffix, type });
+    const fileContent = await this.storageExplorerManager.getFile({ pathSuffix, type }, ctx);
 
     return fileContent;
   }
 
   @Query((type) => LayerMetadataMixedUnion)
-  public async resolveMetadataAsModel(@Arg('data') data: ExplorerResolveMetadataAsModel): Promise<typeof LayerMetadataMixedUnion> {
-    const fileContent = await this.storageExplorerManager.resolveMetadataAsModel(data);
+  public async resolveMetadataAsModel(
+    @Arg('data')
+    data: ExplorerResolveMetadataAsModel,
+    @Ctx()
+    ctx: IContext
+  ): Promise<typeof LayerMetadataMixedUnion> {
+    const fileContent = await this.storageExplorerManager.resolveMetadataAsModel(data, ctx);
 
     return fileContent;
   }
 
   @Query((type) => LayerMetadataMixedUnion)
-  public async getFileById(@Arg('data') data: ExplorerGetById): Promise<typeof LayerMetadataMixedUnion> {
+  public async getFileById(
+    @Arg('data')
+    data: ExplorerGetById,
+    @Ctx()
+    ctx: IContext
+  ): Promise<typeof LayerMetadataMixedUnion> {
     const { id, type } = data;
-    const fileContent = await this.storageExplorerManager.getFileById({ id, type });
+    const fileContent = await this.storageExplorerManager.getFileById({ id, type }, ctx);
 
     return fileContent;
   }
 
   @Query((type) => DecryptedId)
-  public async getDecryptedId(@Arg('data') data: ExplorerGetById): Promise<DecryptedId> {
+  public async getDecryptedId(
+    @Arg('data')
+    data: ExplorerGetById,
+    @Ctx()
+    ctx: IContext
+  ): Promise<DecryptedId> {
     const { id, type } = data;
-    const decryptedId = await this.storageExplorerManager.getDecryptedId({ id, type });
+    const decryptedId = await this.storageExplorerManager.getDecryptedId({ id, type }, ctx);
 
     return decryptedId;
   }

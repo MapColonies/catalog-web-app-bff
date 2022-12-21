@@ -1,3 +1,5 @@
+import { DateGranularity } from '../../graphql/entityDescriptor';
+
 export const pycswVectorBestCatalogRecordAspects = {
   type: {
     label: 'field-names.vector-raster.type',
@@ -22,12 +24,15 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.vector-raster.creationDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   ingestionDate: {
     label: 'field-names.vector-raster.ingestionDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.vector-raster.updateDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   region: {
     label: 'field-names.vector-raster.region',
@@ -53,12 +58,14 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.vector-raster.insertDate',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   keywords: {
     label: 'field-names.vector-raster.keywords',
   },
   links: {
     label: 'field-names.vector-raster.links',
+    fullWidth: true,
   },
   'link.name': {
     label: 'field-names.vector-raster.link.name',

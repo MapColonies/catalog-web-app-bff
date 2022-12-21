@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswLayerCatalogRecord, RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { IngestionData } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
@@ -24,22 +24,22 @@ export class IngestionManager implements IIngestionManagerService {
     this.ingestionServices.DEM = new IngestionManagerDem(this.config, this.logger);
   }
 
-  public async ingest(record: IngestionData): Promise<IngestionData> {
+  public async ingest(record: IngestionData, ctx: IContext): Promise<IngestionData> {
     this.logger.info(`[IngestionManager][ingest] start ingestion for entity ${record.type as RecordType}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
 
-    const updatedData = await catalogManagerInstance.ingest(this.cleanAutoGenerateField(record));
+    const updatedData = await catalogManagerInstance.ingest(this.cleanAutoGenerateField(record), ctx);
     return updatedData;
   }
 
-  public async updateGeopkg(record: IngestionData): Promise<IngestionData | null> {
+  public async updateGeopkg(record: IngestionData, ctx: IContext): Promise<IngestionData | null> {
     this.logger.info(`[IngestionManager][updateGeopkg] start updateGeopkg for entity ${record.type as RecordType}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
 
     if (catalogManagerInstance.updateGeopkg) {
-      const updatedData = await catalogManagerInstance.updateGeopkg(this.cleanAutoGenerateField(record));
+      const updatedData = await catalogManagerInstance.updateGeopkg(this.cleanAutoGenerateField(record), ctx);
       return updatedData;
     }
 

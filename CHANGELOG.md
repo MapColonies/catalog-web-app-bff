@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.2...v1.12.3) (2022-11-07)
+
+
+### Bug Fixes
+
+* raster insertdate granularity ([#124](https://github.com/MapColonies/catalog-web-app-bff/issues/124)) ([840a1b7](https://github.com/MapColonies/catalog-web-app-bff/commit/840a1b74e3f493982bc279c487846233f6bbcdc0))
+
+### [1.12.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.0...v1.12.2) (2022-11-06)
+
+
+### Bug Fixes
+
+* add insert date to records metadata ([#122](https://github.com/MapColonies/catalog-web-app-bff/issues/122)) ([8fb8c1a](https://github.com/MapColonies/catalog-web-app-bff/commit/8fb8c1a341e18ce835e75fc902465f9ebd490a52))
+* all dates granularities should be set to minutes MAPCO-2637 ([#119](https://github.com/MapColonies/catalog-web-app-bff/issues/119)) ([c116ce8](https://github.com/MapColonies/catalog-web-app-bff/commit/c116ce8f6296a81ba8c6557af7fd2303b25cd38c))
+* disable RasterVectorBest entity MAPCO-2551 ([#118](https://github.com/MapColonies/catalog-web-app-bff/issues/118)) ([862f670](https://github.com/MapColonies/catalog-web-app-bff/commit/862f670efe8a1063d68573d38278c3466880b4cb))
+* getCapabilities should not throw unmanaged exceptions ([#115](https://github.com/MapColonies/catalog-web-app-bff/issues/115)) ([8431803](https://github.com/MapColonies/catalog-web-app-bff/commit/843180336eae9f0498e5d2a379592ca138994b4b))
+* jsonObj.Capabilities.Contents.Layer.filter error ([#120](https://github.com/MapColonies/catalog-web-app-bff/issues/120)) ([ccbbba4](https://github.com/MapColonies/catalog-web-app-bff/commit/ccbbba4cb7ff60ad2b64835174921e6b1245ef1c))
+* vector raster best - links should be with full width ([#114](https://github.com/MapColonies/catalog-web-app-bff/issues/114)) ([90c5e63](https://github.com/MapColonies/catalog-web-app-bff/commit/90c5e630c296fdd2b4f7d743137ea89b8ce22a67))
+
 ### [1.12.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.0...v1.12.1) (2022-10-03)
 
 ## [1.12.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.11.1...v1.12.0) (2022-10-03)

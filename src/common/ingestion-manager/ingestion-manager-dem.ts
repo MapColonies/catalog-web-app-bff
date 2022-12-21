@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IngestionData } from '../../graphql/inputTypes';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 
 export class IngestionManagerDem implements IIngestionManagerService {
@@ -11,7 +11,7 @@ export class IngestionManagerDem implements IIngestionManagerService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async ingest(data: IngestionData): Promise<IngestionData> {
+  public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionData> {
     return Promise.reject('Unimplemented service');
   }
 }

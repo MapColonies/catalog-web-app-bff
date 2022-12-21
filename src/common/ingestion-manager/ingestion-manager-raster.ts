@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios';
 import { IngestionData } from '../../graphql/inputTypes';
 import { absoluteToRelativePath } from '../../helpers/string';
 import { requestHandler } from '../../utils';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 
 export class IngestionManagerRaster implements IIngestionManagerService {
@@ -13,13 +13,13 @@ export class IngestionManagerRaster implements IIngestionManagerService {
     this.serviceURL = this.config.get('ingestionServices.raster.url');
   }
 
-  public async ingest(data: IngestionData): Promise<IngestionData> {
-    await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data));
+  public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionData> {
+    await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data), ctx);
     return data;
   }
 
-  public async updateGeopkg(data: IngestionData): Promise<IngestionData> {
-    await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data));
+  public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<IngestionData> {
+    await requestHandler(`${this.serviceURL}/layers`, 'POST', this.buildPayload(data), ctx);
     return data;
   }
 

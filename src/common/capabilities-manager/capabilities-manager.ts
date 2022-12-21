@@ -4,7 +4,7 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { Capability } from '../../graphql/capability';
 import { CapabilitiesLayersSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
-import { IConfig } from '../interfaces';
+import { IConfig, IContext } from '../interfaces';
 import { Services } from '../constants';
 import { CapabilitiesManagerDem } from './capabilities-manager-dem';
 import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
@@ -21,11 +21,11 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
-  public async getCapabilities(params: CapabilitiesLayersSearchParams): Promise<Capability[]> {
+  public async getCapabilities(params: CapabilitiesLayersSearchParams, ctx: IContext): Promise<Capability[]> {
     this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities manager`);
     const capabilities = await Promise.all(
       params.data.map(async (item) => {
-        return this.getManagerInstance(item.recordType).getCapabilities(item.idList);
+        return this.getManagerInstance(item.recordType).getCapabilities(item.idList, ctx);
       })
     );
     return capabilities.flat(1);
