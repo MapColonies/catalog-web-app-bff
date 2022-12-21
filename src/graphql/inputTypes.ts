@@ -223,4 +223,16 @@ export class CapabilitiesLayersSearchParams {
   public data: CapabilitiesLayersSearchParam[];
 }
 
+@InputType()
+export class WfsGetFeatureParams {
+  @Field((type) => [String, String], { nullable: false })
+  public pointCoordinates!: [string, string];
+
+  @Field((type) => [String], { nullable: false })
+  public typeNames!: string[];
+
+  @Field((type) => Number, { nullable: true })
+  public count?: number;
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

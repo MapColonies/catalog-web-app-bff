@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Feature } from 'geojson';
+
 interface IDescribeFeatureElement {
   TYPE_NAME?: string;
   name?: string;
@@ -148,17 +150,4 @@ export interface CRS {
 
 export interface CRSProperties {
   name: string;
-}
-
-export interface Feature {
-  type: string;
-  id: string;
-  geometry: Geometry;
-  geometry_name: string;
-  properties: Record<string, unknown>;
-}
-
-export interface Geometry {
-  type: string;
-  coordinates: [number, number][];
 }

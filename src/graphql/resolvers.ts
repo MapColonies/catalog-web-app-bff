@@ -7,6 +7,7 @@ import { JobResolver } from './resolvers/job.resolver';
 import { ServiceDiscoveryResolver } from './resolvers/service-discovery.resolver';
 import { StorageExplorerResolver } from './resolvers/storage-explorer.resolver';
 import { TaskResolver } from './resolvers/task.resolver';
+import { WfsResolver } from './resolvers/wfs.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
@@ -19,5 +20,6 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     ServiceDiscoveryResolver,
     ExternalServicesResolver,
     CapabilitiesResolver,
+    WfsResolver,
   ];
 }

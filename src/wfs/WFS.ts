@@ -22,6 +22,13 @@ export class WFS {
     return res as Record<string, unknown>;
   }
 
+  public async getFeatureTypes(ctx?: IContext): Promise<string[]> {
+    const wfsClient = this.getWfsClient(ctx);
+    const res = await wfsClient.getFeatureTypeList();
+
+    return res;
+  }
+
   public async getFeature(options: IGetFeatureOptions, ctx?: IContext): Promise<IGetFeatureResponse> {
     const wfsClient = this.getWfsClient(ctx);
     const res = await wfsClient.getFeature(options);
