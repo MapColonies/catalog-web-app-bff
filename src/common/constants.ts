@@ -49,7 +49,12 @@ export const xmlParserOptions = {
     leadingZeros: true,
   },
   arrayMode: (name: string): boolean =>
-    name === 'Layer' || name === 'Format' || name === 'TileMatrixSetLink' || name === 'ResourceURL' || name === 'TileMatrixLimits',
+    name === 'Layer' ||
+    name === 'Style' ||
+    name === 'Format' ||
+    name === 'TileMatrixSetLink' ||
+    name === 'ResourceURL' ||
+    name === 'TileMatrixLimits',
   attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
   tagValueProcessor: (val: string): string => he.decode(val),
   alwaysCreateTextNode: false,
