@@ -63,8 +63,8 @@
     }
   },
   "jobServices": {
-    "raster": {
-      "url": "JOB_SERVICE_RASTER_URL"
+    "common": {
+      "url": "JOB_SERVICE_URL"
     }
   },
   "storageExplorerServices": {

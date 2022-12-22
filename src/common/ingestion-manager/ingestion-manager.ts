@@ -33,6 +33,19 @@ export class IngestionManager implements IIngestionManagerService {
     return updatedData;
   }
 
+  public async updateGeopkg(record: IngestionData, ctx: IContext): Promise<IngestionData | null> {
+    this.logger.info(`[IngestionManager][updateGeopkg] start updateGeopkg for entity ${record.type as RecordType}.`);
+
+    const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
+
+    if (catalogManagerInstance.updateGeopkg) {
+      const updatedData = await catalogManagerInstance.updateGeopkg(this.cleanAutoGenerateField(record), ctx);
+      return updatedData;
+    }
+
+    return null;
+  }
+
   /* eslint-disable */
   private cleanAutoGenerateField(record: IngestionData): IngestionData {
     const cleanRecord: IngestionData = { ...record };

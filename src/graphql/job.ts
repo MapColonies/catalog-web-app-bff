@@ -123,6 +123,15 @@ export class Job {
 
   @Field({ nullable: true })
   public isCleaned?: boolean;
+
+  @Field({ nullable: true })
+  public domain?: string;
+
+  @Field({ nullable: true })
+  public isResettable?: boolean;
+
+  @Field({ nullable: true })
+  public isAbortable?: boolean;
 }
 
 const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' }); // lgtm [js/unused-local-variable]
