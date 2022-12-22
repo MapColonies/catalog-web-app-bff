@@ -889,6 +889,7 @@ export interface TMCEnums {
         parent: string,
         internal: boolean,
         properties: Record<string, unknown>,
+        parentDomain: string,
     }
 };
 
@@ -903,7 +904,8 @@ export const mcEnums = Object.values({ ...enumUnionValues }).reduce((enumValues,
                 translationKey: "",
                 parent: "",
                 internal: false,
-                properties: {}
+                properties: {},
+                parentDomain: "",
             }
         };
     });

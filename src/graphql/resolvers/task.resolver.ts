@@ -5,23 +5,23 @@ import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
 import moment from 'moment';
 import { Services } from '../../common/constants';
-import { requestHandler } from '../../utils';
 import { TasksSearchParams } from '../inputTypes';
 import { TasksGroup } from '../tasksGroup';
 import { Task } from '../job';
 import { IContext } from '../../common/interfaces';
+import { JobManager } from '../../common/job-manager/job-manager';
 //import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
 
 @Resolver()
 export class TaskResolver {
   private readonly logger: Logger;
   private readonly config: IConfig;
-  private readonly serviceURL: string = '';
+  private readonly jobManager: JobManager;
 
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    this.serviceURL = this.config.get('jobServices.raster.url');
+    this.jobManager = container.resolve(JobManager);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +33,7 @@ export class TaskResolver {
     ctx: IContext
   ): Promise<TasksGroup[]> {
     try {
-      const data: Task[] = await Promise.resolve(this.getTasks(params, ctx));
+      const data: Task[] = await this.jobManager.getTasks(params, ctx);
 
       return this.groupTasks(data);
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
@@ -42,14 +42,6 @@ export class TaskResolver {
       this.logger.error(err as string);
       throw err;
     }
-  }
-
-  private async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
-    this.logger.info(`[TaskResolver][getTasks] fetching tasks with params: ${JSON.stringify(params)}`);
-
-    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {}, ctx);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return res.data;
   }
 
   /*

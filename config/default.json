@@ -64,7 +64,7 @@
     }
   },
   "jobServices": {
-    "raster": {
+    "common": {
       "url": "http://localhost:8000/job-manager-service"
     }
   },

@@ -1,29 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
-import { transform, mapKeys, mapValues } from 'lodash';
 import { Services } from '../../common/constants';
-import { requestHandler } from '../../utils';
 import { JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 import { IContext } from '../../common/interfaces';
-//import { MOCK_JOBS_DATA } from '../MOCKS/MOCK_JOBS_DATA';
+import { JobManager } from '../../common/job-manager/job-manager';
 
 @Resolver()
 export class JobResolver {
   private readonly logger: Logger;
   private readonly config: IConfig;
-  private readonly serviceURL: string = '';
+  private readonly jobManager: JobManager;
 
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    this.serviceURL = this.config.get('jobServices.raster.url');
+    this.jobManager = container.resolve(JobManager);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [Job])
   public async jobs(
     @Ctx()
@@ -32,20 +28,14 @@ export class JobResolver {
     params?: JobsSearchParams
   ): Promise<Job[]> {
     try {
-      this.logger.info(`[JobResolver][jobs] searching jobs with params: ${JSON.stringify(params)}`);
-
-      // TODO: use a real call
-      const data = await Promise.resolve(this.getJobs(ctx, params));
-      // const data = await Promise.resolve(MOCK_JOBS_DATA);
-      return this.transformRecordsToEntity(data);
-      // return data;
+      const data = await Promise.resolve(this.jobManager.getJobs(ctx, params));
+      return this.jobManager.transformRecordsToEntity(data);
     } catch (err) {
       this.logger.error(err as string);
       throw err;
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateJob(
     @Arg('id')
@@ -56,9 +46,7 @@ export class JobResolver {
     ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][updateJob] updating job with id: ${id}, data: ${JSON.stringify(data)} `);
-
-      await this.updateJobHandler(id, data, ctx);
+      await this.jobManager.updateJobHandler(id, data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
@@ -69,12 +57,12 @@ export class JobResolver {
   @Mutation((type) => String)
   public async jobRetry(
     @Arg('id')
-    id: string
+    id: string,
+    @Ctx()
+    ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][jobRetry] retrying job with id: ${id}`);
-
-      const response = await Promise.resolve(`Ok! Mutate job retry! Job Id: ${id}`);
+      const response = await this.jobManager.resetJobHandler(id, ctx);
       return response;
     } catch (err) {
       this.logger.error(err as string);
@@ -90,73 +78,11 @@ export class JobResolver {
     ctx: IContext
   ): Promise<string> {
     try {
-      this.logger.info(`[JobResolver][jobAbort] aborting job with id: ${id}`);
-
-      await this.abortJobHandler(id, ctx);
+      await this.jobManager.abortJobHandler(id, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err as string);
       throw err;
     }
   }
-
-  private async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
-    const res = await requestHandler(
-      `${this.serviceURL}/jobs`,
-      'GET',
-      {
-        params: {
-          ...params,
-          fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
-          tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
-          shouldReturnTasks: false,
-        },
-      },
-      ctx
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return res.data;
-  }
-
-  private async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
-    await requestHandler(
-      `${this.serviceURL}/jobs/${id}`,
-      'PUT',
-      {
-        data: {
-          ...params,
-        },
-      },
-      ctx
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return 'ok';
-  }
-
-  private async abortJobHandler(id: string, ctx: IContext): Promise<string> {
-    await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {}, ctx);
-    return 'ok';
-  }
-
-  private readonly transformRecordsToEntity = (cswArray: Job[]): Job[] => {
-    const jobParsedArray = transform(
-      cswArray,
-      (result: Record<string, unknown>[], cswValue) => {
-        const parsedKeys = mapKeys(cswValue, (value, key) => key);
-        const finalParsed = mapValues(parsedKeys, (val, key, obj) => {
-          switch (key) {
-            case 'created':
-            case 'updated':
-              return new Date(val as string);
-            default:
-              return val;
-          }
-        });
-        result.push(finalParsed);
-      },
-      []
-    );
-    //@ts-ignore
-    return jobParsedArray;
-  };
 }
