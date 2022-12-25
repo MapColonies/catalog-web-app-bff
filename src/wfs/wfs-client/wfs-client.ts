@@ -1,5 +1,13 @@
 import { Logger } from '@map-colonies/js-logger';
-import { DEFAULT_COUNT, DEFAULT_OUTPUT_FORMAT, DEFAULT_SRS_NAME, DEFAULT_VERSION, getJsonixContext, getQueryPointXMLBody } from './constants';
+import {
+  DEFAULT_COUNT,
+  DEFAULT_DWITHIN,
+  DEFAULT_OUTPUT_FORMAT,
+  DEFAULT_SRS_NAME,
+  DEFAULT_VERSION,
+  getJsonixContext,
+  getQueryPointXMLBody,
+} from './constants';
 import { IDescribeFeatureResponse, IGetFeatureOptions, IRequestExecutor, IRequestOptions, IWFSClientOptions } from './interfaces';
 
 const jsonixContext = getJsonixContext();
@@ -72,16 +80,16 @@ class WfsClient {
    */
   public async getFeature({
     pointCoordinates,
-    typeNames,
+    typeName,
+    dWithin = DEFAULT_DWITHIN,
     count = this.count,
   }: // filter,
   IGetFeatureOptions): Promise<unknown> {
-    const typeNamesStr = typeNames.join(',');
     const pointCoordinatesStr = pointCoordinates.join(',');
 
-    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeNamesStr, pointCoordinatesStr);
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, pointCoordinatesStr, dWithin);
 
-    this.logger.info(`[WfsClient][getFeature] Attempting query features of types ${typeNamesStr} at point ${pointCoordinatesStr}`);
+    this.logger.info(`[WfsClient][getFeature] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',

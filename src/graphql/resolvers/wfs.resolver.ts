@@ -3,7 +3,9 @@ import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { IContext } from '../../common/interfaces';
 import { WFS } from '../../wfs/WFS';
 import { WfsGetFeatureParams } from '../inputTypes';
-import { GetFeature, GetFeatureTypes } from '../wfs';
+import { GetFeature, GetFeatureTypes, IFeatureTypesConfigs } from '../wfs';
+
+export const FEATURE_DESCRIPTORS_FALLBACK_PROPERTY = 'default';
 
 @Resolver()
 export class WfsResolver {
@@ -20,8 +22,8 @@ export class WfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeature> {
-    const { pointCoordinates, typeNames, count } = data;
-    const getFeatureResponse = await this.wfs.getFeature({ pointCoordinates, typeNames, count }, ctx);
+    const { pointCoordinates, typeName, count, dWithin } = data;
+    const getFeatureResponse = await this.wfs.getFeature({ pointCoordinates, typeName, count, dWithin }, ctx);
 
     return getFeatureResponse;
   }
@@ -32,7 +34,34 @@ export class WfsResolver {
     ctx: IContext
   ): Promise<GetFeatureTypes> {
     const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
+    const featureTypesConfigs = this.getFeatureTypesConfigs();
 
-    return { typesArr: getFeatureTypesResponse };
+    return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
+  }
+
+  private getFeatureTypesConfigs(): IFeatureTypesConfigs {
+    return {
+      addrs: {
+        color: '#4fe368',
+        outlineColor: '#017d16',
+        dWithin: 30,
+        isVisualized: true,
+      },
+      buildings: {
+        color: '#7ebded',
+        outlineColor: '#0465b0',
+        dWithin: 3,
+        isVisualized: true,
+      },
+      roads: {
+        color: '#ffb405',
+        dWithin: 10,
+        isVisualized: true,
+      },
+      [FEATURE_DESCRIPTORS_FALLBACK_PROPERTY]: {
+        dWithin: 5,
+        isVisualized: false,
+      },
+    };
   }
 }

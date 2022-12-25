@@ -31,11 +31,22 @@ export const getJsonixContext = (): Record<string, unknown> => {
   return jsonixContext;
 };
 
+/**
+ *
+ * @param count Maximum number of features matched.
+ * @param outputFormat Supported output formats listed here:
+ * https://docs.geoserver.org/stable/en/user/services/wfs/outputformats.html
+ * @param typeNames Requested feature type.
+ * @param pointCoordinates Point coordinates to query. (longitude, latitude)
+ * @param dWithin Search distance from point in meters.
+ * @returns XML for querying a WFS service by coordinates.
+ */
 export const getQueryPointXMLBody = (
   count: number,
   outputFormat: string,
-  typeNames: string,
-  pointCoordinates: string
+  typeName: string,
+  pointCoordinates: string,
+  dWithin: number
 ): string => `<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" 
                 xmlns:fes="http://www.opengis.net/fes/2.0"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
@@ -48,14 +59,15 @@ export const getQueryPointXMLBody = (
                 http://www.opengis.net/gml/3.2 
                 http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
                 outputFormat="${outputFormat}">
-                        <wfs:Query typeNames="${typeNames}">
+                        <wfs:Query typeNames="${typeName}">
                             <fes:Filter>
-                                <fes:Intersects>
+                                <DWithin>
                                     <fes:ValueReference>osm:geom</fes:ValueReference>
                                     <gml:Point srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
                                         <gml:coordinates>${pointCoordinates}</gml:coordinates>
                                     </gml:Point>
-                                </fes:Intersects>
+                                    <Distance units='m'>${dWithin}</Distance>
+                                </DWithin>
                             </fes:Filter>
                         </wfs:Query>
              </wfs:GetFeature>`;
@@ -64,3 +76,4 @@ export const DEFAULT_OUTPUT_FORMAT: OutputFormat = 'application/json';
 export const DEFAULT_COUNT = 100;
 export const DEFAULT_SRS_NAME = 'EPSG:4326';
 export const DEFAULT_VERSION = '2.0.0';
+export const DEFAULT_DWITHIN = 5;

@@ -122,13 +122,18 @@ export interface IGetFeatureOptions {
   /**
    * @param typeNames Feature types to query.
    */
-  typeNames: string[];
+  typeName: string;
 
   /**
    * @param count The maximum number of features to fetch.
    * @defaultValue `100`
    */
   count?: number;
+
+  /**
+   * @param dWithin Search distance from point in meters.
+   */
+  dWithin?: number;
 
   // filter?: string;
 }

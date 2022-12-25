@@ -228,11 +228,14 @@ export class WfsGetFeatureParams {
   @Field((type) => [String, String], { nullable: false })
   public pointCoordinates!: [string, string];
 
-  @Field((type) => [String], { nullable: false })
-  public typeNames!: string[];
+  @Field((type) => String, { nullable: false })
+  public typeName!: string;
 
   @Field((type) => Number, { nullable: true })
   public count?: number;
+
+  @Field((type) => Number, { nullable: true })
+  public dWithin?: number;
 }
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

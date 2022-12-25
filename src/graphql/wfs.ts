@@ -6,6 +6,7 @@ import { CRS } from '../wfs/wfs-client/interfaces';
 export const geoJsonObject = new GraphQLScalarType({ name: 'geoJsonObject' });
 export const crsObject = new GraphQLScalarType({ name: 'crsObject' });
 export const featureProperties = new GraphQLScalarType({ name: 'featureProperties' });
+export const featureConfigs = new GraphQLScalarType({ name: 'featureConfigs' });
 
 @ObjectType()
 export class WfsFeature {
@@ -46,8 +47,20 @@ export class GetFeature {
   public crs?: CRS;
 }
 
+export interface IFeatureTypesConfigs {
+  [featureType: string]: {
+    isVisualized?: boolean;
+    color?: string;
+    outlineColor?: string;
+    dWithin?: number;
+  };
+}
+
 @ObjectType()
 export class GetFeatureTypes {
   @Field((type) => [String], { nullable: true })
   public typesArr?: string[];
+
+  @Field((type) => featureConfigs, { nullable: true })
+  public featureConfigs: IFeatureTypesConfigs;
 }
