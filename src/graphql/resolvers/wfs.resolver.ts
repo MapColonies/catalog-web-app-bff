@@ -45,7 +45,7 @@ export class WfsResolver {
         color: '#4fe368',
         outlineColor: '#017d16',
         dWithin: 30,
-        isVisualized: true,
+        isVisualized: false,
       },
       buildings: {
         color: '#7ebded',
