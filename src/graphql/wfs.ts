@@ -53,6 +53,8 @@ export interface IFeatureTypesConfigs {
     color?: string;
     outlineColor?: string;
     dWithin?: number;
+    icon?: string;
+    translationId?: string;
   };
 }
 

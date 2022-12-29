@@ -52,6 +52,8 @@ export class WfsResolver {
         outlineColor: '#0465b0',
         dWithin: 3,
         isVisualized: true,
+        translationId: 'actions.wfs.buildings-title',
+        icon: 'home',
       },
       roads: {
         color: '#ffb405',
