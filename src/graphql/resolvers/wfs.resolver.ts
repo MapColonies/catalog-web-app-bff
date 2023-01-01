@@ -53,7 +53,7 @@ export class WfsResolver {
         dWithin: 3,
         isVisualized: true,
         translationId: 'actions.wfs.buildings-title',
-        icon: 'home',
+        icon: 'location_city',
       },
       roads: {
         color: '#ffb405',
