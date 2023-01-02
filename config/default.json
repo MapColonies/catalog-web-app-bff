@@ -94,5 +94,6 @@
     "injectionType": "header",
     "tokenValue": "TOKEN"
   },
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#7EBDED\", \"outlineColor\": \"#0465B0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\", \"icon\": \"maps\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\"} }"
 }

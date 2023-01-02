@@ -1,18 +1,20 @@
+import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { WFS } from '../../wfs/WFS';
 import { WfsGetFeatureParams } from '../inputTypes';
 import { GetFeature, GetFeatureTypes, IFeatureTypesConfigs } from '../wfs';
 
-export const FEATURE_DESCRIPTORS_FALLBACK_PROPERTY = 'default';
-
 @Resolver()
 export class WfsResolver {
   private readonly wfs: WFS;
+  private readonly config: IConfig;
 
   public constructor() {
     this.wfs = container.resolve(WFS);
+    this.config = container.resolve(Services.CONFIG);
   }
 
   @Query((type) => GetFeature)
@@ -34,36 +36,30 @@ export class WfsResolver {
     ctx: IContext
   ): Promise<GetFeatureTypes> {
     const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
-    const featureTypesConfigs = this.getFeatureTypesConfigs();
+    const featureTypesConfigs = this.getFeatureTypesConfigs(getFeatureTypesResponse);
 
     return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
   }
 
-  private getFeatureTypesConfigs(): IFeatureTypesConfigs {
-    return {
-      addrs: {
-        color: '#4fe368',
-        outlineColor: '#017d16',
-        dWithin: 30,
-        isVisualized: false,
-      },
-      buildings: {
-        color: '#7ebded',
-        outlineColor: '#0465b0',
-        dWithin: 3,
-        isVisualized: true,
-        translationId: 'actions.wfs.buildings-title',
-        icon: 'location_city',
-      },
-      roads: {
-        color: '#ffb405',
-        dWithin: 10,
-        isVisualized: true,
-      },
-      [FEATURE_DESCRIPTORS_FALLBACK_PROPERTY]: {
-        dWithin: 5,
-        isVisualized: false,
-      },
+  private getFeatureTypesConfigs(features: string[]): IFeatureTypesConfigs {
+    const DEFAULT_CONFIG = {
+      dWithin: 5,
+      isVisualized: false,
     };
+
+    const defaultFeaturesConfigs = features.reduce((featuresConfig, featureType) => {
+      return {
+        ...featuresConfig,
+        [featureType]: DEFAULT_CONFIG,
+      };
+    }, {} as IFeatureTypesConfigs);
+
+    try {
+      const featureTypesConfig = JSON.parse(this.config.get('wfsServicesConfig')) as IFeatureTypesConfigs;
+      const featureDescFromConfig = { ...defaultFeaturesConfigs, ...featureTypesConfig };
+      return featureDescFromConfig;
+    } catch (e) {
+      return defaultFeaturesConfigs;
+    }
   }
 }
