@@ -146,6 +146,9 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.layerPolygonParts',
     fullWidth: true,
   },
+  transparency: {
+    label: 'field-names.raster.transparency',
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as Record<string, any>;
 
