@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "postinstall": "npm run patch:deps",
-    "patch:deps": "patch-package --patch-dir ./node_modules/@map-colonies/csw-client/dist/patches",
+    "patch:deps": "cd ./node_modules/@map-colonies/csw-client && patch-package --patch-dir ./dist/patches",
     "test:unit": "jest --config=./tests/configurations/unit/jest.config.js",
     "test:integration": "jest --config=./tests/configurations/integration/jest.config.js",
     "format": "prettier --check .",
@@ -79,8 +79,7 @@
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.1.6",
     "tsyringe": "^4.5.0",
-    "type-graphql": "^1.1.1",
-    "w3c-schemas": "^1.4.0"
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
