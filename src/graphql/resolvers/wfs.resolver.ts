@@ -45,6 +45,7 @@ export class WfsResolver {
     const DEFAULT_CONFIG = {
       dWithin: 5,
       isVisualized: false,
+      outlineWidth: 5,
     };
 
     const defaultFeaturesConfigs = features.reduce((featuresConfig, featureType) => {
@@ -56,7 +57,11 @@ export class WfsResolver {
 
     try {
       const featureTypesConfig = JSON.parse(this.config.get('wfsServicesConfig')) as IFeatureTypesConfigs;
-      const featureDescFromConfig = { ...defaultFeaturesConfigs, ...featureTypesConfig };
+      const featureDescFromConfig: IFeatureTypesConfigs = {};
+      for (const [key, val] of Object.entries(defaultFeaturesConfigs)) {
+        featureDescFromConfig[key] = { ...val, ...((featureTypesConfig[key] as Record<string, unknown> | undefined) ?? {}) };
+      }
+
       return featureDescFromConfig;
     } catch (e) {
       return defaultFeaturesConfigs;

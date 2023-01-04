@@ -55,6 +55,7 @@ export interface IFeatureTypesConfigs {
     dWithin?: number;
     icon?: string;
     translationId?: string;
+    outlineWidth?: number;
   };
 }
 
