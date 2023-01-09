@@ -90,6 +90,9 @@
     "MAP_SERVER-RECORD_RASTER-URL": "MAP_SERVER-RECORD_RASTER-URL",
     "MAP_SERVER-RECORD_DEM-URL": "MAP_SERVER-RECORD_DEM-URL"
   },
+  "wfs": {
+    "url": "WFS_URL"
+  },
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "wfsServicesConfig": "WFS_SERVICES_CONFIG"
 }
