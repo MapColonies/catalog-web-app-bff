@@ -29,6 +29,7 @@ export default class JobManagerCommon implements IJobManagerService {
           fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
           tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
           shouldReturnTasks: false,
+          shouldReturnAvailableActions: true,
         },
       },
       ctx
