@@ -54,7 +54,8 @@ export const xmlParserOptions = {
     name === 'Format' ||
     name === 'TileMatrixSetLink' ||
     name === 'ResourceURL' ||
-    name === 'TileMatrixLimits',
+    name === 'TileMatrixLimits' ||
+    name === 'TileMatrixSet',
   attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
   tagValueProcessor: (val: string): string => he.decode(val),
   alwaysCreateTextNode: false,
