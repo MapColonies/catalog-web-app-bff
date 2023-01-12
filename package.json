@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "postinstall": "npm run patch:deps",
-    "patch:deps": "patch-package --patch-dir ./node_modules/@map-colonies/csw-client/dist/patches",
+    "patch:deps": "cd ./node_modules/@map-colonies/csw-client && patch-package --patch-dir ./dist/patches",
     "test:unit": "jest --config=./tests/configurations/unit/jest.config.js",
     "test:integration": "jest --config=./tests/configurations/integration/jest.config.js",
     "format": "prettier --check .",
@@ -72,6 +72,7 @@
     "he": "^1.2.0",
     "http-status-codes": "^2.1.4",
     "js-yaml": "^3.14.1",
+    "jsonix": "^3.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "ogc-schemas": "^2.6.1",

@@ -86,10 +86,14 @@
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
     "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
   },
+  "wfs": {
+    "url": "http://localhost:8000/wfs"
+  },
   "accessToken": {
     "attributeName": "x-api-key",
     "injectionType": "header",
     "tokenValue": "TOKEN"
   },
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM"
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }"
 }
