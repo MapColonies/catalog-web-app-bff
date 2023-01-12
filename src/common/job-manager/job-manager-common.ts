@@ -67,14 +67,12 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async resetJobHandler(id: string, ctx: IContext): Promise<string> {
-    const YEAR_IN_MS = 3.154e10;
     await requestHandler(
       `${this.serviceURL}/jobs/${id}/reset`,
       'POST',
       {
         data: {
-          // TODO: Use decided value.
-          newExpirationDate: new Date(new Date().getTime() + YEAR_IN_MS),
+          newExpirationDate: undefined,
         },
       },
       ctx
