@@ -34,8 +34,10 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
       return { value: style['ows:Identifier'], ...(isDefault === 'true' ? { isDefault } : {}) };
     }),
     format: layer.Format,
-    tileMatrixSet: layer.TileMatrixSetLink.map((link: { TileMatrixSet: string; TileMatrixSetLimits: Record<string, unknown> }) => {
-      const tileMatrixSetID = link.TileMatrixSet;
+    tileMatrixSet: layer.TileMatrixSetLink.map((link: { TileMatrixSet: string[]; TileMatrixSetLimits: Record<string, unknown> }) => {
+      // Because we use fast-xml-parser 3.x the TAG arrayMode definition is cross XML.
+      // In 4.x we can define how the TAG behaves in different nesting levels (by xPath)
+      const tileMatrixSetID = link.TileMatrixSet[0]; // Because of cross XML TAG definition, rather then WMTS schema
       const tileMatrixLabels =
         link.TileMatrixSetLimits !== undefined
           ? (link.TileMatrixSetLimits.TileMatrixLimits as TileMatrixLimits[]).map((tileMatrixLimits: TileMatrixLimits) => tileMatrixLimits.TileMatrix)
