@@ -23,10 +23,7 @@ export class JobManager implements JobManagerType {
     this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
 
     const jobsData = await this.jobManager.getJobs(ctx, params);
-    // return jobsData;
-
-    // Temporarily
-    return this.temporarilySetFieldValues(jobsData);
+    return jobsData;
   }
 
   public transformRecordsToEntity(cswArray: Job[]): Job[] {
@@ -61,15 +58,5 @@ export class JobManager implements JobManagerType {
 
     const response = await this.jobManager.getTasks(params, ctx);
     return response;
-  }
-
-  // Only until isResettable and isAbortable fields will be implemented.
-  private temporarilySetFieldValues(jobs: Job[]): Job[] {
-    return jobs.map((job) => ({
-      ...job,
-      isResettable: job.productType === ProductType.ORTHOPHOTO,
-      isAbortable: job.productType === ProductType.ORTHOPHOTO,
-      domain: job.productType === ProductType.ORTHOPHOTO ? 'RASTER' : '3D',
-    }));
   }
 }

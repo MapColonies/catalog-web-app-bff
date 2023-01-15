@@ -13,7 +13,7 @@ import { IJobManagerService } from './job-manager.interface';
 
 export default class JobManagerCommon implements IJobManagerService {
   private readonly serviceURL: string = '';
-  private readonly jobManagerType: string = RecordType.RECORD_RASTER;
+  // private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.serviceURL = this.config.get('jobServices.common.url');
@@ -29,6 +29,7 @@ export default class JobManagerCommon implements IJobManagerService {
           fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
           tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
           shouldReturnTasks: false,
+          shouldReturnAvailableActions: true,
         },
       },
       ctx
@@ -40,7 +41,9 @@ export default class JobManagerCommon implements IJobManagerService {
     // // Mock Jobs
     // const result = await Promise.resolve(MOCK_JOBS);
 
-    return result.map((job) => ({ ...job, domain: this.jobManagerType }));
+    // return result.map((job) => ({ ...job, domain: this.jobManagerType }));
+
+    return result;
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
@@ -64,7 +67,16 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async resetJobHandler(id: string, ctx: IContext): Promise<string> {
-    await requestHandler(`${this.serviceURL}/jobs/${id}/reset`, 'POST', {}, ctx);
+    await requestHandler(
+      `${this.serviceURL}/jobs/${id}/reset`,
+      'POST',
+      {
+        data: {
+          newExpirationDate: undefined,
+        },
+      },
+      ctx
+    );
     return 'ok';
   }
 
@@ -79,6 +91,7 @@ export default class JobManagerCommon implements IJobManagerService {
       switch (key) {
         case 'created':
         case 'updated':
+        case 'expirationDate':
           return { ...transformedJob, [key]: new Date(value as string) };
 
         default:

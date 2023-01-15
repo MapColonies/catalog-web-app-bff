@@ -49,6 +49,14 @@ export class Task {
   @Field({ nullable: true })
   public attempts?: number;
 }
+@ObjectType()
+export class AvailableActions {
+  @Field({ nullable: false })
+  public isResumable: boolean;
+
+  @Field({ nullable: true })
+  public isAbortable: boolean;
+}
 
 @ObjectType()
 export class Job {
@@ -127,11 +135,8 @@ export class Job {
   @Field({ nullable: true })
   public domain?: string;
 
-  @Field({ nullable: true })
-  public isResettable?: boolean;
-
-  @Field({ nullable: true })
-  public isAbortable?: boolean;
+  @Field((type) => AvailableActions, { nullable: true })
+  public availableActions?: AvailableActions;
 }
 
 const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' }); // lgtm [js/unused-local-variable]
