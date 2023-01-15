@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.3...v1.13.0) (2023-01-15)
+
+
+### Features
+
+* start implementing wfs client ([#128](https://github.com/MapColonies/catalog-web-app-bff/issues/128)) ([81bfdfa](https://github.com/MapColonies/catalog-web-app-bff/commit/81bfdfa1a33603765521e0564c7018a1f0c7116e))
+* transparency field added to model ([#130](https://github.com/MapColonies/catalog-web-app-bff/issues/130)) ([6cbdf19](https://github.com/MapColonies/catalog-web-app-bff/commit/6cbdf19d6224fc2ef0d6a7e96649f85f2ba45374))
+
+
+### Bug Fixes
+
+* c for each error ([#131](https://github.com/MapColonies/catalog-web-app-bff/issues/131)) ([fb42aa4](https://github.com/MapColonies/catalog-web-app-bff/commit/fb42aa4da7934ff18b1351d222e7e553d10f3e50))
+* cross xml array mode definition ([#133](https://github.com/MapColonies/catalog-web-app-bff/issues/133)) ([af216ff](https://github.com/MapColonies/catalog-web-app-bff/commit/af216ff1e959102f5988b4fc262398d09080241e))
+* jobs available actions logic ([#132](https://github.com/MapColonies/catalog-web-app-bff/issues/132)) ([e551014](https://github.com/MapColonies/catalog-web-app-bff/commit/e551014ca1531908ff90a6bcc7221b8e9bf25552))
+* merge fix ([#129](https://github.com/MapColonies/catalog-web-app-bff/issues/129)) ([f346620](https://github.com/MapColonies/catalog-web-app-bff/commit/f3466200ad400aafb83939948d7ee85c56538e2d))
+* use wmts layer url from capabilities (MAPCO-2648) ([#121](https://github.com/MapColonies/catalog-web-app-bff/issues/121)) ([3578ed2](https://github.com/MapColonies/catalog-web-app-bff/commit/3578ed213414d2170add3ed1cdafb6550ef9bb87))
+
 ### [1.12.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.2...v1.12.3) (2022-11-07)
 
 
