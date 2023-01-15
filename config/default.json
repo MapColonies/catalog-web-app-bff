@@ -68,6 +68,9 @@
       "url": "http://localhost:8000/job-manager-service"
     }
   },
+  "lookupTablesService": {
+    "url": "http://localhost:8082/lookup-tables"
+  },
   "storageExplorerServices": {
     "raster": {
       "url": "http://localhost:8000/storage-explorer-raster"

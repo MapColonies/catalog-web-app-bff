@@ -4,6 +4,7 @@ import { LayerMetadataMixedResolver } from './resolvers/csw.resolver';
 import { EntityDescriptorResolver } from './resolvers/entity-descriptor.resolver';
 import { ExternalServicesResolver } from './resolvers/external-services.resolver';
 import { JobResolver } from './resolvers/job.resolver';
+import { LookupTablesResolver } from './resolvers/lookup-table.resolver';
 import { ServiceDiscoveryResolver } from './resolvers/service-discovery.resolver';
 import { StorageExplorerResolver } from './resolvers/storage-explorer.resolver';
 import { TaskResolver } from './resolvers/task.resolver';
@@ -20,6 +21,7 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     ServiceDiscoveryResolver,
     ExternalServicesResolver,
     CapabilitiesResolver,
+    LookupTablesResolver,
     WfsResolver,
   ];
 }

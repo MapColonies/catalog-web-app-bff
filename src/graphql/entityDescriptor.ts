@@ -194,6 +194,12 @@ export class FieldConfig {
 
   @Field((type) => UpdateRules, { nullable: true })
   public updateRules?: UpdateRules;
+
+  @Field((type) => String, { nullable: true })
+  public lookupTable?: string;
+
+  @Field((type) => [String], { nullable: true })
+  public lookupExcludeFields?: string[];
 }
 
 @ObjectType()
