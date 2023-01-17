@@ -75,6 +75,9 @@
       "url": "STORAGE_EXPLORER_3D_URL"
     }
   },
+  "lookupTablesService": {
+    "url": "LOOKUP_TABLES_SERVICE_URL"
+  },
   "accessToken": {
     "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
     "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
