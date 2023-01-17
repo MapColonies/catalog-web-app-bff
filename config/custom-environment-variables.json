@@ -64,7 +64,7 @@
   },
   "jobServices": {
     "common": {
-      "url": "JOB_SERVICE_URL"
+      "url": "JOB_SERVICE_COMMON_URL"
     }
   },
   "storageExplorerServices": {
