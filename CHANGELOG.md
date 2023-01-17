@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.1...v1.13.2) (2023-01-17)
+
+
+### Bug Fixes
+
+* add lookup table service value ([#135](https://github.com/MapColonies/catalog-web-app-bff/issues/135)) ([ce3c6e6](https://github.com/MapColonies/catalog-web-app-bff/commit/ce3c6e6d049ad1e021a6e9fdb5bd345a5b6e9be5))
+
 ### [1.13.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.0...v1.13.1) (2023-01-17)
 
 
