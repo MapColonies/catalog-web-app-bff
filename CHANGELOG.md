@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.0...v1.13.1) (2023-01-17)
+
+
+### Bug Fixes
+
+* job manager common template ([#134](https://github.com/MapColonies/catalog-web-app-bff/issues/134)) ([77ab5c6](https://github.com/MapColonies/catalog-web-app-bff/commit/77ab5c63c6b0f5fc87d95f4dc08f55219b339c70))
+
 ## [1.13.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.12.3...v1.13.0) (2023-01-15)
 
 
