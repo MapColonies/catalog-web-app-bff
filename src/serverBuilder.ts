@@ -1,16 +1,17 @@
 import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
-import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-express-viewer';
-//import { getErrorHandlerMiddleware } from '@map-colonies/error-express-handler';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
+import { GraphQLError, printSchema } from 'graphql';
+import { get } from 'lodash';
 import { inject, injectable } from 'tsyringe';
-import { Logger } from '@map-colonies/js-logger';
-import httpLogger from '@map-colonies/express-access-log-middleware';
 import { buildSchemaSync } from 'type-graphql';
-import { printSchema } from 'graphql';
-import { ApolloServer } from 'apollo-server-express';
+//import { getErrorHandlerMiddleware } from '@map-colonies/error-express-handler';
+import httpLogger from '@map-colonies/express-access-log-middleware';
+import { Logger } from '@map-colonies/js-logger';
+import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-express-viewer';
 import { Services } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
 import { getResolvers } from './graphql/resolvers';
@@ -70,6 +71,20 @@ export class ServerBuilder {
       context: ({ req }): IContext => ({
         requestHeaders: req.headers,
       }),
+      formatError: (formattedError: GraphQLError) => {
+        const serverResponse = get(formattedError, 'extensions.exception.response') as Record<string, unknown>;
+        if (get(formattedError, 'extensions.exception.isAxiosError') === true && serverResponse.data) {
+          return {
+            ...formattedError,
+            serverResponse: {
+              data: { ...(serverResponse.data as Record<string, unknown>) },
+              status: serverResponse.status,
+              statusText: serverResponse.statusText,
+            },
+          };
+        }
+        return formattedError;
+      },
     });
     this.logger.info(`Started GraphQL server with schema: ${printSchema(schema)}`);
     server.applyMiddleware({ app: this.serverInstance });
