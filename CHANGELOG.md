@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.3...v1.13.4) (2023-01-29)
+
+
+### Bug Fixes
+
+* ptoduct type freeze on update ([#137](https://github.com/MapColonies/catalog-web-app-bff/issues/137)) ([d7d267d](https://github.com/MapColonies/catalog-web-app-bff/commit/d7d267daed07c655b39c294652a623760bf03429))
+
 ### [1.13.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.1...v1.13.2) (2023-01-17)
 
 
