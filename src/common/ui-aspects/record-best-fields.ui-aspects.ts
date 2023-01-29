@@ -12,6 +12,9 @@ const pycswBestCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.raster.productType',
+    updateRules: {
+      freeze: true,
+    },
   },
   productName: {
     label: 'field-names.raster.productName',
