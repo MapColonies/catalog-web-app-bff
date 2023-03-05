@@ -2,11 +2,12 @@ import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Ctx, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
 import { requestHandler } from '../../utils';
+import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
 
 @Resolver()
@@ -22,9 +23,14 @@ export class LookupTablesResolver {
   }
 
   @Query(() => LookupTableData)
-  public async getLookupTablesData(@Ctx() ctx: IContext): Promise<LookupTableData> {
+  public async getLookupTablesData(
+    @Ctx()
+    ctx: IContext,
+    @Arg('data')
+    { lookupFields }: GetLookupTablesParams
+  ): Promise<LookupTableData> {
     try {
-      const dictionary = await this.fetchLookupTablesData(ctx);
+      const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
     } catch (error) {
       this.logger.error('[LookupTablesResolver][getLookupTablesData]', error as string);
@@ -32,10 +38,10 @@ export class LookupTablesResolver {
     }
   }
 
-  public async fetchLookupTablesData(ctx: IContext): Promise<LookupTableData> {
+  public async fetchLookupTablesData(ctx: IContext, lookupFields?: LookupTableField[]): Promise<LookupTableData> {
     this.logger.info('[LookupTablesResolver][fetchLookupTablesData] fetching lookup tables data');
-
-    const lookupTableField: LookupTableField[] = this.extractLookupFieldsFromDescriptors();
+    const requestedLookupTables = lookupFields ?? ([] as LookupTableField[]);
+    const lookupTableField: LookupTableField[] = [...this.extractLookupFieldsFromDescriptors(), ...requestedLookupTables];
     const lookupKeyToExcludeFields = this.mapLookupKeyToExcludeFields(lookupTableField);
     const lookupKeys = Array.from(lookupKeyToExcludeFields.keys());
 
