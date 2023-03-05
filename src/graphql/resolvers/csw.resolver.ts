@@ -25,7 +25,7 @@ export const LayerMetadataMixedUnion = createUnionType({
   resolveType: (value) => {
     if (value.productType === ProductType.PHOTO_REALISTIC_3D) {
       return Layer3DRecord;
-    } else if ('verticalDatum' in (value as LayerDemRecord)) {
+    } else if ('resolutionMeter' in (value as LayerDemRecord)) {
       return LayerDemRecord;
     } else if ('discretes' in (value as BestRecord)) {
       return BestRecord;

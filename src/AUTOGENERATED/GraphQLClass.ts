@@ -2,7 +2,8 @@
 /* eslint-disable import/exports-last, @typescript-eslint/naming-convention */
 import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-graphql";
 import { GraphQLScalarType } from "graphql";
-import { RecordType, ProductType, Transparency, RecordStatus, VerticalDatum, Units, UndulationModel, DataType, NoDataValue } from "@map-colonies/mc-model-types";
+import { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
+import {ResamplingMethod} from "@map-colonies/mc-utils";
 
 @InputType()
 export class LinkInput {
@@ -286,17 +287,17 @@ export class LayerDemRecordInput {
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field((type) => VerticalDatum, { nullable: false })
-    public verticalDatum: VerticalDatum;
-    @Field((type) => Units, { nullable: true })
-    public units?: Units;
+    @Field((type) => String, { nullable: true })
+    public verticalDatum: string;
+    @Field((type) => String, { nullable: true })
+    public units?: string;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field((type) => UndulationModel, { nullable: false })
     public undulationModel: UndulationModel;
-    @Field((type) => DataType, { nullable: false })
-    public dataType: DataType;
-    @Field((type) => NoDataValue, { nullable: false })
+    @Field((type) => DEMDataType, { nullable: false })
+    public dataType: DEMDataType;
+    @Field((type) => NoDataValue, { nullable: true })
     public noDataValue: NoDataValue;
     @Field({ nullable: false })
     public id: string;
@@ -702,17 +703,17 @@ export class LayerDemRecord {
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field((type) => VerticalDatum, { nullable: false })
-    public verticalDatum: VerticalDatum;
-    @Field((type) => Units, { nullable: true })
-    public units?: Units;
+    @Field((type) => String, { nullable: true })
+    public verticalDatum: string;
+    @Field((type) => String, { nullable: true })
+    public units?: string;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field((type) => UndulationModel, { nullable: false })
     public undulationModel: UndulationModel;
-    @Field((type) => DataType, { nullable: false })
-    public dataType: DataType;
-    @Field((type) => NoDataValue, { nullable: false })
+    @Field((type) => DEMDataType, { nullable: false })
+    public dataType: DEMDataType;
+    @Field((type) => NoDataValue, { nullable: true })
     public noDataValue: NoDataValue;
     @Field({ nullable: false })
     public id: string;
@@ -875,13 +876,12 @@ const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});
 const ProductTypeRegister = registerEnumType(ProductType, {name: "ProductType"});
 const TransparencyRegister = registerEnumType(Transparency, {name: "Transparency"});
 const RecordStatusRegister = registerEnumType(RecordStatus, {name: "RecordStatus"});
-const VerticalDatumRegister = registerEnumType(VerticalDatum, {name: "VerticalDatum"});
-const UnitsRegister = registerEnumType(Units, {name: "Units"});
 const UndulationModelRegister = registerEnumType(UndulationModel, {name: "UndulationModel"});
-const DataTypeRegister = registerEnumType(DataType, {name: "DataType"});
+const DEMDataTypeRegister = registerEnumType(DEMDataType, {name: "DEMDataType"});
 const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});
+const ResamplingMethodRegister = registerEnumType(ResamplingMethod, {name: "ResamplingMethod"});
 
-export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, VerticalDatum, Units, UndulationModel, DataType, NoDataValue };
+export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue, ResamplingMethod };
 export type EnumUnionKeys = keyof typeof enumUnionValues;
 const enumsNames = Object.keys(enumUnionValues);
 
