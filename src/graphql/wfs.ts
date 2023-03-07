@@ -2,10 +2,9 @@ import { GraphQLScalarType } from 'graphql';
 import { Field, ObjectType } from 'type-graphql';
 import { Geometry, Feature, GeoJsonProperties } from 'geojson';
 import { CRS } from '../wfs/wfs-client/interfaces';
+import { geojsonFeatureProperties, geoJsonObject } from './common-scalars';
 
-export const geoJsonObject = new GraphQLScalarType({ name: 'geoJsonObject' });
 export const crsObject = new GraphQLScalarType({ name: 'crsObject' });
-export const featureProperties = new GraphQLScalarType({ name: 'featureProperties' });
 export const featureConfigs = new GraphQLScalarType({ name: 'featureConfigs' });
 
 @ObjectType()
@@ -19,7 +18,7 @@ export class WfsFeature {
   @Field((type) => String, { nullable: true })
   public id?: string;
 
-  @Field((type) => featureProperties, { nullable: false })
+  @Field((type) => geojsonFeatureProperties, { nullable: false })
   public properties: GeoJsonProperties;
 }
 

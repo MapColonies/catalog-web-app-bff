@@ -1,7 +1,9 @@
+import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
+import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import { IContext } from '../interfaces';
 
 export interface IExportLayerManagerService {
-  getEstimatedSize: (data: unknown, ctx: IContext) => Promise<unknown>;
-  getFreeDiskSpace: (data: unknown, ctx: IContext) => Promise<unknown>;
-  triggerExportTask: (data: unknown, ctx: IContext) => Promise<unknown>; // Gets record type as one of the params
+  getEstimatedSize: (data: GetExportEstimatedSizeInput, ctx: IContext) => Promise<EstimatedSize>;
+  getFreeDiskSpace: (data: GetFreeDiskSpaceInput, ctx: IContext) => Promise<FreeDiskSpace>;
+  triggerExportTask: (data: TriggerExportTaskInput, ctx: IContext) => Promise<TriggerExportTask>;
 }
