@@ -1,11 +1,11 @@
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../export-layer';
 
 export const getEstimatedSize: EstimatedSize = {
-  estimatedSizeInMb: 1234,
+  estimatedSizeInKb: 1_234_568,
 };
 
 export const getFreeDiskSpace: FreeDiskSpace = {
-  freeDiskSpaceInMb: 1_000_000,
+  freeDiskSpaceInKb: 1_000_000,
 };
 
 export const triggerExportTask: TriggerExportTask = {

@@ -17,18 +17,26 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     this.logger.info(`[ExportLayerManager3D][getEstimatedSize] estimating export size with data: ${JSON.stringify(data)}.`);
 
     // MOCK RES
-    const res = await Promise.resolve(getEstimatedSize);
+    // const res = await Promise.resolve(getEstimatedSize);
 
-    return res;
+    // return res;
+
+    return new Promise((res, rej) => {
+      setTimeout(() => rej('N/A'), 2000);
+    });
   }
 
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
     this.logger.info(`[ExportLayerManager3D][getFreeDiskSpace] getting free disk space for domain.`);
 
     // MOCK RES
-    const res = await Promise.resolve(getFreeDiskSpace);
+    // const res = await Promise.resolve(getFreeDiskSpace);
 
-    return res;
+    // return res;
+
+    return new Promise((res, rej) => {
+      setTimeout(() => rej('N/A'), 2000);
+    });
   }
 
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
