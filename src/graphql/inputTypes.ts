@@ -177,6 +177,9 @@ export class JobUpdateData {
 
   @Field((type) => Int, { nullable: true })
   public priority?: number;
+
+  @Field((type) => Date, { nullable: true })
+  public expirationDate?: Date;
 }
 
 @InputType()
