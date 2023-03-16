@@ -3,6 +3,7 @@ import { IConfig } from 'config';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
+import { requestHandlerWithToken } from '../../utils';
 import { IContext } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
@@ -38,9 +39,30 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
     this.logger.info(`[ExportLayerManagerRaster][triggerExportTask] triggering export task with data: ${JSON.stringify(data)}.`);
 
-    // MOCK RES
-    const res = await Promise.resolve(triggerExportTask);
+    const res = await requestHandlerWithToken(
+      `${this.serviceURL}/create/roi`,
+      'POST',
+      {
+        data: {
+          ...data.parameters,
+          dbId: data.catalogRecordID,
+          roi: (data.parameters.isFullLayerExport as boolean) ? undefined : data.parameters.roi,
+          callbackURLs: [],
+        },
+      },
+      ctx
+    );
 
-    return res;
+    const resData = res.data as Record<string, unknown>;
+
+    return {
+      // jobId: resData.jobRequestId as string,
+      jobId: resData.id as string,
+    };
+
+    // MOCK RES
+    // const res = await Promise.resolve(triggerExportTask);
+
+    // return res;
   }
 }
