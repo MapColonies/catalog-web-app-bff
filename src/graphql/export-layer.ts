@@ -32,13 +32,13 @@ export class GeojsonFeatureCollection {
 @ObjectType()
 export class EstimatedSize {
   @Field((type) => Number, { nullable: true })
-  public estimatedSizeInKb?: number;
+  public estimatedSizeBytes?: number;
 }
 
 @ObjectType()
 export class FreeDiskSpace {
   @Field((type) => Number, { nullable: true })
-  public freeDiskSpaceInKb?: number;
+  public freeDiskSpaceBytes?: number;
 }
 
 @ObjectType()

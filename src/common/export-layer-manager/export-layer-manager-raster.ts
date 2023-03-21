@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
-import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
+// import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
 import { requestHandlerWithToken } from '../../utils';
 import { IContext } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
@@ -28,12 +28,19 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
     this.logger.info(`[ExportLayerManagerRaster][getFreeDiskSpace] getting free disk space for domain.`);
 
+    const res = await requestHandlerWithToken(`${this.serviceURL}/storage`, 'GET', {}, ctx);
+    const resData = res.data as Record<string, unknown>;
+
+    return {
+      freeDiskSpaceBytes: resData.free as number,
+    };
+
     // // MOCK RES
     // const res = await Promise.resolve(getFreeDiskSpace);
 
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), 2000);
-    });
+    // return new Promise((res, rej) => {
+    //   setTimeout(() => rej('N/A'), 2000);
+    // });
   }
 
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
