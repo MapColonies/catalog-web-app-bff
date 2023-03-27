@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.4...v1.14.0) (2023-03-27)
+
+
+### Features
+
+* add custom tables request for lookup tables resolver ([#138](https://github.com/MapColonies/catalog-web-app-bff/issues/138)) ([ec16a3c](https://github.com/MapColonies/catalog-web-app-bff/commit/ec16a3cfc05ff276ed5ef1cef037d9f56515ef5f))
+
 ### [1.13.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.13.3...v1.13.4) (2023-01-29)
 
 
