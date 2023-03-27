@@ -279,6 +279,8 @@ export class LayerDemRecordInput {
     public resolutionDegree?: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
+    @Field({ nullable: true })
+    public imagingSortieAccuracyCEP90?: number;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field({ nullable: true })
@@ -287,18 +289,18 @@ export class LayerDemRecordInput {
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field((type) => String, { nullable: true })
-    public verticalDatum: string;
-    @Field((type) => String, { nullable: true })
-    public units?: string;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field((type) => UndulationModel, { nullable: false })
     public undulationModel: UndulationModel;
     @Field((type) => DEMDataType, { nullable: false })
     public dataType: DEMDataType;
-    @Field((type) => NoDataValue, { nullable: true })
+    @Field((type) => NoDataValue, { nullable: false })
     public noDataValue: NoDataValue;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
+    @Field({ nullable: true })
+    public hasTerrain?: boolean;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -695,6 +697,8 @@ export class LayerDemRecord {
     public resolutionDegree?: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
+    @Field({ nullable: true })
+    public imagingSortieAccuracyCEP90?: number;
     @Field((type) => layerPolygonPartsObject, { nullable: true })
     public layerPolygonParts?: Record<string, unknown>;
     @Field({ nullable: true })
@@ -703,18 +707,18 @@ export class LayerDemRecord {
     public heightRangeFrom?: number;
     @Field({ nullable: true })
     public heightRangeTo?: number;
-    @Field((type) => String, { nullable: true })
-    public verticalDatum: string;
-    @Field((type) => String, { nullable: true })
-    public units?: string;
     @Field({ nullable: true })
     public geographicArea?: string;
     @Field((type) => UndulationModel, { nullable: false })
     public undulationModel: UndulationModel;
     @Field((type) => DEMDataType, { nullable: false })
     public dataType: DEMDataType;
-    @Field((type) => NoDataValue, { nullable: true })
+    @Field((type) => NoDataValue, { nullable: false })
     public noDataValue: NoDataValue;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
+    @Field({ nullable: true })
+    public hasTerrain?: boolean;
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: true })
@@ -881,7 +885,7 @@ const DEMDataTypeRegister = registerEnumType(DEMDataType, {name: "DEMDataType"})
 const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});
 const ResamplingMethodRegister = registerEnumType(ResamplingMethod, {name: "ResamplingMethod"});
 
-export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue, ResamplingMethod };
+export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue };
 export type EnumUnionKeys = keyof typeof enumUnionValues;
 const enumsNames = Object.keys(enumUnionValues);
 

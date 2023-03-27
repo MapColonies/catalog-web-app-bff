@@ -44,6 +44,7 @@ export class ServerBuilder {
   }
 
   private registerPreRoutesMiddleware(): void {
+    // @ts-expect-error the signature is wrong
     this.serverInstance.use(httpLogger({ logger: this.logger }));
 
     this.serverInstance.use(cors());
