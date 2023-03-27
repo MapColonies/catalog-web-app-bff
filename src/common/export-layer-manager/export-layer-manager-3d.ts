@@ -6,6 +6,7 @@ import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../gra
 import { IContext } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
+const TIMEOUT = 2000;
 export class ExportLayerManager3D implements IExportLayerManagerService {
   private readonly serviceURL: string = '';
 
@@ -22,7 +23,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), 2000);
+      setTimeout(() => rej('N/A'), TIMEOUT);
     });
   }
 
@@ -35,7 +36,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), 2000);
+      setTimeout(() => rej('N/A'), TIMEOUT);
     });
   }
 

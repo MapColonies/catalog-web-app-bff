@@ -7,6 +7,7 @@ import { requestHandlerWithToken } from '../../utils';
 import { IContext } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
+const TIMEOUT = 2000;
 export class ExportLayerManagerRaster implements IExportLayerManagerService {
   private readonly serviceURL: string = '';
 
@@ -21,7 +22,7 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
     // const res = await Promise.resolve(getEstimatedSize);
 
     return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), 1000);
+      setTimeout(() => rej('N/A'), TIMEOUT);
     });
   }
 
