@@ -92,6 +92,17 @@
   "wfs": {
     "url": "http://localhost:8000/wfs"
   },
+  "exportLayerServices": {
+    "raster": {
+      "url": "https://raster_export.com"
+    },
+    "3d": {
+      "url": "https://3d_export.com"
+    },
+    "dem": {
+      "url": "https://dem_export.com"
+    }
+  },
   "accessToken": {
     "attributeName": "x-api-key",
     "injectionType": "header",

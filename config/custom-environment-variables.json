@@ -96,6 +96,17 @@
   "wfs": {
     "url": "WFS_URL"
   },
+  "exportLayerServices": {
+    "raster": {
+      "url": "EXPORT_LAYER_RASTER_URL"
+    },
+    "3d": {
+      "url": "EXPORT_LAYER_3D_URL"
+    },
+    "dem": {
+      "url": "EXPORT_LAYER_DEM_URL"
+    }
+  },
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "wfsServicesConfig": "WFS_SERVICES_CONFIG"
 }

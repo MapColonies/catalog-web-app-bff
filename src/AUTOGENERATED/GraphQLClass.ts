@@ -3,6 +3,7 @@
 import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-graphql";
 import { GraphQLScalarType } from "graphql";
 import { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
+import {ResamplingMethod} from "@map-colonies/mc-utils";
 
 @InputType()
 export class LinkInput {
@@ -882,6 +883,7 @@ const RecordStatusRegister = registerEnumType(RecordStatus, {name: "RecordStatus
 const UndulationModelRegister = registerEnumType(UndulationModel, {name: "UndulationModel"});
 const DEMDataTypeRegister = registerEnumType(DEMDataType, {name: "DEMDataType"});
 const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});
+const ResamplingMethodRegister = registerEnumType(ResamplingMethod, {name: "ResamplingMethod"});
 
 export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue };
 export type EnumUnionKeys = keyof typeof enumUnionValues;
