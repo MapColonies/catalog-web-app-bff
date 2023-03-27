@@ -64,7 +64,7 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
 
     return {
       // jobId: resData.jobRequestId as string,
-      jobId: resData.id as string,
+      jobId: resData.jobId as string,
     };
 
     // MOCK RES
