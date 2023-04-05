@@ -83,17 +83,20 @@ const pycswDemCatalogRecordAspects = {
     label: 'field-names.dem.producerName',
     fullWidth: true,
   },
+  productStatus: {
+    label: 'field-names.dem.productStatus',
+  },
+  hasTerrain: {
+    label: 'field-names.dem.hasTerrain',
+  },
+  imagingSortieAccuracyCEP90: {
+    label: 'field-names.dem.imagingSortieAccuracyCEP90',
+  },
   geographicArea: {
     label: 'field-names.dem.geographicArea',
   },
   productBoundingBox: {
     label: 'field-names.dem.productBoundingBox',
-  },
-  verticalDatum: {
-    label: 'field-names.dem.verticalDatum',
-  },
-  units: {
-    label: 'field-names.dem.units',
   },
   undulationModel: {
     label: 'field-names.dem.undulationModel',
