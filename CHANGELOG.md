@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.14.1...v1.15.0) (2023-04-13)
+
+
+### Features
+
+* new dem profile sync and update ui aspects and fields ([#141](https://github.com/MapColonies/catalog-web-app-bff/issues/141)) ([e8f9103](https://github.com/MapColonies/catalog-web-app-bff/commit/e8f9103a8a81e76ceeec7b9450b8da0c8d1b5290))
+
 ### [1.14.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.14.0...v1.14.1) (2023-03-27)
 
 
