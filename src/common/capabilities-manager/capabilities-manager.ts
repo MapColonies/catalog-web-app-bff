@@ -6,7 +6,6 @@ import { CapabilitiesLayersSearchParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IConfig, IContext } from '../interfaces';
 import { Services } from '../constants';
-import { CapabilitiesManagerDem } from './capabilities-manager-dem';
 import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
 import { ICapabilitiesManagerInstance, ICapabilitiesManagerService } from './capabilities-manager.interface';
 
@@ -18,7 +17,6 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.mapServices.RASTER = new CapabilitiesManagerRaster(this.config, this.logger);
-    this.mapServices.DEM = new CapabilitiesManagerDem(this.config, this.logger);
   }
 
   public async getCapabilities(params: CapabilitiesLayersSearchParams, ctx: IContext): Promise<Capability[]> {
@@ -35,9 +33,6 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
 
     switch (RecordType[recordType]) {
-      case RecordType.RECORD_DEM:
-        capabilitiesManagerInstance = this.mapServices.DEM;
-        break;
       default:
         capabilitiesManagerInstance = this.mapServices.RASTER;
         break;

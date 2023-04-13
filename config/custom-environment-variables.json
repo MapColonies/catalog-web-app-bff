@@ -35,9 +35,6 @@
   "mapServices": {
     "raster": {
       "url": "MAP_SERVICE_RASTER_URL"
-    },
-    "dem": {
-      "url": "MAP_SERVICE_DEM_URL"
     }
   },
   "catalogServices": {
@@ -90,8 +87,7 @@
     "PYCSW-RECORD_RASTER-URL": "PYCSW-RECORD_RASTER-URL",
     "PYCSW-RECORD_3D-URL": "PYCSW-RECORD_3D-URL",
     "PYCSW-RECORD_DEM-URL": "PYCSW-RECORD_DEM-URL",
-    "MAP_SERVER-RECORD_RASTER-URL": "MAP_SERVER-RECORD_RASTER-URL",
-    "MAP_SERVER-RECORD_DEM-URL": "MAP_SERVER-RECORD_DEM-URL"
+    "MAP_SERVER-RECORD_RASTER-URL": "MAP_SERVER-RECORD_RASTER-URL"
   },
   "wfs": {
     "url": "WFS_URL"

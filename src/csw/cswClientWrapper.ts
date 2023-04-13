@@ -66,7 +66,7 @@ export class CswClientWrapper {
   }
 
   public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
-    const { isDate, isDiscrete, isFootprint, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion } = fieldTypes;
+    const { isDate, isDiscrete, isFootprint, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion, isBoolean } = fieldTypes;
 
     const fixFootprint = (footprint: GeometryObject): GeometryObject => {
       switch (footprint.type) {
@@ -148,6 +148,20 @@ export class CswClientWrapper {
                 default:
                   return val;
               }
+            case isBoolean(key): {
+              // Python booleans notations are capitalized, we should parse it to JS notation.
+              if (typeof val === 'string') {
+                const isBooleanValue = ['True', 'False'].includes(val);
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                const pythonBooleanStringMap: Record<string, boolean> = { True: true, False: false };
+
+                if (isBooleanValue) {
+                  return pythonBooleanStringMap[val];
+                }
+              }
+
+              return val;
+            }
             default:
               return val;
           }
