@@ -96,34 +96,6 @@ export class LayerRasterRecordInput {
 export const footprintObject = new GraphQLScalarType({ name: "footprintObject"});
 export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolygonPartsObject"});
 
-export const NoDataValueScalar = new GraphQLScalarType({
-    name: 'NoDataValue',
-    description: 'Custom scalar type for NoDataValue enum',
-    serialize(value: NoDataValue): string {
-      // Serialize the enum value to a string
-      return value.toString();
-    },
-    parseValue(value: unknown): NoDataValue | null {
-      // Parse the incoming value into the appropriate enum value
-        return Object.entries(NoDataValue).find(([, val]) => {
-            if(val === value) {
-                return true;
-            }
-        })?.[1] ?? null;
-    },
-    parseLiteral(ast): NoDataValue | null {
-      // Parse a literal value into the appropriate enum value
-      if (ast.kind === Kind.STRING) {
-        return Object.entries(NoDataValue).find(([, val]) => {
-            if(val === ast.value) {
-                return true;
-            }
-        })?.[1] ?? null;
-      }
-      return null;
-    },
-  });
-
 @InputType()
 export class Layer3DRecordInput {
     @Field((type) => RecordType, { nullable: true })

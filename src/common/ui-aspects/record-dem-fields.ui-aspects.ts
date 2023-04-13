@@ -86,9 +86,9 @@ const pycswDemCatalogRecordAspects = {
   productStatus: {
     label: 'field-names.dem.productStatus',
   },
-  hasTerrain: {
-    label: 'field-names.dem.hasTerrain',
-  },
+  // hasTerrain: {
+  //   label: 'field-names.dem.hasTerrain',
+  // },
   imagingSortieAccuracyCEP90: {
     label: 'field-names.dem.imagingSortieAccuracyCEP90',
   },
