@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.15.0...v1.15.1) (2023-04-18)
+
+
+### Bug Fixes
+
+* remove dem map server from external services ([#142](https://github.com/MapColonies/catalog-web-app-bff/issues/142)) ([6a1d8b0](https://github.com/MapColonies/catalog-web-app-bff/commit/6a1d8b0667ca95b2adc4f56da20c5e6b2a10b025))
+
 ## [1.15.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.14.1...v1.15.0) (2023-04-13)
 
 
