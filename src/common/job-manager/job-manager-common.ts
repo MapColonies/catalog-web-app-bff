@@ -7,21 +7,24 @@ import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
-import { requestHandler } from '../../utils';
-import { IConfig, IContext } from '../interfaces';
+import { requestExecutor } from '../../utils';
+import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 
 export default class JobManagerCommon implements IJobManagerService {
-  private readonly serviceURL: string = '';
+  private readonly service: IService;
   // private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
-    this.serviceURL = this.config.get('jobServices.common.url');
+    this.service = this.config.get('jobServices.common');
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
-    const res = await requestHandler(
-      `${this.serviceURL}/jobs`,
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/jobs`,
+        exposureType: this.service.exposureType,
+      },
       'GET',
       {
         params: {
@@ -47,8 +50,11 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
-    await requestHandler(
-      `${this.serviceURL}/jobs/${id}`,
+    await requestExecutor(
+      {
+        url: `${this.service.url}/jobs/${id}`,
+        exposureType: this.service.exposureType,
+      },
       'PUT',
       {
         data: {
@@ -62,13 +68,24 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async abortJobHandler(id: string, ctx: IContext): Promise<string> {
-    await requestHandler(`${this.serviceURL}/tasks/abort/${id}`, 'POST', {}, ctx);
+    await requestExecutor(
+      {
+        url: `${this.service.url}/tasks/abort/${id}`,
+        exposureType: this.service.exposureType,
+      },
+      'POST',
+      {},
+      ctx
+    );
     return 'ok';
   }
 
   public async resetJobHandler(id: string, ctx: IContext): Promise<string> {
-    await requestHandler(
-      `${this.serviceURL}/jobs/${id}/reset`,
+    await requestExecutor(
+      {
+        url: `${this.service.url}/jobs/${id}/reset`,
+        exposureType: this.service.exposureType,
+      },
       'POST',
       {
         data: {
@@ -81,7 +98,15 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
-    const res = await requestHandler(`${this.serviceURL}/jobs/${params.jobId}/tasks`, 'GET', {}, ctx);
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/jobs/${params.jobId}/tasks`,
+        exposureType: this.service.exposureType,
+      },
+      'GET',
+      {},
+      ctx
+    );
 
     return res.data as Task[];
   }

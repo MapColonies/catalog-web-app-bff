@@ -24,18 +24,22 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
+      "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
+      "exposureType": "SERVICE"
     },
     "dem": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw"
+      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
+      "exposureType": "SERVICE"
     }
   },
   "mapServices": {
     "raster": {
-      "url": "http://localhost:8000/map-service-raster"
+      "url": "http://localhost:8000/map-service-raster",
+      "exposureType": "ROUTE"
     },
     "dem": {
       "url": "http://localhost:8000/map-service-dem"
@@ -43,10 +47,12 @@
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster"
+      "url": "http://localhost:8000/catalog-service-raster",
+      "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d"
+      "url": "http://localhost:8000/catalog-service-3d",
+      "exposureType": "SERVICE"
     },
     "dem": {
       "url": "NOT_AVAILABLE"
@@ -54,10 +60,12 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster"
+      "url": "http://localhost:8000/ingestion-service-raster",
+      "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d"
+      "url": "http://localhost:8000/ingestion-service-3d",
+      "exposureType": "SERVICE"
     },
     "dem": {
       "url": "NOT_AVAILABLE"
@@ -65,35 +73,43 @@
   },
   "jobServices": {
     "common": {
-      "url": "http://localhost:8000/job-manager-service"
+      "url": "http://localhost:8000/job-manager-service",
+      "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "http://localhost:8082/lookup-tables"
+    "url": "http://localhost:8082/lookup-tables",
+    "exposureType": "SERVICE"
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "http://localhost:8000/storage-explorer-raster"
+      "url": "http://localhost:8000/storage-explorer-raster",
+      "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/storage-explorer-3d"
+      "url": "http://localhost:8000/storage-explorer-3d",
+      "exposureType": "SERVICE"
     }
   },
   "serviceDiscovery": {
-    "url": "http://localhost:8000/service-discovery"
+    "url": "http://localhost:8000/service-discovery",
+    "exposureType": "SERVICE"
   },
   "externalServices": {
     "PYCSW-RECORD_RASTER-URL": "https://pycsw_raster.com",
     "PYCSW-RECORD_3D-URL": "https://pycsw_3d.com",
     "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
-    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com"
+    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
+    "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
   },
   "wfs": {
-    "url": "http://localhost:8000/wfs"
+    "url": "http://localhost:8000/wfs",
+    "exposureType": "ROUTE"
   },
   "exportLayerServices": {
     "raster": {
-      "url": "https://raster_export.com"
+      "url": "https://raster_export.com",
+      "exposureType": "SERVICE"
     },
     "3d": {
       "url": "https://3d_export.com"

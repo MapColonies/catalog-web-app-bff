@@ -40,7 +40,7 @@ export class CSW {
           ...(PycswVectorBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[]),
         ],
         'http://schema.mapcolonies.com/raster',
-        this.config.get('csw.raster.url')
+        this.config.get('csw.raster')
       ),
       entities: [RecordType.RECORD_RASTER],
     };
@@ -50,7 +50,7 @@ export class CSW {
         'mc:MC3DRecord',
         [...Pycsw3DCatalogRecord.getPyCSWMappings(), ...(PycswQuantizedMeshBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
         'http://schema.mapcolonies.com/3d',
-        this.config.get('csw.3d.url')
+        this.config.get('csw.3d')
       ),
       entities: [RecordType.RECORD_3D],
     };
@@ -60,7 +60,7 @@ export class CSW {
         'mc:MCDEMRecord',
         PycswDemCatalogRecord.getPyCSWMappings(),
         'http://schema.mapcolonies.com/dem',
-        this.config.get('csw.dem.url')
+        this.config.get('csw.dem')
       ),
       entities: [RecordType.RECORD_DEM],
     };

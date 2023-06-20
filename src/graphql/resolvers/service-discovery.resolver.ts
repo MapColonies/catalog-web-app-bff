@@ -3,8 +3,8 @@ import { Logger } from 'pino';
 import { container } from 'tsyringe';
 import { Ctx, Query, Resolver } from 'type-graphql';
 import { Services } from '../../common/constants';
-import { IContext } from '../../common/interfaces';
-import { requestHandler } from '../../utils';
+import { IContext, IService } from '../../common/interfaces';
+import { requestExecutor } from '../../utils';
 import { DeploymentWithServices } from '../service-discovery';
 // import { MOCK_DEPS_AND_SERVICES } from '../MOCKS/service-discovery/depAndServicesMock';
 
@@ -12,12 +12,12 @@ import { DeploymentWithServices } from '../service-discovery';
 export class ServiceDiscoveryResolver {
   private readonly logger: Logger;
   private readonly config: IConfig;
-  private readonly serviceURL: string = '';
+  private readonly service: IService;
 
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    this.serviceURL = this.config.get('serviceDiscovery.url');
+    this.service = this.config.get('serviceDiscovery');
   }
 
   @Query((type) => [DeploymentWithServices])
@@ -37,7 +37,7 @@ export class ServiceDiscoveryResolver {
   private async discoverClusterServices(ctx: IContext): Promise<DeploymentWithServices[]> {
     this.logger.info(`[ServiceDiscoveryResolver][discoverClusterServices] fetching services from cluster.`);
 
-    const depsAndServices = await requestHandler(this.serviceURL, 'GET', {}, ctx);
+    const depsAndServices = await requestExecutor(this.service, 'GET', {}, ctx);
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return depsAndServices.data;
