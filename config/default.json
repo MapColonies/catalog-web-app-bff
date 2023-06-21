@@ -40,9 +40,6 @@
     "raster": {
       "url": "http://localhost:8000/map-service-raster",
       "exposureType": "ROUTE"
-    },
-    "dem": {
-      "url": "http://localhost:8000/map-service-dem"
     }
   },
   "catalogServices": {
@@ -99,8 +96,7 @@
     "PYCSW-RECORD_RASTER-URL": "https://pycsw_raster.com",
     "PYCSW-RECORD_3D-URL": "https://pycsw_3d.com",
     "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
-    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com",
-    "MAP_SERVER-RECORD_DEM-URL": "https://geoserver_dem.com"
+    "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com"
   },
   "wfs": {
     "url": "http://localhost:8000/wfs",
