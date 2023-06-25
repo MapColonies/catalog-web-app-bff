@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import config from 'config';
-import { IContext } from './common/interfaces';
+import { IContext, IService } from './common/interfaces';
 
 export enum CatalogRecordItems {
   RASTER = 'RASTER',
@@ -47,4 +47,10 @@ export const requestHandlerWithToken = async (url: string, method: string, param
   }
 
   return requestHandler(url, method, reqConfig, ctx);
+};
+
+export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
+  return service.exposureType === 'ROUTE'
+    ? requestHandlerWithToken(service.url, method, params, ctx)
+    : requestHandler(service.url, method, params, ctx);
 };

@@ -1,18 +1,18 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
-import { requestHandler, requestHandlerWithToken } from '../utils';
+import { requestExecutor } from '../utils';
 import { Services } from '../common/constants';
-import { IContext } from '../common/interfaces';
+import { IContext, IService } from '../common/interfaces';
 import WfsClient from './wfs-client/wfs-client';
 import { IGetFeatureOptions, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
 
 @singleton()
 export class WFS {
-  private readonly baseWfsUrl: string;
+  private readonly service: IService;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
-    this.baseWfsUrl = this.config.get<string>('wfs.url');
+    this.service = this.config.get('wfs');
   }
 
   public async getCapabilities(ctx?: IContext): Promise<Record<string, unknown>> {
@@ -38,9 +38,9 @@ export class WFS {
 
   private getWfsClient(ctx?: IContext): WfsClient {
     const wfsClientOptions: IWFSClientOptions = {
-      baseUrl: this.baseWfsUrl,
+      baseUrl: 'NOT_IN_USE.COM',
       requestExecutor: async (url, method, params): Promise<unknown> => {
-        return requestHandler(url, method, params, ctx);
+        return requestExecutor(this.service, method, params, ctx as IContext);
       },
     };
 
