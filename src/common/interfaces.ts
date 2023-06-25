@@ -15,3 +15,8 @@ export interface OpenApiConfig {
 export interface IContext {
   requestHeaders: IncomingHttpHeaders;
 }
+
+export interface IService {
+  url: string;
+  exposureType: 'SERVICE' | 'ROUTE';
+}

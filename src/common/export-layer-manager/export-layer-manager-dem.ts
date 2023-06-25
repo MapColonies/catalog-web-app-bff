@@ -3,15 +3,15 @@ import { IConfig } from 'config';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
-import { IContext } from '../interfaces';
+import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
 export class ExportLayerManagerDEM implements IExportLayerManagerService {
-  private readonly serviceURL: string = '';
+  private readonly service: IService;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
-    this.serviceURL = this.config.get('exportLayerServices.dem.url');
+    this.service = this.config.get('exportLayerServices.dem');
   }
 
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {

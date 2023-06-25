@@ -3,16 +3,16 @@ import { IConfig } from 'config';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 // import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
-import { requestHandlerWithToken } from '../../utils';
-import { IContext } from '../interfaces';
+import { requestExecutor } from '../../utils';
+import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
 export class ExportLayerManagerRaster implements IExportLayerManagerService {
-  private readonly serviceURL: string = '';
+  private readonly service: IService;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
-    this.serviceURL = this.config.get('exportLayerServices.raster.url');
+    this.service = this.config.get('exportLayerServices.raster');
   }
 
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
@@ -29,7 +29,15 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
     this.logger.info(`[ExportLayerManagerRaster][getFreeDiskSpace] getting free disk space for domain.`);
 
-    const res = await requestHandlerWithToken(`${this.serviceURL}/storage`, 'GET', {}, ctx);
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/storage`,
+        exposureType: this.service.exposureType,
+      },
+      'GET',
+      {},
+      ctx
+    );
     const resData = res.data as Record<string, unknown>;
 
     return {
@@ -47,8 +55,11 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
     this.logger.info(`[ExportLayerManagerRaster][triggerExportTask] triggering export task with data: ${JSON.stringify(data)}.`);
 
-    const res = await requestHandlerWithToken(
-      `${this.serviceURL}/create/roi`,
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/create/roi`,
+        exposureType: this.service.exposureType,
+      },
       'POST',
       {
         data: {

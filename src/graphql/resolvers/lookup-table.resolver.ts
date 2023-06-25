@@ -4,9 +4,9 @@ import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { Services } from '../../common/constants';
-import { IContext } from '../../common/interfaces';
+import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
-import { requestHandler } from '../../utils';
+import { requestExecutor } from '../../utils';
 import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
 
@@ -14,12 +14,12 @@ import { LookupOption, LookupTableData, LookupTableField } from '../lookupTables
 export class LookupTablesResolver {
   private readonly logger: Logger;
   private readonly config: IConfig;
-  private readonly serviceURL: string;
+  private readonly service: IService;
 
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
-    this.serviceURL = this.config.get('lookupTablesService.url');
+    this.service = this.config.get('lookupTablesService');
   }
 
   @Query(() => LookupTableData)
@@ -66,9 +66,19 @@ export class LookupTablesResolver {
   private buildPromises(lookupKeyToExcludeFields: Map<string, string[]>, ctx: IContext): Promise<AxiosResponse<LookupOption[]>>[] {
     const promises: Promise<AxiosResponse<LookupOption[]>>[] = [];
     for (const [lookupKey, lookupExcludeFields] of lookupKeyToExcludeFields.entries()) {
-      const url = `${this.serviceURL}/lookupData/${lookupKey}`;
+      const url = `${this.service.url}/lookupData/${lookupKey}`;
       const payload: AxiosRequestConfig = this.buildPayload(lookupExcludeFields);
-      promises.push(requestHandler(url, 'GET', payload, ctx) as Promise<AxiosResponse<LookupOption[]>>);
+      promises.push(
+        requestExecutor(
+          {
+            url,
+            exposureType: this.service.exposureType,
+          },
+          'GET',
+          payload,
+          ctx
+        ) as Promise<AxiosResponse<LookupOption[]>>
+      );
     }
 
     return promises;
