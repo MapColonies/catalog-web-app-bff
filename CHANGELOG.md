@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.15.2...v1.16.0) (2023-06-25)
+
+
+### Features
+
+* ability to define service exposure ([#143](https://github.com/MapColonies/catalog-web-app-bff/issues/143)) ([a38d7a2](https://github.com/MapColonies/catalog-web-app-bff/commit/a38d7a24e951478585ee21bb69e08575e3e108a9))
+
 ### [1.15.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.15.1...v1.15.2) (2023-06-25)
 
 ### [1.15.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.15.0...v1.15.1) (2023-04-18)
