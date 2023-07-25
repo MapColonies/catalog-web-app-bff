@@ -114,6 +114,10 @@
       "url": "https://dem_export.com"
     }
   },
+  "demHeightsService": {
+    "url": "https://dem_heights.com",
+    "exposureType": "ROUTE"
+  },
   "accessToken": {
     "attributeName": "x-api-key",
     "injectionType": "header",

@@ -311,4 +311,25 @@ export class TriggerExportTaskInput {
   public parameters!: Record<string, unknown>;
 }
 
+@InputType()
+export class DemHeightsPositionInput {
+  @Field((type) => Number, { nullable: false })
+  public latitude!: number;
+
+  @Field((type) => Number, { nullable: false })
+  public longitude!: number;
+}
+
+@InputType()
+export class GetDemPointsHeightsInput {
+  @Field((type) => [DemHeightsPositionInput], { nullable: false })
+  public positions!: DemHeightsPositionInput[];
+
+  @Field((type) => String, { nullable: true })
+  public productType?: string;
+
+  @Field((type) => [String], { nullable: true })
+  public excludeFields?: string[];
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

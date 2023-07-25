@@ -103,6 +103,9 @@
       "url": "EXPORT_LAYER_DEM_URL"
     }
   },
+  "demHeightsService": {
+    "url": "DEM_HEIGHTS_URL"
+  },
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "wfsServicesConfig": "WFS_SERVICES_CONFIG"
 }
