@@ -11,6 +11,7 @@ import { StorageExplorerResolver } from './resolvers/storage-explorer.resolver';
 import { TaskResolver } from './resolvers/task.resolver';
 import { WfsResolver } from './resolvers/wfs.resolver';
 import { DemHeightsResolver } from './resolvers/dem-heights.resolver';
+import { ServicesAvailabilityResolver } from './resolvers/services-availability.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
@@ -27,5 +28,6 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     WfsResolver,
     ExportLayerResolver,
     DemHeightsResolver,
+    ServicesAvailabilityResolver,
   ];
 }
