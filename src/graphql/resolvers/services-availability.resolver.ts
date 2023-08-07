@@ -35,7 +35,7 @@ export class ServicesAvailabilityResolver {
     const mappedNestedServicesToUrlPaths = this.getFlatObjWithPaths(filteredObject, 'url');
 
     const servicesAvailability = Object.entries(mappedNestedServicesToUrlPaths).map(([key, val]) => {
-      return [key, !(val as string).startsWith('http')];
+      return [key, (val as string).startsWith('http')];
     });
 
     return Object.fromEntries(servicesAvailability) as IServicesAvailability;
