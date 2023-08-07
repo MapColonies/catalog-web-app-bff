@@ -20,7 +20,7 @@ export class DemHeightsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<PositionsWithHeights> {
-    const positionsWithHeights = await this.demHeightsManager.getPointsHeights(data.positions, ctx);
+    const positionsWithHeights = await this.demHeightsManager.getPointsHeights(data.positions, ctx, data.productType, data.excludeFields);
 
     return positionsWithHeights;
   }
