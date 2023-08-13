@@ -243,6 +243,18 @@ export class WfsGetFeatureParams {
 }
 
 @InputType()
+export class WfsPolygonPartsGetFeatureParams {
+  @Field((type) => [String, String], { nullable: false })
+  public pointCoordinates!: [string, string];
+
+  @Field((type) => Number, { nullable: true })
+  public count?: number;
+
+  @Field((type) => Number, { nullable: true })
+  public dWithin?: number;
+}
+
+@InputType()
 export class LookupTableFieldInput implements LookupTableField {
   @Field((type) => String, { nullable: true })
   public lookupTable?: string;
