@@ -62,7 +62,7 @@ export class CswClientWrapper {
   }
 
   public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
-    const { isDate, isDiscrete, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion, isBoolean } = fieldTypes;
+    const { isDate, isDiscrete, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion, isBoolean, isFootprint } = fieldTypes;
 
     const cswParsedArray = transform(
       cswArray,
@@ -76,6 +76,10 @@ export class CswClientWrapper {
           const SHOULD_SPECIAL_TREAT_FIELD = true;
 
           switch (SHOULD_SPECIAL_TREAT_FIELD) {
+            case isFootprint(key): {
+              // eslint-disable-next-line
+              return JSON.parse(val as string);
+            }
             case isLayerPolygonParts(key): {
               switch (recordType) {
                 case RecordType.RECORD_RASTER:
