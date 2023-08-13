@@ -114,11 +114,15 @@
       "url": "https://dem_export.com"
     }
   },
+  "demHeightsService": {
+    "url": "https://dem_heights.com",
+    "exposureType": "ROUTE"
+  },
   "accessToken": {
     "attributeName": "x-api-key",
     "injectionType": "header",
     "tokenValue": "TOKEN"
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }"
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465b0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\", \"markerIcon\": \"buildings-marker\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }"
 }
