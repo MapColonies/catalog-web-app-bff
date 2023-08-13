@@ -1,10 +1,7 @@
 import { IncomingHttpHeaders } from 'http';
+import { IConfig } from 'config';
 
-export interface IConfig {
-  get: <T>(setting: string) => T;
-  has: (setting: string) => boolean;
-}
-
+export { IConfig } from 'config';
 export interface OpenApiConfig {
   filePath: string;
   basePath: string;
