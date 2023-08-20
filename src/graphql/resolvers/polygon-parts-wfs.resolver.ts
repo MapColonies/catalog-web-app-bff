@@ -20,8 +20,7 @@ export class PolygonPartsWfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeature> {
-    const { pointCoordinates, count, dWithin } = data;
-    const getFeatureResponse = await this.polygonPartsWFS.getFeature({ pointCoordinates, count, dWithin }, ctx);
+    const getFeatureResponse = await this.polygonPartsWFS.getFeature(data, ctx);
 
     return getFeatureResponse;
   }
