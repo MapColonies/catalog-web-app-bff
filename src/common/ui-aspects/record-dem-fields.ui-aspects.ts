@@ -9,6 +9,10 @@ const pycswDemCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.dem.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+    },
   },
   productType: {
     label: 'field-names.dem.productType',
@@ -21,6 +25,10 @@ const pycswDemCatalogRecordAspects = {
   updateDate: {
     label: 'field-names.dem.updateDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
@@ -29,6 +37,10 @@ const pycswDemCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
@@ -97,6 +109,10 @@ const pycswDemCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.dem.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   undulationModel: {
     label: 'field-names.dem.undulationModel',
@@ -130,6 +146,10 @@ const pycswDemCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.dem.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.dem.typeName',
@@ -149,6 +169,10 @@ const pycswDemCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.dem.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   wktGeometry: {
     label: 'field-names.dem.wktGeometry',

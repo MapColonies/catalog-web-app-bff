@@ -137,6 +137,15 @@ export class ValidationConfig {
 }
 
 @ObjectType()
+export class FilterableFieldConfig {
+  @Field({ nullable: true })
+  public participateInFilterPanel?: boolean;
+
+  @Field({ nullable: true })
+  public operation?: string;
+}
+
+@ObjectType()
 export class FieldConfig {
   @Field({ nullable: false })
   public fieldName: string;
@@ -151,7 +160,7 @@ export class FieldConfig {
   public isManuallyEditable?: boolean; // is field might be edited after creation
 
   @Field({ nullable: true })
-  public isFilterable?: boolean; // is field might participate in filter/search params
+  public isFilterable?: FilterableFieldConfig; // is field might participate in filter/search params
 
   @Field({ nullable: true })
   public isSortable?: boolean; // is field might participate in sorting

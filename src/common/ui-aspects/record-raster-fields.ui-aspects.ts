@@ -36,9 +36,17 @@ const pycswLayerCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.raster.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+    },
   },
   type: {
     label: 'field-names.raster.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
@@ -46,10 +54,18 @@ const pycswLayerCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.raster.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   updateDate: {
     label: 'field-names.raster.update-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   description: {
     label: 'field-names.raster.description',
@@ -110,6 +126,10 @@ const pycswLayerCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
@@ -133,6 +153,10 @@ const pycswLayerCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   scale: {
     label: 'field-names.raster.scale',

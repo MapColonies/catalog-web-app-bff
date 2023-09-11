@@ -9,6 +9,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.3d.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+    },
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
@@ -30,6 +34,10 @@ const pycsw3DCatalogRecordAspects = {
     label: 'field-names.3d.updateDate',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
@@ -120,6 +128,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.3d.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   links: {
     label: 'field-names.3d.links',
@@ -144,6 +156,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.3d.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.3d.typeName',
@@ -163,6 +179,10 @@ const pycsw3DCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.3d.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',

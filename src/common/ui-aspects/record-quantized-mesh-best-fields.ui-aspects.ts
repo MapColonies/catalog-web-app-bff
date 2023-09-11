@@ -9,6 +9,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.quantized-mesh.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+    },
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
@@ -30,6 +34,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     label: 'field-names.quantized-mesh.updateDate',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
@@ -38,6 +46,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   minResolutionMeter: {
     label: 'field-names.quantized-mesh.minResolutionMeter',
@@ -102,6 +114,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.quantized-mesh.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   links: {
     label: 'field-names.quantized-mesh.links',
@@ -126,6 +142,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.quantized-mesh.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.quantized-mesh.typeName',
@@ -145,6 +165,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.quantized-mesh.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   wktGeometry: {
     label: 'field-names.quantized-mesh.wktGeometry',
