@@ -39,6 +39,9 @@ const pycswLayerCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9_]+$',
+      },
     },
   },
   type: {

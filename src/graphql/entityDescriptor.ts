@@ -137,12 +137,39 @@ export class ValidationConfig {
 }
 
 @ObjectType()
+export class FilterFieldValidation {
+  @Field({ nullable: true })
+  public min?: number;
+
+  @Field({ nullable: true })
+  public max?: number;
+
+  @Field({ nullable: true })
+  public minLength?: number;
+
+  @Field({ nullable: true })
+  public maxLength?: number;
+
+  @Field({ nullable: true })
+  public pattern?: string;
+
+  @Field({ nullable: true })
+  public valueAsNumber?: boolean;
+
+  @Field({ nullable: true })
+  public valueAsDate?: boolean;
+}
+
+@ObjectType()
 export class FilterableFieldConfig {
   @Field({ nullable: true })
   public participateInFilterPanel?: boolean;
 
   @Field({ nullable: true })
   public operation?: string;
+
+  @Field((type) => FilterFieldValidation, { nullable: true })
+  public validation?: FilterFieldValidation;
 }
 
 @ObjectType()
@@ -159,7 +186,7 @@ export class FieldConfig {
   @Field({ nullable: true })
   public isManuallyEditable?: boolean; // is field might be edited after creation
 
-  @Field({ nullable: true })
+  @Field((type) => FilterableFieldConfig, { nullable: true })
   public isFilterable?: FilterableFieldConfig; // is field might participate in filter/search params
 
   @Field({ nullable: true })

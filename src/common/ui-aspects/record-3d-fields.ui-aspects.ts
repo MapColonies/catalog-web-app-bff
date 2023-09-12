@@ -46,6 +46,10 @@ const pycsw3DCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'range', // Date filters will be ranges. requires special treatment.
+    },
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
