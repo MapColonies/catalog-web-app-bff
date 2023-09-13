@@ -178,6 +178,9 @@ export class FieldConfig {
   public fieldName: string;
 
   @Field({ nullable: false })
+  public queryableName: string;
+
+  @Field({ nullable: false })
   public label: string;
 
   @Field({ nullable: true })
