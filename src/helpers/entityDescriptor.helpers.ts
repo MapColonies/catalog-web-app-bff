@@ -56,7 +56,7 @@ export function buildDescriptor(
     | typeof PycswQuantizedMeshBestCatalogRecord
 ): EntityDescriptor {
   const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
-
+  const recordCswMappings = recordType.getPyCSWMappings();
   const categoriesMapped = fieldConfigs.map((categoryInfo: Group) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const category = categoryInfo.key.category as FieldCategory;
@@ -74,7 +74,7 @@ export function buildDescriptor(
 
         // Add pycsw queryable name to field config
         // fieldConfig.queryableName = recordType.getPyCSWMapping(field.prop)?.queryableField ?? '';
-        fieldConfig.queryableName = recordType.getPyCSWMappings().find((mapping) => mapping.prop === field.prop)?.queryableField ?? '';
+        fieldConfig.queryableName = recordCswMappings.find((mapping) => mapping.prop === field.prop)?.queryableField ?? '';
 
         if (field.subFields !== undefined) {
           const complexType = field.complexType ? field.complexType.value.toLowerCase() : undefined;

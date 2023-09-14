@@ -36,7 +36,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   sourceDateStart: {
@@ -48,7 +48,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   minResolutionMeter: {
@@ -167,7 +167,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   wktGeometry: {

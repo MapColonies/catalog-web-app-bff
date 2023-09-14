@@ -27,7 +27,7 @@ const pycswDemCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   sourceDateStart: {
@@ -39,7 +39,7 @@ const pycswDemCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   resolutionDegree: {
@@ -171,7 +171,7 @@ const pycswDemCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   wktGeometry: {

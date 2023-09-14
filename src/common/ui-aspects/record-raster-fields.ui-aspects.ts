@@ -40,7 +40,7 @@ const pycswLayerCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'like',
       validation: {
-        pattern: '^[a-zA-Z0-9_]+$',
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
       },
     },
   },
@@ -59,7 +59,7 @@ const pycswLayerCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   updateDate: {
@@ -67,7 +67,7 @@ const pycswLayerCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   description: {
@@ -131,7 +131,7 @@ const pycswLayerCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   minHorizontalAccuracyCE90: {

@@ -43,7 +43,7 @@ export const pycswVectorBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   region: {
@@ -73,7 +73,7 @@ export const pycswVectorBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   keywords: {

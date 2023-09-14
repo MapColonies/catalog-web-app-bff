@@ -38,7 +38,7 @@ const pycswBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   description: {
@@ -101,7 +101,7 @@ const pycswBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   insertDate: {
@@ -109,7 +109,7 @@ const pycswBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'range', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
     },
   },
   minHorizontalAccuracyCE90: {
