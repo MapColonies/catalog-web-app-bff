@@ -105,7 +105,7 @@
   "polygonParts": {
     "url": "https://polygon_parts.com",
     "exposureType": "SERVICE",
-    "wfsFeatureType": "PolygonParts:parts"
+    "wfsFeatureType": "PolygonParts:features"
   },
   "exportLayerServices": {
     "raster": {
