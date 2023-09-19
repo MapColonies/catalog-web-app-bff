@@ -168,6 +168,9 @@ export class FilterableFieldConfig {
   @Field({ nullable: true })
   public operation?: string;
 
+  @Field({ nullable: true })
+  public order?: number;
+
   @Field((type) => FilterFieldValidation, { nullable: true })
   public validation?: FilterFieldValidation;
 }

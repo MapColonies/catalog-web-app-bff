@@ -6,12 +6,21 @@ const pycswDemCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.dem.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.dem.productName',
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 3,
     },
   },
   productType: {
@@ -25,10 +34,6 @@ const pycswDemCatalogRecordAspects = {
   updateDate: {
     label: 'field-names.dem.updateDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
@@ -40,6 +45,7 @@ const pycswDemCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
     },
   },
   resolutionDegree: {
@@ -172,6 +178,7 @@ const pycswDemCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   wktGeometry: {

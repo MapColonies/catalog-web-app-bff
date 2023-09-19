@@ -14,6 +14,14 @@ const pycswLayerCatalogRecordAspects = {
         },
       },
     },
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
@@ -42,6 +50,7 @@ const pycswLayerCatalogRecordAspects = {
       validation: {
         pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
       },
+      order: 3,
     },
   },
   type: {
@@ -60,15 +69,12 @@ const pycswLayerCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   updateDate: {
     label: 'field-names.raster.update-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   description: {
     label: 'field-names.raster.description',
@@ -132,6 +138,7 @@ const pycswLayerCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
     },
   },
   minHorizontalAccuracyCE90: {

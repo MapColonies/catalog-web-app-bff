@@ -6,12 +6,21 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.quantized-mesh.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.quantized-mesh.productName',
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 3,
     },
   },
   productVersion: {
@@ -34,10 +43,6 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     label: 'field-names.quantized-mesh.updateDate',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
@@ -49,6 +54,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
     },
   },
   minResolutionMeter: {
@@ -168,6 +174,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   wktGeometry: {

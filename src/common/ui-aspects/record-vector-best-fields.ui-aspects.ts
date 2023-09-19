@@ -17,6 +17,7 @@ export const pycswVectorBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 3,
     },
   },
   description: {
@@ -41,10 +42,6 @@ export const pycswVectorBestCatalogRecordAspects = {
   updateDate: {
     label: 'field-names.vector-raster.updateDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   region: {
     label: 'field-names.vector-raster.region',
@@ -74,6 +71,7 @@ export const pycswVectorBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   keywords: {

@@ -6,12 +6,21 @@ const pycsw3DCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.3d.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.3d.productName',
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 3,
     },
   },
   productVersion: {
@@ -34,10 +43,6 @@ const pycsw3DCatalogRecordAspects = {
     label: 'field-names.3d.updateDate',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
@@ -49,6 +54,7 @@ const pycsw3DCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
     },
   },
   minResolutionMeter: {
@@ -186,6 +192,7 @@ const pycsw3DCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   wktGeometry: {

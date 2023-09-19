@@ -6,6 +6,14 @@ const pycswBestCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.raster.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
@@ -21,6 +29,7 @@ const pycswBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 3,
     },
   },
   type: {
@@ -36,10 +45,6 @@ const pycswBestCatalogRecordAspects = {
   updateDate: {
     label: 'field-names.raster.update-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-    },
   },
   description: {
     label: 'field-names.raster.description',
@@ -102,6 +107,7 @@ const pycswBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
     },
   },
   insertDate: {
@@ -110,6 +116,7 @@ const pycswBestCatalogRecordAspects = {
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
     },
   },
   minHorizontalAccuracyCE90: {
