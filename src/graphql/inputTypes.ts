@@ -243,6 +243,29 @@ export class WfsGetFeatureParams {
 }
 
 @InputType()
+export class WfsFilterPropertyParam {
+  @Field((type) => String, { nullable: false })
+  public propertyName!: string;
+
+  @Field((type) => String, { nullable: false })
+  public propertyValue!: unknown;
+}
+@InputType()
+export class WfsPolygonPartsGetFeatureParams {
+  @Field((type) => [String, String], { nullable: false })
+  public pointCoordinates!: [string, string];
+
+  @Field((type) => Number, { nullable: true })
+  public count?: number;
+
+  @Field((type) => Number, { nullable: true })
+  public dWithin?: number;
+
+  @Field((type) => [WfsFilterPropertyParam], { nullable: true })
+  public filterProperties?: WfsFilterPropertyParam[];
+}
+
+@InputType()
 export class LookupTableFieldInput implements LookupTableField {
   @Field((type) => String, { nullable: true })
   public lookupTable?: string;

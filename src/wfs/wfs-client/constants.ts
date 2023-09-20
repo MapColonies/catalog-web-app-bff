@@ -1,4 +1,4 @@
-import { OutputFormat } from './interfaces';
+import { OutputFormat, PropertyFilter } from './interfaces';
 
 /* eslint-disable */
 const WFS_2_0 = require('ogc-schemas').WFS_2_0;
@@ -46,31 +46,50 @@ export const getQueryPointXMLBody = (
   outputFormat: string,
   typeName: string,
   pointCoordinates: string,
-  dWithin: number
-): string => `<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" 
-                xmlns:fes="http://www.opengis.net/fes/2.0"
-                xmlns:gml="http://www.opengis.net/gml/3.2"
-                xmlns:sf="http://www.openplans.org/spearfish" 
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                service="WFS" 
-                version="2.0.0" count="${count}"
-                xsi:schemaLocation="http://www.opengis.net/wfs/2.0
-                http://schemas.opengis.net/wfs/2.0/wfs.xsd 
-                http://www.opengis.net/gml/3.2 
-                http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
-                outputFormat="${outputFormat}">
-                        <wfs:Query typeNames="${typeName}">
-                            <fes:Filter>
-                                <DWithin>
-                                    <fes:ValueReference>osm:geom</fes:ValueReference>
-                                    <gml:Point srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
-                                        <gml:coordinates>${pointCoordinates}</gml:coordinates>
-                                    </gml:Point>
-                                    <Distance units='m'>${dWithin}</Distance>
-                                </DWithin>
-                            </fes:Filter>
-                        </wfs:Query>
-             </wfs:GetFeature>`;
+  dWithin: number,
+  filterProperties?: PropertyFilter[]
+): string => {
+  const polygonIntersectionFilter = `<DWithin>
+                                        <fes:ValueReference>osm:geom</fes:ValueReference>
+                                        <gml:Point srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+                                            <gml:coordinates>${pointCoordinates}</gml:coordinates>
+                                        </gml:Point>
+                                        <Distance units='m'>${dWithin}</Distance>
+                                      </DWithin>`;
+
+  const propertiesFilter = filterProperties
+    ?.map(({ propertyName, propertyValue }) => {
+      return `<fes:PropertyIsEqualTo>
+              <fes:ValueReference>${propertyName}</fes:ValueReference>
+              <fes:Literal>${propertyValue}</fes:Literal>
+            </fes:PropertyIsEqualTo>`;
+    })
+    .join('\n');
+
+  const getFeatureQuery = `<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" 
+                  xmlns:fes="http://www.opengis.net/fes/2.0"
+                  xmlns:gml="http://www.opengis.net/gml/3.2"
+                  xmlns:sf="http://www.openplans.org/spearfish" 
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  service="WFS" 
+                  version="2.0.0" count="${count}"
+                  xsi:schemaLocation="http://www.opengis.net/wfs/2.0
+                  http://schemas.opengis.net/wfs/2.0/wfs.xsd 
+                  http://www.opengis.net/gml/3.2 
+                  http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
+                  outputFormat="${outputFormat}">
+                          <wfs:Query typeNames="${typeName}">
+                              <fes:Filter>
+                              <fes:And>
+                                  ${polygonIntersectionFilter}
+                                  ${propertiesFilter ?? ''}
+                              </fes:And>
+                              </fes:Filter>
+                          </wfs:Query>
+               </wfs:GetFeature>`;
+
+  return getFeatureQuery;
+};
 
 export const DEFAULT_OUTPUT_FORMAT: OutputFormat = 'application/json';
 export const DEFAULT_COUNT = 100;

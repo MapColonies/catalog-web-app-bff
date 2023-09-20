@@ -92,6 +92,9 @@
   "wfs": {
     "url": "WFS_URL"
   },
+  "polygonParts": {
+    "url": "POLYGON_PARTS_URL"
+  },
   "exportLayerServices": {
     "raster": {
       "url": "EXPORT_LAYER_RASTER_URL"

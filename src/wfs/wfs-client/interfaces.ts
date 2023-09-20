@@ -113,6 +113,11 @@ export interface IWFSClientOptions {
   version?: string;
 }
 
+export interface PropertyFilter {
+  propertyName: string;
+  propertyValue: unknown;
+}
+
 export interface IGetFeatureOptions {
   /**
    * @param pointCoordinates Coordinates to search features at intersection.
@@ -136,6 +141,11 @@ export interface IGetFeatureOptions {
   dWithin?: number;
 
   // filter?: string;
+
+  /**
+   * @param filterProperties Literal property names and values to match. (Using `PropertyIsEqualTo` filter)
+   */
+  filterProperties?: PropertyFilter[];
 }
 
 export interface IGetFeatureResponse {

@@ -16,4 +16,5 @@ export interface IContext {
 export interface IService {
   url: string;
   exposureType: 'SERVICE' | 'ROUTE';
+  wfsFeatureType?: string;
 }
