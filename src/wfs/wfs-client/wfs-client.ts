@@ -83,11 +83,12 @@ class WfsClient {
     typeName,
     dWithin = DEFAULT_DWITHIN,
     count = this.count,
+    filterProperties,
   }: // filter,
   IGetFeatureOptions): Promise<unknown> {
     const pointCoordinatesStr = pointCoordinates.join(',');
 
-    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, pointCoordinatesStr, dWithin);
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, pointCoordinatesStr, dWithin, filterProperties);
 
     this.logger.info(`[WfsClient][getFeature] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
 

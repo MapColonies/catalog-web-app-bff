@@ -102,6 +102,11 @@
     "url": "http://localhost:8000/wfs",
     "exposureType": "ROUTE"
   },
+  "polygonParts": {
+    "url": "https://polygon_parts.com",
+    "exposureType": "SERVICE",
+    "wfsFeatureType": "PolygonParts:features"
+  },
   "exportLayerServices": {
     "raster": {
       "url": "https://raster_export.com",
