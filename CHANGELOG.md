@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.16.1...v1.17.0) (2023-09-21)
+
+
+### Features
+
+* added dem heights service (MAPCO-3364) ([#145](https://github.com/MapColonies/catalog-web-app-bff/issues/145)) ([aa23e78](https://github.com/MapColonies/catalog-web-app-bff/commit/aa23e7813f1777da5a8739491b0f6ced399fb159))
+* bff services availability (MAPCO-3354) ([#144](https://github.com/MapColonies/catalog-web-app-bff/issues/144)) ([964d099](https://github.com/MapColonies/catalog-web-app-bff/commit/964d0993e8e07a5f6470f0d194391cfa49621b43))
+
+
+### Bug Fixes
+
+* polygon parts exposure type ([ce0b4e2](https://github.com/MapColonies/catalog-web-app-bff/commit/ce0b4e21ab18898b9a2e12e4645bb8b9dfc1b847))
+* update build_and_push.yaml ([df28316](https://github.com/MapColonies/catalog-web-app-bff/commit/df28316ebe4d335bf38785cb3931708294505741))
+* wfs services config icons ([b107eb4](https://github.com/MapColonies/catalog-web-app-bff/commit/b107eb4d3d38df694cc4e70b3f5a2354a75b10b7))
+
 ## [1.16.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.15.2...v1.16.0) (2023-06-25)
 
 
