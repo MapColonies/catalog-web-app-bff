@@ -104,7 +104,7 @@
   },
   "polygonParts": {
     "url": "https://polygon_parts.com",
-    "exposureType": "SERVICE",
+    "exposureType": "ROUTE",
     "wfsFeatureType": "PolygonParts:features"
   },
   "exportLayerServices": {
