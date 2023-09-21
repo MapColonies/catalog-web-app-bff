@@ -14,6 +14,14 @@ const pycswLayerCatalogRecordAspects = {
         },
       },
     },
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
@@ -36,9 +44,21 @@ const pycswLayerCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.raster.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 3,
+    },
   },
   type: {
     label: 'field-names.raster.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
@@ -46,6 +66,11 @@ const pycswLayerCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.raster.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   updateDate: {
     label: 'field-names.raster.update-date',
@@ -110,6 +135,11 @@ const pycswLayerCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
@@ -133,6 +163,10 @@ const pycswLayerCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   scale: {
     label: 'field-names.raster.scale',

@@ -6,6 +6,14 @@ const pycswBestCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.raster.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
@@ -18,9 +26,18 @@ const pycswBestCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.raster.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      order: 3,
+    },
   },
   type: {
     label: 'field-names.raster.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
@@ -87,10 +104,20 @@ const pycswBestCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
   },
   insertDate: {
     label: 'field-names.raster.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',

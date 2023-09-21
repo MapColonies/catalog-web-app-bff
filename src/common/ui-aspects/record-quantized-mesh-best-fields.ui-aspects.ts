@@ -6,9 +6,22 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.quantized-mesh.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.quantized-mesh.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      order: 3,
+    },
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
@@ -38,6 +51,11 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
   },
   minResolutionMeter: {
     label: 'field-names.quantized-mesh.minResolutionMeter',
@@ -102,6 +120,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.quantized-mesh.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   links: {
     label: 'field-names.quantized-mesh.links',
@@ -126,6 +148,10 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.quantized-mesh.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.quantized-mesh.typeName',
@@ -145,6 +171,11 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.quantized-mesh.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   wktGeometry: {
     label: 'field-names.quantized-mesh.wktGeometry',

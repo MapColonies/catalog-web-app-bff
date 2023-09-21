@@ -3,6 +3,10 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 export const pycswVectorBestCatalogRecordAspects = {
   type: {
     label: 'field-names.vector-raster.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   classification: {
     label: 'field-names.vector-raster.classification',
@@ -10,6 +14,11 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.vector-raster.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      order: 3,
+    },
   },
   description: {
     label: 'field-names.vector-raster.description',
@@ -59,6 +68,11 @@ export const pycswVectorBestCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.vector-raster.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   keywords: {
     label: 'field-names.vector-raster.keywords',

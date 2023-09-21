@@ -6,9 +6,22 @@ const pycsw3DCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.3d.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.3d.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      order: 3,
+    },
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
@@ -38,6 +51,11 @@ const pycsw3DCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
@@ -120,6 +138,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.3d.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   links: {
     label: 'field-names.3d.links',
@@ -144,6 +166,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.3d.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.3d.typeName',
@@ -163,6 +189,11 @@ const pycsw3DCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.3d.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',

@@ -6,9 +6,22 @@ const pycswDemCatalogRecordAspects = {
   },
   productId: {
     label: 'field-names.dem.productId',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      validation: {
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+      },
+      order: 2,
+    },
   },
   productName: {
     label: 'field-names.dem.productName',
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'like',
+      order: 3,
+    },
   },
   productType: {
     label: 'field-names.dem.productType',
@@ -29,6 +42,11 @@ const pycswDemCatalogRecordAspects = {
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
@@ -97,6 +115,10 @@ const pycswDemCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.dem.productBoundingBox',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'bbox',
+    },
   },
   undulationModel: {
     label: 'field-names.dem.undulationModel',
@@ -130,6 +152,10 @@ const pycswDemCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.dem.type',
+    isFilterable: {
+      participateInFilterPanel: false,
+      operation: 'eq',
+    },
   },
   typeName: {
     label: 'field-names.dem.typeName',
@@ -149,6 +175,11 @@ const pycswDemCatalogRecordAspects = {
   insertDate: {
     label: 'field-names.dem.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 0,
+    },
   },
   wktGeometry: {
     label: 'field-names.dem.wktGeometry',
