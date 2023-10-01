@@ -10,7 +10,7 @@ const pycswDemCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'like',
       validation: {
-        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ ]+$',
+        pattern: '^[a-zA-Z0-9\u0590-\u05fe_ "\',]+$',
       },
       order: 2,
     },
