@@ -29,6 +29,7 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
     uiAspectFieldConfig.isFilterable = {
       ...filterableConfig,
       validation: {
+        ...(filterableConfig.validation ?? {}),
         pattern: restFieldConfigProps.validation?.find((validation) => validation.pattern)?.pattern,
       },
     } as FilterableFieldConfig;
