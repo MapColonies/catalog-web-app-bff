@@ -75,7 +75,7 @@ export class ServerBuilder {
       formatError: (formattedError: GraphQLError) => {
         const serverResponse = get(formattedError, 'extensions.exception.response') as Record<string, unknown>;
         if (get(formattedError, 'extensions.exception.isAxiosError') === true && serverResponse.data) {
-          const resMessage = get(serverResponse, 'data.message') as string;
+          const resMessage = (get(serverResponse, 'data.message') as string | undefined) ?? '';
 
           return {
             ...formattedError,
