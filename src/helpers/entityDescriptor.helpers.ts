@@ -10,7 +10,7 @@ import {
 } from '@map-colonies/mc-model-types';
 import { pycswCatalogRecordUIAspects } from '../common/pycswRecord.ui-aspect';
 import categoriesTranslation from '../common/ui-aspects/category.trsanslation';
-import { CategoryConfig, EntityDescriptor, FieldConfig } from '../graphql/entityDescriptor';
+import { CategoryConfig, EntityDescriptor, FieldConfig, FilterableFieldConfig } from '../graphql/entityDescriptor';
 import { Group, groupBy } from './group-by';
 
 const FIRST_CATEGORY = 'MAIN';
@@ -18,12 +18,28 @@ const FIRST_CATEGORY = 'MAIN';
 function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComplexType?: string): FieldConfig {
   const { prop, complexType, category, subFields, ...restFieldConfigProps } = field;
   const fieldUIApect = fieldComplexType !== undefined ? `${fieldComplexType}.${prop}` : prop;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+  const uiAspectFieldConfig = pycswCatalogRecordUIAspects[recordType][fieldUIApect];
+
+  if (typeof (uiAspectFieldConfig as FieldConfig).isFilterable !== 'undefined') {
+    const filterableConfig = (uiAspectFieldConfig as FieldConfig).isFilterable as FilterableFieldConfig;
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    uiAspectFieldConfig.isFilterable = {
+      ...filterableConfig,
+      validation: {
+        pattern: restFieldConfigProps.validation?.find((validation) => validation.pattern)?.pattern,
+      },
+    } as FilterableFieldConfig;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return {
     fieldName: prop,
     label: '**** NO TRANSLATION KEY ****',
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    ...pycswCatalogRecordUIAspects[recordType][fieldUIApect],
+    ...uiAspectFieldConfig,
     ...restFieldConfigProps,
     // eslint-disable-next-line
     isRequired:
@@ -65,10 +81,6 @@ export function buildDescriptor(
       categoryTitle: categoriesTranslation[category].displayKey,
       fields: categoryInfo.items.map((field: IPropFieldConfigInfo) => {
         const fieldConfig = buildField(field, recordType.name);
-        if (recordType.name === 'PycswLayerCatalogRecord') {
-          // console.log("recordType.name", recordType.name, "insertDate", recordType.getPyCSWMappings().find(mapping => mapping.prop === 'insertDate'))
-          console.log('recordType.name', recordType.name, 'insertDate', recordType.getPyCSWMapping('insertDate'));
-        }
         // TODO: CHECK, does getPyCSWMapping might be faulty? this does not always return the correct value
         // For example, check the value of recordType.getPyCSWMapping('insertDate')?.queryableField
 
