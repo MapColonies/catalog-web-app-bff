@@ -3,7 +3,7 @@ import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import { IContext } from '../../common/interfaces';
 import { GetDemPointsHeightsInput } from '../inputTypes';
 import DemHeightsManager from '../../common/dem-heights-manager/dem-heights-manager';
-import { PositionWithHeight, PositionsWithHeights } from '../dem-heights';
+import { PositionWithHeight, PositionsWithHeights, Product } from '../dem-heights';
 
 @Resolver((of) => PositionWithHeight)
 export class DemHeightsResolver {
@@ -20,20 +20,20 @@ export class DemHeightsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<PositionsWithHeights> {
-    const positionsWithHeights = await this.demHeightsManager.getPointsHeights(data.positions, ctx, data.productType, data.excludeFields);
+    const positionsWithHeights = await this.demHeightsManager.getPointsHeights(data.positions, ctx, data.productType);
 
     return positionsWithHeights;
   }
 
   // There is an issue serializing dates that comes in string format with TypeGraphQL, this is a workaround
   @FieldResolver()
-  public updateDate(@Root() position: PositionWithHeight): Date | null {
-    if (position.updateDate instanceof Date) {
-      return position.updateDate;
+  public updateDate(@Root() product: Product): Date | null {
+    if (product.updateDate instanceof Date) {
+      return product.updateDate;
     }
 
-    if (typeof position.updateDate === 'string') {
-      return new Date(position.updateDate);
+    if (typeof product.updateDate === 'string') {
+      return new Date(product.updateDate);
     }
 
     return null;
