@@ -3,6 +3,9 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 export const pycswQuantizedMeshBestCatalogRecordAspects = {
   id: {
     label: 'field-names.quantized-mesh.id',
+    isBriefField: {
+      order: 1,
+    },
   },
   productId: {
     label: 'field-names.quantized-mesh.productId',
@@ -22,14 +25,23 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
+    isBriefField: {
+      order: 3,
+    },
   },
   productType: {
     label: 'field-names.quantized-mesh.productType',
+    isBriefField: {
+      order: 9,
+    },
   },
   description: {
     label: 'field-names.quantized-mesh.description',
     fullWidth: true,
     rows: 4,
+    isBriefField: {
+      order: 13,
+    },
   },
   creationDate: {
     label: 'field-names.quantized-mesh.creationDate',
@@ -44,6 +56,9 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 5,
+    },
   },
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
@@ -52,6 +67,9 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 1,
+    },
+    isBriefField: {
+      order: 6,
     },
   },
   minResolutionMeter: {
@@ -90,6 +108,9 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   classification: {
     label: 'field-names.quantized-mesh.classification',
     fullWidth: true,
+    isBriefField: {
+      order: 10,
+    },
     // enumValues: {
     //   dictionary: {
     //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
@@ -172,6 +193,9 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 0,
+    },
+    isBriefField: {
+      order: 4,
     },
   },
   wktGeometry: {

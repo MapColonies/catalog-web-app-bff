@@ -3,6 +3,9 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycswBestCatalogRecordAspects = {
   id: {
     label: 'field-names.raster.id',
+    isBriefField: {
+      order: 2,
+    },
   },
   productId: {
     label: 'field-names.raster.productId',
@@ -11,14 +14,23 @@ const pycswBestCatalogRecordAspects = {
       operation: 'like',
       order: 2,
     },
+    isBriefField: {
+      order: 1,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
+    isBriefField: {
+      order: 4,
+    },
   },
   productType: {
     label: 'field-names.raster.productType',
     updateRules: {
       freeze: true,
+    },
+    isBriefField: {
+      order: 9,
     },
   },
   productName: {
@@ -47,6 +59,9 @@ const pycswBestCatalogRecordAspects = {
     label: 'field-names.raster.description',
     fullWidth: true,
     rows: 4,
+    isBriefField: {
+      order: 12,
+    },
   },
   sensors: {
     label: 'field-names.raster.sensors',
@@ -59,6 +74,9 @@ const pycswBestCatalogRecordAspects = {
   classification: {
     label: 'field-names.raster.classification',
     fullWidth: true,
+    isBriefField: {
+      order: 11,
+    },
     // enumValues: {
     //   dictionary: {
     //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
@@ -93,10 +111,16 @@ const pycswBestCatalogRecordAspects = {
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 3,
+    },
   },
   sourceDateStart: {
     label: 'field-names.raster.sourceDateStart',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 5,
+    },
   },
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
@@ -105,6 +129,9 @@ const pycswBestCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 1,
+    },
+    isBriefField: {
+      order: 6,
     },
   },
   insertDate: {

@@ -17,6 +17,7 @@ import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
+import { FilterField } from '@map-colonies/csw-client';
 
 interface CswClient {
   instance: CswClientWrapper;
@@ -88,7 +89,12 @@ export class CSW {
     /*  TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts = {
       filter: [
-        ...newOpts.filter,
+        ...(newOpts.filter as FilterField[]).map((filterField) => {
+          return {
+            ...filterField,
+            field: filterField.field === 'mc:insertDate' ? 'mc:ingestionDate' : filterField.field,
+          };
+        }),
         {
           field: 'mc:productType',
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
