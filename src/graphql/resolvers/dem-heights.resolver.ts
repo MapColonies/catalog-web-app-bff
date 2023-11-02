@@ -24,4 +24,18 @@ export class DemHeightsResolver {
 
     return positionsWithHeights;
   }
+
+  // There is an issue serializing dates that comes in string format with TypeGraphQL, this is a workaround
+  // @FieldResolver()
+  // public updateDate(@Root() product: Product): Date | null {
+  //   if (product.updateDate instanceof Date) {
+  //     return product.updateDate;
+  //   }
+
+  //   if (typeof product.updateDate === 'string') {
+  //     return new Date(product.updateDate);
+  //   }
+
+  //   return null;
+  // }
 }
