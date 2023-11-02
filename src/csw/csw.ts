@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { FilterField } from '@map-colonies/csw-client';
 import {
   PycswLayerCatalogRecord,
   PycswBestCatalogRecord,
@@ -17,7 +18,6 @@ import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
-import { FilterField } from '@map-colonies/csw-client';
 
 interface CswClient {
   instance: CswClientWrapper;
