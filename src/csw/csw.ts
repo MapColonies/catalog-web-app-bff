@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { FilterField } from '@map-colonies/csw-client';
 import {
   PycswLayerCatalogRecord,
   PycswBestCatalogRecord,
@@ -88,7 +89,12 @@ export class CSW {
     /*  TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts = {
       filter: [
-        ...newOpts.filter,
+        ...(newOpts.filter as FilterField[]).map((filterField) => {
+          return {
+            ...filterField,
+            field: filterField.field === 'mc:insertDate' ? 'mc:ingestionDate' : filterField.field,
+          };
+        }),
         {
           field: 'mc:productType',
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

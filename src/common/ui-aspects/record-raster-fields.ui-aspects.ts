@@ -3,6 +3,9 @@ import { DateGranularity, FractionType, OperationType } from '../../graphql/enti
 const pycswLayerCatalogRecordAspects = {
   id: {
     label: 'field-names.raster.id',
+    isBriefField: {
+      order: 2,
+    },
   },
   productId: {
     label: 'field-names.raster.productId',
@@ -19,6 +22,9 @@ const pycswLayerCatalogRecordAspects = {
       operation: 'like',
       order: 2,
     },
+    isBriefField: {
+      order: 1,
+    },
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
@@ -32,11 +38,17 @@ const pycswLayerCatalogRecordAspects = {
         },
       },
     },
+    isBriefField: {
+      order: 4,
+    },
   },
   productType: {
     label: 'field-names.raster.productType',
     updateRules: {
       freeze: true,
+    },
+    isBriefField: {
+      order: 9,
     },
   },
   productName: {
@@ -74,6 +86,9 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.description',
     fullWidth: true,
     rows: 4,
+    isBriefField: {
+      order: 12,
+    },
   },
   sensors: {
     label: 'field-names.raster.sensors',
@@ -86,6 +101,9 @@ const pycswLayerCatalogRecordAspects = {
   classification: {
     label: 'field-names.raster.classification',
     fullWidth: true,
+    isBriefField: {
+      order: 11,
+    },
     // enumValues: {
     //   dictionary: {
     //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
@@ -121,10 +139,16 @@ const pycswLayerCatalogRecordAspects = {
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 3,
+    },
   },
   sourceDateStart: {
     label: 'field-names.raster.sourceDateStart',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 5,
+    },
   },
   sourceDateEnd: {
     label: 'field-names.raster.sourceDateEnd',
@@ -133,6 +157,9 @@ const pycswLayerCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 1,
+    },
+    isBriefField: {
+      order: 6,
     },
   },
   minHorizontalAccuracyCE90: {
@@ -151,9 +178,15 @@ const pycswLayerCatalogRecordAspects = {
   productSubType: {
     label: 'field-names.raster.productSubType',
     fullWidth: true,
+    isBriefField: {
+      order: 10,
+    },
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
+    isBriefField: {
+      order: 7,
+    },
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
@@ -179,6 +212,9 @@ const pycswLayerCatalogRecordAspects = {
   },
   transparency: {
     label: 'field-names.raster.transparency',
+    isBriefField: {
+      order: 8,
+    },
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as Record<string, any>;
