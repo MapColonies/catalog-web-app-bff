@@ -350,9 +350,6 @@ export class GetDemPointsHeightsInput {
 
   @Field((type) => String, { nullable: true })
   public productType?: string;
-
-  @Field((type) => [String], { nullable: true })
-  public excludeFields?: string[];
 }
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
