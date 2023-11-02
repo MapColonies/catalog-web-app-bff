@@ -11,6 +11,9 @@ export const pycswVectorBestCatalogRecordAspects = {
   classification: {
     label: 'field-names.vector-raster.classification',
     fullWidth: true,
+    isBriefField: {
+      order: 11,
+    },
   },
   productName: {
     label: 'field-names.vector-raster.productName',
@@ -24,6 +27,9 @@ export const pycswVectorBestCatalogRecordAspects = {
     label: 'field-names.vector-raster.description',
     fullWidth: true,
     rows: 4,
+    isBriefField: {
+      order: 12,
+    },
   },
   srsId: {
     label: 'field-names.vector-raster.srsId',
@@ -38,6 +44,9 @@ export const pycswVectorBestCatalogRecordAspects = {
   ingestionDate: {
     label: 'field-names.vector-raster.ingestionDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 3,
+    },
   },
   updateDate: {
     label: 'field-names.vector-raster.updateDate',
@@ -49,9 +58,15 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.vector-raster.productVersion',
+    isBriefField: {
+      order: 4,
+    },
   },
   productType: {
     label: 'field-names.vector-raster.productType',
+    isBriefField: {
+      order: 9,
+    },
   },
   srsName: {
     label: 'field-names.vector-raster.srsName',
@@ -64,6 +79,9 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   id: {
     label: 'field-names.vector-raster.id',
+    isBriefField: {
+      order: 2,
+    },
   },
   insertDate: {
     label: 'field-names.vector-raster.insertDate',

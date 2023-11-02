@@ -3,12 +3,18 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycswDemCatalogRecordAspects = {
   id: {
     label: 'field-names.dem.id',
+    isBriefField: {
+      order: 1,
+    },
   },
   productId: {
     label: 'field-names.dem.productId',
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
+      order: 2,
+    },
+    isBriefField: {
       order: 2,
     },
   },
@@ -22,11 +28,17 @@ const pycswDemCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.dem.productType',
+    isBriefField: {
+      order: 3,
+    },
   },
   description: {
     label: 'field-names.dem.description',
     fullWidth: true,
     rows: 4,
+    isBriefField: {
+      order: 11,
+    },
   },
   updateDate: {
     label: 'field-names.dem.updateDate',
@@ -47,15 +59,27 @@ const pycswDemCatalogRecordAspects = {
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
+    isBriefField: {
+      order: 5,
+    },
   },
   resolutionMeter: {
     label: 'field-names.dem.resolutionMeter',
+    isBriefField: {
+      order: 6,
+    },
   },
   absoluteAccuracyLEP90: {
     label: 'field-names.dem.absoluteAccuracyLEP90',
+    isBriefField: {
+      order: 7,
+    },
   },
   relativeAccuracyLEP90: {
     label: 'field-names.dem.relativeAccuracyLEP90',
+    isBriefField: {
+      order: 8,
+    },
   },
   sensors: {
     label: 'field-names.dem.sensors',
@@ -88,6 +112,9 @@ const pycswDemCatalogRecordAspects = {
   classification: {
     label: 'field-names.dem.classification',
     fullWidth: true,
+    isBriefField: {
+      order: 10,
+    },
     // enumValues: {
     //   dictionary: {
     //     "SHAMUR": { displayKey: 'lookups.classification.shamur', tooltipKey: 'lookups.classification.shamur.tooltip', icon: 'mc-icon-shamur' },
@@ -100,6 +127,9 @@ const pycswDemCatalogRecordAspects = {
   },
   productStatus: {
     label: 'field-names.dem.productStatus',
+    isBriefField: {
+      order: 4,
+    },
   },
   // hasTerrain: {
   //   label: 'field-names.dem.hasTerrain',
@@ -176,6 +206,9 @@ const pycswDemCatalogRecordAspects = {
       participateInFilterPanel: true,
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 0,
+    },
+    isBriefField: {
+      order: 9,
     },
   },
   wktGeometry: {

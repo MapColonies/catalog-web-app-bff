@@ -176,6 +176,12 @@ export class FilterableFieldConfig {
 }
 
 @ObjectType()
+export class BriefFieldConfig {
+  @Field({ nullable: false })
+  public order: number;
+}
+
+@ObjectType()
 export class FieldConfig {
   @Field({ nullable: false })
   public fieldName: string;
@@ -194,6 +200,9 @@ export class FieldConfig {
 
   @Field((type) => FilterableFieldConfig, { nullable: true })
   public isFilterable?: FilterableFieldConfig; // is field might participate in filter/search params
+
+  @Field((type) => BriefFieldConfig, { nullable: true })
+  public isBriefField?: BriefFieldConfig; // is field will be displayed in brief pannel
 
   @Field({ nullable: true })
   public isSortable?: boolean; // is field might participate in sorting
