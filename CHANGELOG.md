@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.18.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.18.1...v1.18.2) (2023-11-02)
+
+
+### Bug Fixes
+
+* brief panel ([#152](https://github.com/MapColonies/catalog-web-app-bff/issues/152)) ([5b8b49e](https://github.com/MapColonies/catalog-web-app-bff/commit/5b8b49ef03036de08fbdca5186c03a718faded8d))
+* elevations new input & output format ([#151](https://github.com/MapColonies/catalog-web-app-bff/issues/151)) ([418ea1c](https://github.com/MapColonies/catalog-web-app-bff/commit/418ea1c462494d97c2b3024642c57d9b726f7e0e))
+
 ### [1.18.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.18.0...v1.18.1) (2023-10-02)
 
 
