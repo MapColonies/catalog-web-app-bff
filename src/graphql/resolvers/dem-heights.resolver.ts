@@ -3,7 +3,7 @@ import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { IContext } from '../../common/interfaces';
 import DemHeightsManager from '../../common/dem-heights-manager/dem-heights-manager';
 import { GetDemPointsHeightsInput } from '../inputTypes';
-import { PositionWithHeight, PositionsWithHeights, Product } from '../dem-heights';
+import { PositionWithHeight, PositionsWithHeights } from '../dem-heights';
 
 @Resolver((of) => PositionWithHeight)
 export class DemHeightsResolver {
