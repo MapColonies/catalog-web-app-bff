@@ -106,6 +106,7 @@ const pycsw3DCatalogRecordAspects = {
   footprint: {
     label: 'field-names.3d.footprint',
     fullWidth: true,
+    isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.3d.heightRangeFrom',

@@ -76,6 +76,8 @@ export const pycswVectorBestCatalogRecordAspects = {
   },
   footprint: {
     label: 'field-names.vector-raster.footprint',
+    fullWidth: true,
+    isCopyable: true,
   },
   id: {
     label: 'field-names.vector-raster.id',

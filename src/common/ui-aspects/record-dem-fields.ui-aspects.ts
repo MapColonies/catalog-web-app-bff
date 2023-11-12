@@ -92,6 +92,7 @@ const pycswDemCatalogRecordAspects = {
   layerPolygonParts: {
     label: 'field-names.dem.layerPolygonParts',
     fullWidth: true,
+    isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.dem.heightRangeFrom',
