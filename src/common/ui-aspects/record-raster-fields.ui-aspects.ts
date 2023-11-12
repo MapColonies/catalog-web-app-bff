@@ -201,6 +201,7 @@ const pycswLayerCatalogRecordAspects = {
   footprint: {
     label: 'field-names.raster.footprint',
     fullWidth: true,
+    isCopyable: true,
   },
   producerName: {
     label: 'field-names.raster.producerName',
@@ -209,6 +210,7 @@ const pycswLayerCatalogRecordAspects = {
   layerPolygonParts: {
     label: 'field-names.raster.layerPolygonParts',
     fullWidth: true,
+    isCopyable: true,
   },
   transparency: {
     label: 'field-names.raster.transparency',

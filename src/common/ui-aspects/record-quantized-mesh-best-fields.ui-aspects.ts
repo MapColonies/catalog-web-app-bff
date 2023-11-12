@@ -88,6 +88,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   footprint: {
     label: 'field-names.quantized-mesh.footprint',
     fullWidth: true,
+    isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.quantized-mesh.heightRangeFrom',
