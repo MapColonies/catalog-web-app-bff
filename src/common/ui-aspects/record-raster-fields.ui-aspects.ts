@@ -68,6 +68,14 @@ const pycswLayerCatalogRecordAspects = {
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
+    lookupTable: 'zoomlevelresolutions',
+    lookupTableBinding: {
+      valueFromPropertyName: 'resolutionDeg',
+    },
+    dependentField: {
+      name: 'maxResolutionMeter',
+      valueFromPropertyName: 'resolutionMeter',
+    },
   },
   insertDate: {
     label: 'field-names.raster.insertDate',
@@ -187,6 +195,7 @@ const pycswLayerCatalogRecordAspects = {
     isBriefField: {
       order: 7,
     },
+    isDisabled: true,
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
