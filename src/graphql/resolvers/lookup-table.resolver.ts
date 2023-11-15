@@ -55,8 +55,8 @@ export class LookupTablesResolver {
     return { dictionary };
   }
 
-  private addCustomLookupTables(promises: Promise<AxiosResponse<LookupOption[]>>[], lookupKeys: string[]) {
-    const getResolutionsLookup = () => {
+  private addCustomLookupTables(promises: Promise<AxiosResponse<LookupOption[]>>[], lookupKeys: string[]): void {
+    const getResolutionsLookup: () => Promise<AxiosResponse<LookupOption[]>> = async () => {
       const MAX_RESOLUTION = 22;
       const resArr = [];
       for (let i = 0; i < MAX_RESOLUTION + 1; i++) {
