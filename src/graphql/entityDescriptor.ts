@@ -104,6 +104,21 @@ export class UpdateRules {
 }
 
 @ObjectType()
+export class LookupTableBinding {
+  @Field({ nullable: false })
+  public valueFromPropertyName: string;
+}
+
+@ObjectType()
+export class DependentField {
+  @Field({ nullable: false })
+  public name: string;
+
+  @Field({ nullable: false })
+  public valueFromPropertyName: string;
+}
+
+@ObjectType()
 export class ValidationConfig {
   @Field({ nullable: false })
   public errorMsgCode: string;
@@ -220,6 +235,9 @@ export class FieldConfig {
   public isCopyable?: boolean; // is field might be copied
 
   @Field({ nullable: true })
+  public isDisabled?: boolean; // is field disabled (probably somebody else plays with his value)
+
+  @Field({ nullable: true })
   public rows?: number; // should present string as text-area controller. rows represents the maximum number of rows to present.
 
   @Field((type) => Autocompletion, { nullable: true })
@@ -251,6 +269,12 @@ export class FieldConfig {
 
   @Field((type) => [String], { nullable: true })
   public lookupExcludeFields?: string[];
+
+  @Field((type) => LookupTableBinding, { nullable: true })
+  public lookupTableBinding?: LookupTableBinding;
+
+  @Field((type) => DependentField, { nullable: true })
+  public dependentField?: DependentField;
 }
 
 @ObjectType()

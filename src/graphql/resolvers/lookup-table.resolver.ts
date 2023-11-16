@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colonies/mc-utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
@@ -9,6 +10,8 @@ import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
 import { requestExecutor } from '../../utils';
 import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
+
+const CUSTOM_LOOKUP_TABLES = ['zoomlevelresolutions'];
 
 @Resolver()
 export class LookupTablesResolver {
@@ -46,9 +49,38 @@ export class LookupTablesResolver {
     const lookupKeys = Array.from(lookupKeyToExcludeFields.keys());
 
     const promises = this.buildPromises(lookupKeyToExcludeFields, ctx);
+    this.addCustomLookupTables(promises, lookupKeys);
     const dictionary = await this.buildDictionary(lookupKeys, promises);
 
     return { dictionary };
+  }
+
+  private addCustomLookupTables(promises: Promise<AxiosResponse<LookupOption[]>>[], lookupKeys: string[]): void {
+    const getResolutionsLookup: () => Promise<AxiosResponse<LookupOption[]>> = async () => {
+      const MAX_RESOLUTION = 22;
+      const resArr = [];
+      for (let i = 0; i < MAX_RESOLUTION + 1; i++) {
+        resArr[i] = {
+          value: `${i}`,
+          translationCode: `${i}`,
+          properties: {
+            resolutionDeg: zoomLevelToResolutionDeg(i),
+            resolutionMeter: zoomLevelToResolutionMeter(i),
+          },
+        };
+      }
+      return Promise.resolve<AxiosResponse<LookupOption[]>>({
+        data: resArr as LookupOption[],
+        status: 200,
+        statusText: '',
+        headers: {},
+        config: {},
+      });
+    };
+
+    lookupKeys.push(...CUSTOM_LOOKUP_TABLES);
+
+    promises.push(getResolutionsLookup());
   }
 
   private async buildDictionary(lookupKeys: string[], promises: Promise<AxiosResponse<LookupOption[]>>[]): Promise<Record<string, LookupOption[]>> {
@@ -117,7 +149,7 @@ export class LookupTablesResolver {
         e.categories
           .map((c) => c.fields)
           .flat()
-          .filter((f) => f.lookupTable)
+          .filter((f) => f.lookupTable && !CUSTOM_LOOKUP_TABLES.includes(f.lookupTable))
           .map(({ lookupTable, lookupExcludeFields }) => ({ lookupTable, lookupExcludeFields }))
       )
       .flat();
