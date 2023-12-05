@@ -40,6 +40,7 @@ const pycswBestCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   type: {
     label: 'field-names.raster.type',
@@ -133,6 +134,7 @@ const pycswBestCatalogRecordAspects = {
     isBriefField: {
       order: 6,
     },
+    isInfoTooltip: true,
   },
   insertDate: {
     label: 'field-names.raster.insertDate',

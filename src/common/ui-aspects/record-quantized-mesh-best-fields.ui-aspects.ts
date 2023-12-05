@@ -22,6 +22,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
@@ -34,6 +35,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     isBriefField: {
       order: 9,
     },
+    isInfoTooltip: true,
   },
   description: {
     label: 'field-names.quantized-mesh.description',
@@ -71,12 +73,14 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     isBriefField: {
       order: 6,
     },
+    isInfoTooltip: true,
   },
   minResolutionMeter: {
     label: 'field-names.quantized-mesh.minResolutionMeter',
   },
   maxResolutionMeter: {
     label: 'field-names.quantized-mesh.maxResolutionMeter',
+    isInfoTooltip: true,
   },
   maxAccuracyCE90: {
     label: 'field-names.quantized-mesh.maxAccuracyCE90',

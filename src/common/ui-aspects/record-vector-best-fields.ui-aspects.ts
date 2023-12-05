@@ -22,6 +22,7 @@ export const pycswVectorBestCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   description: {
     label: 'field-names.vector-raster.description',

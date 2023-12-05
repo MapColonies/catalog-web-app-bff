@@ -24,31 +24,31 @@
   },
   "csw": {
     "raster": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
+      "url": "https://raster-pycsw-int-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
-      "exposureType": "SERVICE"
+      "url": "https://serving-3d-pycsw-all-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
+      "exposureType": "ROUTE"
     },
     "dem": {
-      "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
-      "exposureType": "SERVICE"
+      "url": "https://dem-int-pycsw-all-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/dem/v1/all",
+      "exposureType": "ROUTE"
     }
   },
   "mapServices": {
     "raster": {
-      "url": "http://localhost:8000/map-service-raster",
+      "url": "https://raster-mapproxy-int-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://localhost:8000/catalog-service-raster",
+      "url": "https://raster-catalog-manager-int-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/catalog-service-3d",
+      "url": "https://catalog-3d-3d-ingestion-catalog-route-integration.apps.j1lk3njp.eastus.aroapp.io/",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -57,11 +57,11 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://localhost:8000/ingestion-service-raster",
+      "url": "https://raster-overseer-int-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/ingestion-service-3d",
+      "url": "https://catalog-3d-3d-ingestion-catalog-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -70,26 +70,26 @@
   },
   "jobServices": {
     "common": {
-      "url": "http://localhost:8000/job-manager-service",
+      "url": "https://common-job-manager-integration-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "http://localhost:8082/lookup-tables",
+    "url": "https://lookup-tables-int-route-integration.apps.j1lk3njp.eastus.aroapp.io/lookup-tables",
     "exposureType": "SERVICE"
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "http://localhost:8000/storage-explorer-raster",
+      "url": "https://raster-overseer-int-route-integration.apps.j1lk3njp.eastus.aroapp.io/explorer",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://localhost:8000/storage-explorer-3d",
+      "url": "https://ingestion-3d-3d-model-ingestion-service-integration.apps.j1lk3njp.eastus.aroapp.io/explorer",
       "exposureType": "SERVICE"
     }
   },
   "serviceDiscovery": {
-    "url": "http://localhost:8000/service-discovery",
+    "url": "https://app-int-k8s-services-list-integration-route-integration.apps.j1lk3njp.eastus.aroapp.io/getDeploymentsAndServices",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -99,18 +99,13 @@
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com"
   },
   "wfs": {
-    "url": "http://localhost:8000/wfs",
+    "url": "http://geoserver-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/core/ows",
     "exposureType": "ROUTE"
-  },
-  "polygonParts": {
-    "url": "https://polygon_parts.com",
-    "exposureType": "ROUTE",
-    "wfsFeatureType": "PolygonParts:features"
   },
   "exportLayerServices": {
     "raster": {
-      "url": "https://raster_export.com",
-      "exposureType": "SERVICE"
+      "url": "https://exporter-trigger-int-exporter-trigger-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "exposureType": "ROUTE"
     },
     "3d": {
       "url": "https://3d_export.com"
@@ -119,15 +114,17 @@
       "url": "https://dem_export.com"
     }
   },
-  "demHeightsService": {
-    "url": "https://dem_heights.com",
-    "exposureType": "ROUTE"
-  },
   "accessToken": {
-    "attributeName": "x-api-key",
-    "injectionType": "header",
-    "tokenValue": "TOKEN"
+    "attributeName": "token",
+    "injectionType": "queryParam",
+    "tokenValue": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJhbyI6WyJodHRwczovL2Rpc2NyZXRlLWxheWVyLWNsaWVudC1pbnRlZ3JhdGlvbi1yb3V0ZS1pbnRlZ3JhdGlvbi5hcHBzLmoxbGszbmpwLmVhc3R1cy5hcm9hcHAuaW8iLCJodHRwczovL2Rpc2NyZXRlLWxheWVyLWNsaWVudC1pbnRlZ3JhdGlvbi10b29scy1yb3V0ZS1pbnRlZ3JhdGlvbi5hcHBzLmoxbGszbmpwLmVhc3R1cy5hcm9hcHAuaW8iLCJodHRwOi8vbG9jYWxob3N0OjMwMDAiXSwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdLCJpYXQiOjE2NzQ2MzIzNDYsInN1YiI6Im1hcGNvbG9uaWVzLWFwcCIsImlzcyI6Im1hcGNvbG9uaWVzLXRva2VuLWNsaSJ9.fcssnHFRLYqWxsFyOlu02zV0X7Klrg4k0fktVtv0HwIqAoc5vWiVobkT6f0HffrAtjHLyhZXUXqr_EqOJ5DcdArKtuozTAs-ihmz9C0ALtJSwmPhWPIzOsg1U2Og_WCRABfUbe_Id8sMVJXkEwioYBweEvA-yRaWvfnoJygjzaKPvMIGcw9b2u6xBbnGaT7pBGz2TV2-WrRXdbPhTQWFgUcCF5KfXI6dnn2naBb4ChT3NDr1QrRO5657tQEwSyML_yJYa8YBz5MebgMpnLexVAsM5Zvopyhq-Jj8pWU_VwlJVi4WZOg6nylUkK3pYeyldVgBJARImFgkVE0ZwIX-2Q",
+    "tokenValue_int": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1kZXYifQ.eyJhbyI6WyJodHRwczovL2Rpc2NyZXRlLWxheWVyLWNsaWVudC1pbnRlZ3JhdGlvbi1yb3V0ZS1pbnRlZ3JhdGlvbi5hcHBzLmoxbGszbmpwLmVhc3R1cy5hcm9hcHAuaW8iLCJodHRwczovL2Rpc2NyZXRlLWxheWVyLWNsaWVudC1pbnRlZ3JhdGlvbi10b29scy1yb3V0ZS1pbnRlZ3JhdGlvbi5hcHBzLmoxbGszbmpwLmVhc3R1cy5hcm9hcHAuaW8iLCJodHRwOi8vbG9jYWxob3N0OjMwMDAiXSwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdLCJpYXQiOjE2NzQ2MzIzNDYsInN1YiI6Im1hcGNvbG9uaWVzLWFwcCIsImlzcyI6Im1hcGNvbG9uaWVzLXRva2VuLWNsaSJ9.mCj2YBSCraxUxgEv91hfynAgj_0GY2gPTb6sA8uzEoYBIo6l8lfalrLE2shs0VGzXtcGR8H3vXJtyB4hNgho11GJVXIsZ1egJziwb4ZmWgxGRz3noT5tfNhLruZ36ihQ05S4q1I5LMqEir0IroBnWccrScgQhHJuSsHts2hB3NcgYFetpm2XGe3Z6wFmluw03Fl85gfZUZudcVh7ZEE4tHU96XxI0L1GUa7VPt-8X_3MofBCryJ6OfmlqptTCxanEXYfnulfaqQO2d8zEkLvGoLsy_h5NC1gOPRJ1ZnlwatVyuzaGVuFgpZ0Z7TSTXbdN2qIg99kzNh-4NL1BFCUvw",
+    "tokenValue_dev": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w"
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465b0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\", \"markerIcon\": \"buildings-marker\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}}"
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
+  "demHeightsService": {
+    "url": "https://dem-int-heights-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
+    "exposureType": "ROUTE"
+  }
 }

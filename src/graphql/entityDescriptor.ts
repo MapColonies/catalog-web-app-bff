@@ -220,6 +220,9 @@ export class FieldConfig {
   public isBriefField?: BriefFieldConfig; // is field will be displayed in brief pannel
 
   @Field({ nullable: true })
+  public isInfoTooltip?: boolean; // is field will be displayed in search results grid tooltip
+
+  @Field({ nullable: true })
   public isSortable?: boolean; // is field might participate in sorting
 
   @Field({ nullable: true })
