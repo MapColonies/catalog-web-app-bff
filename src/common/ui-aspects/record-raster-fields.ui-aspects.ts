@@ -58,6 +58,7 @@ const pycswLayerCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   type: {
     label: 'field-names.raster.type',
@@ -169,6 +170,7 @@ const pycswLayerCatalogRecordAspects = {
     isBriefField: {
       order: 6,
     },
+    isInfoTooltip: true,
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
@@ -196,6 +198,7 @@ const pycswLayerCatalogRecordAspects = {
       order: 7,
     },
     isDisabled: true,
+    isInfoTooltip: true,
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',

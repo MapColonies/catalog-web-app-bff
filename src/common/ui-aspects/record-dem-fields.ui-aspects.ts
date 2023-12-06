@@ -25,12 +25,14 @@ const pycswDemCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   productType: {
     label: 'field-names.dem.productType',
     isBriefField: {
       order: 3,
     },
+    isInfoTooltip: true,
   },
   description: {
     label: 'field-names.dem.description',
@@ -56,6 +58,7 @@ const pycswDemCatalogRecordAspects = {
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 1,
     },
+    isInfoTooltip: true,
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
@@ -68,6 +71,7 @@ const pycswDemCatalogRecordAspects = {
     isBriefField: {
       order: 6,
     },
+    isInfoTooltip: true,
   },
   absoluteAccuracyLEP90: {
     label: 'field-names.dem.absoluteAccuracyLEP90',

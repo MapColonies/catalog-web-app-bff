@@ -22,6 +22,7 @@ const pycsw3DCatalogRecordAspects = {
       operation: 'like',
       order: 3,
     },
+    isInfoTooltip: true,
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
