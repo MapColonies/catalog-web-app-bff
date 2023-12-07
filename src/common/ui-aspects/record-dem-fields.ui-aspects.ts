@@ -215,6 +215,7 @@ const pycswDemCatalogRecordAspects = {
     isBriefField: {
       order: 9,
     },
+    isInfoTooltip: true,
   },
   wktGeometry: {
     label: 'field-names.dem.wktGeometry',

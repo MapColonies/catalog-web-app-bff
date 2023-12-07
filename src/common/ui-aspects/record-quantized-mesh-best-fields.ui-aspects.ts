@@ -202,6 +202,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     isBriefField: {
       order: 4,
     },
+    isInfoTooltip: true,
   },
   wktGeometry: {
     label: 'field-names.quantized-mesh.wktGeometry',

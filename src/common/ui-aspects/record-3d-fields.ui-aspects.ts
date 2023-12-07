@@ -72,6 +72,7 @@ const pycsw3DCatalogRecordAspects = {
     isBriefField: {
       order: 6,
     },
+    isInfoTooltip: true,
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
@@ -229,6 +230,7 @@ const pycsw3DCatalogRecordAspects = {
     isBriefField: {
       order: 4,
     },
+    isInfoTooltip: true,
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',

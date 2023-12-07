@@ -48,6 +48,7 @@ export const pycswVectorBestCatalogRecordAspects = {
     isBriefField: {
       order: 3,
     },
+    isInfoTooltip: true,
   },
   updateDate: {
     label: 'field-names.vector-raster.updateDate',
