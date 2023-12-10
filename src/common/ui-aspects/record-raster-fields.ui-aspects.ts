@@ -151,6 +151,7 @@ const pycswLayerCatalogRecordAspects = {
     isBriefField: {
       order: 3,
     },
+    isInfoTooltip: true,
   },
   sourceDateStart: {
     label: 'field-names.raster.sourceDateStart',
