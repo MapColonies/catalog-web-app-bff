@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.18.2...v1.19.0) (2023-12-21)
+
+
+### Features
+
+* resolution as custom lookup-table (zoomlevelresolutions) ( MAPCO-3631 ) ([#154](https://github.com/MapColonies/catalog-web-app-bff/issues/154)) ([2d62329](https://github.com/MapColonies/catalog-web-app-bff/commit/2d623296763838e31e76bf120362512609d45678))
+
+
+### Bug Fixes
+
+* add version date to search results info tooltip ([#156](https://github.com/MapColonies/catalog-web-app-bff/issues/156)) ([90c85fe](https://github.com/MapColonies/catalog-web-app-bff/commit/90c85feac3c8b1248c66ce7572bc14a33415d794))
+* json fields copyable decoration ([#153](https://github.com/MapColonies/catalog-web-app-bff/issues/153)) ([f852b06](https://github.com/MapColonies/catalog-web-app-bff/commit/f852b064af61c66ee6f26fabe9e19a03a14f8e83))
+* search results list values ([#155](https://github.com/MapColonies/catalog-web-app-bff/issues/155)) ([5a27868](https://github.com/MapColonies/catalog-web-app-bff/commit/5a27868300e7ed50bd4c4245b186fea6de1eae3b))
+
 ### [1.18.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.18.1...v1.18.2) (2023-11-02)
 
 
