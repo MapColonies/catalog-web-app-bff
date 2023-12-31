@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.19.0...v1.19.1) (2023-12-31)
+
+
+### Bug Fixes
+
+* 3d csw service as route ([#159](https://github.com/MapColonies/catalog-web-app-bff/issues/159)) ([fe914af](https://github.com/MapColonies/catalog-web-app-bff/commit/fe914af33af7f71cf81ae2efcb5d109814967490))
+
 ## [1.19.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.18.2...v1.19.0) (2023-12-21)
 
 
