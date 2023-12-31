@@ -29,7 +29,7 @@
     },
     "3d": {
       "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
-      "exposureType": "SERVICE"
+      "exposureType": "ROUTE"
     },
     "dem": {
       "url": "http://localhost:8000/pycsw/version=2.0.0&service=csw",
