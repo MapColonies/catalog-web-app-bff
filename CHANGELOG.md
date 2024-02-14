@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.19.1...v1.20.0) (2024-02-14)
+
+
+### Features
+
+* login ( MAPCO-3936 ) ([#160](https://github.com/MapColonies/catalog-web-app-bff/issues/160)) ([48c0086](https://github.com/MapColonies/catalog-web-app-bff/commit/48c0086c486c6dd5b897b610dcae05ad30bf52e3))
+
 ### [1.19.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.19.0...v1.19.1) (2023-12-31)
 
 
