@@ -352,4 +352,13 @@ export class GetDemPointsHeightsInput {
   public productType?: string;
 }
 
+@InputType()
+export class UserLoginParams {
+  @Field((type) => String, { nullable: false })
+  public userName!: string;
+
+  @Field((type) => String, { nullable: false })
+  public userPassword!: string;
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;

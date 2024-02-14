@@ -110,5 +110,6 @@
     "url": "DEM_HEIGHTS_URL"
   },
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
-  "wfsServicesConfig": "WFS_SERVICES_CONFIG"
+  "wfsServicesConfig": "WFS_SERVICES_CONFIG",
+  "adminPassword": "ADMIN_PASSWORD"
 }
