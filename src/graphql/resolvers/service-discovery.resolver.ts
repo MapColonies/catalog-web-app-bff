@@ -37,10 +37,18 @@ export class ServiceDiscoveryResolver {
   private async discoverClusterServices(ctx: IContext): Promise<DeploymentWithServices[]> {
     this.logger.info(`[ServiceDiscoveryResolver][discoverClusterServices] fetching services from cluster.`);
 
-    const depsAndServices = await requestExecutor(this.service, 'GET', {}, ctx);
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/getDeploymentsAndServices`,
+        exposureType: this.service.exposureType,
+      },
+      'GET',
+      {},
+      ctx
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return depsAndServices.data;
+    return res.data;
     // return Promise.resolve(MOCK_DEPS_AND_SERVICES);
   }
 }
