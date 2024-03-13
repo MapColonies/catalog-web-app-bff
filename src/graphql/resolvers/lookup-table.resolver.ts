@@ -98,7 +98,7 @@ export class LookupTablesResolver {
   private buildPromises(lookupKeyToExcludeFields: Map<string, string[]>, ctx: IContext): Promise<AxiosResponse<LookupOption[]>>[] {
     const promises: Promise<AxiosResponse<LookupOption[]>>[] = [];
     for (const [lookupKey, lookupExcludeFields] of lookupKeyToExcludeFields.entries()) {
-      const url = `${this.service.url}/lookupData/${lookupKey}`;
+      const url = `${this.service.url}/lookup-tables/lookupData/${lookupKey}`;
       const payload: AxiosRequestConfig = this.buildPayload(lookupExcludeFields);
       promises.push(
         requestExecutor(

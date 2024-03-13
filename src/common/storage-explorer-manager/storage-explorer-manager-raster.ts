@@ -21,7 +21,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // REAL LOGIC
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/directory?pathSuffix=${data.pathSuffix}`,
+        url: `${this.service.url}/explorer/directory?pathSuffix=${data.pathSuffix}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -46,7 +46,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/directorybyid?id=${data.id}`,
+        url: `${this.service.url}/explorer/directorybyid?id=${data.id}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -67,7 +67,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // REAL LOGIC
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/file?pathSuffix=${data.pathSuffix}`,
+        url: `${this.service.url}/explorer/file?pathSuffix=${data.pathSuffix}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -94,7 +94,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/filebyid?id=${data.id}`,
+        url: `${this.service.url}/explorer/filebyid?id=${data.id}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -110,7 +110,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/decryptid?id=${data.id}`,
+        url: `${this.service.url}/explorer/decryptid?id=${data.id}`,
         exposureType: this.service.exposureType,
       },
       'GET',
