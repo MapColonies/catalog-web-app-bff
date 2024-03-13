@@ -39,7 +39,7 @@ export class ServiceDiscoveryResolver {
 
     const res = await requestExecutor(
       {
-        url: `${this.service}/getDeploymentsAndServices`,
+        url: `${this.service.url}/getDeploymentsAndServices`,
         exposureType: this.service.exposureType,
       },
       'GET',
