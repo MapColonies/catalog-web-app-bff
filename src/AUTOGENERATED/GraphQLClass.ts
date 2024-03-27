@@ -426,6 +426,44 @@ export class QuantizedMeshBestRecordInput {
     public links?: LinkInput[];
 }
 
+@InputType()
+export class PolygonPartRecordInput {
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: false })
+    public name: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: false })
+    public imagingTimeBeginUTC: Date;
+    @Field({ nullable: false })
+    public imagingTimeEndUTC: Date;
+    @Field({ nullable: false })
+    public horizontalAccuracyCE90: number;
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
+    @Field((type) => [String], { nullable: true })
+    public countries?: string[];
+    @Field((type) => [String], { nullable: true })
+    public cities?: string[];
+    @Field({ nullable: false })
+    public resolutionDegree: number;
+    @Field({ nullable: false })
+    public resolutionMeter: number;
+    @Field((type) => geometryObject, { nullable: false })
+    public geometry: Record<string, unknown>;
+    @Field({ nullable: false })
+    public recordId: string;
+    @Field({ nullable: true })
+    public version?: string;
+    @Field({ nullable: false })
+    public ingestionDateUTC: Date;
+}
+
+export const geometryObject = new GraphQLScalarType({ name: "geometryObject"});
+
 @ObjectType()
 export class Link {
     @Field({ nullable: true })
@@ -844,6 +882,42 @@ export class QuantizedMeshBestRecord {
     public links?: Link[];
 }
 
+@ObjectType()
+export class PolygonPartRecord {
+    @Field({ nullable: false })
+    public id: string;
+    @Field({ nullable: false })
+    public classification: string;
+    @Field({ nullable: false })
+    public name: string;
+    @Field({ nullable: true })
+    public description?: string;
+    @Field({ nullable: false })
+    public imagingTimeBeginUTC: Date;
+    @Field({ nullable: false })
+    public imagingTimeEndUTC: Date;
+    @Field({ nullable: false })
+    public horizontalAccuracyCE90: number;
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
+    @Field((type) => [String], { nullable: true })
+    public countries?: string[];
+    @Field((type) => [String], { nullable: true })
+    public cities?: string[];
+    @Field({ nullable: false })
+    public resolutionDegree: number;
+    @Field({ nullable: false })
+    public resolutionMeter: number;
+    @Field((type) => geometryObject, { nullable: false })
+    public geometry: Record<string, unknown>;
+    @Field({ nullable: false })
+    public recordId: string;
+    @Field({ nullable: true })
+    public version?: string;
+    @Field({ nullable: false })
+    public ingestionDateUTC: Date;
+}
+
 @Resolver(Link)
 export class LinkResolver {
 }
@@ -874,6 +948,10 @@ export class VectorBestRecordResolver {
 
 @Resolver(QuantizedMeshBestRecord)
 export class QuantizedMeshBestRecordResolver {
+}
+
+@Resolver(PolygonPartRecord)
+export class PolygonPartRecordResolver {
 }
 
 const RecordTypeRegister = registerEnumType(RecordType, {name: "RecordType"});

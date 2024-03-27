@@ -7,6 +7,7 @@ import {
   PycswLayerCatalogRecord,
   PycswVectorBestCatalogRecord,
   PycswQuantizedMeshBestCatalogRecord,
+  PolygonPartRecord,
 } from '@map-colonies/mc-model-types';
 import { pycswCatalogRecordUIAspects } from '../common/pycswRecord.ui-aspect';
 import categoriesTranslation from '../common/ui-aspects/category.trsanslation';
@@ -23,7 +24,7 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
   const uiAspectFieldConfig = pycswCatalogRecordUIAspects[recordType][fieldUIApect];
 
   // Field pattern validation from field config should be used for filters as well.
-  if (typeof (uiAspectFieldConfig as FieldConfig).isFilterable !== 'undefined') {
+  if (typeof (uiAspectFieldConfig as FieldConfig)?.isFilterable !== 'undefined') {
     const filterableConfig = (uiAspectFieldConfig as FieldConfig).isFilterable as FilterableFieldConfig;
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -72,6 +73,7 @@ export function buildDescriptor(
     | typeof PycswBestCatalogRecord
     | typeof PycswVectorBestCatalogRecord
     | typeof PycswQuantizedMeshBestCatalogRecord
+    | typeof PolygonPartRecord
 ): EntityDescriptor {
   const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
   const recordCswMappings = recordType.getPyCSWMappings();
@@ -115,5 +117,6 @@ export function getDescriptors(): EntityDescriptor[] {
     PycswBestCatalogRecord,
     PycswVectorBestCatalogRecord,
     PycswQuantizedMeshBestCatalogRecord,
+    PolygonPartRecord,
   ].map((recordType) => buildDescriptor(recordType));
 }

@@ -5,6 +5,7 @@ import { pycswDemCatalogRecordUIAspects } from './ui-aspects/record-dem-fields.u
 import { pycswLayerCatalogRecordUIAspects } from './ui-aspects/record-raster-fields.ui-aspects';
 import { pycswVectorBestCatalogRecordAspects } from './ui-aspects/record-vector-best-fields.ui-aspects';
 import { pycswQuantizedMeshBestCatalogRecordAspects } from './ui-aspects/record-quantized-mesh-best-fields.ui-aspects';
+import { polygonPartRecordUIAspects } from './ui-aspects/record-polygon-part-fields.ui-aspects';
 
 export const pycswCatalogRecordUIAspects = {
   PycswLayerCatalogRecord: pycswLayerCatalogRecordUIAspects,
@@ -13,4 +14,5 @@ export const pycswCatalogRecordUIAspects = {
   PycswBestCatalogRecord: pycswBestCatalogRecordUIAspects,
   PycswVectorBestCatalogRecord: pycswVectorBestCatalogRecordAspects,
   PycswQuantizedMeshBestCatalogRecord: pycswQuantizedMeshBestCatalogRecordAspects,
+  PolygonPartRecord: polygonPartRecordUIAspects,
 } as Record<string, any>;
