@@ -278,6 +278,9 @@ export class FieldConfig {
 
   @Field((type) => DependentField, { nullable: true })
   public dependentField?: DependentField;
+
+  @Field((type) => String, { nullable: true })
+  public shapeFileMapping?: string;
 }
 
 @ObjectType()
