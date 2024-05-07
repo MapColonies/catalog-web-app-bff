@@ -241,6 +241,12 @@ export class FieldConfig {
   public isDisabled?: boolean; // is field disabled (probably somebody else plays with his value)
 
   @Field({ nullable: true })
+  public isCreateEssential?: boolean; // is field participate in creation process
+
+  @Field({ nullable: true })
+  public isUpdateEssential?: boolean; // is field participate in update process
+
+  @Field({ nullable: true })
   public rows?: number; // should present string as text-area controller. rows represents the maximum number of rows to present.
 
   @Field((type) => Autocompletion, { nullable: true })

@@ -38,7 +38,7 @@ export class LayerRasterRecordInput {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -190,7 +190,7 @@ export class BestRecordInput {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -324,7 +324,7 @@ export class VectorBestRecordInput {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -431,8 +431,6 @@ export class PolygonPartRecordInput {
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: false })
-    public classification: string;
-    @Field({ nullable: false })
     public name: string;
     @Field({ nullable: true })
     public description?: string;
@@ -452,12 +450,14 @@ export class PolygonPartRecordInput {
     public resolutionDegree: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
+    @Field({ nullable: false })
+    public sourceResolutionMeter: number;
     @Field((type) => geometryObject, { nullable: false })
     public geometry: Record<string, unknown>;
     @Field({ nullable: false })
     public recordId: string;
     @Field({ nullable: true })
-    public version?: string;
+    public updatedInVersion?: string;
     @Field({ nullable: false })
     public ingestionDateUTC: Date;
 }
@@ -497,7 +497,7 @@ export class LayerRasterRecord {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -646,7 +646,7 @@ export class BestRecord {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -780,7 +780,7 @@ export class VectorBestRecord {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srsId: string;
+    public srs: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -887,8 +887,6 @@ export class PolygonPartRecord {
     @Field({ nullable: false })
     public id: string;
     @Field({ nullable: false })
-    public classification: string;
-    @Field({ nullable: false })
     public name: string;
     @Field({ nullable: true })
     public description?: string;
@@ -908,12 +906,14 @@ export class PolygonPartRecord {
     public resolutionDegree: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
+    @Field({ nullable: false })
+    public sourceResolutionMeter: number;
     @Field((type) => geometryObject, { nullable: false })
     public geometry: Record<string, unknown>;
     @Field({ nullable: false })
     public recordId: string;
     @Field({ nullable: true })
-    public version?: string;
+    public updatedInVersion?: string;
     @Field({ nullable: false })
     public ingestionDateUTC: Date;
 }

@@ -94,6 +94,13 @@ const polygonPartRecordAspects = {
     isDisabled: true,
     isInfoTooltip: true,
   },
+  sourceResolutionMeter: {
+    label: 'field-names.polygon-parts.sourceResolutionMeter',
+    isBriefField: {
+      order: 8,
+    },
+    isInfoTooltip: true,
+  },
   geometry: {
     label: 'field-names.raster.footprint',
     fullWidth: true,

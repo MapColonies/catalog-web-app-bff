@@ -176,7 +176,7 @@ const pycswLayerCatalogRecordAspects = {
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
-  srsId: {
+  srs: {
     label: 'field-names.raster.srs',
   },
   srsName: {

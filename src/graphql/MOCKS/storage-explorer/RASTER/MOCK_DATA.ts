@@ -89,7 +89,7 @@ export const MOCK_FILE: LayerRasterRecord = {
   transparency: Transparency.OPAQUE,
   classification: '5',
   productName: 'RASTER_ORTO_MOCK',
-  srsId: '4326',
+  srs: '4326',
   sourceDateStart: new Date('2021-10-13T14:05:22.089Z'),
   sourceDateEnd: new Date('2021-10-14T14:00:22.089Z'),
   productId: 'JAKSHD-2122K-ASDKGBV-4KD4S9X',
