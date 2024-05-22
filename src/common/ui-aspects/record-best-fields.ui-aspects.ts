@@ -150,9 +150,11 @@ const pycswBestCatalogRecordAspects = {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
   srs: {
+    isDisabled: true,
     label: 'field-names.raster.srs',
   },
   srsName: {
+    isDisabled: true,
     label: 'field-names.raster.srs-name',
   },
   keywords: {

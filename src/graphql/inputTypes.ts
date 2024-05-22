@@ -361,4 +361,13 @@ export class UserLoginParams {
   public userPassword!: string;
 }
 
+@InputType()
+export class SourceValidationParams {
+  @Field((type) => String, { nullable: false })
+  public originDirectory!: string;
+
+  @Field((type) => [String], { nullable: false })
+  public fileNames!: string[];
+}
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
