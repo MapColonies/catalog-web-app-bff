@@ -40,6 +40,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+# Output of 'npm pack' or 'helm package helm'
+*.tgz
 
 # TypeScript v1 declaration files
 typings/

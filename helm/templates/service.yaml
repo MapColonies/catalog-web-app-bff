@@ -1,0 +1,29 @@
+{{- if .Values.bff.enabled -}}
+{{- $environment := include "app.environment" . -}}
+{{- $cloudProviderFlavor := include "app.cloudProviderFlavor" . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "app.fullname" . }}-bff
+  labels:
+    app: {{ template "app.name" . }}
+    component: bff-service
+    environment: {{ $environment }}
+    release: {{ .Release.Name }}
+spec:
+  {{- if eq $cloudProviderFlavor "minikube" }}
+  type: NodePort
+  {{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.bff.servicePort }}
+      targetPort: {{ .Values.bff.env.serverPort }}
+      protocol: TCP
+      {{- if eq $cloudProviderFlavor "minikube" }}
+      nodePort: {{ .Values.bff.nodePort }}
+      {{- end }}
+  selector:
+    app: {{ template "app.name" . }}
+    release: {{ .Release.Name }}
+    run: {{ .Release.Name }}-bff
+{{- end }}

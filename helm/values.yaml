@@ -1,0 +1,92 @@
+global:
+  cloudProvider: {}
+  environment: development
+environment: development
+runAsUser: 1001050000
+cloudProvider:
+  dockerRegistryUrl: acrarolibotnonprod.azurecr.io
+  imagePullSecretName: acr-registry
+  imagePullPolicy: Always
+  flavor: openshift
+annotations:
+  collectord.io/index: ''
+  collectord.io/logs-output: splunk
+  collectord.io/procstats-output: devnull
+  collectord.io/netstats-output: devnull
+  collectord.io/nettable-output: devnull
+  collectord.io/stats-output: devnull
+route:
+  enabled: true
+  host:
+  path: /bff
+  tls:
+    enabled: true
+    useCert: false
+ingress:
+  enabled: false
+  type: nginx-kubernetes # supported values: 'nginx-org' | 'nginx-kubernetes'
+  host:
+  path: /bff
+  tls:
+    useExternal:
+caSecret:
+  name: ''
+  path: /usr/local/share/ca-certificates
+  key: ca.crt
+  value:
+shared:
+  servedEntityTypes: RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM
+  accessToken:
+    attributeName: token
+    injectionType: queryParam
+    tokenValue: TOKEN
+bff:
+  enabled: true
+  image: catalog-web-app-bff
+  imageTag: v1.2.2
+  replicaCount: 1
+  servicePort: 80
+  nodePort: 30020
+  env:
+    serverPort: 8080
+    openapiFilePath: ./openapi3.yaml
+    logLevel: info
+    requestPayloadLimit: 1mb
+    responseCompressionEnabled: true
+    cswRasterUrl: ''
+    csw3DUrl: ''
+    cswDEMUrl: ''
+    catalogServiceRasterUrl: ''
+    catalogService3DUrl: ''
+    catalogServiceDEMUrl: NOT_IMPLEMENTED
+    ingestionServiceRasterUrl: ''
+    ingestionService3DUrl: ''
+    ingestionServiceDEMUrl: NOT_IMPLEMENTED
+    storageExplorerRasterUrl: ''
+    storageExplorer3DUrl: ''
+    storageExplorerDEMUrl: NOT_IMPLEMENTED
+    exportLayerRasterUrl: ''
+    exportLayer3DUrl: NOT_IMPLEMENTED
+    exportLayerDEMUrl: NOT_IMPLEMENTED
+    jobManagerServiceCommonUrl: ''
+    lookupTablesServiceUrl: ''
+    serviceDiscoveryUrl: ''
+    externalServices:
+      pycswRecordRasterUrl: ''
+      pycswRecord3DUrl: ''
+      pycswRecordDEMUrl: ''
+      mapServerRecordRasterUrl: ''
+    mapServiceRasterUrl: ''
+    wfsUrl: ''
+    wfsServicesConfig: '{"buildings": {"color": "#0465b0", "outlineColor": "#0465b0", "dWithin": 3, "isVisualized": true, "translationId": "actions.wfs.buildings-title", "icon": "location_city"}, "addrs": {"translationId": "תשאול כתובת", "isVisualized": "false"}}'
+    polygonPartsUrl: ''
+    demHeightsUrl: ''
+    adminPassword: 123456
+  resources:
+    enabled: true
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 125m
+      memory: 500Mi

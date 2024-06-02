@@ -1,0 +1,54 @@
+{{- if .Values.bff.enabled -}}
+{{- $environment := include "app.environment" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "app.fullname" . }}-bff-configmap
+  labels:
+    app: {{ template "app.name" . }}
+    component: bff-configmap
+    environment: {{ $environment }}
+    release: {{ .Release.Name }}
+data:
+  production.json: {{ .Files.Get "config/production.json" | quote }}
+  {{ if .Values.caSecret.name }}
+  NODE_EXTRA_CA_CERTS: {{ printf "%s/%s" .Values.caSecret.path .Values.caSecret.key | quote }}
+  {{ end }}
+  SERVED_ENTITY_TYPES: {{ quote .Values.shared.servedEntityTypes }}
+  ACCESS_TOKEN_ATTRIBUTE_NAME: {{ quote .Values.shared.accessToken.attributeName }}
+  ACCESS_TOKEN_INJECTION_TYPE: {{ quote .Values.shared.accessToken.injectionType }}
+  ACCESS_TOKEN_TOKEN_VALUE: {{ quote .Values.shared.accessToken.tokenValue }}
+  SERVER_PORT: {{ quote .Values.bff.env.serverPort }}
+  OPENAPI_FILE_PATH: {{ quote .Values.bff.env.openapiFilePath }}
+  LOG_LEVEL: {{ quote .Values.bff.env.logLevel }}
+  REQUEST_PAYLOAD_LIMIT: {{ quote .Values.bff.env.requestPayloadLimit }}
+  RESPONSE_COMPRESSION_ENABLED: {{ quote .Values.bff.env.responseCompressionEnabled }}
+  CSW_RASTER_URL: {{ quote .Values.bff.env.cswRasterUrl }}
+  CSW_3D_URL: {{ quote .Values.bff.env.csw3DUrl }}
+  CSW_DEM_URL: {{ quote .Values.bff.env.cswDEMUrl }}
+  CATALOG_SERVICE_RASTER_URL: {{ quote .Values.bff.env.catalogServiceRasterUrl }}
+  CATALOG_SERVICE_3D_URL: {{ quote .Values.bff.env.catalogService3DUrl }}
+  CATALOG_SERVICE_DEM_URL: {{ quote .Values.bff.env.catalogServiceDEMUrl }}
+  INGESTION_SERVICE_RASTER_URL: {{ quote .Values.bff.env.ingestionServiceRasterUrl }}
+  INGESTION_SERVICE_3D_URL: {{ quote .Values.bff.env.ingestionService3DUrl }}
+  INGESTION_SERVICE_DEM_URL: {{ quote .Values.bff.env.ingestionServiceDEMUrl }}
+  STORAGE_EXPLORER_RASTER_URL: {{ quote .Values.bff.env.storageExplorerRasterUrl }}
+  STORAGE_EXPLORER_3D_URL: {{ quote .Values.bff.env.storageExplorer3DUrl }}
+  STORAGE_EXPLORER_DEM_URL: {{ quote .Values.bff.env.storageExplorerDEMUrl }}
+  EXPORT_LAYER_RASTER_URL: {{  quote .Values.bff.env.exportLayerRasterUrl }}
+  EXPORT_LAYER_3D_URL: {{  quote .Values.bff.env.exportLayer3DUrl }}
+  EXPORT_LAYER_DEM_URL: {{  quote .Values.bff.env.exportLayerDEMUrl }}
+  JOB_SERVICE_COMMON_URL: {{ quote .Values.bff.env.jobManagerServiceCommonUrl }}
+  LOOKUP_TABLES_SERVICE_URL: {{ quote .Values.bff.env.lookupTablesServiceUrl }}
+  SERVICE_DISCOVERY_URL: {{ quote .Values.bff.env.serviceDiscoveryUrl }}
+  PYCSW-RECORD_RASTER-URL: {{ quote .Values.bff.env.externalServices.pycswRecordRasterUrl }}
+  PYCSW-RECORD_3D-URL: {{ quote .Values.bff.env.externalServices.pycswRecord3DUrl }}
+  PYCSW-RECORD_DEM-URL: {{ quote .Values.bff.env.externalServices.pycswRecordDEMUrl }}
+  MAP_SERVER-RECORD_RASTER-URL: {{ quote .Values.bff.env.externalServices.mapServerRecordRasterUrl }}
+  MAP_SERVICE_RASTER_URL: {{ quote .Values.bff.env.mapServiceRasterUrl }}
+  WFS_URL: {{ quote .Values.bff.env.wfsUrl }}
+  WFS_SERVICES_CONFIG: {{ quote .Values.bff.env.wfsServicesConfig }}
+  POLYGON_PARTS_URL: {{ quote .Values.bff.env.polygonPartsUrl }}
+  DEM_HEIGHTS_URL: {{ quote .Values.bff.env.demHeightsUrl }}
+  ADMIN_PASSWORD: {{ quote .Values.bff.env.adminPassword }}
+{{- end }}

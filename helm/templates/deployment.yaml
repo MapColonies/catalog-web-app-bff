@@ -1,0 +1,86 @@
+{{- if .Values.bff.enabled -}}
+{{- $environment := include "app.environment" . -}}
+{{- $cloudProviderDockerRegistryUrl := include "app.cloudProviderDockerRegistryUrl" . -}}
+{{- $cloudProviderImagePullSecretName := include "app.cloudProviderImagePullSecretName" . -}}
+{{- $cloudProviderImagePullPolicy := include "app.cloudProviderImagePullPolicy" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "app.fullname" . }}-bff
+  labels:
+    app: {{ template "app.name" . }}
+    component: bff-deployment
+    environment: {{ $environment }}
+    release: {{ .Release.Name }}
+{{- with .Values.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  replicas: {{ .Values.bff.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "app.name" . }}
+      release: {{ .Release.Name }}
+      run: {{ .Release.Name }}-bff
+  template:
+    metadata:
+      labels:
+        app: {{ template "app.name" . }}
+        release: {{ .Release.Name }}
+        run: {{ .Release.Name }}-bff
+    spec:
+      {{- if $cloudProviderImagePullSecretName }}
+      imagePullSecrets:
+        - name: {{ $cloudProviderImagePullSecretName | quote }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-bff
+          image: {{ $cloudProviderDockerRegistryUrl }}/{{ .Values.bff.image }}:{{ .Values.bff.imageTag }}
+          imagePullPolicy: {{ $cloudProviderImagePullPolicy }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: {{ .Values.runAsUser }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.bff.env.serverPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /docs/api
+              port: {{ .Values.bff.env.serverPort }}
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          {{- if .Values.bff.resources.enabled }}
+          resources:
+            limits:
+              cpu: {{ .Values.bff.resources.limits.cpu }}
+              memory: {{ .Values.bff.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.bff.resources.requests.cpu }}
+              memory: {{ .Values.bff.resources.requests.memory }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "app.fullname" . }}-bff-configmap
+          volumeMounts:
+            {{- if .Values.caSecret.name }}
+            - name: root-ca
+              mountPath: {{ .Values.caSecret.path | quote }}
+            {{- end }}
+            - name: production-json
+              mountPath: /usr/src/app/config/production.json
+              subPath: production.json
+      volumes:
+        {{- if .Values.caSecret.name }}
+        - name: root-ca
+          secret:
+            secretName: {{ .Values.caSecret.name }}
+        {{- end }}
+        - name: production-json
+          configMap:
+            name: {{ template "app.fullname" . }}-bff-configmap
+            items:
+              - key: "production.json"
+                path: "production.json"
+{{- end }}
