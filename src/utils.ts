@@ -1,6 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import axiosRetry from 'axios-retry';
 import config from 'config';
 import { IContext, IService } from './common/interfaces';
+
+axiosRetry(axios, {
+  retries: 0,
+});
 
 export enum CatalogRecordItems {
   RASTER = 'RASTER',
