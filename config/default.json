@@ -126,5 +126,9 @@
   "demHeightsService": {
     "url": "https://dem-int-heights-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
     "exposureType": "ROUTE"
+  },
+  "validationService": {
+    "url": "",
+    "exposureType": "ROUTE"
   }
 }
