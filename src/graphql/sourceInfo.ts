@@ -13,5 +13,8 @@ export class SourceInfo {
   public resolutionDegree: number; //pixelSize
 
   @Field((type) => footprintObject, { nullable: false })
-  public extentPolygon: Record<string, unknown>; //extentPolygon
+  public extentPolygon: Record<string, unknown>;
+
+  @Field((type) => String, { nullable: false })
+  public fileName: string;
 }

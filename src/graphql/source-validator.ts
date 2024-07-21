@@ -4,23 +4,32 @@ import { inject, singleton } from 'tsyringe';
 import { SourceValidationParams } from './inputTypes';
 import { SourceValidation } from './sourceValidation';
 import { SourceInfo } from './sourceInfo';
-import { ValidationManager } from '../common/validation-manager/validation-manager';
 import { Services } from '../common/constants';
-import { IContext } from '../common/interfaces';
+import { IContext, IService } from '../common/interfaces';
+import { requestExecutor } from '../utils';
 
 @singleton()
 export class SourceValidator {
-  private readonly validationService: ValidationManager = {} as ValidationManager;
+  private readonly service: IService;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
-    this.validationService = new ValidationManager(this.config, this.logger);
+    this.service = this.config.get('validationService');
   }
 
-  public async validateSources(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceValidation> {
+  public async validateSources(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
     // this.logger.info(`[SourceValidator][validateSources] start validation for source ${sourceData.originDirectory}.`);
 
-    // const updatedData = await ValidationManager.validate(sourceData, ctx);
-    // return updatedData;
+    // const response = await requestExecutor(
+    //     {
+    //       url: `${this.service.url}/ingestion/validateSources`,
+    //       exposureType: this.service.exposureType,
+    //     },
+    //     'POST',
+    //     this.buildPayload(sourceData),
+    //     ctx
+    //   );
+
+    //   return response.data as SourceValidation;
 
     return new Promise((resolve, reject) => {
       resolve({
@@ -30,11 +39,19 @@ export class SourceValidator {
     });
   }
 
-  public async sourcesInfo(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceInfo[]> {
+  public async sourcesInfo(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceInfo[]> {
     // this.logger.info(`[SourceValidator][sourcesInfo]get info for sources ${sourceData.originDirectory}.`);
 
-    // const updatedData = await ValidationManager.getInfo(sourceData, ctx);
-    // return updatedData;
+    // const response = await requestExecutor(
+    //     {
+    //       url: `${this.service.url}/ingestion/sourcesInfo`,
+    //       exposureType: this.service.exposureType,
+    //     },
+    //     'POST',
+    //     this.buildPayload(sourceData),
+    //     ctx
+    //   );
+    //   return response.data as SourceInfo[];
 
     return new Promise((resolve, reject) => {
       resolve([
@@ -54,8 +71,13 @@ export class SourceValidator {
             ],
             type: 'Polygon',
           },
+          fileName: 'file',
         },
       ]);
     });
+  }
+
+  private buildPayload(data: any): import('axios').AxiosRequestConfig {
+    throw new Error('Method not implemented.');
   }
 }
