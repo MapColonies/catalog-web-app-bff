@@ -3,6 +3,7 @@ import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
 import { SourceValidationParams } from './inputTypes';
 import { SourceValidation } from './sourceValidation';
+import { SourceInfo } from './sourceInfo';
 import { ValidationManager } from '../common/validation-manager/validation-manager';
 import { Services } from '../common/constants';
 import { IContext } from '../common/interfaces';
@@ -15,10 +16,24 @@ export class SourceValidator {
     this.validationService = new ValidationManager(this.config, this.logger);
   }
 
-  public async validateSources(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceValidation[]> {
-    // this.logger.info(`[SourceValidator][validateSource] start validation for source ${sourceData.originDirectory}.`);
+  public async validateSources(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceValidation> {
+    // this.logger.info(`[SourceValidator][validateSources] start validation for source ${sourceData.originDirectory}.`);
 
     // const updatedData = await ValidationManager.validate(sourceData, ctx);
+    // return updatedData;
+
+    return new Promise((resolve, reject) => {
+      resolve({
+        isValid: true,
+        message: 'Files are valid',
+      });
+    });
+  }
+
+  public async sourcesInfo(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceInfo[]> {
+    // this.logger.info(`[SourceValidator][sourcesInfo]get info for sources ${sourceData.originDirectory}.`);
+
+    // const updatedData = await ValidationManager.getInfo(sourceData, ctx);
     // return updatedData;
 
     return new Promise((resolve, reject) => {
