@@ -3,10 +3,8 @@ import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
 import { SourceValidationParams } from './inputTypes';
 import { SourceValidation } from './sourceValidation';
-import { SourceInfo } from './sourceInfo';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { requestExecutor } from '../utils';
 
 @singleton()
 export class SourceValidator {
