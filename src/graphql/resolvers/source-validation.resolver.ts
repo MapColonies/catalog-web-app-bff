@@ -17,21 +17,20 @@ export class SourceValidationResolver {
     this.logger = container.resolve(Services.LOGGER);
   }
 
-  @Query((type) => [SourceValidation])
+  @Query((type) => SourceValidation)
   public async validateSource(
     @Arg('data')
     data: SourceValidationParams,
     @Ctx()
     ctx: IContext
-  ): Promise<SourceValidation[]> {
-    let sourcesValidationResponse: SourceValidation[] = [];
+  ): Promise<SourceValidation> {
+    let sourcesValidationResponse: SourceValidation = { isValid: true, message: 'Files are valid' };
     try {
-      await this.sourceValidator.validateSources(data, ctx);
+      sourcesValidationResponse = await this.sourceValidator.validateSources(data, ctx);
     } catch (error) {
       this.logger.error(error as string);
       throw error;
     }
-
     return sourcesValidationResponse;
   }
 }
