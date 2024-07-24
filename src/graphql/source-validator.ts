@@ -39,45 +39,7 @@ export class SourceValidator {
     });
   }
 
-  public async sourcesInfo(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceInfo[]> {
-    // this.logger.info(`[SourceValidator][sourcesInfo]get info for sources ${sourceData.originDirectory}.`);
-
-    // const response = await requestExecutor(
-    //     {
-    //       url: `${this.service.url}/ingestion/sourcesInfo`,
-    //       exposureType: this.service.exposureType,
-    //     },
-    //     'POST',
-    //     this.buildPayload(sourceData),
-    //     ctx
-    //   );
-    //   return response.data as SourceInfo[];
-
-    return new Promise((resolve, reject) => {
-      resolve([
-        {
-          srs: '8888', //crs
-          fileFormat: 'gpkg',
-          resolutionDegree: 0.00274658203125, //pixelSize
-          extentPolygon: {
-            coordinates: [
-              [
-                [45.55709751400781, 35.165318109968524],
-                [45.55709751400781, 29.371448852577814],
-                [50.94014988868878, 29.371448852577814],
-                [50.94014988868878, 35.165318109968524],
-                [45.55709751400781, 35.165318109968524],
-              ],
-            ],
-            type: 'Polygon',
-          },
-          fileName: 'file',
-        },
-      ]);
-    });
-  }
-
-  private buildPayload(data: any): import('axios').AxiosRequestConfig {
-    throw new Error('Method not implemented.');
-  }
+  //   private buildPayload(data: any): import('axios').AxiosRequestConfig {
+  //     throw new Error('Method not implemented.');
+  //   }
 }

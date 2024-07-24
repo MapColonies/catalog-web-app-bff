@@ -5,7 +5,6 @@ import { IContext } from '../../common/interfaces';
 import { SourceValidationParams } from '../inputTypes';
 import { SourceValidator } from '../source-validator';
 import { SourceValidation } from '../sourceValidation';
-import { SourceInfo } from '../sourceInfo';
 import { Services } from '../../common/constants';
 
 @Resolver()
@@ -18,24 +17,21 @@ export class SourceValidationResolver {
     this.logger = container.resolve(Services.LOGGER);
   }
 
-  @Query((type) => [SourceInfo])
+  @Query((type) => [SourceValidation])
   public async validateSource(
     @Arg('data')
     data: SourceValidationParams,
     @Ctx()
     ctx: IContext
-  ): Promise<SourceInfo[]> {
-    let sourcesInfoResponse: SourceInfo[] = [];
+  ): Promise<SourceValidation[]> {
+    let sourcesValidationResponse: SourceValidation[] = [];
     try {
-      const sourceValidationResponse = await this.sourceValidator.validateSources(data, ctx);
-      if (sourceValidationResponse.isValid) {
-        sourcesInfoResponse = await this.sourceValidator.sourcesInfo(data, ctx);
-      }
+      await this.sourceValidator.validateSources(data, ctx);
     } catch (error) {
       this.logger.error(error as string);
       throw error;
     }
 
-    return sourcesInfoResponse;
+    return sourcesValidationResponse;
   }
 }
