@@ -24,13 +24,12 @@ export class SourceValidationResolver {
     @Ctx()
     ctx: IContext
   ): Promise<SourceValidation> {
-    let sourcesValidationResponse: SourceValidation = { isValid: true, message: 'Files are valid' };
     try {
-      sourcesValidationResponse = await this.sourceValidator.validateSources(data, ctx);
+      const sourcesValidationResponse = await this.sourceValidator.validateSources(data, ctx);
+      return sourcesValidationResponse;
     } catch (error) {
       this.logger.error(error as string);
       throw error;
     }
-    return sourcesValidationResponse;
   }
 }
