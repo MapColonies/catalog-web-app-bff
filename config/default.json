@@ -28,11 +28,11 @@
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "https://pycsw-opala-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "url": "https://pycsw-all-route-manual-3d-dev.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
       "exposureType": "ROUTE"
     },
     "dem": {
-      "url": "https://dem-int-pycsw-all-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/dem/v1/all",
+      "url": "https://dem-dev-pycsw-all-development-nginx-route-dem-dev.apps.j1lk3njp.eastus.aroapp.io/api/dem/v1/all",
       "exposureType": "ROUTE"
     }
   },
@@ -48,7 +48,7 @@
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://ingestion-3d-ingestion-catalog-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://gateway-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -61,7 +61,7 @@
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://ingestion-3d-model-ingestion-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://gateway-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -75,7 +75,7 @@
     }
   },
   "lookupTablesService": {
-    "url": "https://lookup-tables-int-lookup-tables-integration.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://lookup-tables-dem-dev-lookup-tables-dem-dev.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "storageExplorerServices": {
@@ -84,12 +84,12 @@
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://ingestion-3d-model-ingestion-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://gateway-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "serviceDiscovery": {
-    "url": "https://app-prod-k8s-services-list-prod.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://app-dem-dev-k8s-k8s-services-list-dem-dev.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -120,9 +120,9 @@
     "tokenValue": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w"
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465b0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "demHeightsService": {
-    "url": "https://dem-int-heights-production-heights-nginx-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
+    "url": "https://dem-dev-heights-development-heights-nginx-dem-dev.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
     "exposureType": "ROUTE"
   },
   "adminPassword": "123456",
@@ -133,6 +133,6 @@
   },
   "validationService": {
     "url": "https://raster-ingestion-dev-discrete-overseer-creator-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
-    "exposureType": "ROUTE"
+    "exposureType": "SERVICE"
   }
 }
