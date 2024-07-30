@@ -148,6 +148,34 @@ export interface IGetFeatureOptions {
   filterProperties?: PropertyFilter[];
 }
 
+export interface IGetFeatureOptionsByFeature {
+  /**
+   * @param feature Feature to search features that intersect with.
+   */
+  feature: Feature;
+
+  /**
+   * @param typeNames Feature types to query.
+   */
+  typeName: string;
+
+  /**
+   * @param count The maximum number of features to fetch.
+   * @defaultValue `100`
+   */
+  count?: number;
+
+  /**
+   * @param dWithin Search distance from point in meters.
+   */
+  dWithin?: number;
+
+  /**
+   * @param filterProperties Literal property names and values to match. (Using `PropertyIsEqualTo` filter)
+   */
+  filterProperties?: PropertyFilter[];
+}
+
 export interface IGetFeatureResponse {
   type: string;
   features: Feature[];

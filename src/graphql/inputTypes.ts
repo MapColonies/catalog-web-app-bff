@@ -252,8 +252,11 @@ export class WfsFilterPropertyParam {
 }
 @InputType()
 export class WfsPolygonPartsGetFeatureParams {
-  @Field((type) => [String, String], { nullable: false })
-  public pointCoordinates!: [string, string];
+  @Field((type) => GeojsonFeatureInput, { nullable: false })
+  public feature!: Feature;
+
+  @Field((type) => String, { nullable: false })
+  public typeName!: string;
 
   @Field((type) => Number, { nullable: true })
   public count?: number;

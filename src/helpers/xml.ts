@@ -53,3 +53,10 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
   }));
   return capabilityList ?? [];
 };
+
+export const compactXML = (xmlStr: string): string => {
+  return xmlStr
+    .replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, '')
+    .replace(/[ \r\n\t]{1,}xmlns/g, ' xmlns')
+    .replace(/>\s{0,}</g, '><');
+};
