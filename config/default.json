@@ -28,6 +28,7 @@
     "injectionType": "queryParam",
     "tokenValue": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w"
   },
+  "adminPassword": "123456",
   "csw": {
     "raster": {
       "url": "https://raster-serving-dev-pycsw-nginx-route-manual-raster-dev.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
@@ -135,6 +136,5 @@
   "demHeightsService": {
     "url": "https://dem-dev-heights-development-heights-nginx-dem-dev.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
     "exposureType": "ROUTE"
-  },
-  "adminPassword": "123456"
+  }
 }

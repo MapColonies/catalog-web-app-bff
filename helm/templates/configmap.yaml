@@ -23,6 +23,7 @@ data:
   LOG_LEVEL: {{ quote .Values.bff.env.logLevel }}
   REQUEST_PAYLOAD_LIMIT: {{ quote .Values.bff.env.requestPayloadLimit }}
   RESPONSE_COMPRESSION_ENABLED: {{ quote .Values.bff.env.responseCompressionEnabled }}
+  ADMIN_PASSWORD: {{ quote .Values.bff.env.adminPassword }}
   CSW_RASTER_URL: {{ quote .Values.bff.env.cswRasterUrl }}
   CSW_3D_URL: {{ quote .Values.bff.env.csw3DUrl }}
   CSW_DEM_URL: {{ quote .Values.bff.env.cswDEMUrl }}
@@ -51,5 +52,4 @@ data:
   WFS_SERVICES_CONFIG: {{ quote .Values.bff.env.wfsServicesConfig }}
   POLYGON_PARTS_URL: {{ quote .Values.bff.env.polygonPartsUrl }}
   DEM_HEIGHTS_URL: {{ quote .Values.bff.env.demHeightsUrl }}
-  ADMIN_PASSWORD: {{ quote .Values.bff.env.adminPassword }}
 {{- end }}

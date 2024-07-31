@@ -27,6 +27,7 @@
     "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
     "tokenValue": "ACCESS_TOKEN_TOKEN_VALUE"
   },
+  "adminPassword": "ADMIN_PASSWORD",
   "csw": {
     "raster": {
       "url": "CSW_RASTER_URL"
@@ -115,6 +116,5 @@
   },
   "demHeightsService": {
     "url": "DEM_HEIGHTS_URL"
-  },
-  "adminPassword": "ADMIN_PASSWORD"
+  }
 }
