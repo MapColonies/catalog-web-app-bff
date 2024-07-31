@@ -2,11 +2,11 @@ import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
-import { SourceValidationParams } from './inputTypes';
-import { SourceValidation } from './sourceValidation';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
 import { requestExecutor } from '../utils';
+import { SourceValidationParams } from './inputTypes';
+import { SourceValidation } from './sourceValidation';
 
 @singleton()
 export class SourceValidator {
