@@ -35,6 +35,7 @@ data:
   STORAGE_EXPLORER_RASTER_URL: {{ quote .Values.bff.env.storageExplorerRasterUrl }}
   STORAGE_EXPLORER_3D_URL: {{ quote .Values.bff.env.storageExplorer3DUrl }}
   STORAGE_EXPLORER_DEM_URL: {{ quote .Values.bff.env.storageExplorerDEMUrl }}
+  VALIDATION_SERVICE_RASTER_URL: {{ quote .Values.bff.env.validationServiceRasterUrl }}
   EXPORT_LAYER_RASTER_URL: {{  quote .Values.bff.env.exportLayerRasterUrl }}
   EXPORT_LAYER_3D_URL: {{  quote .Values.bff.env.exportLayer3DUrl }}
   EXPORT_LAYER_DEM_URL: {{  quote .Values.bff.env.exportLayerDEMUrl }}

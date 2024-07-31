@@ -21,6 +21,12 @@
       }
     }
   },
+  "servedEntityTypes": "SERVED_ENTITY_TYPES",
+  "accessToken": {
+    "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
+    "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
+    "tokenValue": "ACCESS_TOKEN_TOKEN_VALUE"
+  },
   "csw": {
     "raster": {
       "url": "CSW_RASTER_URL"
@@ -30,11 +36,6 @@
     },
     "dem": {
       "url": "CSW_DEM_URL"
-    }
-  },
-  "mapServices": {
-    "raster": {
-      "url": "MAP_SERVICE_RASTER_URL"
     }
   },
   "catalogServices": {
@@ -59,11 +60,6 @@
       "url": "INGESTION_SERVICE_DEM_URL"
     }
   },
-  "jobServices": {
-    "common": {
-      "url": "JOB_SERVICE_COMMON_URL"
-    }
-  },
   "storageExplorerServices": {
     "raster": {
       "url": "STORAGE_EXPLORER_RASTER_URL"
@@ -72,28 +68,10 @@
       "url": "STORAGE_EXPLORER_3D_URL"
     }
   },
-  "lookupTablesService": {
-    "url": "LOOKUP_TABLES_SERVICE_URL"
-  },
-  "accessToken": {
-    "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
-    "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
-    "tokenValue": "ACCESS_TOKEN_TOKEN_VALUE"
-  },
-  "serviceDiscovery": {
-    "url": "SERVICE_DISCOVERY_URL"
-  },
-  "externalServices": {
-    "PYCSW-RECORD_RASTER-URL": "PYCSW-RECORD_RASTER-URL",
-    "PYCSW-RECORD_3D-URL": "PYCSW-RECORD_3D-URL",
-    "PYCSW-RECORD_DEM-URL": "PYCSW-RECORD_DEM-URL",
-    "MAP_SERVER-RECORD_RASTER-URL": "MAP_SERVER-RECORD_RASTER-URL"
-  },
-  "wfs": {
-    "url": "WFS_URL"
-  },
-  "polygonParts": {
-    "url": "POLYGON_PARTS_URL"
+  "validationService": {
+    "raster": {
+      "url": "VALIDATION_SERVICE_RASTER_URL"
+    }
   },
   "exportLayerServices": {
     "raster": {
@@ -106,10 +84,37 @@
       "url": "EXPORT_LAYER_DEM_URL"
     }
   },
+  "jobServices": {
+    "common": {
+      "url": "JOB_SERVICE_COMMON_URL"
+    }
+  },
+  "lookupTablesService": {
+    "url": "LOOKUP_TABLES_SERVICE_URL"
+  },
+  "serviceDiscovery": {
+    "url": "SERVICE_DISCOVERY_URL"
+  },
+  "externalServices": {
+    "PYCSW-RECORD_RASTER-URL": "PYCSW-RECORD_RASTER-URL",
+    "PYCSW-RECORD_3D-URL": "PYCSW-RECORD_3D-URL",
+    "PYCSW-RECORD_DEM-URL": "PYCSW-RECORD_DEM-URL",
+    "MAP_SERVER-RECORD_RASTER-URL": "MAP_SERVER-RECORD_RASTER-URL"
+  },
+  "mapServices": {
+    "raster": {
+      "url": "MAP_SERVICE_RASTER_URL"
+    }
+  },
+  "wfs": {
+    "url": "WFS_URL"
+  },
+  "wfsServicesConfig": "WFS_SERVICES_CONFIG",
+  "polygonParts": {
+    "url": "POLYGON_PARTS_URL"
+  },
   "demHeightsService": {
     "url": "DEM_HEIGHTS_URL"
   },
-  "servedEntityTypes": "SERVED_ENTITY_TYPES",
-  "wfsServicesConfig": "WFS_SERVICES_CONFIG",
   "adminPassword": "ADMIN_PASSWORD"
 }

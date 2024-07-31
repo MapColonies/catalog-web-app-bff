@@ -13,7 +13,7 @@ export class SourceValidator {
   private readonly service: IService;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
-    this.service = this.config.get('validationService');
+    this.service = this.config.get('validationService.raster');
   }
 
   public async validateSources(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {

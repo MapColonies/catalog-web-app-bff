@@ -65,6 +65,7 @@ bff:
     storageExplorerRasterUrl: ''
     storageExplorer3DUrl: ''
     storageExplorerDEMUrl: NOT_IMPLEMENTED
+    validationServiceRasterUrl: ''
     exportLayerRasterUrl: ''
     exportLayer3DUrl: NOT_IMPLEMENTED
     exportLayerDEMUrl: NOT_IMPLEMENTED
