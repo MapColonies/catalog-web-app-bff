@@ -1,5 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
+import { get } from 'lodash';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../common/constants';
@@ -30,14 +31,14 @@ export class SourceValidator {
     );
 
     const validationResponse: SourceValidation = {
-      isValid: response.data.isValid,
-      message: response.data.reason ?? 'Files are valid',
+      isValid: get(response.data, 'isValid') as boolean,
+      message: (get(response.data, 'reason') as string | undefined) ?? 'Files are valid',
     };
 
     return validationResponse;
   }
 
-  private buildPayload(data: any): AxiosRequestConfig {
+  private buildPayload(data: SourceValidationParams): AxiosRequestConfig {
     return { data };
   }
 }
