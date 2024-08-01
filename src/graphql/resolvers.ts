@@ -14,6 +14,7 @@ import { DemHeightsResolver } from './resolvers/dem-heights.resolver';
 import { ServicesAvailabilityResolver } from './resolvers/services-availability.resolver';
 import { PolygonPartsWfsResolver } from './resolvers/polygon-parts-wfs.resolver';
 import { UserLoginResolver } from './resolvers/user-login.resolver';
+import { SourceValidationResolver } from './resolvers/source-validation.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
@@ -33,5 +34,6 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     ServicesAvailabilityResolver,
     PolygonPartsWfsResolver,
     UserLoginResolver,
+    SourceValidationResolver,
   ];
 }
