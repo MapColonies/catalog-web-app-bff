@@ -35,7 +35,7 @@
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "https://pycsw-all-route-manual-3d-dev.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
+      "url": "https://serving-3d-dev-pycsw-all-nginx-manual-3d-dev.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
       "exposureType": "ROUTE"
     },
     "dem": {
