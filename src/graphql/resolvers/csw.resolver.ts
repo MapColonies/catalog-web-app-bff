@@ -121,7 +121,7 @@ export class LayerMetadataMixedResolver {
     productId: string,
     @Arg('productType', { nullable: false })
     productType: ProductType
-  ): Promise<LayerMetadataUnionType> {
+  ): Promise<LayerMetadataUnionType | null> {
     try {
       const data = await this.csw.getRecords(ctx, 1, 2, {
         filter: [
@@ -135,7 +135,7 @@ export class LayerMetadataMixedResolver {
           },
         ],
       });
-      return data[0] ?? {};
+      return data[0];
     } catch (err) {
       this.logger.error(err);
       throw err;
