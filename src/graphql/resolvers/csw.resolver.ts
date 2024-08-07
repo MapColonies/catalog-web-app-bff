@@ -120,9 +120,7 @@ export class LayerMetadataMixedResolver {
     @Arg('productId', { nullable: false })
     productId: string,
     @Arg('productType', { nullable: false })
-    productType: ProductType,
-    @Arg('productVersion', { nullable: false })
-    productVersion: string
+    productType: ProductType
   ): Promise<LayerMetadataUnionType> {
     try {
       const data = await this.csw.getRecords(ctx, 1, 2, {
@@ -134,10 +132,6 @@ export class LayerMetadataMixedResolver {
           {
             field: 'mc:productType',
             eq: productType,
-          },
-          {
-            field: 'mc:productVersion',
-            eq: productVersion,
           },
         ],
       });

@@ -22,16 +22,16 @@
       }
     }
   },
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM",
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER",
   "accessToken": {
     "attributeName": "token",
     "injectionType": "queryParam",
-    "tokenValue": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w"
+    "tokenValue": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJhbyI6WyJodHRwczovL2FwcC1pbnQtY2xpZW50LXJvdXRlLWludGVncmF0aW9uLmFwcHMuajFsazNuanAuZWFzdHVzLmFyb2FwcC5pbyIsImh0dHBzOi8vYXBwLWludC1jbGllbnQtdG9vbHMtcm91dGUtaW50ZWdyYXRpb24uYXBwcy5qMWxrM25qcC5lYXN0dXMuYXJvYXBwLmlvIiwiaHR0cDovL2xvY2FsaG9zdDozMDAwIl0sImQiOlsicmFzdGVyIiwicmFzdGVyV21zIiwicmFzdGVyRXhwb3J0IiwiZGVtIiwidmVjdG9yIiwiM2QiXSwiaWF0IjoxNjc0NjMyMzQ2LCJzdWIiOiJtYXBjb2xvbmllcy1hcHAiLCJpc3MiOiJtYXBjb2xvbmllcy10b2tlbi1jbGkifQ.e-4SmHNOE8FwpcJoHdp-3Dh6D8GqCwM5wZfZIPrivGhfeKdihcsjEj_WN2jWN-ULha_ytZN5gRusLjwikNwgbF6hvb-QTDe3bEHPAjtgpZmF4HaJze8e6VPDF1tTC52CHDzNnwkUGAH1tnVGq10SnyhsGDezUChTVeBeVu-swTI58qCjemUQRw7-Q03uSEH24AkbX2CC1_rNwulo7ChglyTdn01tTWPsPjIuDjeixxm2CUmUHpfZzroaSzwof7ByQe22o3tFddje6ItNLBUC_VN7UfNLa_QPSVbIuNac-iMGFbK-RIyXUK8mp1AwddvSGsBUYcDs8fWMLzKhItljnw"
   },
   "adminPassword": "123456",
   "csw": {
     "raster": {
-      "url": "https://raster-serving-dev-pycsw-nginx-route-manual-raster-dev.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "url": "https://raster-serving-int-pycsw-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     },
     "3d": {
@@ -45,7 +45,7 @@
   },
   "catalogServices": {
     "raster": {
-      "url": "https://raster-core-dev-raster-catalog-manager-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-core-int-raster-catalog-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
@@ -58,7 +58,7 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "https://raster-ingestion-dev-discrete-overseer-creator-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://overseer-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
@@ -71,7 +71,7 @@
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "https://raster-ingestion-dev-discrete-overseer-creator-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://overseer-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
@@ -81,13 +81,13 @@
   },
   "validationService": {
     "raster": {
-      "url": "https://raster-ingestion-dev-discrete-overseer-creator-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://overseer-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "exportLayerServices": {
     "raster": {
-      "url": "https://exporter-trigger-route-noauth-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-export-int-exporter-trigger-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "ROUTE"
     },
     "3d": {
@@ -99,16 +99,16 @@
   },
   "jobServices": {
     "common": {
-      "url": "https://common-job-manager-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://common-job-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "https://app-dem-dev-lookup-tables-dem-dev.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://app-int-lookup-tables-integration.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "serviceDiscovery": {
-    "url": "https://app-dem-dev-k8s-services-list-dem-dev.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://app-int-k8s-services-list-integration.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -119,7 +119,7 @@
   },
   "mapServices": {
     "raster": {
-      "url": "https://raster-serving-dev-mapproxy-nginx-route-manual-raster-dev.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "url": "https://raster-serving-int-mapproxy-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     }
   },
@@ -129,12 +129,13 @@
   },
   "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
-    "url": "https://polygon-parts-dev.mapcolonies.net/api/raster/v1/geoserver/wfs?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w",
+    "url": "NOT_DEPLOYED",
+    "url_dev": "https://polygon-parts-dev.mapcolonies.net/api/raster/v1/geoserver/wfs?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNYXBDb2xvbmllc0RldiIsImlhdCI6MTUxNjIzOTAyMiwiZCI6WyJyYXN0ZXIiLCJyYXN0ZXJXbXMiLCJyYXN0ZXJFeHBvcnQiLCJkZW0iLCJ2ZWN0b3IiLCIzZCJdfQ.GvTQ_yLjnioxxFrNgGQiuarhJxLpe8AhTTtrWE3LHoUED48CFKBEOfKqOyEWSDVZjx1jHkDvZAL1iyEvi5FHNys7UBRXCiJvVlG-muJZ6ycS9PGKauzL-eggXqTqGsXh4FBkqvHUEElXEnu7ARsMCm5eIC66U2i_eHFU3PLcOc67qJvS1IQjAI2oj9Pd5mGaI_HlDaf3B4PFOb0AHdY-r_MDGwck3asm1G_InVzsvCXt36vImyn1Z4HYaN4YiDfaMLBF0-GGrlLE84PObzGGtt66EIuQ4OneEZSzoQNusBt5-SFs0EQXsfsDc_RMRTz3DZseqkNIKiXEsEBBPjMr7w",
     "url_prod": "https://polygon-parts.mapcolonies.net/api/raster/v1/wfs?token=eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJkIjpbInJhc3RlciIsInJhc3RlcldtcyIsInJhc3RlckV4cG9ydCIsImRlbSIsInZlY3RvciIsIjNkIl0sImlhdCI6MTY3NDYzMjM0Niwic3ViIjoibWFwY29sb25pZXMtYXBwIiwiaXNzIjoibWFwY29sb25pZXMtdG9rZW4tY2xpIn0.D1u28gFlxf_Z1bzIiRHZonUgrdWwhZy8DtmQj15cIzaABRUrGV2n_OJlgWTuNfrao0SbUZb_s0_qUUW6Gz_zO3ET2bVx5xQjBu0CaIWdmUPDjEYr6tw-eZx8EjFFIyq3rs-Fo0daVY9cX1B2aGW_GeJir1oMnJUURhABYRoh60azzl_utee9UdhDpnr_QElNtzJZIKogngsxCWp7tI7wkTuNCBaQM7aLEcymk0ktxlWEAt1E0nGt1R-bx-HnPeeQyZlxx4UQ1nuYTijpz7N8poaCCExOFeafj9T7megv2BzTrKWgfM1eai8srSgNa3I5wKuW0EyYnGZxdbJe8aseZg",
     "exposureType": "SERVICE"
   },
   "demHeightsService": {
-    "url": "https://dem-dev-heights-development-heights-nginx-dem-dev.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
+    "url": "https://dem-int-heights-production-heights-nginx-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
     "exposureType": "ROUTE"
   }
 }
