@@ -135,7 +135,7 @@ export class LayerMetadataMixedResolver {
           },
         ],
       });
-      return data[0];
+      return data[0] ?? {};
     } catch (err) {
       this.logger.error(err);
       throw err;
