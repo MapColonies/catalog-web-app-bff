@@ -113,6 +113,41 @@ export class LayerMetadataMixedResolver {
     }
   }
 
+  @Query((type) => LayerMetadataMixedUnion)
+  public async getProduct(
+    @Ctx()
+    ctx: IContext,
+    @Arg('productId', { nullable: false })
+    productId: string,
+    @Arg('productType', { nullable: false })
+    productType: ProductType,
+    @Arg('productVersion', { nullable: false })
+    productVersion: string
+  ): Promise<LayerMetadataUnionType> {
+    try {
+      const data = await this.csw.getRecords(ctx, 1, 2, {
+        filter: [
+          {
+            field: 'mc:productId',
+            eq: productId,
+          },
+          {
+            field: 'mc:productType',
+            eq: productType,
+          },
+          {
+            field: 'mc:productVersion',
+            eq: productVersion,
+          },
+        ],
+      });
+      return data[0];
+    } catch (err) {
+      this.logger.error(err);
+      throw err;
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateStatus(
