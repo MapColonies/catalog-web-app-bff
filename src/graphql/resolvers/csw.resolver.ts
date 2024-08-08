@@ -113,7 +113,7 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  @Query((type) => LayerMetadataMixedUnion)
+  @Query((type) => LayerMetadataMixedUnion, { nullable: true })
   public async getProduct(
     @Ctx()
     ctx: IContext,
