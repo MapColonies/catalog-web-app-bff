@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.20.2...v1.21.0) (2024-08-08)
+
+
+### Features
+
+* new query - get product ([#164](https://github.com/MapColonies/catalog-web-app-bff/issues/164)) ([c4b771d](https://github.com/MapColonies/catalog-web-app-bff/commit/c4b771d95478e4663857f0b6cfca0f4c02d41aeb))
+
+
+### Bug Fixes
+
+* nullable ([9ead36c](https://github.com/MapColonies/catalog-web-app-bff/commit/9ead36cda3c82af15b9c3a69002e45dc10d28125))
+
 ### [1.20.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.20.1...v1.20.2) (2024-08-01)
 
 
