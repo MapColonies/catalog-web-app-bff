@@ -6,7 +6,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "app.fullname" . }}-bff
+  name: {{ template "app.fullname" . }}
   labels:
     app: {{ template "app.name" . }}
     component: bff-deployment
@@ -35,7 +35,7 @@ spec:
         - name: {{ $cloudProviderImagePullSecretName | quote }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}-bff
+        - name: {{ .Chart.Name }}
           image: {{ $cloudProviderDockerRegistryUrl }}/{{ .Values.bff.image }}:{{ .Values.bff.imageTag }}
           imagePullPolicy: {{ $cloudProviderImagePullPolicy }}
           securityContext:
@@ -62,7 +62,7 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ template "app.fullname" . }}-bff-configmap
+                name: {{ template "app.fullname" . }}-configmap
           volumeMounts:
             {{- if .Values.caSecret.name }}
             - name: root-ca
@@ -79,7 +79,7 @@ spec:
         {{- end }}
         - name: production-json
           configMap:
-            name: {{ template "app.fullname" . }}-bff-configmap
+            name: {{ template "app.fullname" . }}-configmap
             items:
               - key: "production.json"
                 path: "production.json"
