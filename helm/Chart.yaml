@@ -3,3 +3,7 @@ description: Helm chart to deploy Catalog App
 name: catalog-web-app-bff
 version: 1.21.1
 appVersion: 1.21.1
+dependencies:
+  - name: common
+    version: 1.0.1
+    repository: file://../../helm-common

@@ -1,93 +1,217 @@
 global:
-  cloudProvider: {}
+  configManagment:
+    enabled: false
+  imageRegistry: acrarolibotnonprod.azurecr.io
+  imagePullSecrets:
+    - my-registry
+  deploymentFlavor: openshift
+  tlsCertificates:
+    - hostname: catalog-dem-dev.mapcolonies.net
+      certificate: xxx
+      key: xx
+      caCertificate: x
+    - hostname: tiles-dem-dev.mapcolonies.net
+      certificate: xxx
+      key: xx
+      caCertificate: x
+  tracing:
+    enabled: false
+    url: http://localhost:55681/v1/traces
+  metrics:
+    enabled: false
+    url: http://localhost:55681/v1/metrics
   environment: development
-environment: development
-runAsUser: 1001050000
-cloudProvider:
-  dockerRegistryUrl: acrarolibotnonprod.azurecr.io
-  imagePullSecretName: acr-registry
-  imagePullPolicy: Always
-  flavor: openshift
-annotations:
-  collectord.io/index: ''
-  collectord.io/logs-output: splunk
-  collectord.io/procstats-output: devnull
-  collectord.io/netstats-output: devnull
-  collectord.io/nettable-output: devnull
-  collectord.io/stats-output: devnull
-route:
-  enabled: true
-  host:
-  path: /bff
-  tls:
-    enabled: true
-    useCert: false
-ingress:
+  releaseVersion: DUMMY_releaseVersion
+  currentSubChart: DUMMY_currentSubChart
+  secrets:
+    - name: postgres
+      type: Opaque
+      path: aaa
+      data:
+        - key: password
+          value: yyy
+    - name: root-ca
+      type: Opaque
+      path: '/usr/local/share/ca-certificates'
+      data:
+        - key: ca.crt
+          value: xxx
+  shared:
+    servedEntityTypes: RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM
+    accessToken:
+      attributeName: token
+      injectionType: queryParam
+      tokenValue: TOKEN
+
+commonLabels:
+commonAnnotations:
+# ----------- initContainers ----------
+volumePermissions:
   enabled: false
-  type: nginx-kubernetes # supported values: 'nginx-org' | 'nginx-kubernetes'
-  host:
-  path: /bff
-  tls:
-    useExternal:
-caSecret:
-  name: ''
-  path: /usr/local/share/ca-certificates
-  key: ca.crt
-  value:
-shared:
-  servedEntityTypes: RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM
-  accessToken:
-    attributeName: token
-    injectionType: queryParam
-    tokenValue: TOKEN
-bff:
-  enabled: true
-  image: catalog-web-app-bff
-  imageTag: v1.2.2
+# ------ volumes and volumeMounts -----
+persistence:
+  enabled: false
+# ----------- command/debug -----------
+diagnosticMode:
+  enabled: false
+# --------- MAIN_OBJECT_BLOCK ---------
+configValues:
+  deploymentAnnotations:
+    # collectord.io/index: '' # PROVIDE SPLUNK INDEX
+  autoscaling:
+    enabled: false
   replicaCount: 1
-  servicePort: 80
-  nodePort: 30020
-  env:
-    serverPort: 8080
-    openapiFilePath: ./openapi3.yaml
-    logLevel: info
-    requestPayloadLimit: 1mb
-    responseCompressionEnabled: true
-    adminPassword: 123456
-    cswRasterUrl: ''
-    csw3DUrl: ''
-    cswDEMUrl: ''
-    catalogServiceRasterUrl: ''
-    catalogService3DUrl: ''
-    catalogServiceDEMUrl: NOT_IMPLEMENTED
-    ingestionServiceRasterUrl: ''
-    ingestionService3DUrl: ''
-    ingestionServiceDEMUrl: NOT_IMPLEMENTED
-    storageExplorerRasterUrl: ''
-    storageExplorer3DUrl: ''
-    storageExplorerDEMUrl: NOT_IMPLEMENTED
-    validationServiceRasterUrl: ''
-    exportLayerRasterUrl: ''
-    exportLayer3DUrl: NOT_IMPLEMENTED
-    exportLayerDEMUrl: NOT_IMPLEMENTED
-    jobManagerServiceCommonUrl: ''
-    lookupTablesServiceUrl: ''
-    serviceDiscoveryUrl: ''
-    externalServices:
-      pycswRecordRasterUrl: ''
-      pycswRecord3DUrl: ''
-      pycswRecordDEMUrl: ''
-      mapServerRecordRasterUrl: ''
-    mapServiceRasterUrl: ''
-    wfsUrl: ''
-    wfsServicesConfig: '{"buildings": {"color": "#0465b0", "outlineColor": "#0465b0", "dWithin": 3, "isVisualized": true, "translationId": "actions.wfs.buildings-title", "icon": "location_city"}, "addrs": {"translationId": "תשאול כתובת", "isVisualized": "false"}}'
-    polygonPartsUrl: ''
-    demHeightsUrl: ''
-  resources:
+  podAnnotations:
     enabled: true
+    resetOnConfigChange: true
+    annotations: {}
+  prometheus:
+    scrape: false
+  metrics:
+    enabled: false
+  tracing:
+    enabled: false
+  # topologySpreadConstraints:
+  #   - maxSkew: 1
+  #     topologyKey: zone
+  #     whenUnsatisfiable: DoNotSchedule
+  #     labelSelector:
+  #       matchLabels:
+  #         app.kubernetes.io/name: '{{ include "common.names.name" . }}'
+  # ----------- containers ------------
+  image:
+    repository: catalog-web-app-bff
+    tag: v1.2.2
+    pullPolicy: Always
+    debug: false
+  containerSecurityContext:
+    enabled: true
+    runAsNonRoot: true
+    runAsUser: 1000700000
+  extraEnvVars:
+    - name: SERVER_PORT
+      value: '{{ .Values.configValues.containerPorts.http }}'
+  extraEnvVarsCM: '{{ template "common.names.fullname" . }}'
+  extraEnvVarsSecret:
+  resources:
     limits:
       cpu: 500m
       memory: 500Mi
     requests:
       cpu: 125m
       memory: 500Mi
+  containerPorts:
+    http: 8080
+    https: 443
+  customLivenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+    httpGet:
+      path: /docs/api
+      port: http
+  customReadinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+    httpGet:
+      path: /docs/api
+      port: http
+  startupProbe:
+    enabled : false
+  extraVolumeMounts:
+    - name: production-json
+      mountPath: /usr/src/app/config/production.json
+      subPath: production.json
+    - name: root-ca
+      mountPath: '{{ (include "common.secrets.getSecretByName" (dict "name" "root-ca" "key" "path" "context" .)) }}'
+  extraVolumes:
+    - name: production-json
+      configMap:
+        name: '{{ template "common.names.fullname" . }}'
+        items:
+          - key: production.json
+            path: production.json
+    - name: root-ca
+      secret:
+        secretName: root-ca
+env:
+  logLevel: info
+  logPrettyPrintEnabled: false
+  responseCompressionEnabled: true
+  requestPayloadLimit: 1mb
+  openapiFilePath: ./openapi3.yaml
+  adminPassword: 123456
+  cswRasterUrl: ''
+  csw3DUrl: ''
+  cswDEMUrl: ''
+  catalogServiceRasterUrl: ''
+  catalogService3DUrl: ''
+  catalogServiceDEMUrl: NOT_IMPLEMENTED
+  ingestionServiceRasterUrl: ''
+  ingestionService3DUrl: ''
+  ingestionServiceDEMUrl: NOT_IMPLEMENTED
+  storageExplorerRasterUrl: ''
+  storageExplorer3DUrl: ''
+  storageExplorerDEMUrl: NOT_IMPLEMENTED
+  validationServiceRasterUrl: ''
+  exportLayerRasterUrl: ''
+  exportLayer3DUrl: NOT_IMPLEMENTED
+  exportLayerDEMUrl: NOT_IMPLEMENTED
+  jobManagerServiceCommonUrl: ''
+  lookupTablesServiceUrl: ''
+  serviceDiscoveryUrl: ''
+  externalServices:
+    pycswRecordRasterUrl: ''
+    pycswRecord3DUrl: ''
+    pycswRecordDEMUrl: ''
+    mapServerRecordRasterUrl: ''
+  mapServiceRasterUrl: ''
+  wfsUrl: ''
+  wfsServicesConfig: '{"buildings": {"color": "#0465b0", "outlineColor": "#0465b0", "dWithin": 3, "isVisualized": true, "translationId": "actions.wfs.buildings-title", "icon": "location_city"}, "addrs": {"translationId": "תשאול כתובת", "isVisualized": "false"}}'
+  polygonPartsUrl: ''
+  demHeightsUrl: ''
+route:
+  enabled: true
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: /
+  timeout:
+    enabled: false
+    duration: 60s
+  hostname: catalog-dem-dev.mapcolonies.net
+  path: /bff
+  targetPort: http
+  tls: 
+    enabled: true
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    useCerts: true
+  extraRules:
+ingress:
+  enabled: false
+  apiVersion: ""
+  type: nginx-kubernetes
+  annotations: {}
+  pathType: Prefix
+  hostname: COMPONENT_NAME.local
+  extraHosts: []
+  extraPaths: []
+  path: /bff
+  extraRules: []
+  extraTls: []
+  selfSigned: false
+  tls: true
+  cors:
+    enabled: true
+    origin: '*'
+service:
+  annotations: {}
+  ports:
+    http: 80
+  protocol: TCP
+serviceAccount:
+  create: false
