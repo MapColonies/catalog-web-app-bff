@@ -25,7 +25,7 @@ global:
       path: /usr/local/share/ca-certificates
       data:
         - key: ca.crt
-          value: xxx
+          value:
   shared:
     servedEntityTypes: RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM
     accessToken:
