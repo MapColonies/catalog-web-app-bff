@@ -7,13 +7,9 @@ global:
   deploymentFlavor: openshift
   tlsCertificates:
     - hostname: catalog-dem-dev.mapcolonies.net
-      certificate: xxx
-      key: xx
-      caCertificate: x
-    - hostname: tiles-dem-dev.mapcolonies.net
-      certificate: xxx
-      key: xx
-      caCertificate: x
+      certificate:
+      key:
+      caCertificate:
   tracing:
     enabled: false
     url: http://localhost:55681/v1/traces
@@ -24,15 +20,9 @@ global:
   releaseVersion: DUMMY_releaseVersion
   currentSubChart: DUMMY_currentSubChart
   secrets:
-    - name: postgres
-      type: Opaque
-      path: aaa
-      data:
-        - key: password
-          value: yyy
     - name: root-ca
       type: Opaque
-      path: '/usr/local/share/ca-certificates'
+      path: /usr/local/share/ca-certificates
       data:
         - key: ca.crt
           value: xxx
@@ -122,7 +112,7 @@ configValues:
       path: /docs/api
       port: http
   startupProbe:
-    enabled : false
+    enabled: false
   extraVolumeMounts:
     - name: production-json
       mountPath: /usr/src/app/config/production.json
@@ -185,7 +175,7 @@ route:
   hostname: catalog-dem-dev.mapcolonies.net
   path: /bff
   targetPort: http
-  tls: 
+  tls:
     enabled: true
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
@@ -193,7 +183,7 @@ route:
   extraRules:
 ingress:
   enabled: false
-  apiVersion: ""
+  apiVersion: ''
   type: nginx-kubernetes
   annotations: {}
   pathType: Prefix
