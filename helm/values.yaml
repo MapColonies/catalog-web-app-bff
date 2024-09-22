@@ -186,11 +186,11 @@ route:
   extraRules:
 ingress:
   enabled: false
-  apiVersion: ''
+  apiVersion:
   type: nginx-kubernetes
   annotations: {}
   pathType: Prefix
-  hostname: COMPONENT_NAME.local
+  hostname: libot.wwest.local
   extraHosts: []
   extraPaths: []
   path: /bff
