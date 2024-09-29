@@ -60,7 +60,7 @@ npm run test:integration
 
 ## Deployment
 
-[!IMPORTANT] 
+> [!IMPORTANT] 
 > We depend on `Red-Hat Yaml Extention` for validating the values files against the relevant schemas from helm-common.
 > That means, you should install the extention from vscode in order to be able to edit values files according to our schemas.
 
