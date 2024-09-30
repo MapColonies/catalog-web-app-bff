@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: Helm chart to deploy Catalog App
 name: catalog-web-app-bff
 version: 1.22.0
