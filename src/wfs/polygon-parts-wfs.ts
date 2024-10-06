@@ -18,8 +18,8 @@ export class PolygonPartsWFS {
   public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<IGetFeatureResponse> {
     const wfsClient = this.getWfsClient(ctx);
     // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
-    // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}_polygon_parts
-    const res = await wfsClient.getFeatureByFeature({ ...options, typeName: 'polygon_parts:orthophoto_best_orthophotobest_polygon_parts' });
+    // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
+    const res = await wfsClient.getFeatureByFeature({ ...options, typeName: 'polygon_parts:orthophoto_best_orthophotobest' });
 
     return res as IGetFeatureResponse;
   }
