@@ -2,7 +2,6 @@ import {
   FieldCategory,
   IPropFieldConfigInfo,
   Pycsw3DCatalogRecord,
-  PycswBestCatalogRecord,
   PycswDemCatalogRecord,
   PycswLayerCatalogRecord,
   PycswVectorBestCatalogRecord,
@@ -70,7 +69,6 @@ export function buildDescriptor(
     | typeof PycswLayerCatalogRecord
     | typeof Pycsw3DCatalogRecord
     | typeof PycswDemCatalogRecord
-    | typeof PycswBestCatalogRecord
     | typeof PycswVectorBestCatalogRecord
     | typeof PycswQuantizedMeshBestCatalogRecord
     | typeof PolygonPartRecord
@@ -117,7 +115,6 @@ export function getDescriptors(): EntityDescriptor[] {
     PycswLayerCatalogRecord,
     Pycsw3DCatalogRecord,
     PycswDemCatalogRecord,
-    PycswBestCatalogRecord,
     PycswVectorBestCatalogRecord,
     PycswQuantizedMeshBestCatalogRecord,
     PolygonPartRecord,
