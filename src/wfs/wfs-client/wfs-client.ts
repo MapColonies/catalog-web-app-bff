@@ -89,6 +89,7 @@ class WfsClient {
   public async getFeatureByPoint({
     pointCoordinates,
     typeName,
+    geomRefFieldName,
     dWithin = DEFAULT_DWITHIN,
     count = this.count,
     filterProperties,
@@ -96,7 +97,15 @@ class WfsClient {
   IGetFeatureOptions): Promise<unknown> {
     const pointCoordinatesStr = pointCoordinates.join(',');
 
-    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, pointCoordinatesStr, dWithin, filterProperties);
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(
+      geomRefFieldName,
+      count,
+      DEFAULT_OUTPUT_FORMAT,
+      typeName,
+      pointCoordinatesStr,
+      dWithin,
+      filterProperties
+    );
 
     this.logger.info(`[WfsClient][getFeatureByPoint] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
 
@@ -128,12 +137,13 @@ class WfsClient {
   public async getFeatureByFeature({
     feature,
     typeName,
+    geomRefFieldName,
     dWithin = DEFAULT_DWITHIN,
     count = this.count,
     filterProperties,
   }: // filter,
   IGetFeatureOptionsByFeature): Promise<unknown> {
-    const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, feature, dWithin, filterProperties);
+    const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(geomRefFieldName, count, DEFAULT_OUTPUT_FORMAT, typeName, feature, dWithin, filterProperties);
 
     this.logger.info(`[WfsClient][getFeatureByFeature] Attempting query features of types ${typeName} for feature ${JSON.stringify(feature)}`);
 

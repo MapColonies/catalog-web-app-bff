@@ -18,14 +18,6 @@ export class LinkInput {
 }
 
 @InputType()
-export class DiscreteOrderInput {
-    @Field({ nullable: false })
-    public id: string;
-    @Field({ nullable: false })
-    public zOrder: number;
-}
-
-@InputType()
 export class LayerRasterRecordInput {
     @Field({ nullable: false })
     public id: string;
@@ -42,15 +34,15 @@ export class LayerRasterRecordInput {
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
-    public creationDate?: Date;
+    public creationDateUTC?: Date;
     @Field({ nullable: true })
     public ingestionDate?: Date;
     @Field({ nullable: true })
-    public updateDate?: Date;
+    public updateDateUTC?: Date;
     @Field({ nullable: false })
-    public sourceDateStart: Date;
+    public imagingTimeBeginUTC: Date;
     @Field({ nullable: false })
-    public sourceDateEnd: Date;
+    public imagingTimeEndUTC: Date;
     @Field({ nullable: true })
     public minHorizontalAccuracyCE90?: number;
     @Field((type) => [String], { nullable: false })
@@ -77,10 +69,6 @@ export class LayerRasterRecordInput {
     public scale?: number;
     @Field((type) => footprintObject, { nullable: false })
     public footprint: Record<string, unknown>;
-    @Field((type) => layerPolygonPartsObject, { nullable: true })
-    public layerPolygonParts?: Record<string, unknown>;
-    @Field((type) => [String], { nullable: true })
-    public includedInBests?: string[];
     @Field({ nullable: true })
     public productBoundingBox?: string;
     @Field((type) => Transparency, { nullable: false })
@@ -94,7 +82,6 @@ export class LayerRasterRecordInput {
 }
 
 export const footprintObject = new GraphQLScalarType({ name: "footprintObject"});
-export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolygonPartsObject"});
 
 @InputType()
 export class Layer3DRecordInput {
@@ -179,7 +166,6 @@ export class Layer3DRecordInput {
     public links?: LinkInput[];
 }
 
-
 @InputType()
 export class LayerDemRecordInput {
     @Field((type) => RecordType, { nullable: true })
@@ -254,6 +240,8 @@ export class LayerDemRecordInput {
     public links?: LinkInput[];
 }
 
+export const layerPolygonPartsObject = new GraphQLScalarType({ name: "layerPolygonPartsObject"});
+
 @InputType()
 export class VectorBestRecordInput {
     @Field((type) => RecordType, { nullable: true })
@@ -265,7 +253,7 @@ export class VectorBestRecordInput {
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: false })
-    public srs: string;
+    public srsId: string;
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
@@ -370,40 +358,34 @@ export class QuantizedMeshBestRecordInput {
 @InputType()
 export class PolygonPartRecordInput {
     @Field({ nullable: false })
-    public id: string;
+    public partId: string;
     @Field({ nullable: false })
-    public name: string;
+    public sourceId: string;
+    @Field({ nullable: false })
+    public sourceName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: false })
-    public imagingTimeBeginUTC: Date;
-    @Field({ nullable: false })
-    public imagingTimeEndUTC: Date;
-    @Field({ nullable: false })
-    public horizontalAccuracyCE90: number;
-    @Field((type) => [String], { nullable: false })
-    public sensors: string[];
-    @Field((type) => [String], { nullable: true })
-    public countries?: string[];
-    @Field((type) => [String], { nullable: true })
-    public cities?: string[];
     @Field({ nullable: false })
     public resolutionDegree: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
     @Field({ nullable: false })
     public sourceResolutionMeter: number;
-    @Field((type) => geometryObject, { nullable: false })
-    public geometry: Record<string, unknown>;
     @Field({ nullable: false })
-    public recordId: string;
-    @Field({ nullable: true })
-    public updatedInVersion?: string;
+    public horizontalAccuracyCE90: number;
+    @Field((type) => [String], { nullable: true })
+    public countries?: string[];
+    @Field((type) => [String], { nullable: true })
+    public cities?: string[];
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
     @Field({ nullable: false })
-    public ingestionDateUTC: Date;
+    public imagingTimeBeginUTC: Date;
+    @Field({ nullable: false })
+    public imagingTimeEndUTC: Date;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
 }
-
-export const geometryObject = new GraphQLScalarType({ name: "geometryObject"});
 
 @ObjectType()
 export class Link {
@@ -415,14 +397,6 @@ export class Link {
     public protocol: string;
     @Field({ nullable: false })
     public url: string;
-}
-
-@ObjectType()
-export class DiscreteOrder {
-    @Field({ nullable: false })
-    public id: string;
-    @Field({ nullable: false })
-    public zOrder: number;
 }
 
 @ObjectType()
@@ -442,15 +416,15 @@ export class LayerRasterRecord {
     @Field({ nullable: false })
     public producerName: string;
     @Field({ nullable: true })
-    public creationDate?: Date;
+    public creationDateUTC?: Date;
     @Field({ nullable: true })
     public ingestionDate?: Date;
     @Field({ nullable: true })
-    public updateDate?: Date;
+    public updateDateUTC?: Date;
     @Field({ nullable: false })
-    public sourceDateStart: Date;
+    public imagingTimeBeginUTC: Date;
     @Field({ nullable: false })
-    public sourceDateEnd: Date;
+    public imagingTimeEndUTC: Date;
     @Field({ nullable: true })
     public minHorizontalAccuracyCE90?: number;
     @Field((type) => [String], { nullable: false })
@@ -477,10 +451,6 @@ export class LayerRasterRecord {
     public scale?: number;
     @Field((type) => footprintObject, { nullable: false })
     public footprint: Record<string, unknown>;
-    @Field((type) => layerPolygonPartsObject, { nullable: true })
-    public layerPolygonParts?: Record<string, unknown>;
-    @Field((type) => [String], { nullable: true })
-    public includedInBests?: string[];
     @Field({ nullable: true })
     public productBoundingBox?: string;
     @Field((type) => Transparency, { nullable: false })
@@ -766,45 +736,37 @@ export class QuantizedMeshBestRecord {
 @ObjectType()
 export class PolygonPartRecord {
     @Field({ nullable: false })
-    public id: string;
+    public partId: string;
     @Field({ nullable: false })
-    public name: string;
+    public sourceId: string;
+    @Field({ nullable: false })
+    public sourceName: string;
     @Field({ nullable: true })
     public description?: string;
-    @Field({ nullable: false })
-    public imagingTimeBeginUTC: Date;
-    @Field({ nullable: false })
-    public imagingTimeEndUTC: Date;
-    @Field({ nullable: false })
-    public horizontalAccuracyCE90: number;
-    @Field((type) => [String], { nullable: false })
-    public sensors: string[];
-    @Field((type) => [String], { nullable: true })
-    public countries?: string[];
-    @Field((type) => [String], { nullable: true })
-    public cities?: string[];
     @Field({ nullable: false })
     public resolutionDegree: number;
     @Field({ nullable: false })
     public resolutionMeter: number;
     @Field({ nullable: false })
     public sourceResolutionMeter: number;
-    @Field((type) => geometryObject, { nullable: false })
-    public geometry: Record<string, unknown>;
     @Field({ nullable: false })
-    public recordId: string;
-    @Field({ nullable: true })
-    public updatedInVersion?: string;
+    public horizontalAccuracyCE90: number;
+    @Field((type) => [String], { nullable: true })
+    public countries?: string[];
+    @Field((type) => [String], { nullable: true })
+    public cities?: string[];
+    @Field((type) => [String], { nullable: false })
+    public sensors: string[];
     @Field({ nullable: false })
-    public ingestionDateUTC: Date;
+    public imagingTimeBeginUTC: Date;
+    @Field({ nullable: false })
+    public imagingTimeEndUTC: Date;
+    @Field((type) => footprintObject, { nullable: false })
+    public footprint: Record<string, unknown>;
 }
 
 @Resolver(Link)
 export class LinkResolver {
-}
-
-@Resolver(DiscreteOrder)
-export class DiscreteOrderResolver {
 }
 
 @Resolver(LayerRasterRecord)

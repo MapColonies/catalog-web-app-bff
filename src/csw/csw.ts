@@ -2,7 +2,6 @@ import { Logger } from '@map-colonies/js-logger';
 import { FilterField } from '@map-colonies/csw-client';
 import {
   PycswLayerCatalogRecord,
-  PycswBestCatalogRecord,
   Pycsw3DCatalogRecord,
   PycswDemCatalogRecord,
   PycswVectorBestCatalogRecord,
@@ -35,11 +34,7 @@ export class CSW {
     this.cswClients.RASTER = {
       instance: new CswClientWrapper(
         'mc:MCRasterRecord',
-        [
-          ...PycswLayerCatalogRecord.getPyCSWMappings(),
-          ...(PycswBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[]),
-          ...(PycswVectorBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[]),
-        ],
+        [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(PycswVectorBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
         'http://schema.mapcolonies.com/raster',
         this.config.get('csw.raster')
       ),

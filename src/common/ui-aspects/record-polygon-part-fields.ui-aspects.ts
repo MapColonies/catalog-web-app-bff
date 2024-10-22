@@ -1,7 +1,7 @@
 import { DateGranularity, FractionType, OperationType } from '../../graphql/entityDescriptor';
 
 const polygonPartRecordAspects = {
-  id: {
+  sourceId: {
     label: 'field-names.raster.id',
     isBriefField: {
       order: 2,
@@ -13,7 +13,7 @@ const polygonPartRecordAspects = {
       order: 4,
     },
   },
-  name: {
+  sourceName: {
     label: 'field-names.raster.productName',
     isInfoTooltip: true,
   },
@@ -101,7 +101,7 @@ const polygonPartRecordAspects = {
     },
     isInfoTooltip: true,
   },
-  geometry: {
+  footprint: {
     label: 'field-names.raster.footprint',
     fullWidth: true,
     isCopyable: true,

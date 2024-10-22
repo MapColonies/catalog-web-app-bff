@@ -82,6 +82,7 @@ const getPropertiesFilter = (filterProperties?: PropertyFilter[]) => {
  * @returns XML for querying a WFS service by coordinates.
  */
 export const getQueryPointXMLBody = (
+  geomRefFieldName: string,
   count: number,
   outputFormat: string,
   typeName: string,
@@ -89,7 +90,7 @@ export const getQueryPointXMLBody = (
   dWithin: number,
   filterProperties?: PropertyFilter[]
 ): string => {
-  const pointIntersectionFilter = getPointIntersectionFilter(pointCoordinates, dWithin, 'osm:geom');
+  const pointIntersectionFilter = getPointIntersectionFilter(pointCoordinates, dWithin, geomRefFieldName);
 
   const propertiesFilter = getPropertiesFilter(filterProperties);
 
@@ -129,6 +130,7 @@ export const getQueryPointXMLBody = (
  * @returns XML for querying a WFS service by coordinates.
  */
 export const getQueryFeatureXMLBody = (
+  geomRefFieldName: string,
   count: number,
   outputFormat: string,
   typeName: string,
@@ -140,10 +142,10 @@ export const getQueryFeatureXMLBody = (
 
   switch (feature.geometry.type) {
     case 'Point':
-      polygonIntersectionFilter = getPointIntersectionFilter(feature.geometry.coordinates.join(','), dWithin, 'geometry');
+      polygonIntersectionFilter = getPointIntersectionFilter(feature.geometry.coordinates.join(','), dWithin, geomRefFieldName);
       break;
     case 'Polygon':
-      polygonIntersectionFilter = getPolygonIntersectionFilter(feature, 'geometry');
+      polygonIntersectionFilter = getPolygonIntersectionFilter(feature, geomRefFieldName);
       break;
   }
 
