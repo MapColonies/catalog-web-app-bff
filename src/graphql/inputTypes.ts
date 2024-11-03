@@ -371,6 +371,9 @@ export class SourceValidationParams {
 
   @Field((type) => [String], { nullable: false })
   public fileNames!: string[];
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
 }
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
