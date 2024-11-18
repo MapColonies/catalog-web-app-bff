@@ -116,6 +116,7 @@ export const MOCK_FILE: LayerRasterRecord = {
       ],
     ],
   },
+  maxHorizontalAccuracyCE90: 10,
   minHorizontalAccuracyCE90: 1,
   creationDateUTC: new Date('2022-02-09T11:26:44.415Z'),
   updateDateUTC: new Date('2022-02-10T11:26:44.415Z'),
@@ -129,4 +130,6 @@ export const MOCK_FILE: LayerRasterRecord = {
   // }
   rms: 2,
   keywords: 'ORTO_RASTER_MOCK',
+  minResolutionDeg: 0.02,
+  minResolutionMeter: 30,
 };

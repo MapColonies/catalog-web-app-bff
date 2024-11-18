@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IIngestionManagerService, ISourceInfoService } from './ingestion-manager.interface';
-import { IngestionData, SourceValidationParams } from '../../graphql/inputTypes';
+import { IngestionData, IngestionRasterData, SourceValidationParams } from '../../graphql/inputTypes';
 import { absoluteToRelativePath } from '../../helpers/string';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -55,11 +55,11 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionData> {
     await requestExecutor(
       {
-        url: `${this.service.url}/layers`,
+        url: `${this.service.url}/ingestion`,
         exposureType: this.service.exposureType,
       },
       'POST',
-      this.buildPayload(data),
+      this.buildPayload(data as IngestionRasterData),
       ctx
     );
     return data;
@@ -68,23 +68,26 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<IngestionData> {
     await requestExecutor(
       {
-        url: `${this.service.url}/layers`,
+        url: `${this.service.url}/ingestion/${data.metadata.id}`,
         exposureType: this.service.exposureType,
       },
-      'POST',
-      this.buildPayload(data),
+      'PUT',
+      this.buildPayload(data as IngestionRasterData),
       ctx
     );
     return data;
   }
 
-  private buildPayload(data: IngestionData): AxiosRequestConfig {
+  private buildPayload(data: IngestionRasterData): AxiosRequestConfig {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...metadata } = data.metadata;
     const payloadData = {
-      originDirectory: absoluteToRelativePath(data.directory),
-      fileNames: data.fileNames,
-      metadata,
+      inputFiles: {
+        originDirectory: absoluteToRelativePath(data.directory),
+        fileNames: data.fileNames,
+      },
+      metadata: metadata,
+      partsData: data.partsData,
     };
 
     this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);

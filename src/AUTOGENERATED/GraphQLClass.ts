@@ -33,20 +33,22 @@ export class LayerRasterRecordInput {
     public srs: string;
     @Field({ nullable: false })
     public producerName: string;
-    @Field({ nullable: true })
-    public creationDateUTC?: Date;
-    @Field({ nullable: true })
-    public ingestionDate?: Date;
-    @Field({ nullable: true })
-    public updateDateUTC?: Date;
-    @Field({ nullable: false })
-    public imagingTimeBeginUTC: Date;
-    @Field({ nullable: false })
-    public imagingTimeEndUTC: Date;
-    @Field({ nullable: true })
-    public minHorizontalAccuracyCE90?: number;
-    @Field((type) => [String], { nullable: false })
-    public sensors: string[];
+    // @Field({ nullable: true })
+    // public creationDateUTC?: Date; --> DONE
+    // @Field({ nullable: true })
+    // public ingestionDate?: Date; --> NONE
+    // @Field({ nullable: true })
+    // public updateDateUTC?: Date; --> DONE
+    // @Field({ nullable: false })
+    // public imagingTimeBeginUTC: Date; --> DONE
+    // @Field({ nullable: false })
+    // public imagingTimeEndUTC: Date; --> DONE
+    // @Field({ nullable: false })
+    // public maxHorizontalAccuracyCE90: number; --> DONE
+    // @Field({ nullable: true })
+    // public minHorizontalAccuracyCE90?: number; --> DONE
+    // @Field((type) => [String], { nullable: false })
+    // public sensors: string[]; --> DONE
     @Field((type) => [String], { nullable: false })
     public region: string[];
     @Field({ nullable: true })
@@ -59,16 +61,20 @@ export class LayerRasterRecordInput {
     public productSubType?: string;
     @Field({ nullable: false })
     public srsName: string;
-    @Field({ nullable: true })
-    public maxResolutionDeg?: number;
-    @Field({ nullable: true })
-    public maxResolutionMeter?: number;
+    // @Field({ nullable: true })
+    // public maxResolutionDeg?: number; --> DONE
+    // @Field({ nullable: false })
+    // public minResolutionDeg: number; --> DONE
+    // @Field({ nullable: true })
+    // public maxResolutionMeter?: number; --> DONE
+    // @Field({ nullable: false })
+    // public minResolutionMeter: number; --> DONE
     @Field({ nullable: true })
     public rms?: number;
     @Field({ nullable: true })
     public scale?: number;
-    @Field((type) => footprintObject, { nullable: false })
-    public footprint: Record<string, unknown>;
+    // @Field((type) => footprintObject, { nullable: false })
+    // public footprint: Record<string, unknown>; --> DONE
     @Field({ nullable: true })
     public productBoundingBox?: string;
     @Field((type) => Transparency, { nullable: false })
@@ -357,8 +363,10 @@ export class QuantizedMeshBestRecordInput {
 
 @InputType()
 export class PolygonPartRecordInput {
-    @Field({ nullable: false })
-    public partId: string;
+    // @Field({ nullable: false })
+    // public partId: string;
+    // @Field({ nullable: false })
+    // public productId: string;
     @Field({ nullable: false })
     public sourceId: string;
     @Field({ nullable: false })
@@ -425,6 +433,8 @@ export class LayerRasterRecord {
     public imagingTimeBeginUTC: Date;
     @Field({ nullable: false })
     public imagingTimeEndUTC: Date;
+    @Field({ nullable: false })
+    public maxHorizontalAccuracyCE90: number;
     @Field({ nullable: true })
     public minHorizontalAccuracyCE90?: number;
     @Field((type) => [String], { nullable: false })
@@ -443,8 +453,12 @@ export class LayerRasterRecord {
     public srsName: string;
     @Field({ nullable: true })
     public maxResolutionDeg?: number;
+    @Field({ nullable: false })
+    public minResolutionDeg: number;
     @Field({ nullable: true })
     public maxResolutionMeter?: number;
+    @Field({ nullable: true })
+    public minResolutionMeter: number;
     @Field({ nullable: true })
     public rms?: number;
     @Field({ nullable: true })
@@ -737,6 +751,8 @@ export class QuantizedMeshBestRecord {
 export class PolygonPartRecord {
     @Field({ nullable: false })
     public partId: string;
+    @Field({ nullable: false })
+    public productId: string;
     @Field({ nullable: false })
     public sourceId: string;
     @Field({ nullable: false })
