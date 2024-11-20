@@ -1,0 +1,54 @@
+{{- $MAIN_OBJECT_BLOCK := "configValues" -}}
+{{- $COMPONENT_NAME := "backend" -}}
+{{- $DATA := include "catalogWebAppBffData" . -}}
+
+{{- define "catalogWebAppBffData" -}}
+{{- $CONFIG_MANAGER_OBJECT := include "common.tplvalues.getGlobalObject" (dict "objName" "configManagment" "context" .) | fromYaml }}
+{{- if not $CONFIG_MANAGER_OBJECT.enabled -}}
+  REQUEST_PAYLOAD_LIMIT: {{ .Values.env.requestPayloadLimit | quote }}
+  RESPONSE_COMPRESSION_ENABLED: {{ .Values.env.responseCompressionEnabled | quote }}
+{{- end }}
+  production.json: {{ .Files.Get "config/production.json" | quote }}
+  {{- $secrets := (include "common.tplvalues.getGlobalObject" (dict "objName" "secrets" "context" .)) | fromYamlArray -}}
+  {{- range $secrets }}
+    {{- if eq .name "root-ca" }}
+  NODE_EXTRA_CA_CERTS: {{ printf "%s/%s" .path (first .data).key | quote }}
+    {{- end }}
+  {{- end }}
+  SERVED_ENTITY_TYPES: {{ quote .Values.global.shared.servedEntityTypes }}
+  ACCESS_TOKEN_ATTRIBUTE_NAME: {{ quote .Values.global.shared.accessToken.attributeName }}
+  ACCESS_TOKEN_INJECTION_TYPE: {{ quote .Values.global.shared.accessToken.injectionType }}
+  ACCESS_TOKEN_TOKEN_VALUE: {{ quote .Values.global.shared.accessToken.tokenValue }}
+  OPENAPI_FILE_PATH: {{ quote .Values.env.openapiFilePath }}
+  ADMIN_PASSWORD: {{ quote .Values.env.adminPassword }}
+  CSW_RASTER_URL: {{ quote .Values.env.cswRasterUrl }}
+  CSW_3D_URL: {{ quote .Values.env.csw3DUrl }}
+  CSW_DEM_URL: {{ quote .Values.env.cswDEMUrl }}
+  CATALOG_SERVICE_RASTER_URL: {{ quote .Values.env.catalogServiceRasterUrl }}
+  CATALOG_SERVICE_3D_URL: {{ quote .Values.env.catalogService3DUrl }}
+  CATALOG_SERVICE_DEM_URL: {{ quote .Values.env.catalogServiceDEMUrl }}
+  INGESTION_SERVICE_RASTER_URL: {{ quote .Values.env.ingestionServiceRasterUrl }}
+  INGESTION_SERVICE_3D_URL: {{ quote .Values.env.ingestionService3DUrl }}
+  INGESTION_SERVICE_DEM_URL: {{ quote .Values.env.ingestionServiceDEMUrl }}
+  STORAGE_EXPLORER_RASTER_URL: {{ quote .Values.env.storageExplorerRasterUrl }}
+  STORAGE_EXPLORER_3D_URL: {{ quote .Values.env.storageExplorer3DUrl }}
+  STORAGE_EXPLORER_DEM_URL: {{ quote .Values.env.storageExplorerDEMUrl }}
+  VALIDATION_SERVICE_RASTER_URL: {{ quote .Values.env.validationServiceRasterUrl }}
+  EXPORT_LAYER_RASTER_URL: {{  quote .Values.env.exportLayerRasterUrl }}
+  EXPORT_LAYER_3D_URL: {{  quote .Values.env.exportLayer3DUrl }}
+  EXPORT_LAYER_DEM_URL: {{  quote .Values.env.exportLayerDEMUrl }}
+  JOB_SERVICE_COMMON_URL: {{ quote .Values.env.jobManagerServiceCommonUrl }}
+  LOOKUP_TABLES_SERVICE_URL: {{ quote .Values.env.lookupTablesServiceUrl }}
+  SERVICE_DISCOVERY_URL: {{ quote .Values.env.serviceDiscoveryUrl }}
+  PYCSW-RECORD_RASTER-URL: {{ quote .Values.env.externalServices.pycswRecordRasterUrl }}
+  PYCSW-RECORD_3D-URL: {{ quote .Values.env.externalServices.pycswRecord3DUrl }}
+  PYCSW-RECORD_DEM-URL: {{ quote .Values.env.externalServices.pycswRecordDEMUrl }}
+  MAP_SERVER-RECORD_RASTER-URL: {{ quote .Values.env.externalServices.mapServerRecordRasterUrl }}
+  MAP_SERVICE_RASTER_URL: {{ quote .Values.env.mapServiceRasterUrl }}
+  WFS_URL: {{ quote .Values.env.wfsUrl }}
+  WFS_SERVICES_CONFIG: {{ quote .Values.env.wfsServicesConfig }}
+  POLYGON_PARTS_URL: {{ quote .Values.env.polygonPartsUrl }}
+  DEM_HEIGHTS_URL: {{ quote .Values.env.demHeightsUrl }}
+{{- end }}
+
+{{ include "mc-chart.configmap" (dict "MAIN_OBJECT_BLOCK" $MAIN_OBJECT_BLOCK "COMPONENT_NAME" $COMPONENT_NAME "DATA" $DATA "WITH_TELEMETRY_TRACING" false "WITH_TELEMETRY_METRICS" false "context" .)}}

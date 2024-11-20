@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.22.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.21.1...v1.22.0) (2024-09-19)
+
+
+### Features
+
+* use helm common ([#166](https://github.com/MapColonies/catalog-web-app-bff/issues/166)) ([0a5ad1b](https://github.com/MapColonies/catalog-web-app-bff/commit/0a5ad1bd92e7d3d65ec917db4cf3fb7318f21f1b))
+
+### [1.21.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.21.0...v1.21.1) (2024-08-14)
+
+## [1.21.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.20.2...v1.21.0) (2024-08-08)
+
+
+### Features
+
+* new query - get product ([#164](https://github.com/MapColonies/catalog-web-app-bff/issues/164)) ([c4b771d](https://github.com/MapColonies/catalog-web-app-bff/commit/c4b771d95478e4663857f0b6cfca0f4c02d41aeb))
+
+
+### Bug Fixes
+
+* nullable ([9ead36c](https://github.com/MapColonies/catalog-web-app-bff/commit/9ead36cda3c82af15b9c3a69002e45dc10d28125))
+
+### [1.20.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.20.1...v1.20.2) (2024-08-01)
+
+
+### Bug Fixes
+
+* axios default retry mechanism ([#162](https://github.com/MapColonies/catalog-web-app-bff/issues/162)) ([bc7103a](https://github.com/MapColonies/catalog-web-app-bff/commit/bc7103a87e234b352fe5682231f8425990d0b0fa))
+
 ### [1.20.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.20.0...v1.20.1) (2024-03-13)
 
 

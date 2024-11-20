@@ -1,0 +1,179 @@
+nameOverride:
+fullnameOverride:
+# --------------- common --------------
+commonLabels:
+commonAnnotations:
+# ----------- initContainers ----------
+volumePermissions:
+  enabled: false
+# ------ volumes and volumeMounts -----
+persistence:
+  enabled: false
+# ----------- command/debug -----------
+diagnosticMode:
+  enabled: false
+# --------- MAIN_OBJECT_BLOCK ---------
+configValues:
+  deploymentAnnotations:
+    # collectord.io/index: '' # PROVIDE SPLUNK INDEX
+  autoscaling:
+    enabled: false
+  replicaCount: 1
+  podAnnotations:
+    enabled: true
+    resetOnConfigChange: true
+    annotations:
+  prometheus:
+    scrape: false
+  metrics:
+    enabled: false
+  tracing:
+    enabled: false
+  # topologySpreadConstraints:
+  #   - maxSkew: 1
+  #     topologyKey: zone
+  #     whenUnsatisfiable: DoNotSchedule
+  #     labelSelector:
+  #       matchLabels:
+  #         app.kubernetes.io/name: '{{ include "common.names.name" . }}'
+  podSecurityContext:
+    enabled: false
+  # ----------- containers ------------
+  image:
+    repository: catalog-web-app-bff
+    tag: v1.2.2
+    pullPolicy: Always
+    debug: false
+  containerSecurityContext:
+    enabled: true
+    runAsNonRoot: true
+    runAsUser: 1000700000
+  extraEnvVars:
+    - name: SERVER_PORT
+      value: '{{ .Values.configValues.containerPorts.http }}'
+  extraEnvVarsCM: '{{ template "common.names.fullname" . }}'
+  extraEnvVarsSecret:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 125m
+      memory: 500Mi
+  containerPorts:
+    http: 8080
+    https: 443
+  customLivenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+    httpGet:
+      path: /docs/api
+      port: http
+  customReadinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+    httpGet:
+      path: /docs/api
+      port: http
+  startupProbe:
+    enabled: false
+  extraVolumeMounts:
+    - name: production-json
+      mountPath: /usr/src/app/config/production.json
+      subPath: production.json
+    - name: root-ca
+      mountPath: '{{ (include "common.secrets.getSecretByName" (dict "name" "root-ca" "key" "path" "context" .)) }}'
+  extraVolumes:
+    - name: production-json
+      configMap:
+        name: '{{ template "common.names.fullname" . }}'
+        items:
+          - key: production.json
+            path: production.json
+    - name: root-ca
+      secret:
+        secretName: root-ca
+env:
+  logLevel: info
+  logPrettyPrintEnabled: false
+  responseCompressionEnabled: true
+  requestPayloadLimit: 1mb
+  openapiFilePath: ./openapi3.yaml
+  adminPassword: 123456
+  cswRasterUrl: ''
+  csw3DUrl: ''
+  cswDEMUrl: ''
+  catalogServiceRasterUrl: ''
+  catalogService3DUrl: ''
+  catalogServiceDEMUrl: NOT_IMPLEMENTED
+  ingestionServiceRasterUrl: ''
+  ingestionService3DUrl: ''
+  ingestionServiceDEMUrl: NOT_IMPLEMENTED
+  storageExplorerRasterUrl: ''
+  storageExplorer3DUrl: ''
+  storageExplorerDEMUrl: NOT_IMPLEMENTED
+  validationServiceRasterUrl: ''
+  exportLayerRasterUrl: ''
+  exportLayer3DUrl: NOT_IMPLEMENTED
+  exportLayerDEMUrl: NOT_IMPLEMENTED
+  jobManagerServiceCommonUrl: ''
+  lookupTablesServiceUrl: ''
+  serviceDiscoveryUrl: ''
+  externalServices:
+    pycswRecordRasterUrl: ''
+    pycswRecord3DUrl: ''
+    pycswRecordDEMUrl: ''
+    mapServerRecordRasterUrl: ''
+  mapServiceRasterUrl: ''
+  wfsUrl: ''
+  wfsServicesConfig: '{"buildings": {"color": "#0465b0", "outlineColor": "#0465b0", "dWithin": 3, "isVisualized": true, "translationId": "actions.wfs.buildings-title", "icon": "location_city"}, "addrs": {"translationId": "תשאול כתובת", "isVisualized": "false"}}'
+  polygonPartsUrl: ''
+  demHeightsUrl: ''
+route:
+  enabled: true
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: /
+  timeout:
+    enabled: false
+    duration: 60s
+  routesMapping:
+    - hostname:
+      path: /bff
+      suffix:
+  targetPort: http
+  tls:
+    enabled: true
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    useCerts: true
+  extraRules:
+ingress:
+  enabled: false
+  apiVersion:
+  type: nginx-kubernetes
+  annotations:
+  pathType: Prefix
+  hostname: libot.wwest.local
+  extraHosts: []
+  extraPaths: []
+  path: /bff
+  extraRules: []
+  extraTls: []
+  selfSigned: false
+  tls: true
+  cors:
+    enabled: true
+    origin: '*'
+service:
+  annotations:
+  ports:
+    http: 80
+  protocol: TCP
+serviceAccount:
+  create: false
