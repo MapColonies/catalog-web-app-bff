@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { convertToJson, getTraversalObj } from 'fast-xml-parser';
 import { xmlParserOptions } from '../common/constants';
 import { Capability, ResourceURL } from '../graphql/capability';
@@ -55,8 +56,10 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
 };
 
 export const compactXML = (xmlStr: string): string => {
+  /* eslint-disable */
   return xmlStr
     .replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, '')
     .replace(/[ \r\n\t]{1,}xmlns/g, ' xmlns')
     .replace(/>\s{0,}</g, '><');
+  /* eslint-enable */
 };

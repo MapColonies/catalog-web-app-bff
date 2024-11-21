@@ -23,6 +23,7 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
   const uiAspectFieldConfig = pycswCatalogRecordUIAspects[recordType][fieldUIApect];
 
   // Field pattern validation from field config should be used for filters as well.
+  // eslint-disable-next-line
   if (typeof (uiAspectFieldConfig as FieldConfig)?.isFilterable !== 'undefined') {
     const filterableConfig = (uiAspectFieldConfig as FieldConfig).isFilterable as FilterableFieldConfig;
 
