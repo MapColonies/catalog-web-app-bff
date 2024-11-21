@@ -7,8 +7,16 @@ import {
   DEFAULT_VERSION,
   getJsonixContext,
   getQueryPointXMLBody,
+  getQueryFeatureXMLBody,
 } from './constants';
-import { IDescribeFeatureResponse, IGetFeatureOptions, IRequestExecutor, IRequestOptions, IWFSClientOptions } from './interfaces';
+import {
+  IDescribeFeatureResponse,
+  IGetFeatureOptions,
+  IGetFeatureOptionsByFeature,
+  IRequestExecutor,
+  IRequestOptions,
+  IWFSClientOptions,
+} from './interfaces';
 
 const jsonixContext = getJsonixContext();
 
@@ -78,9 +86,10 @@ class WfsClient {
    * @param options of type IGetFeatureOptions
    * @returns Promise of the WFS service getFeatures response
    */
-  public async getFeature({
+  public async getFeatureByPoint({
     pointCoordinates,
     typeName,
+    geomRefFieldName,
     dWithin = DEFAULT_DWITHIN,
     count = this.count,
     filterProperties,
@@ -88,9 +97,17 @@ class WfsClient {
   IGetFeatureOptions): Promise<unknown> {
     const pointCoordinatesStr = pointCoordinates.join(',');
 
-    const XML_BODY_TEMPLATE = getQueryPointXMLBody(count, DEFAULT_OUTPUT_FORMAT, typeName, pointCoordinatesStr, dWithin, filterProperties);
+    const XML_BODY_TEMPLATE = getQueryPointXMLBody(
+      geomRefFieldName,
+      count,
+      DEFAULT_OUTPUT_FORMAT,
+      typeName,
+      pointCoordinatesStr,
+      dWithin,
+      filterProperties
+    );
 
-    this.logger.info(`[WfsClient][getFeature] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
+    this.logger.info(`[WfsClient][getFeatureByPoint] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -104,12 +121,51 @@ class WfsClient {
 
     if (!(getFeatureData as boolean)) {
       const error = 'There was an error targeting the WFS features';
-      this.logger.error(`[WfsClient][getFeature] ${error}`);
+      this.logger.error(`[WfsClient][getFeatureByPoint] ${error}`);
 
       throw new Error(error);
     }
 
     return getFeatureData;
+  }
+
+  /**
+   * Performs a getFeatures request, filtering by geometry intersection
+   * @param options of type IGetFeatureOptions
+   * @returns Promise of the WFS service getFeatures response
+   */
+  public async getFeatureByFeature({
+    feature,
+    typeName,
+    geomRefFieldName,
+    dWithin = DEFAULT_DWITHIN,
+    count = this.count,
+    filterProperties,
+  }: // filter,
+  IGetFeatureOptionsByFeature): Promise<unknown> {
+    const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(geomRefFieldName, count, DEFAULT_OUTPUT_FORMAT, typeName, feature, dWithin, filterProperties);
+
+    this.logger.info(`[WfsClient][getFeatureByFeature] Attempting query features of types ${typeName} for feature ${JSON.stringify(feature)}`);
+
+    const getFeatureData = await this.request({
+      request: 'GetFeature',
+      method: 'POST',
+      config: {
+        // eslint-disable-next-line
+        headers: { 'Content-Type': 'application/xml' },
+        data: XML_BODY_TEMPLATE,
+      },
+    });
+
+    if (!(getFeatureData as boolean)) {
+      const error = 'There was an error targeting the WFS features';
+      this.logger.error(`[WfsClient][getFeatureByFeature] ${error}`);
+
+      throw new Error(error);
+    }
+
+    return getFeatureData;
+    // return {};
   }
 
   private async request({ request, method = 'GET', config = {} }: IRequestOptions): Promise<unknown> {

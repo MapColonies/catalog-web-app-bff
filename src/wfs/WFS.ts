@@ -31,7 +31,7 @@ export class WFS {
 
   public async getFeature(options: IGetFeatureOptions, ctx?: IContext): Promise<IGetFeatureResponse> {
     const wfsClient = this.getWfsClient(ctx);
-    const res = await wfsClient.getFeature(options);
+    const res = await wfsClient.getFeatureByPoint(options);
 
     return res as IGetFeatureResponse;
   }

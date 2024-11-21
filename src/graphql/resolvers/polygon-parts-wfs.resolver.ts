@@ -5,6 +5,8 @@ import { WfsPolygonPartsGetFeatureParams } from '../inputTypes';
 import { GetFeature } from '../wfs';
 import { PolygonPartsWFS } from '../../wfs/polygon-parts-wfs';
 
+const GEOMETRY_COLUMN = 'footprint';
+
 @Resolver()
 export class PolygonPartsWfsResolver {
   private readonly polygonPartsWFS: PolygonPartsWFS;
@@ -20,7 +22,13 @@ export class PolygonPartsWfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeature> {
-    const getFeatureResponse = await this.polygonPartsWFS.getFeature(data, ctx);
+    const getFeatureResponse = await this.polygonPartsWFS.getFeature(
+      {
+        ...data,
+        geomRefFieldName: GEOMETRY_COLUMN,
+      },
+      ctx
+    );
 
     return getFeatureResponse;
   }

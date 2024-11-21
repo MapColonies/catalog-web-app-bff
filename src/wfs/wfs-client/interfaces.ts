@@ -130,6 +130,11 @@ export interface IGetFeatureOptions {
   typeName: string;
 
   /**
+   * @param typeNames Geometry refference field name.
+   */
+  geomRefFieldName: string;
+
+  /**
    * @param count The maximum number of features to fetch.
    * @defaultValue `100`
    */
@@ -141,6 +146,38 @@ export interface IGetFeatureOptions {
   dWithin?: number;
 
   // filter?: string;
+
+  /**
+   * @param filterProperties Literal property names and values to match. (Using `PropertyIsEqualTo` filter)
+   */
+  filterProperties?: PropertyFilter[];
+}
+
+export interface IGetFeatureOptionsByFeature {
+  /**
+   * @param feature Feature to search features that intersect with.
+   */
+  feature: Feature;
+
+  /**
+   * @param typeNames Feature types to query.
+   */
+  typeName: string;
+
+  /**
+   * @param typeNames Geometry refference field name.
+   */
+  geomRefFieldName: string;
+  /**
+   * @param count The maximum number of features to fetch.
+   * @defaultValue `100`
+   */
+  count?: number;
+
+  /**
+   * @param dWithin Search distance from point in meters.
+   */
+  dWithin?: number;
 
   /**
    * @param filterProperties Literal property names and values to match. (Using `PropertyIsEqualTo` filter)

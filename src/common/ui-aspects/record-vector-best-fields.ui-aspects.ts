@@ -32,7 +32,7 @@ export const pycswVectorBestCatalogRecordAspects = {
       order: 12,
     },
   },
-  srsId: {
+  srs: {
     label: 'field-names.vector-raster.srsId',
   },
   producerName: {

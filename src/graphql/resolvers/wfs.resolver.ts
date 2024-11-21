@@ -7,6 +7,8 @@ import { WFS } from '../../wfs/WFS';
 import { WfsGetFeatureParams } from '../inputTypes';
 import { GetFeature, GetFeatureTypes, IFeatureTypesConfigs } from '../wfs';
 
+const GEOMETRY_COLUMN = 'osm:geom';
+
 @Resolver()
 export class WfsResolver {
   private readonly wfs: WFS;
@@ -25,7 +27,16 @@ export class WfsResolver {
     ctx: IContext
   ): Promise<GetFeature> {
     const { pointCoordinates, typeName, count, dWithin } = data;
-    const getFeatureResponse = await this.wfs.getFeature({ pointCoordinates, typeName, count, dWithin }, ctx);
+    const getFeatureResponse = await this.wfs.getFeature(
+      {
+        pointCoordinates,
+        typeName,
+        count,
+        dWithin,
+        geomRefFieldName: GEOMETRY_COLUMN,
+      },
+      ctx
+    );
 
     return getFeatureResponse;
   }

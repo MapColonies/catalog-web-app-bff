@@ -1,32 +1,32 @@
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
-import { Logger } from 'pino';
+import { Logger } from '@map-colonies/js-logger';
 import { IContext } from '../../common/interfaces';
 import { SourceValidationParams } from '../inputTypes';
-import { SourceValidator } from '../source-validator';
-import { SourceValidation } from '../sourceValidation';
+import { SourceValidatorManager } from '../../common/source-validator-manager/source-validator-manager';
 import { Services } from '../../common/constants';
+import { SourceValidation } from '../sourceValidation';
 
 @Resolver()
 export class SourceValidationResolver {
-  private readonly sourceValidator: SourceValidator;
+  private readonly sourceValidator: SourceValidatorManager;
   private readonly logger: Logger;
 
   public constructor() {
-    this.sourceValidator = container.resolve(SourceValidator);
+    this.sourceValidator = container.resolve(SourceValidatorManager);
     this.logger = container.resolve(Services.LOGGER);
   }
 
-  @Query((type) => SourceValidation)
+  @Query((type) => [SourceValidation])
   public async validateSource(
     @Arg('data')
     data: SourceValidationParams,
     @Ctx()
     ctx: IContext
-  ): Promise<SourceValidation> {
+  ): Promise<SourceValidation[]> {
     try {
-      const sourcesValidationResponse = await this.sourceValidator.validateSources(data, ctx);
-      return sourcesValidationResponse;
+      const sourceValidationResponse = await this.sourceValidator.sourceInfo(data, ctx);
+      return [sourceValidationResponse];
     } catch (error) {
       this.logger.error(error as string);
       throw error;
