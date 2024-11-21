@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.22.0...v1.23.0) (2024-11-21)
+
+
+### Features
+
+* values schema integration ([#167](https://github.com/MapColonies/catalog-web-app-bff/issues/167)) ([7c43963](https://github.com/MapColonies/catalog-web-app-bff/commit/7c439630a0e41b6b0bbf89fcab304142769442dc))
+
+
+### Bug Fixes
+
+* helm artifacts ([79ce782](https://github.com/MapColonies/catalog-web-app-bff/commit/79ce782b7997f8c5c19bfc9e6b10372da9544199))
+* support specific and official routes ([d80b14a](https://github.com/MapColonies/catalog-web-app-bff/commit/d80b14a166088c449931bff64960993309571c24))
+* v2 ([5bdbd88](https://github.com/MapColonies/catalog-web-app-bff/commit/5bdbd886498857ee975e8ff77f73e30f88d86527))
+
 ## [1.22.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.21.1...v1.22.0) (2024-09-19)
 
 
