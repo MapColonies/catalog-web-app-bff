@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.23.0...v1.23.1) (2024-11-21)
+
+
+### Bug Fixes
+
+* bump docker node and helm openapi bumpers ([#169](https://github.com/MapColonies/catalog-web-app-bff/issues/169)) ([2e51d64](https://github.com/MapColonies/catalog-web-app-bff/commit/2e51d64abfda74e1192eaf6bd69d1d03bbbbd36b))
+* chart.yaml bump version ([fd4e8ae](https://github.com/MapColonies/catalog-web-app-bff/commit/fd4e8ae8f01e4d584559925a4cc7d1891486d352))
+
 ## [1.23.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.22.0...v1.23.0) (2024-11-21)
 
 

@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Catalog Web App BFF
   description: BFF API for catalog (web) UI
-  version: 1.0.0
+  version: 1.23.1
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -16,13 +16,12 @@ paths:
         - GraphQL
       summary: retrieve the GraphQL playground
       responses:
-        200:
+        '200':
           description: OK
           content:
             text/html:
               schema:
                 $ref: '#/components/schemas/acceptall'
-
     post:
       operationId: graphqlFetchData
       tags:
@@ -36,7 +35,7 @@ paths:
             schema:
               $ref: '#/components/schemas/graphqlBody'
       responses:
-        200:
+        '200':
           description: graphqlFetchData
           content:
             application/json:
