@@ -1,11 +1,11 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { IIngestionManagerService, ISourceInfoService } from './ingestion-manager.interface';
 import { IngestionData, IngestionRasterData, SourceValidationParams } from '../../graphql/inputTypes';
 import { absoluteToRelativePath } from '../../helpers/string';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { SourceValidation } from '../../graphql/sourceValidation';
+import { IIngestionManagerService, ISourceInfoService } from './ingestion-manager.interface';
 
 export class IngestionManagerRaster implements IIngestionManagerService, ISourceInfoService {
   private readonly service: IService;
@@ -14,9 +14,10 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     this.service = this.config.get('ingestionServices.raster');
   }
   public async sourceInfo(data: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
+    const ONLY_ONE_SOURCE = 0;
     // 1. ingestion-trigger/ingestion/validateSources
     // 2. ingestion-trigger/ingestion/sourcesInfo
-    const validateSourcesResp: AxiosResponse<SourceValidation> = await requestExecutor(
+    const validateSourcesResp: AxiosResponse<SourceValidation> = (await requestExecutor(
       {
         url: `${this.service.url}/ingestion/validateSources`,
         exposureType: this.service.exposureType,
@@ -24,9 +25,9 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       'POST',
       this.buildValidationPayload(data),
       ctx
-    );
+    )) as AxiosResponse<SourceValidation>;
 
-    let sourcesInfo: AxiosResponse<SourceValidation> | null = null;
+    let sourcesInfo: AxiosResponse<Record<string, unknown>[]> | null = null;
     if (validateSourcesResp.data.isValid) {
       sourcesInfo = await requestExecutor(
         {
@@ -43,10 +44,10 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       ...validateSourcesResp.data,
       ...(sourcesInfo
         ? {
-            srs: (sourcesInfo.data as any)[0].crs,
-            fileFormat: (sourcesInfo.data as any)[0].fileFormat,
-            resolutionDegree: (sourcesInfo.data as any)[0].pixelSize,
-            extentPolygon: (sourcesInfo.data as any)[0].extentPolygon,
+            srs: sourcesInfo.data[ONLY_ONE_SOURCE].crs as string,
+            fileFormat: sourcesInfo.data[ONLY_ONE_SOURCE].fileFormat as string,
+            resolutionDegree: sourcesInfo.data[ONLY_ONE_SOURCE].pixelSize as number,
+            extentPolygon: sourcesInfo.data[ONLY_ONE_SOURCE].extentPolygon as Record<string, unknown>,
           }
         : {}),
     };
