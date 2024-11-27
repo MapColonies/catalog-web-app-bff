@@ -67,17 +67,6 @@ const pycswLayerCatalogRecordAspects = {
       operation: 'eq',
     },
   },
-  maxResolutionDeg: {
-    label: 'field-names.raster.maxResolutionDeg',
-    lookupTable: 'zoomlevelresolutions',
-    lookupTableBinding: {
-      valueFromPropertyName: 'resolutionDeg',
-    },
-    dependentField: {
-      name: 'maxResolutionMeter',
-      valueFromPropertyName: 'resolutionMeter',
-    },
-  },
   insertDate: {
     label: 'field-names.raster.insertDate',
     dateGranularity: DateGranularity.DATE_AND_TIME,
@@ -86,10 +75,6 @@ const pycswLayerCatalogRecordAspects = {
       operation: 'dateRange', // Date filters will be ranges. requires special treatment.
       order: 0,
     },
-  },
-  updateDate: {
-    label: 'field-names.raster.update-date',
-    dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   description: {
     label: 'field-names.raster.description',
@@ -140,11 +125,6 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.link.url',
     fullWidth: true,
   },
-  creationDate: {
-    label: 'field-names.raster.creation-date',
-    fullWidth: true,
-    dateGranularity: DateGranularity.DATE_AND_TIME,
-  },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
@@ -152,29 +132,6 @@ const pycswLayerCatalogRecordAspects = {
       order: 3,
     },
     isInfoTooltip: true,
-  },
-  sourceDateStart: {
-    label: 'field-names.raster.sourceDateStart',
-    dateGranularity: DateGranularity.DATE_AND_TIME,
-    isBriefField: {
-      order: 5,
-    },
-  },
-  sourceDateEnd: {
-    label: 'field-names.raster.sourceDateEnd',
-    dateGranularity: DateGranularity.DATE_AND_TIME,
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
-      order: 1,
-    },
-    isBriefField: {
-      order: 6,
-    },
-    isInfoTooltip: true,
-  },
-  minHorizontalAccuracyCE90: {
-    label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
   srs: {
     isDisabled: true,
@@ -190,10 +147,27 @@ const pycswLayerCatalogRecordAspects = {
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
-    fullWidth: true,
     isBriefField: {
       order: 10,
     },
+  },
+
+  minResolutionDeg: {
+    label: 'field-names.raster.minResolutionDeg',
+  },
+  maxResolutionDeg: {
+    label: 'field-names.raster.maxResolutionDeg',
+    lookupTable: 'zoomlevelresolutions',
+    lookupTableBinding: {
+      valueFromPropertyName: 'resolutionDeg',
+    },
+    dependentField: {
+      name: 'maxResolutionMeter',
+      valueFromPropertyName: 'resolutionMeter',
+    },
+  },
+  minResolutionMeter: {
+    label: 'field-names.raster.minResolutionMeter',
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
@@ -203,6 +177,43 @@ const pycswLayerCatalogRecordAspects = {
     isDisabled: true,
     isInfoTooltip: true,
   },
+  creationDateUTC: {
+    catageory: undefined,
+    label: 'field-names.raster.creation-date',
+    fullWidth: true,
+    dateGranularity: DateGranularity.DATE_AND_TIME,
+  },
+  minHorizontalAccuracyCE90: {
+    label: 'field-names.raster.minHorizontalAccuracyCE90',
+  },
+  maxHorizontalAccuracyCE90: {
+    label: 'field-names.raster.maxHorizontalAccuracyCE90',
+  },
+  updateDateUTC: {
+    label: 'field-names.raster.update-date',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
+  },
+  imagingTimeBeginUTC: {
+    label: 'field-names.raster.sourceDateStart',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
+    isBriefField: {
+      order: 5,
+    },
+  },
+  imagingTimeEndUTC: {
+    label: 'field-names.raster.sourceDateEnd',
+    dateGranularity: DateGranularity.DATE_AND_TIME,
+    isFilterable: {
+      participateInFilterPanel: true,
+      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      order: 1,
+    },
+    isBriefField: {
+      order: 6,
+    },
+    isInfoTooltip: true,
+  },
+
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
     isFilterable: {
