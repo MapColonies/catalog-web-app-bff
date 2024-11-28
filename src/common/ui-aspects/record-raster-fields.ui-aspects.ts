@@ -154,14 +154,14 @@ const pycswLayerCatalogRecordAspects = {
     isInfoTooltip: true,
   },
   imagingTimeBeginUTC: {
-    label: 'field-names.raster.sourceDateStart',
+    label: 'field-names.raster.imagingTimeBeginUTC',
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
     },
   },
   imagingTimeEndUTC: {
-    label: 'field-names.raster.sourceDateEnd',
+    label: 'field-names.raster.imagingTimeEndUTC',
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
