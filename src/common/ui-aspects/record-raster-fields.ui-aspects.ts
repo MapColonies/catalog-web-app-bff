@@ -87,7 +87,7 @@ const pycswLayerCatalogRecordAspects = {
       order: 0,
     },
   },
-  updateDate: {
+  updateDateUTC: {
     label: 'field-names.raster.update-date',
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
@@ -140,7 +140,7 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.link.url',
     fullWidth: true,
   },
-  creationDate: {
+  creationDateUTC: {
     label: 'field-names.raster.creation-date',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
@@ -153,14 +153,14 @@ const pycswLayerCatalogRecordAspects = {
     },
     isInfoTooltip: true,
   },
-  sourceDateStart: {
+  imagingTimeBeginUTC: {
     label: 'field-names.raster.sourceDateStart',
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
     },
   },
-  sourceDateEnd: {
+  imagingTimeEndUTC: {
     label: 'field-names.raster.sourceDateEnd',
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
@@ -176,6 +176,9 @@ const pycswLayerCatalogRecordAspects = {
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
   },
+  maxHorizontalAccuracyCE90: {
+    label: 'field-names.raster.maxHorizontalAccuracyCE90',
+  },
   srs: {
     isDisabled: true,
     label: 'field-names.raster.srs',
@@ -190,10 +193,15 @@ const pycswLayerCatalogRecordAspects = {
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
-    fullWidth: true,
     isBriefField: {
       order: 10,
     },
+  },
+  minResolutionDeg: {
+    label: 'field-names.raster.minResolutionDeg',
+  },
+  minResolutionMeter: {
+    label: 'field-names.raster.minResolutionMeter',
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
@@ -203,6 +211,7 @@ const pycswLayerCatalogRecordAspects = {
     isDisabled: true,
     isInfoTooltip: true,
   },
+
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
     isFilterable: {
