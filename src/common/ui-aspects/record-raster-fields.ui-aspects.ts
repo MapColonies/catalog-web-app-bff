@@ -141,7 +141,6 @@ const pycswLayerCatalogRecordAspects = {
     fullWidth: true,
   },
   creationDateUTC: {
-    catageory: undefined,
     label: 'field-names.raster.creation-date',
     fullWidth: true,
     dateGranularity: DateGranularity.DATE_AND_TIME,
@@ -174,6 +173,12 @@ const pycswLayerCatalogRecordAspects = {
     },
     isInfoTooltip: true,
   },
+  minHorizontalAccuracyCE90: {
+    label: 'field-names.raster.minHorizontalAccuracyCE90',
+  },
+  maxHorizontalAccuracyCE90: {
+    label: 'field-names.raster.maxHorizontalAccuracyCE90',
+  },
   srs: {
     isDisabled: true,
     label: 'field-names.raster.srs',
@@ -205,12 +210,6 @@ const pycswLayerCatalogRecordAspects = {
     },
     isDisabled: true,
     isInfoTooltip: true,
-  },
-  minHorizontalAccuracyCE90: {
-    label: 'field-names.raster.minHorizontalAccuracyCE90',
-  },
-  maxHorizontalAccuracyCE90: {
-    label: 'field-names.raster.maxHorizontalAccuracyCE90',
   },
 
   productBoundingBox: {
