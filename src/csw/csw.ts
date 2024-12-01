@@ -66,8 +66,8 @@ export class CSW {
     this.logger.info(
       `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
     );
-    /*  TODO: range of elements (start-end) is per CSW-client-instance. */
-    const getRecords = [];
+
+    const getRecords: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
     const newOpts: SearchOptions = {
       filter:
@@ -81,7 +81,7 @@ export class CSW {
       sort: opts?.sort ? [...opts.sort] : undefined,
     };
 
-    /*  TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
+    /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts = {
       filter: [
         ...(newOpts.filter as FilterField[]).map((filterField) => {
@@ -105,29 +105,65 @@ export class CSW {
         case RecordType.RECORD_ALL:
           getRecords.push(
             ...this.getEntitiesCswInstances().map(async (client) => {
-              return client.entities.includes(RecordType.RECORD_RASTER)
-                ? client.instance.getRecords(ctx, start, end, rasterOpts)
-                : client.instance.getRecords(ctx, start, end, newOpts);
+              try {
+                return client.entities.includes(RecordType.RECORD_RASTER)
+                  ? await client.instance.getRecords(ctx, start, end, rasterOpts)
+                  : await client.instance.getRecords(ctx, start, end, newOpts);
+              } catch (error) {
+                const input = client.entities[0];
+                throw new Error(`Failed to fetch records for at least one of the catalogs (${input.substring(input.lastIndexOf('_') + 1)})`);
+              }
             })
           );
           break;
         case RecordType.RECORD_RASTER:
-          getRecords.push(this.cswClients.RASTER.instance.getRecords(ctx, start, end, rasterOpts));
+          getRecords.push(
+            (async () => {
+              try {
+                return await this.cswClients.RASTER.instance.getRecords(ctx, start, end, rasterOpts);
+              } catch (error) {
+                throw new Error(`Failed to fetch RASTER records`);
+              }
+            })()
+          );
           break;
         case RecordType.RECORD_3D:
-          getRecords.push(this.cswClients['3D'].instance.getRecords(ctx, start, end, newOpts));
+          getRecords.push(
+            (async () => {
+              try {
+                return await this.cswClients['3D'].instance.getRecords(ctx, start, end, newOpts);
+              } catch (error) {
+                throw new Error(`Failed to fetch 3D records`);
+              }
+            })()
+          );
           break;
         case RecordType.RECORD_DEM:
-          getRecords.push(this.cswClients.DEM.instance.getRecords(ctx, start, end, newOpts));
+          getRecords.push(
+            (async () => {
+              try {
+                return await this.cswClients.DEM.instance.getRecords(ctx, start, end, newOpts);
+              } catch (error) {
+                throw new Error(`Failed to fetch DEM records`);
+              }
+            })()
+          );
           break;
       }
     } else {
-      getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecords(ctx, start, end, newOpts)));
+      getRecords.push(
+        ...this.getEntitiesCswInstances().map(async (client) => {
+          try {
+            return await client.instance.getRecords(ctx, start, end, newOpts);
+          } catch (error) {
+            const input = client.entities[0];
+            throw new Error(`Failed to fetch records for at least one of the catalogs (${input.substring(input.lastIndexOf('_') + 1)})`);
+          }
+        })
+      );
     }
 
     const data = await Promise.all(getRecords);
-    // console.log('\n\n******** Response: ********\n', JSON.stringify(data.flat()), '\n\n\n\n');
-
     return data.flat();
   }
 
