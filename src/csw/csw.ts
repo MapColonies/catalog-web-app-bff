@@ -63,9 +63,7 @@ export class CSW {
   }
 
   public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
-    this.logger.info(
-      `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
-    );
+    this.logger.info(`[CSW][getRecords] getting records. start: ${start?.toString()}, end: ${end?.toString()}, options: ${JSON.stringify(opts)}.`);
 
     const getRecords: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
@@ -92,12 +90,13 @@ export class CSW {
         }),
         {
           field: 'mc:productType',
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           neq: ProductType.ORTHOPHOTO_HISTORY,
         },
       ],
       sort: newOpts.sort,
     };
+
+    let catalog: CatalogRecordItems;
 
     if (typeFilterIdx > NOT_FOUND) {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
@@ -110,44 +109,20 @@ export class CSW {
                   ? await client.instance.getRecords(ctx, start, end, rasterOpts)
                   : await client.instance.getRecords(ctx, start, end, newOpts);
               } catch (error) {
-                const input = client.entities[0];
-                throw new Error(`Failed to fetch records for at least one of the catalogs (${input.substring(input.lastIndexOf('_') + 1)})`);
+                catalog = this.recordTypeToEntity(client.entities[0]);
+                throw new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
               }
             })
           );
           break;
         case RecordType.RECORD_RASTER:
-          getRecords.push(
-            (async () => {
-              try {
-                return await this.cswClients.RASTER.instance.getRecords(ctx, start, end, rasterOpts);
-              } catch (error) {
-                throw new Error(`Failed to fetch RASTER records`);
-              }
-            })()
-          );
+          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
+          getRecords.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
           break;
         case RecordType.RECORD_3D:
-          getRecords.push(
-            (async () => {
-              try {
-                return await this.cswClients['3D'].instance.getRecords(ctx, start, end, newOpts);
-              } catch (error) {
-                throw new Error(`Failed to fetch 3D records`);
-              }
-            })()
-          );
-          break;
         case RecordType.RECORD_DEM:
-          getRecords.push(
-            (async () => {
-              try {
-                return await this.cswClients.DEM.instance.getRecords(ctx, start, end, newOpts);
-              } catch (error) {
-                throw new Error(`Failed to fetch DEM records`);
-              }
-            })()
-          );
+          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
+          getRecords.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
           break;
       }
     } else {
@@ -156,8 +131,8 @@ export class CSW {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
           } catch (error) {
-            const input = client.entities[0];
-            throw new Error(`Failed to fetch records for at least one of the catalogs (${input.substring(input.lastIndexOf('_') + 1)})`);
+            catalog = this.recordTypeToEntity(client.entities[0]);
+            throw new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
           }
         })
       );
@@ -184,8 +159,8 @@ export class CSW {
     return data;
   }
 
-  private recordTypeToEntity(recType: RecordType): CatalogRecordItems {
-    switch (recType) {
+  private recordTypeToEntity(recordType: RecordType): CatalogRecordItems {
+    switch (recordType) {
       case RecordType.RECORD_DEM:
         return CatalogRecordItems.DEM;
       case RecordType.RECORD_3D:
@@ -200,5 +175,20 @@ export class CSW {
     return Object.values(this.cswClients).filter((cswClient) => {
       return intersection(cswClient.entities, servedEntities).length > 0;
     });
+  }
+
+  private async fetchRecords(
+    instance: CswClientWrapper,
+    catalog: CatalogRecordItems,
+    ctx: IContext,
+    start?: number,
+    end?: number,
+    options?: SearchOptions
+  ): Promise<CatalogRecordType[]> {
+    try {
+      return await instance.getRecords(ctx, start, end, options);
+    } catch (error) {
+      throw new Error(`Failed to fetch ${catalog} records`);
+    }
   }
 }
