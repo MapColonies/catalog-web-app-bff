@@ -109,8 +109,7 @@ export class CSW {
                   ? await client.instance.getRecords(ctx, start, end, rasterOpts)
                   : await client.instance.getRecords(ctx, start, end, newOpts);
               } catch (error) {
-                catalog = this.recordTypeToEntity(client.entities[0]);
-                throw new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
+                throw this.cswError(client);
               }
             })
           );
@@ -131,8 +130,7 @@ export class CSW {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
           } catch (error) {
-            catalog = this.recordTypeToEntity(client.entities[0]);
-            throw new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
+            throw this.cswError(client);
           }
         })
       );
@@ -190,5 +188,10 @@ export class CSW {
     } catch (error) {
       throw new Error(`Failed to fetch ${catalog} records`);
     }
+  }
+
+  private cswError(client: CswClient): Error {
+    const catalog = this.recordTypeToEntity(client.entities[0]);
+    return new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
   }
 }
