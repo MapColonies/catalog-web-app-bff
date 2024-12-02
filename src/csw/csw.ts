@@ -67,7 +67,7 @@ export class CSW {
       `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
     );
 
-    const getRecords: Promise<CatalogRecordType[]>[] = [];
+    const getCatalogs: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
     const newOpts: SearchOptions = {
       filter:
@@ -104,7 +104,7 @@ export class CSW {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
       switch (RecordType[fetchRecordType]) {
         case RecordType.RECORD_ALL:
-          getRecords.push(
+          getCatalogs.push(
             ...this.getEntitiesCswInstances().map(async (client) => {
               try {
                 return client.entities.includes(RecordType.RECORD_RASTER)
@@ -118,16 +118,16 @@ export class CSW {
           break;
         case RecordType.RECORD_RASTER:
           catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
-          getRecords.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
+          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
           break;
         case RecordType.RECORD_3D:
         case RecordType.RECORD_DEM:
           catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
-          getRecords.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
+          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
           break;
       }
     } else {
-      getRecords.push(
+      getCatalogs.push(
         ...this.getEntitiesCswInstances().map(async (client) => {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
@@ -138,7 +138,7 @@ export class CSW {
       );
     }
 
-    const data = await Promise.all(getRecords);
+    const data = await Promise.all(getCatalogs);
     return data.flat();
   }
 
