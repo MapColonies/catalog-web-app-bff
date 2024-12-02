@@ -66,8 +66,8 @@ export class CSW {
     this.logger.info(
       `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
     );
-    /*  TODO: range of elements (start-end) is per CSW-client-instance. */
-    const getRecords = [];
+
+    const getCatalogs: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
     const newOpts: SearchOptions = {
       filter:
@@ -81,7 +81,7 @@ export class CSW {
       sort: opts?.sort ? [...opts.sort] : undefined,
     };
 
-    /*  TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
+    /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts = {
       filter: [
         ...(newOpts.filter as FilterField[]).map((filterField) => {
@@ -92,42 +92,53 @@ export class CSW {
         }),
         {
           field: 'mc:productType',
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           neq: ProductType.ORTHOPHOTO_HISTORY,
         },
       ],
       sort: newOpts.sort,
     };
 
+    let catalog: CatalogRecordItems;
+
     if (typeFilterIdx > NOT_FOUND) {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
       switch (RecordType[fetchRecordType]) {
         case RecordType.RECORD_ALL:
-          getRecords.push(
+          getCatalogs.push(
             ...this.getEntitiesCswInstances().map(async (client) => {
-              return client.entities.includes(RecordType.RECORD_RASTER)
-                ? client.instance.getRecords(ctx, start, end, rasterOpts)
-                : client.instance.getRecords(ctx, start, end, newOpts);
+              try {
+                return client.entities.includes(RecordType.RECORD_RASTER)
+                  ? await client.instance.getRecords(ctx, start, end, rasterOpts)
+                  : await client.instance.getRecords(ctx, start, end, newOpts);
+              } catch (error) {
+                throw this.cswError(client);
+              }
             })
           );
           break;
         case RecordType.RECORD_RASTER:
-          getRecords.push(this.cswClients.RASTER.instance.getRecords(ctx, start, end, rasterOpts));
+          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
+          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
           break;
         case RecordType.RECORD_3D:
-          getRecords.push(this.cswClients['3D'].instance.getRecords(ctx, start, end, newOpts));
-          break;
         case RecordType.RECORD_DEM:
-          getRecords.push(this.cswClients.DEM.instance.getRecords(ctx, start, end, newOpts));
+          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
+          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
           break;
       }
     } else {
-      getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecords(ctx, start, end, newOpts)));
+      getCatalogs.push(
+        ...this.getEntitiesCswInstances().map(async (client) => {
+          try {
+            return await client.instance.getRecords(ctx, start, end, newOpts);
+          } catch (error) {
+            throw this.cswError(client);
+          }
+        })
+      );
     }
 
-    const data = await Promise.all(getRecords);
-    // console.log('\n\n******** Response: ********\n', JSON.stringify(data.flat()), '\n\n\n\n');
-
+    const data = await Promise.all(getCatalogs);
     return data.flat();
   }
 
@@ -148,8 +159,8 @@ export class CSW {
     return data;
   }
 
-  private recordTypeToEntity(recType: RecordType): CatalogRecordItems {
-    switch (recType) {
+  private recordTypeToEntity(recordType: RecordType): CatalogRecordItems {
+    switch (recordType) {
       case RecordType.RECORD_DEM:
         return CatalogRecordItems.DEM;
       case RecordType.RECORD_3D:
@@ -164,5 +175,25 @@ export class CSW {
     return Object.values(this.cswClients).filter((cswClient) => {
       return intersection(cswClient.entities, servedEntities).length > 0;
     });
+  }
+
+  private async fetchRecords(
+    instance: CswClientWrapper,
+    catalog: CatalogRecordItems,
+    ctx: IContext,
+    start?: number,
+    end?: number,
+    options?: SearchOptions
+  ): Promise<CatalogRecordType[]> {
+    try {
+      return await instance.getRecords(ctx, start, end, options);
+    } catch (error) {
+      throw new Error(`Failed to fetch ${catalog} records`);
+    }
+  }
+
+  private cswError(client: CswClient): Error {
+    const catalog = this.recordTypeToEntity(client.entities[0]);
+    return new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
   }
 }
