@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.23.2...v1.23.3) (2024-12-03)
+
+
+### Bug Fixes
+
+* bug, change raster and pp ui-aspects from sourceDate to imagingTime ([#171](https://github.com/MapColonies/catalog-web-app-bff/issues/171)) ([dcf7882](https://github.com/MapColonies/catalog-web-app-bff/commit/dcf7882248fa49cfeb98d778d6b38b0f7128bd96))
+* csw get records error handling  (MAPCO-5411) ([#172](https://github.com/MapColonies/catalog-web-app-bff/issues/172)) ([4df3880](https://github.com/MapColonies/catalog-web-app-bff/commit/4df38805abf4eb5363bbcb060f1ee3b899f6f1aa))
+* error handling ([#174](https://github.com/MapColonies/catalog-web-app-bff/issues/174)) ([765307c](https://github.com/MapColonies/catalog-web-app-bff/commit/765307c3afc555ce394004b18203b6361853efeb))
+* lookup tables ([b8d212b](https://github.com/MapColonies/catalog-web-app-bff/commit/b8d212b0edfc745633fe82c54c75b3f6c8c5c055))
+* update fields in raster ui-aspects ([#170](https://github.com/MapColonies/catalog-web-app-bff/issues/170)) ([1e54d02](https://github.com/MapColonies/catalog-web-app-bff/commit/1e54d02597e5a6594a5eb8b88da5061fdebc2cbe))
+
 ### [1.23.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.23.1...v1.23.2) (2024-11-21)
 
 ### [1.23.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.23.0...v1.23.1) (2024-11-21)
