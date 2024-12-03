@@ -20,7 +20,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     await requestExecutor(
       {
-        url: `${this.service.url}/records/${record.id}`,
+        url: `${this.service.url}/records/metadata/${record.id}`,
         exposureType: this.service.exposureType,
       },
       'PUT',
