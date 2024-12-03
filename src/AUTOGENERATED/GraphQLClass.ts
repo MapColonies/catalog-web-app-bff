@@ -367,7 +367,7 @@ export class PolygonPartRecordInput {
     // public partId: string;
     // @Field({ nullable: false })
     // public productId: string;
-    @Field({ nullable: false })
+    @Field({ nullable: true })
     public sourceId: string;
     @Field({ nullable: false })
     public sourceName: string;
