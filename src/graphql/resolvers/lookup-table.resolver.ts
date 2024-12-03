@@ -38,7 +38,7 @@ export class LookupTablesResolver {
       return dictionary;
     } catch (error) {
       this.logger.error('[LookupTablesResolver][getLookupTablesData]', error);
-      throw new Error('Failed to fetch lookup tables data. Please try again later');
+      throw new Error('Failed to fetch lookup tables data');
     }
   }
 
@@ -52,13 +52,8 @@ export class LookupTablesResolver {
     const promises = this.buildPromises(lookupKeyToExcludeFields, ctx);
     this.addCustomLookupTables(promises, lookupKeys);
 
-    try {
-      const dictionary = await this.buildDictionary(lookupKeys, promises);
-      return { dictionary };
-    } catch (error) {
-      this.logger.error('[LookupTablesResolver][fetchLookupTablesData][buildDictionary]', error);
-      throw new Error('Error building dictionary from lookup tables. Please check the service availability.');
-    }
+    const dictionary = await this.buildDictionary(lookupKeys, promises);
+    return { dictionary };
   }
 
   private addCustomLookupTables(promises: Promise<AxiosResponse<LookupOption[]>>[], lookupKeys: string[]): void {
@@ -91,19 +86,12 @@ export class LookupTablesResolver {
 
   private async buildDictionary(lookupKeys: string[], promises: Promise<AxiosResponse<LookupOption[]>>[]): Promise<Record<string, LookupOption[]>> {
     const lookupDataMap: Record<string, LookupOption[]> = {};
-
-    try {
-      const allResponses = await Promise.all<AxiosResponse<LookupOption[]>>(promises);
-      for (let i = 0; i < lookupKeys.length; i++) {
-        const key = lookupKeys[i];
-        const response = allResponses[i];
-        lookupDataMap[key] = response.data;
-      }
-    } catch (error) {
-      this.logger.error('[LookupTablesResolver][buildDictionary] Error fetching data', error);
-      throw new Error('Failed to retrieve lookup data. Please ensure the lookup-tables service is available.');
+    const allResponses = await Promise.all<AxiosResponse<LookupOption[]>>(promises);
+    for (let i = 0; i < lookupKeys.length; i++) {
+      const key = lookupKeys[i];
+      const response = allResponses[i];
+      lookupDataMap[key] = response.data;
     }
-
     return lookupDataMap;
   }
 
