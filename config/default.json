@@ -130,7 +130,7 @@
   "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
     "url": "https://raster-pp-url",
-    "exposureType": "SERVICE"
+    "exposureType": "ROUTE"
   },
   "demHeightsService": {
     "url": "NOT_AVAILABLE",
