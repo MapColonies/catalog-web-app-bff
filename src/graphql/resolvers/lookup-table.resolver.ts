@@ -1,9 +1,10 @@
-import { Logger } from '@map-colonies/js-logger';
-import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colonies/mc-utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfig } from 'config';
+import { get } from 'lodash';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
+import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colonies/mc-utils';
 import { Services } from '../../common/constants';
 import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
@@ -96,13 +97,14 @@ export class LookupTablesResolver {
       for (let i = 0; i < lookupKeys.length; i++) {
         const key = lookupKeys[i];
         const response = allResponses[i];
+        // @ts-ignore
         if (!response || !response.data) {
           throw new Error(`No data returned for lookup key: ${key}`);
         }
         lookupDataMap[key] = response.data;
       }
     } catch (error) {
-      this.logger.error(`[LookupTablesResolver][buildDictionary] Error fetching data: ${error.message}`);
+      this.logger.error(`[LookupTablesResolver][buildDictionary] Error fetching data: ${get(error, 'message')}`);
       throw new Error('Failed to retrieve lookup data. Please ensure the lookup-tables service is available.');
     }
 
