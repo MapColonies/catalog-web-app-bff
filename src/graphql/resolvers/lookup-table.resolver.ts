@@ -97,14 +97,10 @@ export class LookupTablesResolver {
       for (let i = 0; i < lookupKeys.length; i++) {
         const key = lookupKeys[i];
         const response = allResponses[i];
-        // @ts-ignore
-        if (!response || !response.data) {
-          throw new Error(`No data returned for lookup key: ${key}`);
-        }
         lookupDataMap[key] = response.data;
       }
     } catch (error) {
-      this.logger.error(`[LookupTablesResolver][buildDictionary] Error fetching data: ${get(error, 'message')}`);
+      this.logger.error('[LookupTablesResolver][buildDictionary] Error fetching data', error);
       throw new Error('Failed to retrieve lookup data. Please ensure the lookup-tables service is available.');
     }
 
