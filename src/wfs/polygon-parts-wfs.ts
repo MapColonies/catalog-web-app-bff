@@ -17,23 +17,32 @@ export class PolygonPartsWFS {
 
   public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<IGetFeatureResponse> {
     const wfsClient = this.getWfsClient(ctx);
-    // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
-    // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
-    const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
 
-    return res as IGetFeatureResponse;
+    try {
+      // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
+      // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
+      const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
+      return res as IGetFeatureResponse;
+    } catch (error) {
+      this.logger.error('[PolygonPartsWFS][getFeature]', error);
+      throw new Error('Failed to retrieve Polygon Parts feature data');
+    }
   }
 
   private getWfsClient(ctx?: IContext): WfsClient {
     const wfsClientOptions: IWFSClientOptions = {
       baseUrl: 'NOT_IN_USE.COM',
       requestExecutor: async (url, method, params): Promise<unknown> => {
-        return requestExecutor(this.service, method, params, ctx as IContext);
+        try {
+          return await requestExecutor(this.service, method, params, ctx as IContext);
+        } catch (error) {
+          this.logger.error('[PolygonPartsWFS][requestExecutor]', error);
+          throw new Error('Failed to execute request to Polygon Parts WFS service. Please check the service availability');
+        }
       },
     };
 
     const wfsClient = new WfsClient(wfsClientOptions, this.logger);
-
     return wfsClient;
   }
 }

@@ -1,9 +1,10 @@
-import { Logger } from '@map-colonies/js-logger';
-import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colonies/mc-utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfig } from 'config';
+import { get } from 'lodash';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
+import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colonies/mc-utils';
 import { Services } from '../../common/constants';
 import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
@@ -36,12 +37,12 @@ export class LookupTablesResolver {
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
     } catch (error) {
-      this.logger.error('[LookupTablesResolver][getLookupTablesData]', error as string);
-      throw error;
+      this.logger.error('[LookupTablesResolver][getLookupTablesData]', error);
+      throw new Error('Failed to fetch lookup tables data. Please try again later');
     }
   }
 
-  public async fetchLookupTablesData(ctx: IContext, lookupFields?: LookupTableField[]): Promise<LookupTableData> {
+  private async fetchLookupTablesData(ctx: IContext, lookupFields?: LookupTableField[]): Promise<LookupTableData> {
     this.logger.info('[LookupTablesResolver][fetchLookupTablesData] fetching lookup tables data');
     const requestedLookupTables = lookupFields ?? ([] as LookupTableField[]);
     const lookupTableField: LookupTableField[] = [...this.extractLookupFieldsFromDescriptors(), ...requestedLookupTables];
@@ -50,9 +51,14 @@ export class LookupTablesResolver {
 
     const promises = this.buildPromises(lookupKeyToExcludeFields, ctx);
     this.addCustomLookupTables(promises, lookupKeys);
-    const dictionary = await this.buildDictionary(lookupKeys, promises);
 
-    return { dictionary };
+    try {
+      const dictionary = await this.buildDictionary(lookupKeys, promises);
+      return { dictionary };
+    } catch (error) {
+      this.logger.error('[LookupTablesResolver][fetchLookupTablesData][buildDictionary]', error);
+      throw new Error('Error building dictionary from lookup tables. Please check the service availability.');
+    }
   }
 
   private addCustomLookupTables(promises: Promise<AxiosResponse<LookupOption[]>>[], lookupKeys: string[]): void {
@@ -85,11 +91,17 @@ export class LookupTablesResolver {
 
   private async buildDictionary(lookupKeys: string[], promises: Promise<AxiosResponse<LookupOption[]>>[]): Promise<Record<string, LookupOption[]>> {
     const lookupDataMap: Record<string, LookupOption[]> = {};
-    const allResponses = await Promise.all<AxiosResponse<LookupOption[]>>(promises);
-    for (let i = 0; i < lookupKeys.length; i++) {
-      const key = lookupKeys[i];
-      const { data } = allResponses[i];
-      lookupDataMap[key] = data;
+
+    try {
+      const allResponses = await Promise.all<AxiosResponse<LookupOption[]>>(promises);
+      for (let i = 0; i < lookupKeys.length; i++) {
+        const key = lookupKeys[i];
+        const response = allResponses[i];
+        lookupDataMap[key] = response.data;
+      }
+    } catch (error) {
+      this.logger.error('[LookupTablesResolver][buildDictionary] Error fetching data', error);
+      throw new Error('Failed to retrieve lookup data. Please ensure the lookup-tables service is available.');
     }
 
     return lookupDataMap;
