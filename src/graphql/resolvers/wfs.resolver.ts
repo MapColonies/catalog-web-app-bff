@@ -27,18 +27,22 @@ export class WfsResolver {
     ctx: IContext
   ): Promise<GetFeature> {
     const { pointCoordinates, typeName, count, dWithin } = data;
-    const getFeatureResponse = await this.wfs.getFeature(
-      {
-        pointCoordinates,
-        typeName,
-        count,
-        dWithin,
-        geomRefFieldName: GEOMETRY_COLUMN,
-      },
-      ctx
-    );
-
-    return getFeatureResponse;
+    try {
+      const getFeatureResponse = await this.wfs.getFeature(
+        {
+          pointCoordinates,
+          typeName,
+          count,
+          dWithin,
+          geomRefFieldName: GEOMETRY_COLUMN,
+        },
+        ctx
+      );
+      return getFeatureResponse;
+    } catch (error) {
+      console.error('[WfsResolver][getFeature]', error);
+      throw new Error('Failed to retrieve WFS feature data');
+    }
   }
 
   @Query((type) => GetFeatureTypes)
@@ -46,10 +50,14 @@ export class WfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeatureTypes> {
-    const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
-    const featureTypesConfigs = this.getFeatureTypesConfigs(getFeatureTypesResponse);
-
-    return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
+    try {
+      const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
+      const featureTypesConfigs = this.getFeatureTypesConfigs(getFeatureTypesResponse);
+      return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
+    } catch (error) {
+      console.error('[WfsResolver][getFeatureTypes]', error);
+      throw new Error('Failed to retrieve WFS feature types');
+    }
   }
 
   private getFeatureTypesConfigs(features: string[]): IFeatureTypesConfigs {
@@ -75,6 +83,7 @@ export class WfsResolver {
 
       return featureDescFromConfig;
     } catch (e) {
+      console.error('[WfsResolver][getFeatureTypesConfigs][JSONParseError]', e);
       return defaultFeaturesConfigs;
     }
   }
