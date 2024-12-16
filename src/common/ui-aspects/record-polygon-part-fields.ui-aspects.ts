@@ -1,4 +1,4 @@
-import { DateGranularity, FractionType, OperationType } from '../../graphql/entityDescriptor';
+import { DateGranularity, FractionType, OperationType, ValidationValueType } from '../../graphql/entityDescriptor';
 
 const polygonPartRecordAspects = {
   sourceId: {
@@ -23,6 +23,14 @@ const polygonPartRecordAspects = {
     lookupTableBinding: {
       valueFromPropertyName: 'resolutionDeg',
     },
+    // UI field for filter resolution degree options
+    validation: [
+      {
+        errorMsgCode: 'DUMMY_NOT_IN_USE',
+        valueType: ValidationValueType.FIELD,
+        max: 'resolutionDegreeMaxValue',
+      },
+    ],
     dependentField: {
       name: 'resolutionMeter',
       valueFromPropertyName: 'resolutionMeter',
