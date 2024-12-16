@@ -12,6 +12,7 @@ export enum Status {
   Failed = 'Failed',
   Expired = 'Expired',
   Aborted = 'Aborted',
+  Suspended = 'Suspended',
 }
 
 // @ObjectType()
