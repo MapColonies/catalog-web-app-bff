@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import {
   FieldCategory,
   IPropFieldConfigInfo,
@@ -44,7 +45,7 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     ...uiAspectFieldConfig,
     ...restFieldConfigProps,
-    validation: [...(uiAspectFieldConfig?.validation || []), ...(restFieldConfigProps?.validation || [])],
+    validation: [...(get(uiAspectFieldConfig, 'validation', []) as []), ...(get(restFieldConfigProps, 'validation', []) as [])],
     // eslint-disable-next-line
     isRequired:
       restFieldConfigProps.validation !== undefined &&
