@@ -94,7 +94,9 @@ export function buildDescriptor(
         // fieldConfig.queryableName = recordType.getPyCSWMapping(field.prop)?.queryableField ?? '';
         fieldConfig.queryableName = recordCswMappings.find((mapping) => mapping.prop === field.prop)?.queryableField ?? '';
 
-        fieldConfig.shapeFileMapping = recordShapeFileMappings.find((mapping) => mapping.prop === field.prop)?.valuePath ?? '';
+        fieldConfig.shapeFileMapping = recordShapeFileMappings
+          .find((mapping) => mapping.prop === field.prop)
+          ?.shapeFileMappings.map(({ provider, valuePath }) => ({ provider, valuePath }));
 
         if (field.subFields !== undefined) {
           const complexType = field.complexType ? field.complexType.value.toLowerCase() : undefined;
