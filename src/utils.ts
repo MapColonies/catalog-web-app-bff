@@ -3,6 +3,7 @@ import axiosRetry from 'axios-retry';
 import config from 'config';
 import { IContext, IService } from './common/interfaces';
 
+//@ts-ignore
 axiosRetry(axios, {
   retries: 0,
 });
