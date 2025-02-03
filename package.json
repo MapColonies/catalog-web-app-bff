@@ -1,6 +1,6 @@
 {
   "name": "catalog-web-app-bff",
-  "version": "1.24.1",
+  "version": "1.25.0",
   "description": "This is template for map colonies typescript service",
   "main": "./src/index.ts",
   "scripts": {
