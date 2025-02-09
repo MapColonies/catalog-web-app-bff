@@ -20,6 +20,8 @@ export const requestHandler = async (url: string, method: string, params: AxiosR
   const requestConfig: AxiosRequestConfig = {
     url,
     method: method as Method,
+    maxBodyLength: Infinity,
+    maxContentLength: Infinity,
     ...params,
     headers: {
       ...{ ...(params.headers ?? {}), ...(ctx ? { origin: ctx.requestHeaders.origin } : {}) },

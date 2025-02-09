@@ -91,7 +91,8 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       partsData: data.partsData,
     };
 
-    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+    const { partsData, ...payloadWithoutParts } = payloadData;
+    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadWithoutParts)}.`);
 
     return {
       data: {
