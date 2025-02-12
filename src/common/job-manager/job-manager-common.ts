@@ -123,7 +123,7 @@ export default class JobManagerCommon implements IJobManagerService {
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${params.jobId}/tasks`,
+        url: `${this.service.url}/jobs/${params.jobId}/tasks?excludeParameters=true`,
         exposureType: this.service.exposureType,
       },
       'GET',
