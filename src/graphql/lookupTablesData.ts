@@ -6,6 +6,11 @@ export interface LookupTableField {
   lookupExcludeFields?: string[];
 }
 
+enum Locale {
+  ENGLISH = 'en',
+  HEBREW = 'he',
+}
+
 export const properties = new GraphQLScalarType({ name: 'properties' });
 export const lookupTableDataType = new GraphQLScalarType({ name: 'LookupTableDataType' });
 
@@ -15,7 +20,10 @@ export class LookupOption {
   public value: string;
 
   @Field((type) => String, { nullable: false })
-  public translationCode: string;
+  public translationCode?: string;
+
+  @Field((type) => String, { nullable: false })
+  public translation?: { locale: Locale; text: string }[];
 
   @Field((type) => properties, { nullable: true })
   public properties?: Record<string, unknown>;
