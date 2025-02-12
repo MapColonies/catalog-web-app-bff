@@ -4,6 +4,7 @@ import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-g
 import { GraphQLScalarType } from "graphql";
 import { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
 import {ResamplingMethod} from "@map-colonies/mc-utils";
+import { ProviderType } from "@map-colonies/mc-model-types/Schema/models/layerMetadata/decorators/property/shp.decorator";
 
 @InputType()
 export class LinkInput {
@@ -818,7 +819,7 @@ const DEMDataTypeRegister = registerEnumType(DEMDataType, {name: "DEMDataType"})
 const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});
 const ResamplingMethodRegister = registerEnumType(ResamplingMethod, {name: "ResamplingMethod"});
 
-export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue };
+export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue, ProviderType };
 export type EnumUnionKeys = keyof typeof enumUnionValues;
 const enumsNames = Object.keys(enumUnionValues);
 
