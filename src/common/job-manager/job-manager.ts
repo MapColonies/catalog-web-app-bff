@@ -1,9 +1,10 @@
+import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { ProductType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { JobSearchParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
@@ -26,10 +27,19 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(cswArray: Job[]): Job[] {
-    return cswArray.map((job) => {
-      return this.jobManager.transformRecordToEntity(job);
-    });
+  public async getJob(ctx: IContext, params?: JobSearchParams): Promise<Job> {
+    this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
+
+    const jobsData = await this.jobManager.getJob(ctx, params);
+    return jobsData;
+  }
+
+  public transformRecordsToEntity(cswArray: Job[] | Job): Job[] | Job {
+    return isArray(cswArray)
+      ? cswArray.map((job) => {
+          return this.jobManager.transformRecordToEntity(job);
+        })
+      : this.jobManager.transformRecordToEntity(cswArray);
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {

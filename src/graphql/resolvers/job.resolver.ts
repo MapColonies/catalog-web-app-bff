@@ -3,7 +3,7 @@ import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
 import { Services } from '../../common/constants';
-import { JobsSearchParams, JobUpdateData } from '../inputTypes';
+import { JobSearchParams, JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
@@ -29,7 +29,23 @@ export class JobResolver {
   ): Promise<Job[]> {
     try {
       const data = await Promise.resolve(this.jobManager.getJobs(ctx, params));
-      return this.jobManager.transformRecordsToEntity(data);
+      return this.jobManager.transformRecordsToEntity(data) as Job[];
+    } catch (err) {
+      this.logger.error(err as string);
+      throw err;
+    }
+  }
+
+  @Query((type) => [Job])
+  public async job(
+    @Ctx()
+    ctx: IContext,
+    @Arg('params', { nullable: true })
+    params: JobSearchParams
+  ): Promise<Job> {
+    try {
+      const data = await Promise.resolve(this.jobManager.getJob(ctx, params));
+      return this.jobManager.transformRecordsToEntity(data) as Job;
     } catch (err) {
       this.logger.error(err as string);
       throw err;
