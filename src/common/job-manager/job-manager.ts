@@ -4,7 +4,7 @@ import { ProductType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { JobSearchParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
@@ -27,10 +27,10 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public async getJob(ctx: IContext, params?: JobSearchParams): Promise<Job> {
-    this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
+  public async getJob(id: string, ctx: IContext): Promise<Job> {
+    this.logger.info(`[JobManager][getJobs] Fetching job ${id}`);
 
-    const jobsData = await this.jobManager.getJob(ctx, params);
+    const jobsData = await this.jobManager.getJob(id, ctx);
     return jobsData;
   }
 

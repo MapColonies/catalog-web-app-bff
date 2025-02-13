@@ -36,15 +36,15 @@ export class JobResolver {
     }
   }
 
-  @Query((type) => [Job])
+  @Query((type) => Job)
   public async job(
+    @Arg('id')
+    id: string,
     @Ctx()
-    ctx: IContext,
-    @Arg('params', { nullable: true })
-    params: JobSearchParams
+    ctx: IContext
   ): Promise<Job> {
     try {
-      const data = await Promise.resolve(this.jobManager.getJob(ctx, params));
+      const data = await Promise.resolve(this.jobManager.getJob(id, ctx));
       return this.jobManager.transformRecordsToEntity(data) as Job;
     } catch (err) {
       this.logger.error(err as string);

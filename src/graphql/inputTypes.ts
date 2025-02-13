@@ -156,12 +156,6 @@ export class JobsSearchParams {
 }
 
 @InputType()
-export class JobSearchParams {
-  @Field({ nullable: true })
-  public resourceId: string;
-}
-
-@InputType()
 export class TasksSearchParams {
   @Field({ nullable: false })
   public jobId: string;

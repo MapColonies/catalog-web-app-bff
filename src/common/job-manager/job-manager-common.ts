@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 
-import { JobSearchParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -49,20 +49,14 @@ export default class JobManagerCommon implements IJobManagerService {
     return result;
   }
 
-  public async getJob(ctx: IContext, params?: JobSearchParams): Promise<Job> {
+  public async getJob(id: string, ctx: IContext): Promise<Job> {
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${params?.resourceId}`,
+        url: `${this.service.url}/jobs/${id}`,
         exposureType: this.service.exposureType,
       },
       'GET',
-      {
-        params: {
-          ...params,
-          shouldReturnTasks: false,
-          shouldReturnAvailableActions: false,
-        },
-      },
+      {},
       ctx
     );
 
