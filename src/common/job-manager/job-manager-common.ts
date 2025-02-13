@@ -52,7 +52,7 @@ export default class JobManagerCommon implements IJobManagerService {
   public async getJob(id: string, ctx: IContext): Promise<Job> {
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${id}`,
+        url: `${this.service.url}/jobs/${encodeURI(id)}`,
         exposureType: this.service.exposureType,
       },
       'GET',
