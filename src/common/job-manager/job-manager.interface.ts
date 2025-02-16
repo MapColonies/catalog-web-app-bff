@@ -5,11 +5,12 @@ import { IContext } from '../interfaces';
 
 export interface IJobManagerService {
   getJobs: (ctx: IContext, params?: JobsSearchParams) => Promise<Job[]>;
+  getJob: (id: string, ctx: IContext) => Promise<Job>;
   getTasks: (params: TasksSearchParams, ctx: IContext) => Promise<Task[]>;
   updateJobHandler: (id: string, params: JobUpdateData, ctx: IContext) => Promise<string>;
   abortJobHandler: (id: string, ctx: IContext) => Promise<string>;
   resetJobHandler: (id: string, ctx: IContext) => Promise<string>;
-  transformRecordsToEntity?: (cswArray: Job[]) => Job[];
+  transformRecordsToEntity?: (cswArray: Job[] | Job) => Job[] | Job;
   transformRecordToEntity: (cswJob: Job) => Job;
 }
 
