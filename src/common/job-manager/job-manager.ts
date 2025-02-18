@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { ProductType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
@@ -26,10 +27,19 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(cswArray: Job[]): Job[] {
-    return cswArray.map((job) => {
-      return this.jobManager.transformRecordToEntity(job);
-    });
+  public async getJob(id: string, ctx: IContext): Promise<Job> {
+    this.logger.info(`[JobManager][getJobs] Fetching job ${id}`);
+
+    const jobsData = await this.jobManager.getJob(id, ctx);
+    return jobsData;
+  }
+
+  public transformRecordsToEntity(cswArray: Job[] | Job): Job[] | Job {
+    return isArray(cswArray)
+      ? cswArray.map((job) => {
+          return this.jobManager.transformRecordToEntity(job);
+        })
+      : this.jobManager.transformRecordToEntity(cswArray);
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {

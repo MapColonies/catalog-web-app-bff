@@ -49,6 +49,23 @@ export default class JobManagerCommon implements IJobManagerService {
     return result;
   }
 
+  public async getJob(id: string, ctx: IContext): Promise<Job> {
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/jobs/${encodeURI(id)}`,
+        exposureType: this.service.exposureType,
+      },
+      'GET',
+      {},
+      ctx
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const result = (!isEmpty(res.data) ? res.data : []) as Job;
+
+    return result;
+  }
+
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
     await requestExecutor(
       {
@@ -100,7 +117,7 @@ export default class JobManagerCommon implements IJobManagerService {
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${params.jobId}/tasks`,
+        url: `${this.service.url}/jobs/${params.jobId}/tasks?shouldExcludeParameters=true`,
         exposureType: this.service.exposureType,
       },
       'GET',

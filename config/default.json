@@ -36,11 +36,11 @@
     },
     "3d": {
       "url": "NOT_DEPLOYED",
-      "exposureType": "SERVICE"
+      "exposureType": "ROUTE"
     },
     "dem": {
       "url": "NOT_DEPLOYED",
-      "exposureType": "SERVICE"
+      "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
