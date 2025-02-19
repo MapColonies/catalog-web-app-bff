@@ -132,6 +132,7 @@ export const getQueryPointXMLBody = (
 export const getQueryFeatureXMLBody = (
   geomRefFieldName: string,
   count: number,
+  startIndex: number,
   outputFormat: string,
   typeName: string,
   feature: Feature,
@@ -157,7 +158,7 @@ export const getQueryFeatureXMLBody = (
                   xmlns:sf="http://www.openplans.org/spearfish" 
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   service="WFS" 
-                  version="2.0.0" count="${count}"
+                  version="2.0.0"
                   xsi:schemaLocation="http://www.opengis.net/wfs/2.0
                   http://schemas.opengis.net/wfs/2.0/wfs.xsd 
                   http://www.opengis.net/gml/3.2 
@@ -171,6 +172,8 @@ export const getQueryFeatureXMLBody = (
                               </fes:And>
                               </fes:Filter>
                           </wfs:Query>
+                          <wfs:Count>${count}</wfs:Count>
+                          <wfs:StartIndex>${startIndex}</wfs:StartIndex>
                </wfs:GetFeature>`;
 
   return compactXML(getFeatureQuery);

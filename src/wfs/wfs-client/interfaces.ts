@@ -175,6 +175,12 @@ export interface IGetFeatureOptionsByFeature {
   count?: number;
 
   /**
+   * @param startIndex The maximum number of features to fetch.
+   * @defaultValue `0`
+   */
+  startIndex?: number;
+
+  /**
    * @param dWithin Search distance from point in meters.
    */
   dWithin?: number;
