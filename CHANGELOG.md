@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.25.2...v1.26.0) (2025-02-20)
+
+
+### Features
+
+* support wfs pagination ([#184](https://github.com/MapColonies/catalog-web-app-bff/issues/184)) ([b25d53e](https://github.com/MapColonies/catalog-web-app-bff/commit/b25d53e8cc9507121ed7517045be73a88c2494db))
+
 ### [1.25.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.25.1...v1.25.2) (2025-02-16)
 
 ### [1.25.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.25.0...v1.25.1) (2025-02-09)
