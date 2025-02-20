@@ -265,6 +265,9 @@ export class WfsPolygonPartsGetFeatureParams {
   public count?: number;
 
   @Field((type) => Number, { nullable: true })
+  public startIndex?: number;
+
+  @Field((type) => Number, { nullable: true })
   public dWithin?: number;
 
   @Field((type) => [WfsFilterPropertyParam], { nullable: true })

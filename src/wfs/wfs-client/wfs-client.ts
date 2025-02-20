@@ -140,10 +140,20 @@ class WfsClient {
     geomRefFieldName,
     dWithin = DEFAULT_DWITHIN,
     count = this.count,
+    startIndex = 0,
     filterProperties,
   }: // filter,
   IGetFeatureOptionsByFeature): Promise<unknown> {
-    const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(geomRefFieldName, count, DEFAULT_OUTPUT_FORMAT, typeName, feature, dWithin, filterProperties);
+    const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(
+      geomRefFieldName,
+      count,
+      startIndex,
+      DEFAULT_OUTPUT_FORMAT,
+      typeName,
+      feature,
+      dWithin,
+      filterProperties
+    );
 
     this.logger.info(`[WfsClient][getFeatureByFeature] Attempting query features of types ${typeName} for feature ${JSON.stringify(feature)}`);
 
