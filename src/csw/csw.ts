@@ -4,11 +4,11 @@ import {
   PycswLayerCatalogRecord,
   Pycsw3DCatalogRecord,
   PycswDemCatalogRecord,
-  PycswVectorBestCatalogRecord,
   PycswQuantizedMeshBestCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
   ProductType,
+  VectorBestMetadata,
 } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { get, intersection } from 'lodash';
@@ -17,9 +17,10 @@ import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
+import { WfsClientWrapper } from './wfsClientWrapper';
 
 interface CswClient {
-  instance: CswClientWrapper;
+  instance: CswClientWrapper | WfsClientWrapper;
   entities: RecordType[];
 }
 
@@ -34,7 +35,7 @@ export class CSW {
     this.cswClients.RASTER = {
       instance: new CswClientWrapper(
         'mc:MCRasterRecord',
-        [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(PycswVectorBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
+        [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(VectorBestMetadata.getWFSCapabilitiesMappings() as IPropPYCSWMapping[])],
         'http://schema.mapcolonies.com/raster',
         this.config.get('csw.raster')
       ),
@@ -59,6 +60,11 @@ export class CSW {
         this.config.get('csw.dem')
       ),
       entities: [RecordType.RECORD_DEM],
+    };
+
+    this.cswClients.VECTOR = {
+      instance: new WfsClientWrapper(VectorBestMetadata.getWFSCapabilitiesMappings(), this.config.get('csw.vector')),
+      entities: [RecordType.RECORD_VECTOR],
     };
   }
 
@@ -125,6 +131,19 @@ export class CSW {
           catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
           getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
           break;
+        case RecordType.RECORD_VECTOR:
+          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
+          getCatalogs.push(
+            this.fetchRecords(
+              this.cswClients[catalog /*'VECTOR_BEST'*/].instance,
+              this.recordTypeToEntity(RecordType.RECORD_VECTOR),
+              ctx,
+              start,
+              end,
+              newOpts
+            )
+          );
+          break;
       }
     } else {
       getCatalogs.push(
@@ -165,6 +184,8 @@ export class CSW {
         return CatalogRecordItems.DEM;
       case RecordType.RECORD_3D:
         return CatalogRecordItems['3D'];
+      case RecordType.RECORD_VECTOR:
+        return CatalogRecordItems.VECTOR;
       default:
         return CatalogRecordItems.RASTER;
     }
@@ -178,7 +199,7 @@ export class CSW {
   }
 
   private async fetchRecords(
-    instance: CswClientWrapper,
+    instance: CswClientWrapper | WfsClientWrapper,
     catalog: CatalogRecordItems,
     ctx: IContext,
     start?: number,

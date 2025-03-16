@@ -47,6 +47,19 @@ export const fieldTypes = {
   isProductVersion: (fieldName: string): boolean => fieldName === 'productVersion',
 };
 
+export const fieldTypesVector = {
+  isProductName: (fieldName: string): boolean => fieldName === 'productName',
+  isSrsId: (fieldName: string): boolean => fieldName === 'srsId',
+  isSrsName: (fieldName: string): boolean => fieldName === 'srsName',
+  isProducerName: (fieldName: string): boolean => fieldName === 'producerName',
+  isFootprint: (fieldName: string): boolean => fieldName === 'footprint',
+  isProductType: (fieldName: string): boolean => fieldName === 'productType',
+  isFeatureStructure: (fieldName: string): boolean => fieldName === 'featureStructure',
+
+  isLinks: (fieldName: string): boolean => fieldName === 'links',
+  isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
+};
+
 export const xmlParserOptions = {
   attributeNamePrefix: '',
   attrNodeName: 'attr',

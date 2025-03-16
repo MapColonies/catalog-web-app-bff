@@ -22,6 +22,8 @@ export const LayerMetadataMixedUnion = createUnionType({
       return LayerDemRecord;
     } else if (value.productType === ProductType.QUANTIZED_MESH_DTM_BEST) {
       return QuantizedMeshBestRecord;
+    } else if (value.productType === ProductType.VECTOR_BEST) {
+      return VectorBestRecord;
     } else {
       return LayerRasterRecord;
     }
