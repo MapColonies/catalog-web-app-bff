@@ -35,7 +35,7 @@ export class CSW {
     this.cswClients.RASTER = {
       instance: new CswClientWrapper(
         'mc:MCRasterRecord',
-        [...PycswLayerCatalogRecord.getPyCSWMappings(), ...(VectorBestMetadata.getWFSCapabilitiesMappings() as IPropPYCSWMapping[])],
+        [...PycswLayerCatalogRecord.getPyCSWMappings()],
         'http://schema.mapcolonies.com/raster',
         this.config.get('csw.raster')
       ),
