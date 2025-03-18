@@ -45,6 +45,22 @@ export class WfsClientWrapper {
         const footPrintBBox: [number, number, number, number] = [...fea.wgs84BoundingBox[0].lowerCorner, ...fea.wgs84BoundingBox[0].upperCorner];
 
         const footPrint = bboxPolygon(footPrintBBox) as unknown as Record<string, unknown>;
+        const geometry = footPrint.geometry as { type: string; coordinates: number[][][] };
+
+        // Flatten the geometry object
+        const flattenedFootPrint = {
+          // type: footPrint.type,
+          bbox: footPrint.bbox,
+          properties: footPrint.properties,
+          ...geometry, // Spread the geometry properties (type, coordinates) into the root object
+        };
+
+        // const footPrint2 = {
+        //   bbox: ...{footPrint.bbox},
+        //   type: ...{footPrint.type},
+        //   properties: ...{footPrint.properties},
+        //   geometry: ...{footPrint['geometry']}
+        // }
 
         const metadataPromises = Array.from({ length: 15 }, () => {
           // return this.fetchData("http://localhost:3000/env-config.js");
@@ -68,7 +84,7 @@ export class WfsClientWrapper {
           srsId: defCrs[defCrs.length - 1],
           srsName: defCrs[defCrs.length - 1],
           producerName: fea.name.namespaceURI === 'core' ? 'Moria' : 'Shlita',
-          footprint: footPrint,
+          footprint: flattenedFootPrint,
           productType: ProductType.VECTOR_BEST,
           // srs: defCrs[defCrs.length-1],
           id: uuidv4(),
@@ -89,7 +105,7 @@ export class WfsClientWrapper {
               {
                 fieldName: 'Something',
                 aliasFieldName: 'שם כינוי לשדה',
-                type: 'type',
+                type: 'boolean',
               },
             ],
           },
