@@ -1,14 +1,10 @@
 import { GraphQLScalarType } from 'graphql';
 import { Field, ObjectType } from 'type-graphql';
+import { CountryTranslation } from '@map-colonies/types';
 
 export interface LookupTableField {
   lookupTable?: string;
   lookupExcludeFields?: string[];
-}
-
-enum Locale {
-  ENGLISH = 'en',
-  HEBREW = 'he',
 }
 
 export const properties = new GraphQLScalarType({ name: 'properties' });
@@ -23,7 +19,7 @@ export class LookupOption {
   public translationCode?: string;
 
   @Field((type) => String, { nullable: false })
-  public translation?: { locale: Locale; text: string }[];
+  public translation?: CountryTranslation[];
 
   @Field((type) => properties, { nullable: true })
   public properties?: Record<string, unknown>;

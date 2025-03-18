@@ -259,6 +259,9 @@ export class FieldConfig {
   public isUpdateEssential?: boolean; // is field participate in update process
 
   @Field({ nullable: true })
+  public isMultiSelection?: boolean; // is multi selection field
+
+  @Field({ nullable: true })
   public rows?: number; // should present string as text-area controller. rows represents the maximum number of rows to present.
 
   @Field((type) => Autocompletion, { nullable: true })
