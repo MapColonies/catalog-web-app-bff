@@ -7,7 +7,6 @@ import { RecordType, UndulationModel, DEMDataType, NoDataValue } from "@map-colo
 import { ProductType, RecordStatus, Transparency } from "@map-colonies/types";
 import { ProviderType } from "@map-colonies/mc-model-types/Schema/models/layerMetadata/decorators/property/shp.decorator";
 
-
 @InputType()
 export class LinkInput {
     @Field({ nullable: true })
