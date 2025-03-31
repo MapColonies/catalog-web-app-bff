@@ -78,9 +78,9 @@ export class WfsClientWrapper {
         return {
           type: RecordType.RECORD_VECTOR,
           classification: '5',
-          productName: 'מבנים', //Take from from metadata link that inside of featureStructure
+          productName: 'מבנים', //Take from metadata link that is inside featureStructure
           // productName: fea.name.localPart,
-          description: 'this is the desc',
+          description: 'This is a desc',
           srsId: defCrs[defCrs.length - 1],
           srsName: defCrs[defCrs.length - 1],
           producerName: fea.name.namespaceURI === 'core' ? 'Moria' : 'Shlita',
@@ -91,7 +91,7 @@ export class WfsClientWrapper {
           keywords: keywords,
           links: [
             {
-              name: 'buildings_dates',
+              name: 'buildings',
               description: '',
               protocol: 'WFS',
               url: 'http://geoserver-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/core/ows',
@@ -103,9 +103,39 @@ export class WfsClientWrapper {
             aliasLayerName: 'מבנים',
             fields: [
               {
-                fieldName: 'Something',
-                aliasFieldName: 'שם כינוי לשדה',
-                type: 'boolean',
+                fieldName: 'OSM_ID',
+                aliasFieldName: 'מזהה OSM',
+                type: 'String',
+              },
+              {
+                fieldName: 'ID',
+                aliasFieldName: 'מזהה',
+                type: 'String',
+              },
+              {
+                fieldName: 'BUILDING_TYPE',
+                aliasFieldName: 'סוג',
+                type: 'String',
+              },
+              {
+                fieldName: 'SENSITIVITY',
+                aliasFieldName: 'רגישות',
+                type: 'String',
+              },
+              {
+                fieldName: 'ENTITY_ID',
+                aliasFieldName: 'מזהה יישות',
+                type: 'String',
+              },
+              {
+                fieldName: 'IS_SENSITIVE',
+                aliasFieldName: 'רגיש',
+                type: 'Boolean',
+              },
+              {
+                fieldName: 'DATE',
+                aliasFieldName: 'תאריך',
+                type: 'Date',
               },
             ],
           },
