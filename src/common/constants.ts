@@ -48,14 +48,17 @@ export const fieldTypes = {
 };
 
 export const fieldTypesVector = {
+  isId: (fieldName: string): boolean => fieldName === 'id',
+  isType: (fieldName: string): boolean => fieldName === 'type',
   isProductName: (fieldName: string): boolean => fieldName === 'productName',
+  isClassification: (fieldName: string): boolean => fieldName === 'classification',
   isSrsId: (fieldName: string): boolean => fieldName === 'srsId',
   isSrsName: (fieldName: string): boolean => fieldName === 'srsName',
   isProducerName: (fieldName: string): boolean => fieldName === 'producerName',
   isFootprint: (fieldName: string): boolean => fieldName === 'footprint',
+  isDescription: (fieldName: string): boolean => fieldName === 'description',
   isProductType: (fieldName: string): boolean => fieldName === 'productType',
   isFeatureStructure: (fieldName: string): boolean => fieldName === 'featureStructure',
-
   isLinks: (fieldName: string): boolean => fieldName === 'links',
   isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
 };

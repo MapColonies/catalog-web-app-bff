@@ -63,7 +63,7 @@ export class CSW {
     };
 
     this.cswClients.VECTOR = {
-      instance: new WfsClientWrapper(VectorBestMetadata.getWFSCapabilitiesMappings(), this.config.get('csw.vector')),
+      instance: new WfsClientWrapper(VectorBestMetadata.getWFSMappings(), this.config.get('csw.vector')),
       entities: [RecordType.RECORD_VECTOR],
     };
   }
