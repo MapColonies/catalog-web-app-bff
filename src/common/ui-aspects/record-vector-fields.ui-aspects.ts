@@ -52,9 +52,10 @@ export const vectorCatalogRecordAspects = {
   },
   featureStructure: {
     label: 'field-names.vector.featureStructure',
-    isBriefField: {
-      order: 9,
-    },
+    fullWidth: true,
+    // isBriefField: {
+    //   order: 9,
+    // },
   },
   id: {
     label: 'field-names.vector.id',

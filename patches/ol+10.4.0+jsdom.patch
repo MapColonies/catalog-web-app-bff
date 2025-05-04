@@ -1,0 +1,32 @@
+diff --git a/node_modules/ol/xml.js b/node_modules/ol/xml.js
+index cdb9bb3..c1111f5 100644
+--- a/node_modules/ol/xml.js
++++ b/node_modules/ol/xml.js
+@@ -3,6 +3,9 @@
+  */
+ import {extend} from './array.js';
+ 
++const jsdom = require("jsdom");
++const domOnServer = new jsdom.JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
++
+ /**
+  * When using {@link module:ol/xml.makeChildAppender} or
+  * {@link module:ol/xml.makeSimpleNodeFactory}, the top `objectStack` item needs
+@@ -531,6 +534,8 @@ export function registerXMLSerializer(xmlSerializer) {
+ export function getXMLSerializer() {
+   if (xmlSerializer_ === undefined && typeof XMLSerializer !== 'undefined') {
+     xmlSerializer_ = new XMLSerializer();
++  } else if (xmlSerializer_ === undefined && typeof XMLSerializer === 'undefined') {
++      xmlSerializer_ = new domOnServer.window.XMLSerializer();
+   }
+   return xmlSerializer_;
+ }
+@@ -555,6 +560,8 @@ export function registerDocument(document) {
+ export function getDocument() {
+   if (document_ === undefined && typeof document !== 'undefined') {
+     document_ = document.implementation.createDocument('', '', null);
++  } else if (document_ === undefined && typeof document === 'undefined') {
++      document_ = domOnServer.window.document.implementation.createDocument('', '', null);
+   }
+   return document_;
+ }

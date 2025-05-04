@@ -30,7 +30,10 @@ export const requestHandler = async (url: string, method: string, params: AxiosR
 
   return axios
     .request(requestConfig)
-    .then((res) => res)
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
     .catch((error) => {
       throw error;
     });
