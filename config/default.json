@@ -12,7 +12,7 @@
     "port": "8080",
     "request": {
       "payload": {
-        "limit": "15mb"
+        "limit": "1mb"
       }
     },
     "response": {
@@ -22,44 +22,34 @@
       }
     }
   },
+  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER",
   "accessToken": {
     "attributeName": "token",
     "injectionType": "queryParam",
-    "tokenValue": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJkIjpbInJhc3RlciIsInJhc3RlcldtcyIsInJhc3RlckV4cG9ydCIsImRlbSIsInZlY3RvciIsIjNkIl0sImlhdCI6MTY3NDYzMjM0Niwic3ViIjoibWFwY29sb25pZXMtYXBwIiwiaXNzIjoibWFwY29sb25pZXMtdG9rZW4tY2xpIn0.D1u28gFlxf_Z1bzIiRHZonUgrdWwhZy8DtmQj15cIzaABRUrGV2n_OJlgWTuNfrao0SbUZb_s0_qUUW6Gz_zO3ET2bVx5xQjBu0CaIWdmUPDjEYr6tw-eZx8EjFFIyq3rs-Fo0daVY9cX1B2aGW_GeJir1oMnJUURhABYRoh60azzl_utee9UdhDpnr_QElNtzJZIKogngsxCWp7tI7wkTuNCBaQM7aLEcymk0ktxlWEAt1E0nGt1R-bx-HnPeeQyZlxx4UQ1nuYTijpz7N8poaCCExOFeafj9T7megv2BzTrKWgfM1eai8srSgNa3I5wKuW0EyYnGZxdbJe8aseZg"
+    "tokenValue": "TOKEN_VALUE"
   },
-  "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM,RECORD_VECTOR",
   "adminPassword": "123456",
   "csw": {
     "raster": {
-      "url": "https://raster-serving-int-pycsw-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "url": "https://raster-csw-url",
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "https://serving-3d-pycsw-all-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
+      "url": "NOT_DEPLOYED",
       "exposureType": "ROUTE"
     },
     "dem": {
-      "url": "https://dem-int-pycsw-all-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/dem/v1/all",
-      "exposureType": "ROUTE"
-    },
-    "vector": {
-      "url": "http://geoserver-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/core/ows",
-      "exposureType": "ROUTE"
-    }
-  },
-  "mapServices": {
-    "raster": {
-      "url": "https://raster-serving-int-mapproxy-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
+      "url": "NOT_DEPLOYED",
       "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "https://raster-core-int-raster-catalog-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-catalog-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://ingestion-3d-gateway-manual-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "NOT_DEPLOYED",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -68,39 +58,57 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-ingestion-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://ingestion-3d-gateway-manual-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "NOT_DEPLOYED",
       "exposureType": "SERVICE"
     },
     "dem": {
       "url": "NOT_AVAILABLE"
     }
   },
+  "storageExplorerServices": {
+    "raster": {
+      "url": "https://raster-ingestion-url",
+      "exposureType": "SERVICE"
+    },
+    "3d": {
+      "url": "NOT_DEPLOYED",
+      "exposureType": "SERVICE"
+    }
+  },
+  "validationService": {
+    "raster": {
+      "url": "https://raster-ingestion-url",
+      "exposureType": "SERVICE"
+    }
+  },
+  "exportLayerServices": {
+    "raster": {
+      "url": "https://raster-export-url",
+      "exposureType": "ROUTE"
+    },
+    "3d": {
+      "url": "https://3d_export.com"
+    },
+    "dem": {
+      "url": "https://dem_export.com"
+    }
+  },
   "jobServices": {
     "common": {
-      "url": "https://common-job-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://common-job-manager-url",
       "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "https://common-lookup-tables-integration.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://common-lookup-tables-url",
     "exposureType": "SERVICE"
   },
-  "storageExplorerServices": {
-    "raster": {
-      "url": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
-      "exposureType": "SERVICE"
-    },
-    "3d": {
-      "url": "https://ingestion-3d-gateway-manual-route-integration.apps.j1lk3njp.eastus.aroapp.io",
-      "exposureType": "SERVICE"
-    }
-  },
   "serviceDiscovery": {
-    "url": "https://app-k8s-services-list-integration.apps.j1lk3njp.eastus.aroapp.io",
+    "url": "https://app-service-discovery-url",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -109,33 +117,23 @@
     "PYCSW-RECORD_DEM-URL": "https://pycsw_dem.com",
     "MAP_SERVER-RECORD_RASTER-URL": "https://mapproxy_raster.com"
   },
-  "wfs": {
-    "url": "http://geoserver-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/core/ows",
-    "exposureType": "ROUTE"
-  },
-  "exportLayerServices": {
+  "mapServices": {
     "raster": {
-      "url": "https://raster-export-int-exporter-trigger-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-mapproxy-url",
       "exposureType": "ROUTE"
-    },
-    "3d": {
-      "url": "NOT_AVAILABLE"
-    },
-    "dem": {
-      "url": "NOT_AVAILABLE"
     }
   },
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465B0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
-  "demHeightsService": {
-    "url": "https://dem-dem-heights-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1",
+  "wfs": {
+    "url": "http://geoserver-url",
     "exposureType": "ROUTE"
   },
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"transparent\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
-    "url": "https://raster-serving-int-pp-geoserver-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/geoserver/wfs",
+    "url": "https://raster-pp-url",
     "exposureType": "ROUTE"
   },
-  "validationService": {
-    "url": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+  "demHeightsService": {
+    "url": "NOT_AVAILABLE",
     "exposureType": "ROUTE"
   }
 }
