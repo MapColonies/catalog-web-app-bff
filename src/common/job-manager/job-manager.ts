@@ -1,6 +1,5 @@
 import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { ProductType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
