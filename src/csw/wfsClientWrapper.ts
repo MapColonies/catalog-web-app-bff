@@ -104,7 +104,7 @@ export class WfsClientWrapper {
               break;
             }
             case isKeywords(key): {
-              newFeature[key] = (wfsFeature.capabilitiesKey as string[])?.join(',');
+              newFeature[key] = (wfsFeature[`${capabilitiesKey}`] as string[])?.join(',');
               break;
             }
             case isType(key): {

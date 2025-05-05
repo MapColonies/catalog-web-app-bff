@@ -104,10 +104,9 @@ export class CSW {
       sort: newOpts.sort,
     };
 
-    let catalog: CatalogRecordItems;
-
     if (typeFilterIdx > NOT_FOUND) {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
+      const catalog: CatalogRecordItems = this.recordTypeToEntity(RecordType[fetchRecordType]);
       switch (RecordType[fetchRecordType]) {
         case RecordType.RECORD_ALL:
           getCatalogs.push(
@@ -123,26 +122,16 @@ export class CSW {
           );
           break;
         case RecordType.RECORD_RASTER:
-          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
           getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
+          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
         case RecordType.RECORD_3D:
         case RecordType.RECORD_DEM:
-          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
           getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
+          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
         case RecordType.RECORD_VECTOR:
-          catalog = this.recordTypeToEntity(RecordType[fetchRecordType]);
-          getCatalogs.push(
-            this.fetchRecords(
-              this.cswClients[catalog /*'VECTOR_BEST'*/].instance,
-              this.recordTypeToEntity(RecordType.RECORD_VECTOR),
-              ctx,
-              start,
-              end,
-              newOpts
-            )
-          );
+          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
       }
     } else {
@@ -159,6 +148,22 @@ export class CSW {
 
     const data = await Promise.all(getCatalogs);
     return data.flat();
+  }
+
+  private addVectorRecordIfExist(
+    getCatalogs: Promise<CatalogRecordType[]>[],
+    catalog: CatalogRecordItems,
+    ctx: IContext,
+    searchOptions: SearchOptions,
+    opts?: SearchOptions,
+    start?: number,
+    end?: number
+  ) {
+    const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
+
+    if (opts && opts.filter && opts?.filter?.length < 2 && isIncludeVector) {
+      getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
+    }
   }
 
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {

@@ -60,6 +60,7 @@
     "@map-colonies/openapi-express-viewer": "^2.0.1",
     "@map-colonies/telemetry": "^1.1.1",
     "@map-colonies/types": "file:../types",
+    "@map-colonies/wfs-client": "file:../ogc-clients/packages/wfs-client/map-colonies-wfs-client-1.0.0.tgz",
     "@opentelemetry/api": "1.0.0-rc.0",
     "@opentelemetry/api-metrics": "0.19.0",
     "@opentelemetry/instrumentation-express": "0.16.0",
