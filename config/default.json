@@ -41,6 +41,10 @@
     "dem": {
       "url": "NOT_DEPLOYED",
       "exposureType": "ROUTE"
+    },
+    "vector": {
+      "url": "NOT_DEPLOYED",
+      "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
