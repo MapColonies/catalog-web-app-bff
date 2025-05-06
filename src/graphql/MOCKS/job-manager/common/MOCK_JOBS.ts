@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { ProductType } from '@map-colonies/mc-model-types';
+import { ProductType } from '@map-colonies/types';
 import { Job, Status } from '../../../job';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */

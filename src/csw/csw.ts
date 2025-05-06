@@ -7,9 +7,9 @@ import {
   PycswQuantizedMeshBestCatalogRecord,
   RecordType,
   IPropPYCSWMapping,
-  ProductType,
   VectorBestMetadata,
 } from '@map-colonies/mc-model-types';
+import { ProductType } from '@map-colonies/types';
 import { inject, singleton } from 'tsyringe';
 import { get, intersection } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';

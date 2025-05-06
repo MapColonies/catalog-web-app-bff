@@ -1,5 +1,6 @@
 import { GraphQLScalarType } from 'graphql';
 import { Field, ObjectType } from 'type-graphql';
+import { CountryTranslation } from '@map-colonies/types';
 
 export interface LookupTableField {
   lookupTable?: string;
@@ -15,7 +16,10 @@ export class LookupOption {
   public value: string;
 
   @Field((type) => String, { nullable: false })
-  public translationCode: string;
+  public translationCode?: string;
+
+  @Field((type) => String, { nullable: false })
+  public translation?: CountryTranslation[];
 
   @Field((type) => properties, { nullable: true })
   public properties?: Record<string, unknown>;

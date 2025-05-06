@@ -2,8 +2,9 @@
 /* eslint-disable import/exports-last, @typescript-eslint/naming-convention */
 import { InputType, ObjectType, Field, Resolver, registerEnumType } from "type-graphql";
 import { GraphQLScalarType } from "graphql";
-import { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
-import {ResamplingMethod} from "@map-colonies/mc-utils";
+import { ResamplingMethod } from "@map-colonies/mc-utils";
+import { RecordType, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
+import { ProductType, RecordStatus, Transparency } from "@map-colonies/types";
 import { ProviderType } from "@map-colonies/mc-model-types/Schema/models/layerMetadata/decorators/property/shp.decorator";
 
 @InputType()
