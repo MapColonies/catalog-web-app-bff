@@ -130,7 +130,7 @@ export class WfsClientWrapper {
             }
             case isSrsName(key): {
               let defaultCrs = (wfsFeature[`${capabilitiesKey}`] as string).split(':');
-              newFeature[key] = defaultCrs[defaultCrs.length - 3];
+              newFeature[key] = `${defaultCrs[defaultCrs.length - 3]}:${defaultCrs[defaultCrs.length - 1]}`;
               break;
             }
             case isProducerName(key): {

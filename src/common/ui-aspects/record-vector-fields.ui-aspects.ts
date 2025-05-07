@@ -1,25 +1,16 @@
 export const vectorCatalogRecordAspects = {
   type: {
     label: 'field-names.vector.type',
-    isFilterable: {
-      participateInFilterPanel: false,
-      operation: 'eq',
-    },
   },
   classification: {
     label: 'field-names.vector.classification',
     fullWidth: true,
     isBriefField: {
-      order: 11,
+      order: 3,
     },
   },
   productName: {
     label: 'field-names.vector.productName',
-    isFilterable: {
-      participateInFilterPanel: true,
-      operation: 'like',
-      order: 3,
-    },
     isInfoTooltip: true,
   },
   description: {
@@ -27,7 +18,7 @@ export const vectorCatalogRecordAspects = {
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 12,
+      order: 5,
     },
   },
   srsId: {
@@ -38,12 +29,12 @@ export const vectorCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.vector.productType',
-    isBriefField: {
-      order: 9,
-    },
   },
   srsName: {
     label: 'field-names.vector.srsName',
+    isBriefField: {
+      order: 2,
+    },
   },
   footprint: {
     label: 'field-names.vector.footprint',
@@ -53,14 +44,14 @@ export const vectorCatalogRecordAspects = {
   featureStructure: {
     label: 'field-names.vector.featureStructure',
     fullWidth: true,
-    // isBriefField: {
-    //   order: 9,
-    // },
+    isBriefField: {
+      order: 4,
+    },
   },
   id: {
     label: 'field-names.vector.id',
     isBriefField: {
-      order: 2,
+      order: 1,
     },
   },
   keywords: {
