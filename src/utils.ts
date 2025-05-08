@@ -12,7 +12,7 @@ export enum CatalogRecordItems {
   RASTER = 'RASTER',
   '3D' = '3D',
   DEM = 'DEM',
-  VECTOR_BEST = 'VECTOR_BEST',
+  VECTOR = 'VECTOR',
   QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
