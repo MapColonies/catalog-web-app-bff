@@ -150,22 +150,6 @@ export class CSW {
     return data.flat();
   }
 
-  private addVectorRecordIfExist(
-    getCatalogs: Promise<CatalogRecordType[]>[],
-    catalog: CatalogRecordItems,
-    ctx: IContext,
-    searchOptions: SearchOptions,
-    opts?: SearchOptions,
-    start?: number,
-    end?: number
-  ) {
-    const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
-
-    if (opts && opts.filter && opts?.filter?.length < 2 && isIncludeVector) {
-      getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
-    }
-  }
-
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
     this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
 
@@ -181,6 +165,23 @@ export class CSW {
     const clientType = this.recordTypeToEntity(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);
     return data;
+  }
+
+  private addVectorRecordIfExist(
+    getCatalogs: Promise<CatalogRecordType[]>[],
+    catalog: CatalogRecordItems,
+    ctx: IContext,
+    searchOptions: SearchOptions,
+    opts?: SearchOptions,
+    start?: number,
+    end?: number
+  ): void {
+    const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
+    const minFiltersForCatalogSearch = 2;
+
+    if (Array.isArray(opts?.filter) && opts?.filter?.length < minFiltersForCatalogSearch && isIncludeVector) {
+      getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
+    }
   }
 
   private recordTypeToEntity(recordType: RecordType): CatalogRecordItems {
