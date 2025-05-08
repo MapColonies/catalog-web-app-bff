@@ -11,13 +11,13 @@ import {
 } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
 import { inject, singleton } from 'tsyringe';
-import { get, intersection } from 'lodash';
+import { get, intersection, size } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
-import { CswWfsClientWrapper } from './wfsClientWrapper';
+import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
 interface CswClient {
   instance: CswClientWrapper | CswWfsClientWrapper;
@@ -179,7 +179,7 @@ export class CSW {
     const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
     const minFiltersForCatalogSearch = 2;
 
-    if (Array.isArray(opts?.filter) && opts?.filter?.length < minFiltersForCatalogSearch && isIncludeVector) {
+    if (size(opts?.filter) < minFiltersForCatalogSearch && isIncludeVector) {
       getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
     }
   }
