@@ -17,10 +17,10 @@ import { IConfig, IContext } from '../common/interfaces';
 import { SearchOptions } from '../graphql/inputTypes';
 import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
-import { WfsClientWrapper } from './wfsClientWrapper';
+import { CswWfsClientWrapper } from './wfsClientWrapper';
 
 interface CswClient {
-  instance: CswClientWrapper | WfsClientWrapper;
+  instance: CswClientWrapper | CswWfsClientWrapper;
   entities: RecordType[];
 }
 
@@ -63,7 +63,7 @@ export class CSW {
     };
 
     this.cswClients.VECTOR = {
-      instance: new WfsClientWrapper(VectorBestMetadata.getWFSMappings(), this.config.get('csw.vector')),
+      instance: new CswWfsClientWrapper(VectorBestMetadata.getWFSMappings(), this.config.get('csw.vector')),
       entities: [RecordType.RECORD_VECTOR],
     };
   }
@@ -204,7 +204,7 @@ export class CSW {
   }
 
   private async fetchRecords(
-    instance: CswClientWrapper | WfsClientWrapper,
+    instance: CswClientWrapper | CswWfsClientWrapper,
     catalog: CatalogRecordItems,
     ctx: IContext,
     start?: number,
