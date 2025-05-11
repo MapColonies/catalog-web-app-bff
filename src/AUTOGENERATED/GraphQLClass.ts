@@ -119,6 +119,8 @@ export class LayerRasterRecordInput {
     // public footprint: Record<string, unknown>; --> DONE
     @Field({ nullable: true })
     public productBoundingBox?: string;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
     @Field((type) => Transparency, { nullable: false })
     public transparency: Transparency;
     @Field({ nullable: true })
@@ -487,6 +489,8 @@ export class LayerRasterRecord {
     public footprint: Record<string, unknown>;
     @Field({ nullable: true })
     public productBoundingBox?: string;
+    @Field((type) => RecordStatus, { nullable: true })
+    public productStatus?: RecordStatus;
     @Field((type) => Transparency, { nullable: false })
     public transparency: Transparency;
     @Field({ nullable: true })
