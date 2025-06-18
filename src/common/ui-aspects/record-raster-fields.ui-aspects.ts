@@ -96,7 +96,7 @@ const pycswLayerCatalogRecordAspects = {
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 12,
+      order: 13,
     },
   },
   sensors: {
@@ -211,7 +211,6 @@ const pycswLayerCatalogRecordAspects = {
     isDisabled: true,
     isInfoTooltip: true,
   },
-
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
     isFilterable: {
@@ -240,6 +239,12 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.transparency',
     isBriefField: {
       order: 8,
+    },
+  },
+  productStatus: {
+    label: 'field-names.raster.productStatus',
+    isBriefField: {
+      order: 12,
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

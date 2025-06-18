@@ -12,9 +12,17 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     this.service = this.config.get('catalogServices.raster');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    return Promise.reject('Unimplemented service');
+    await requestExecutor(
+      {
+        url: `${this.service.url}/records/status/${record.id}`,
+        exposureType: this.service.exposureType,
+      },
+      'PUT',
+      this.buildPayload(record),
+      ctx
+    );
+    return record;
   }
 
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
@@ -39,9 +47,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
 
     return {
       data: {
-        metadata: {
-          ...payloadData,
-        },
+        ...payloadData,
       },
     };
   }
