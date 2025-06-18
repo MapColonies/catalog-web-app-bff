@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.26.0...v1.27.0) (2025-06-18)
+
+
+### Features
+
+* raster product status publish unpublish ([#187](https://github.com/MapColonies/catalog-web-app-bff/issues/187)) ([4e5631a](https://github.com/MapColonies/catalog-web-app-bff/commit/4e5631a53f42c7368e5ca214dcb59faf5ffdad5b))
+* vector catalog ([#185](https://github.com/MapColonies/catalog-web-app-bff/issues/185)) ([931197e](https://github.com/MapColonies/catalog-web-app-bff/commit/931197e0c73a5ddbcdc52d8de9ce94affb0753b5))
+
+
+### Bug Fixes
+
+* export url ([#188](https://github.com/MapColonies/catalog-web-app-bff/issues/188)) ([fd7b47b](https://github.com/MapColonies/catalog-web-app-bff/commit/fd7b47b2a53a3bad5f5d3927c543fd6546d4dd11))
+
 ## [1.26.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.25.2...v1.26.0) (2025-02-20)
 
 
