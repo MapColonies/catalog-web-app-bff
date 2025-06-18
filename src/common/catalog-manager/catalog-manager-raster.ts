@@ -47,9 +47,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
 
     return {
       data: {
-        metadata: {
-          ...payloadData,
-        },
+        ...payloadData,
       },
     };
   }
