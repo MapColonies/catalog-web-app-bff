@@ -57,7 +57,7 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/create/roi`,
+        url: `${this.service.url}/export`,
         exposureType: this.service.exposureType,
       },
       'POST',
