@@ -19,7 +19,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
         exposureType: this.service.exposureType,
       },
       'PUT',
-      this.buildPayload(record),
+      this.buildStatusPayload(record),
       ctx
     );
     return record;
@@ -32,13 +32,13 @@ export class CatalogManagerRaster implements ICatalogManagerService {
         exposureType: this.service.exposureType,
       },
       'PUT',
-      this.buildPayload(record),
+      this.buildMetadataPayload(record),
       ctx
     );
     return record;
   }
 
-  private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
+  private buildStatusPayload(data: RecordUpdatePartial): AxiosRequestConfig {
     const payloadData = {
       ...data.partialRecordData,
     };
@@ -48,6 +48,22 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     return {
       data: {
         ...payloadData,
+      },
+    };
+  }
+
+  private buildMetadataPayload(data: RecordUpdatePartial): AxiosRequestConfig {
+    const payloadData = {
+      ...data.partialRecordData,
+    };
+
+    this.logger.info(`[CatalogManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+
+    return {
+      data: {
+        metadata: {
+          ...payloadData,
+        },
       },
     };
   }
