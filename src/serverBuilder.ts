@@ -5,7 +5,7 @@ import compression from 'compression';
 import cors from 'cors';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
 import { GraphQLError, GraphQLFormattedError, printSchema } from 'graphql';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
 //import { getErrorHandlerMiddleware } from '@map-colonies/error-express-handler';
@@ -74,7 +74,7 @@ export class ServerBuilder {
       }),
       formatError: (formattedError: GraphQLError): GraphQLFormattedError => {
         const serverResponse = get(formattedError, 'extensions.exception.response') as Record<string, unknown>;
-        if (get(formattedError, 'extensions.exception.isAxiosError') === true && serverResponse.data !== undefined) {
+        if (get(formattedError, 'extensions.exception.isAxiosError') === true && !isEmpty(serverResponse.data)) {
           const resMessage = (get(serverResponse, 'data.message') as string | undefined) ?? '';
 
           return {
