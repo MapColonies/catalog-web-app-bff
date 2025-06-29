@@ -84,6 +84,7 @@ export class TaskResolver {
       // Remove requested non-relevant keys from the representor.
       if (typeof removeKeys !== 'undefined') {
         for (const removeKey of removeKeys) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           delete groupRepresentor[removeKey];
         }
@@ -116,6 +117,7 @@ export class TaskResolver {
 
       // Building group key.
       for (const key of GROUPING_KEYS) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         groupKey[key] = task[key];
       }

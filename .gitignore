@@ -106,3 +106,8 @@ dist
 # Jest
 jest_html_reporters.html
 reports
+
+# Ignore specific patch files
+patches/jsonix+3.0.0.patch
+patches/ol+10.4.0.patch
+patches/ol+10.4.0+jsdom.patch

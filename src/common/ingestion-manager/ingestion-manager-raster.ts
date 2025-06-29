@@ -91,6 +91,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       partsData: data.partsData,
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { partsData, ...payloadWithoutParts } = payloadData;
     this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadWithoutParts)}.`);
 

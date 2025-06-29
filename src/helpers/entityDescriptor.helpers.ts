@@ -17,6 +17,7 @@ import { Group, groupBy } from './group-by';
 const FIRST_CATEGORY = 'MAIN';
 
 function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComplexType?: string): FieldConfig {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { prop, complexType, category, subFields, ...restFieldConfigProps } = field;
   const fieldUIApect = fieldComplexType !== undefined ? `${fieldComplexType}.${prop}` : prop;
 

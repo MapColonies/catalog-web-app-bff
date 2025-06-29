@@ -1,4 +1,4 @@
-import { DateGranularity, FractionType, OperationType, ValidationValueType } from '../../graphql/entityDescriptor';
+import { DateGranularity, ValidationValueType } from '../../graphql/entityDescriptor';
 
 const polygonPartRecordAspects = {
   sourceId: {

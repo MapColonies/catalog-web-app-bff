@@ -1,5 +1,5 @@
 import { IncomingHttpHeaders } from 'http';
-import { IConfig } from 'config';
+// import { IConfig } from 'config';
 
 export { IConfig } from 'config';
 export interface OpenApiConfig {

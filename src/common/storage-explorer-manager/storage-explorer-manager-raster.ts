@@ -81,6 +81,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // return Promise.resolve(MOCK_FILE);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
     this.logger.info(`[StorageExplorerManagerRaster][resolveMetadataAsModel] resolve file metadata: ${JSON.stringify(metadata)}.`);
 
