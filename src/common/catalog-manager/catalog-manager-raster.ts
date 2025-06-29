@@ -38,7 +38,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     return record;
   }
 
-  private buildPayload(data: RecordUpdatePartial, isMetadata: boolean = false): AxiosRequestConfig {
+  private buildPayload(data: RecordUpdatePartial, isMetadata = false): AxiosRequestConfig {
     const payloadData = {
       ...data.partialRecordData,
     };
