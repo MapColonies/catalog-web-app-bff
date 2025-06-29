@@ -78,11 +78,13 @@ export class CSW {
     const newOpts: SearchOptions = {
       filter:
         typeFilterIdx > NOT_FOUND
-          ? // @ts-ignore
+          ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             [...opts?.filter?.filter((item) => item.field !== 'mc:type')]
           : opts?.filter
           ? [...opts.filter]
           : undefined,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       sort: opts?.sort ? [...opts.sort] : undefined,
     };

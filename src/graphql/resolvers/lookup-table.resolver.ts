@@ -1,6 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfig } from 'config';
-import { get } from 'lodash';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
@@ -149,7 +148,7 @@ export class LookupTablesResolver {
         e.categories
           .map((c) => c.fields)
           .flat()
-          .filter((f) => f.lookupTable && !CUSTOM_LOOKUP_TABLES.includes(f.lookupTable))
+          .filter((f) => typeof f.lookupTable === 'string' && f.lookupTable !== '' && !CUSTOM_LOOKUP_TABLES.includes(f.lookupTable))
           .map(({ lookupTable, lookupExcludeFields }) => ({ lookupTable, lookupExcludeFields }))
       )
       .flat();

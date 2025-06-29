@@ -17,8 +17,10 @@ export class UserLoginVerifier {
     this.adminPwd = this.config.get('adminPassword');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async verifyAdminUser(userData: UserLoginParams, ctx?: IContext): Promise<IUserLogin> {
     const isAdminVerified = this.adminPwd === userData.userPassword;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, reject) => {
       resolve({ isValid: isAdminVerified });
     });

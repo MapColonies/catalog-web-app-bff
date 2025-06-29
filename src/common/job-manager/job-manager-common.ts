@@ -1,10 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { isEmpty } from 'lodash';
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
-
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { requestExecutor } from '../../utils';

@@ -7,6 +7,7 @@ export default function searchMockData(path: string, mockData: Record<string, Fi
   if (isRoot) {
     return rootDir.map((file) => {
       if ('childrenCount' in file && 'childrenIds' in file) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { childrenCount, childrenIds, ...restFile } = file;
         return { ...restFile, selectable: !restFile.isDir };
       }
