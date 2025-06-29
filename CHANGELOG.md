@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.3...v1.27.4) (2025-06-29)
+
+
+### Bug Fixes
+
+* eslint ([#192](https://github.com/MapColonies/catalog-web-app-bff/issues/192)) ([d2ffe45](https://github.com/MapColonies/catalog-web-app-bff/commit/d2ffe45d8150bda9e839fef855d43920b845c413))
+
 ### [1.27.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.2...v1.27.3) (2025-06-29)
 
 
