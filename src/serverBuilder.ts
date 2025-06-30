@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
-import { GraphQLError, GraphQLFormattedError, printSchema } from 'graphql';
+import { GraphQLError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
 import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
@@ -72,20 +72,18 @@ export class ServerBuilder {
       context: ({ req }): IContext => ({
         requestHeaders: req.headers,
       }),
-      formatError: (formattedError: GraphQLError): GraphQLFormattedError => {
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      formatError: (formattedError: GraphQLError) => {
         const serverResponse = get(formattedError, 'extensions.exception.response') as Record<string, unknown>;
         if (get(formattedError, 'extensions.exception.isAxiosError') === true && !isEmpty(serverResponse.data)) {
           const resMessage = (get(serverResponse, 'data.message') as string | undefined) ?? '';
 
           return {
             ...formattedError,
-            extensions: {
-              ...formattedError.extensions,
-              serverResponse: {
-                data: { ...(serverResponse.data as Record<string, unknown>), message: `${serverResponse.statusText as string} : ${resMessage}` },
-                status: serverResponse.status,
-                statusText: serverResponse.statusText,
-              },
+            serverResponse: {
+              data: { ...(serverResponse.data as Record<string, unknown>), message: `${serverResponse.statusText as string} : ${resMessage}` },
+              status: serverResponse.status,
+              statusText: serverResponse.statusText,
             },
           };
         }
