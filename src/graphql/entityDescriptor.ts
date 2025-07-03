@@ -220,7 +220,7 @@ export class FieldConfig {
   public label: string;
 
   @Field({ nullable: false })
-  public order: string;
+  public order: number;
 
   @Field({ nullable: true })
   public fullWidth?: boolean;
