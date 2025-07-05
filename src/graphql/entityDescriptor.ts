@@ -219,6 +219,9 @@ export class FieldConfig {
   @Field({ nullable: false })
   public label: string;
 
+  @Field({ nullable: false })
+  public order: number;
+
   @Field({ nullable: true })
   public fullWidth?: boolean;
 
