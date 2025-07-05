@@ -30,7 +30,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
-    order: 0,
+    order: 4,
     updateRules: {
       freeze: true,
       value: {
@@ -47,7 +47,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.raster.productType',
-    order: 0,
+    order: 7,
     updateRules: {
       freeze: true,
     },
@@ -57,7 +57,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.raster.productName',
-    order: 0,
+    order: 3,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -67,7 +67,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   type: {
     label: 'field-names.raster.type',
-    order: 0,
+    order: 999,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'eq',
@@ -75,7 +75,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
-    order: 0,
+    order: 10,
     lookupTable: 'zoomlevelresolutions',
     lookupTableBinding: {
       valueFromPropertyName: 'resolutionDeg',
@@ -87,22 +87,22 @@ const pycswLayerCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.raster.insertDate',
-    order: 0,
+    order: 104,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 0,
     },
   },
   updateDateUTC: {
     label: 'field-names.raster.update-date',
-    order: 0,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   description: {
     label: 'field-names.raster.description',
-    order: 0,
+    order: 100,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -111,17 +111,17 @@ const pycswLayerCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.raster.sensors',
-    order: 0,
+    order: 107,
     fullWidth: true,
   },
   region: {
     label: 'field-names.raster.region',
-    order: 0,
+    order: 108,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.raster.classification',
-    order: 0,
+    order: 101,
     fullWidth: true,
     isBriefField: {
       order: 11,
@@ -134,39 +134,38 @@ const pycswLayerCatalogRecordAspects = {
   },
   links: {
     label: 'field-names.raster.links',
-    order: 0,
+    order: 110,
     fullWidth: true,
   },
   'link.name': {
     label: 'field-names.raster.link.name',
-    order: 0,
-    isCopyable: true,
+    order: 111,
     fullWidth: true,
+    isCopyable: true,
   },
   'link.description': {
     label: 'field-names.raster.link.description',
-    order: 0,
+    order: 112,
     fullWidth: true,
   },
   'link.protocol': {
     label: 'field-names.raster.link.protocol',
-    order: 0,
+    order: 113,
     fullWidth: true,
   },
   'link.url': {
     label: 'field-names.raster.link.url',
-    order: 0,
+    order: 114,
     fullWidth: true,
   },
   creationDateUTC: {
     label: 'field-names.raster.creation-date',
-    order: 0,
-    fullWidth: true,
+    order: 103,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
-    order: 0,
+    order: 5,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 3,
@@ -175,7 +174,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   imagingTimeBeginUTC: {
     label: 'field-names.raster.imagingTimeBeginUTC',
-    order: 0,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
@@ -183,11 +182,11 @@ const pycswLayerCatalogRecordAspects = {
   },
   imagingTimeEndUTC: {
     label: 'field-names.raster.imagingTimeEndUTC',
-    order: 0,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 1,
     },
     isBriefField: {
@@ -197,45 +196,45 @@ const pycswLayerCatalogRecordAspects = {
   },
   minHorizontalAccuracyCE90: {
     label: 'field-names.raster.minHorizontalAccuracyCE90',
-    order: 0,
+    order: 202,
   },
   maxHorizontalAccuracyCE90: {
     label: 'field-names.raster.maxHorizontalAccuracyCE90',
-    order: 0,
+    order: 203,
   },
   srs: {
     isDisabled: true,
     label: 'field-names.raster.srs',
-    order: 0,
+    order: 201,
   },
   srsName: {
     isDisabled: true,
     label: 'field-names.raster.srs-name',
-    order: 0,
+    order: 200,
   },
   keywords: {
     label: 'field-names.raster.keywords',
-    order: 0,
+    order: 109,
     fullWidth: true,
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
-    order: 0,
+    order: 8,
     isBriefField: {
       order: 10,
     },
   },
   minResolutionDeg: {
     label: 'field-names.raster.minResolutionDeg',
-    order: 0,
+    order: 9,
   },
   minResolutionMeter: {
     label: 'field-names.raster.minResolutionMeter',
-    order: 0,
+    order: 11,
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
-    order: 0,
+    order: 12,
     isBriefField: {
       order: 7,
     },
@@ -244,7 +243,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.raster.productBoundingBox',
-    order: 0,
+    order: 999,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'bbox',
@@ -252,35 +251,35 @@ const pycswLayerCatalogRecordAspects = {
   },
   scale: {
     label: 'field-names.raster.scale',
-    order: 0,
+    order: 204,
   },
   footprint: {
     label: 'field-names.raster.footprint',
-    order: 0,
+    order: 205,
     fullWidth: true,
     isCopyable: true,
   },
   producerName: {
     label: 'field-names.raster.producerName',
-    order: 0,
+    order: 102,
     fullWidth: true,
   },
   layerPolygonParts: {
     label: 'field-names.raster.layerPolygonParts',
-    order: 0,
+    order: 999,
     fullWidth: true,
     isCopyable: true,
   },
   transparency: {
     label: 'field-names.raster.transparency',
-    order: 0,
+    order: 14,
     isBriefField: {
       order: 8,
     },
   },
   productStatus: {
     label: 'field-names.raster.productStatus',
-    order: 0,
+    order: 13,
     isBriefField: {
       order: 12,
     },
