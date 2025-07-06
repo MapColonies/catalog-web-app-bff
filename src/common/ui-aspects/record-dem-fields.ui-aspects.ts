@@ -3,26 +3,26 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycswDemCatalogRecordAspects = {
   id: {
     label: 'field-names.dem.id',
-    order: 1,
+    order: 2,
     isBriefField: {
-      order: 1,
+      order: 2,
     },
   },
   productId: {
     label: 'field-names.dem.productId',
-    order: 0,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
       order: 2,
     },
     isBriefField: {
-      order: 2,
+      order: 1,
     },
   },
   productName: {
     label: 'field-names.dem.productName',
-    order: 0,
+    order: 3,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -32,7 +32,7 @@ const pycswDemCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.dem.productType',
-    order: 0,
+    order: 4,
     isBriefField: {
       order: 3,
     },
@@ -40,7 +40,7 @@ const pycswDemCatalogRecordAspects = {
   },
   description: {
     label: 'field-names.dem.description',
-    order: 0,
+    order: 100,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -49,17 +49,17 @@ const pycswDemCatalogRecordAspects = {
   },
   updateDate: {
     label: 'field-names.dem.updateDate',
-    order: 0,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.dem.sourceDateStart',
-    order: 0,
+    order: 104,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateEnd: {
     label: 'field-names.dem.sourceDateEnd',
-    order: 0,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -70,14 +70,14 @@ const pycswDemCatalogRecordAspects = {
   },
   resolutionDegree: {
     label: 'field-names.dem.resolutionDegree',
-    order: 0,
+    order: 7,
     isBriefField: {
       order: 5,
     },
   },
   resolutionMeter: {
     label: 'field-names.dem.resolutionMeter',
-    order: 0,
+    order: 8,
     isBriefField: {
       order: 6,
     },
@@ -85,58 +85,58 @@ const pycswDemCatalogRecordAspects = {
   },
   absoluteAccuracyLEP90: {
     label: 'field-names.dem.absoluteAccuracyLEP90',
-    order: 0,
+    order: 204,
     isBriefField: {
       order: 7,
     },
   },
   relativeAccuracyLEP90: {
     label: 'field-names.dem.relativeAccuracyLEP90',
-    order: 0,
+    order: 205,
     isBriefField: {
       order: 8,
     },
   },
   sensors: {
     label: 'field-names.dem.sensors',
-    order: 0,
+    order: 108,
     fullWidth: true,
   },
   footprint: {
     label: 'field-names.dem.footprint',
-    order: 0,
+    order: 210,
     fullWidth: true,
   },
   layerPolygonParts: {
     label: 'field-names.dem.layerPolygonParts',
-    order: 0,
+    order: 208,
     fullWidth: true,
     isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.dem.heightRangeFrom',
-    order: 0,
+    order: 202,
   },
   heightRangeTo: {
     label: 'field-names.dem.heightRangeTo',
-    order: 0,
+    order: 203,
   },
   srsId: {
     label: 'field-names.dem.srsId',
-    order: 0,
+    order: 201,
   },
   srsName: {
     label: 'field-names.dem.srsName',
-    order: 0,
+    order: 200,
   },
   region: {
     label: 'field-names.dem.region',
-    order: 0,
+    order: 109,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.dem.classification',
-    order: 0,
+    order: 101,
     fullWidth: true,
     isBriefField: {
       order: 10,
@@ -149,31 +149,30 @@ const pycswDemCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.dem.producerName',
-    order: 0,
-    fullWidth: true,
+    order: 102,
   },
   productStatus: {
     label: 'field-names.dem.productStatus',
-    order: 0,
+    order: 9,
     isBriefField: {
       order: 4,
     },
   },
   // hasTerrain: {
   //   label: 'field-names.dem.hasTerrain',
-  //   order: 0,
+  //   order: 999,
   // },
   imagingSortieAccuracyCEP90: {
     label: 'field-names.dem.imagingSortieAccuracyCEP90',
-    order: 0,
+    order: 5,
   },
   geographicArea: {
     label: 'field-names.dem.geographicArea',
-    order: 0,
+    order: 999,
   },
   productBoundingBox: {
     label: 'field-names.dem.productBoundingBox',
-    order: 0,
+    order: 206,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'bbox',
@@ -181,45 +180,45 @@ const pycswDemCatalogRecordAspects = {
   },
   undulationModel: {
     label: 'field-names.dem.undulationModel',
-    order: 0,
+    order: 209,
   },
   dataType: {
     label: 'field-names.dem.dataType',
-    order: 0,
+    order: 106,
   },
   noDataValue: {
     label: 'field-names.dem.noDataValue',
-    order: 0,
+    order: 107,
   },
   links: {
     label: 'field-names.dem.links',
-    order: 0,
+    order: 111,
     fullWidth: true,
   },
   'link.name': {
     label: 'field-names.dem.link.name',
-    order: 0,
+    order: 112,
     isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
     label: 'field-names.dem.link.description',
-    order: 0,
+    order: 113,
     fullWidth: true,
   },
   'link.protocol': {
     label: 'field-names.dem.link.protocol',
-    order: 0,
+    order: 114,
     fullWidth: true,
   },
   'link.url': {
     label: 'field-names.dem.link.url',
-    order: 0,
+    order: 115,
     fullWidth: true,
   },
   type: {
     label: 'field-names.dem.type',
-    order: 0,
+    order: 999,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'eq',
@@ -227,27 +226,27 @@ const pycswDemCatalogRecordAspects = {
   },
   typeName: {
     label: 'field-names.dem.typeName',
-    order: 0,
+    order: 999,
   },
   schema: {
     label: 'field-names.dem.schema',
-    order: 0,
+    order: 999,
   },
   mdSource: {
     label: 'field-names.dem.mdSource',
-    order: 0,
+    order: 999,
   },
   xml: {
     label: 'field-names.dem.xml',
-    order: 0,
+    order: 999,
   },
   anyText: {
     label: 'field-names.dem.anyText',
-    order: 0,
+    order: 999,
   },
   insertDate: {
     label: 'field-names.dem.insertDate',
-    order: 0,
+    order: 103,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -261,11 +260,11 @@ const pycswDemCatalogRecordAspects = {
   },
   wktGeometry: {
     label: 'field-names.dem.wktGeometry',
-    order: 0,
+    order: 207,
   },
   keywords: {
     label: 'field-names.dem.keywords',
-    order: 0,
+    order: 110,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as Record<string, any>;
