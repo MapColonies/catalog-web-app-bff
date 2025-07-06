@@ -1,11 +1,11 @@
 export const vectorCatalogRecordAspects = {
   type: {
     label: 'field-names.vector.type',
-    order: 0,
+    order: 999,
   },
   classification: {
     label: 'field-names.vector.classification',
-    order: 0,
+    order: 101,
     fullWidth: true,
     isBriefField: {
       order: 3,
@@ -13,12 +13,12 @@ export const vectorCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.vector.productName',
-    order: 0,
+    order: 2,
     isInfoTooltip: true,
   },
   description: {
     label: 'field-names.vector.description',
-    order: 0,
+    order: 100,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -27,32 +27,32 @@ export const vectorCatalogRecordAspects = {
   },
   srsId: {
     label: 'field-names.vector.srsId',
-    order: 0,
+    order: 201,
   },
   producerName: {
     label: 'field-names.vector.producerName',
-    order: 0,
+    order: 102,
   },
   productType: {
     label: 'field-names.vector.productType',
-    order: 0,
+    order: 3,
   },
   srsName: {
     label: 'field-names.vector.srsName',
-    order: 0,
+    order: 200,
     isBriefField: {
       order: 2,
     },
   },
   footprint: {
     label: 'field-names.vector.footprint',
-    order: 0,
+    order: 202,
     fullWidth: true,
     isCopyable: true,
   },
   featureStructure: {
     label: 'field-names.vector.featureStructure',
-    order: 0,
+    order: 4,
     fullWidth: true,
     isBriefField: {
       order: 4,
@@ -60,39 +60,40 @@ export const vectorCatalogRecordAspects = {
   },
   id: {
     label: 'field-names.vector.id',
-    order: 0,
+    order: 1,
     isBriefField: {
       order: 1,
     },
   },
   keywords: {
     label: 'field-names.vector.keywords',
-    order: 0,
+    order: 103,
+    fullWidth: true,
   },
   links: {
     label: 'field-names.vector.links',
-    order: 0,
+    order: 104,
     fullWidth: true,
   },
   'link.name': {
     label: 'field-names.vector.link.name',
-    order: 0,
+    order: 105,
     isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
     label: 'field-names.vector.link.description',
-    order: 0,
+    order: 106,
     fullWidth: true,
   },
   'link.protocol': {
     label: 'field-names.vector.link.protocol',
-    order: 0,
+    order: 107,
     fullWidth: true,
   },
   'link.url': {
     label: 'field-names.vector.link.url',
-    order: 0,
+    order: 108,
     fullWidth: true,
   },
 
