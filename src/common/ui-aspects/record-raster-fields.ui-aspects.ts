@@ -87,7 +87,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.raster.insertDate',
-    order: 104,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -160,7 +160,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   creationDateUTC: {
     label: 'field-names.raster.creation-date',
-    order: 103,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   ingestionDate: {
@@ -174,7 +174,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   imagingTimeBeginUTC: {
     label: 'field-names.raster.imagingTimeBeginUTC',
-    order: 105,
+    order: 103,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
@@ -182,7 +182,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   imagingTimeEndUTC: {
     label: 'field-names.raster.imagingTimeEndUTC',
-    order: 106,
+    order: 104,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,

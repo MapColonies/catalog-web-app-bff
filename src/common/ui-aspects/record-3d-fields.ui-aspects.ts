@@ -52,7 +52,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.3d.creationDate',
-    order: 105,
+    order: 107,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
@@ -62,7 +62,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
-    order: 107,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
@@ -70,7 +70,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
-    order: 108,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -267,7 +267,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.3d.insertDate',
-    order: 106,
+    order: 108,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
