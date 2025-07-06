@@ -29,14 +29,14 @@ const pycsw3DCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
-    order: 4,
+    order: 6,
     isBriefField: {
-      order: 3,
+      order: 6,
     },
   },
   productType: {
     label: 'field-names.3d.productType',
-    order: 5,
+    order: 4,
     isBriefField: {
       order: 9,
     },
@@ -47,7 +47,7 @@ const pycsw3DCatalogRecordAspects = {
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 13,
+      order: 12,
     },
   },
   creationDate: {
@@ -57,7 +57,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   updateDate: {
     label: 'field-names.3d.updateDate',
-    order: 6,
+    order: 5,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
@@ -65,7 +65,7 @@ const pycsw3DCatalogRecordAspects = {
     order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
-      order: 5,
+      order: 3,
     },
   },
   sourceDateEnd: {
@@ -78,7 +78,7 @@ const pycsw3DCatalogRecordAspects = {
       order: 1,
     },
     isBriefField: {
-      order: 6,
+      order: 4,
     },
     isInfoTooltip: true,
   },
@@ -106,15 +106,15 @@ const pycsw3DCatalogRecordAspects = {
   },
   accuracySE90: {
     label: 'field-names.3d.accuracySE90',
-    order: 204,
+    order: 205,
   },
   relativeAccuracySE90: {
     label: 'field-names.3d.relativeAccuracySE90',
-    order: 205,
+    order: 206,
   },
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
-    order: 206,
+    order: 207,
     fullWidth: true,
   },
   sensors: {
@@ -124,17 +124,17 @@ const pycsw3DCatalogRecordAspects = {
   },
   footprint: {
     label: 'field-names.3d.footprint',
-    order: 213,
+    order: 204,
     fullWidth: true,
     isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.3d.heightRangeFrom',
-    order: 207,
+    order: 208,
   },
   heightRangeTo: {
     label: 'field-names.3d.heightRangeTo',
-    order: 208,
+    order: 209,
   },
   srsId: {
     label: 'field-names.3d.srsId',
@@ -177,11 +177,11 @@ const pycsw3DCatalogRecordAspects = {
   },
   minFlightAlt: {
     label: 'field-names.3d.minFlightAlt',
-    order: 209,
+    order: 210,
   },
   maxFlightAlt: {
     label: 'field-names.3d.maxFlightAlt',
-    order: 210,
+    order: 211,
   },
   geographicArea: {
     label: 'field-names.3d.geographicArea',
@@ -205,7 +205,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.3d.productBoundingBox',
-    order: 211,
+    order: 212,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'bbox',
@@ -275,13 +275,13 @@ const pycsw3DCatalogRecordAspects = {
       order: 0,
     },
     isBriefField: {
-      order: 4,
+      order: 5,
     },
     isInfoTooltip: true,
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',
-    order: 212,
+    order: 213,
   },
   keywords: {
     label: 'field-names.3d.keywords',
