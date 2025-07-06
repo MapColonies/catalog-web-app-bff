@@ -29,16 +29,16 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
-    order: 4,
+    order: 6,
     isBriefField: {
-      order: 3,
+      order: 6,
     },
   },
   productType: {
     label: 'field-names.quantized-mesh.productType',
-    order: 5,
+    order: 4,
     isBriefField: {
-      order: 9,
+      order: 2,
     },
     isInfoTooltip: true,
   },
@@ -48,30 +48,30 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 13,
+      order: 8,
     },
   },
   creationDate: {
     label: 'field-names.quantized-mesh.creationDate',
-    order: 105,
+    order: 107,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.quantized-mesh.updateDate',
-    order: 6,
+    order: 5,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
-    order: 106,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
-      order: 5,
+      order: 3,
     },
   },
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
-    order: 107,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -79,7 +79,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
       order: 1,
     },
     isBriefField: {
-      order: 6,
+      order: 4,
     },
     isInfoTooltip: true,
   },
@@ -98,22 +98,22 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.quantized-mesh.sensors',
-    order: 108,
+    order: 109,
     fullWidth: true,
   },
   footprint: {
     label: 'field-names.quantized-mesh.footprint',
-    order: 207,
+    order: 203,
     fullWidth: true,
     isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.quantized-mesh.heightRangeFrom',
-    order: 203,
+    order: 204,
   },
   heightRangeTo: {
     label: 'field-names.quantized-mesh.heightRangeTo',
-    order: 204,
+    order: 205,
   },
   srsId: {
     label: 'field-names.quantized-mesh.srsId',
@@ -125,7 +125,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   region: {
     label: 'field-names.quantized-mesh.region',
-    order: 109,
+    order: 110,
     fullWidth: true,
   },
   classification: {
@@ -133,7 +133,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     order: 101,
     fullWidth: true,
     isBriefField: {
-      order: 10,
+      order: 7,
     },
     // enumValues: {
     //   dictionary: {
@@ -152,10 +152,12 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   producerName: {
     label: 'field-names.quantized-mesh.producerName',
     order: 102,
+    fullWidth: true,
   },
   geographicArea: {
     label: 'field-names.quantized-mesh.geographicArea',
-    order: 110,
+    order: 111,
+    fullWidth: true,
   },
   productSource: {
     label: 'field-names.quantized-mesh.productSource',
@@ -168,7 +170,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productBoundingBox: {
     label: 'field-names.quantized-mesh.productBoundingBox',
-    order: 205,
+    order: 206,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'bbox',
@@ -230,7 +232,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.quantized-mesh.insertDate',
-    order: 999,
+    order: 108,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -238,17 +240,17 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
       order: 0,
     },
     isBriefField: {
-      order: 4,
+      order: 5,
     },
     isInfoTooltip: true,
   },
   wktGeometry: {
     label: 'field-names.quantized-mesh.wktGeometry',
-    order: 206,
+    order: 207,
   },
   keywords: {
     label: 'field-names.quantized-mesh.keywords',
-    order: 111,
+    order: 112,
     fullWidth: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -42,12 +42,12 @@ const pycswLayerCatalogRecordAspects = {
       },
     },
     isBriefField: {
-      order: 4,
+      order: 6,
     },
   },
   productType: {
     label: 'field-names.raster.productType',
-    order: 7,
+    order: 5,
     updateRules: {
       freeze: true,
     },
@@ -75,7 +75,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
-    order: 10,
+    order: 8,
     lookupTable: 'zoomlevelresolutions',
     lookupTableBinding: {
       valueFromPropertyName: 'resolutionDeg',
@@ -97,7 +97,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   updateDateUTC: {
     label: 'field-names.raster.update-date',
-    order: 6,
+    order: 14,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   description: {
@@ -165,10 +165,10 @@ const pycswLayerCatalogRecordAspects = {
   },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
-    order: 5,
+    order: 13,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
-      order: 3,
+      order: 5,
     },
     isInfoTooltip: true,
   },
@@ -177,7 +177,7 @@ const pycswLayerCatalogRecordAspects = {
     order: 103,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
-      order: 5,
+      order: 3,
     },
   },
   imagingTimeEndUTC: {
@@ -190,7 +190,7 @@ const pycswLayerCatalogRecordAspects = {
       order: 1,
     },
     isBriefField: {
-      order: 6,
+      order: 4,
     },
     isInfoTooltip: true,
   },
@@ -219,22 +219,22 @@ const pycswLayerCatalogRecordAspects = {
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
-    order: 8,
+    order: 6,
     isBriefField: {
       order: 10,
     },
   },
   minResolutionDeg: {
     label: 'field-names.raster.minResolutionDeg',
-    order: 9,
+    order: 7,
   },
   minResolutionMeter: {
     label: 'field-names.raster.minResolutionMeter',
-    order: 11,
+    order: 9,
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
-    order: 12,
+    order: 10,
     isBriefField: {
       order: 7,
     },
@@ -251,11 +251,11 @@ const pycswLayerCatalogRecordAspects = {
   },
   scale: {
     label: 'field-names.raster.scale',
-    order: 204,
+    order: 205,
   },
   footprint: {
     label: 'field-names.raster.footprint',
-    order: 205,
+    order: 204,
     fullWidth: true,
     isCopyable: true,
   },
@@ -272,14 +272,14 @@ const pycswLayerCatalogRecordAspects = {
   },
   transparency: {
     label: 'field-names.raster.transparency',
-    order: 14,
+    order: 11,
     isBriefField: {
       order: 8,
     },
   },
   productStatus: {
     label: 'field-names.raster.productStatus',
-    order: 13,
+    order: 12,
     isBriefField: {
       order: 12,
     },
