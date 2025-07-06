@@ -77,7 +77,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 1,
     },
     isBriefField: {
@@ -236,7 +236,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 0,
     },
     isBriefField: {

@@ -3,14 +3,14 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycsw3DCatalogRecordAspects = {
   id: {
     label: 'field-names.3d.id',
-    order: 1,
+    order: 2,
     isBriefField: {
       order: 1,
     },
   },
   productId: {
     label: 'field-names.3d.productId',
-    order: 0,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -19,7 +19,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.3d.productName',
-    order: 0,
+    order: 3,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -29,21 +29,21 @@ const pycsw3DCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
-    order: 3,
+    order: 4,
     isBriefField: {
       order: 3,
     },
   },
   productType: {
     label: 'field-names.3d.productType',
-    order: 0,
+    order: 5,
     isBriefField: {
       order: 9,
     },
   },
   description: {
     label: 'field-names.3d.description',
-    order: 0,
+    order: 100,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -52,19 +52,17 @@ const pycsw3DCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.3d.creationDate',
-    order: 0,
-    fullWidth: true,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.3d.updateDate',
-    order: 0,
-    fullWidth: true,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
-    order: 0,
+    order: 107,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
@@ -72,11 +70,11 @@ const pycsw3DCatalogRecordAspects = {
   },
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
-    order: 0,
+    order: 108,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 1,
     },
     isBriefField: {
@@ -86,73 +84,74 @@ const pycsw3DCatalogRecordAspects = {
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
-    order: 0,
+    order: 7,
   },
   maxResolutionMeter: {
     label: 'field-names.3d.maxResolutionMeter',
-    order: 0,
+    order: 8,
   },
   maxAccuracyCE90: {
     label: 'field-names.3d.maxAccuracyCE90',
-    order: 0,
+    order: 202,
     isBriefField: {
       order: 7,
     },
   },
   absoluteAccuracyLE90: {
     label: 'field-names.3d.absoluteAccuracyLE90',
-    order: 0,
+    order: 203,
     isBriefField: {
       order: 8,
     },
   },
   accuracySE90: {
     label: 'field-names.3d.accuracySE90',
-    order: 0,
+    order: 204,
   },
   relativeAccuracySE90: {
     label: 'field-names.3d.relativeAccuracySE90',
-    order: 0,
+    order: 205,
   },
   visualAccuracy: {
     label: 'field-names.3d.visualAccuracy',
-    order: 0,
+    order: 206,
+    fullWidth: true,
   },
   sensors: {
     label: 'field-names.3d.sensors',
-    order: 0,
+    order: 109,
     fullWidth: true,
   },
   footprint: {
     label: 'field-names.3d.footprint',
-    order: 0,
+    order: 213,
     fullWidth: true,
     isCopyable: true,
   },
   heightRangeFrom: {
     label: 'field-names.3d.heightRangeFrom',
-    order: 0,
+    order: 207,
   },
   heightRangeTo: {
     label: 'field-names.3d.heightRangeTo',
-    order: 0,
+    order: 208,
   },
   srsId: {
     label: 'field-names.3d.srsId',
-    order: 0,
+    order: 201,
   },
   srsName: {
     label: 'field-names.3d.srsName',
-    order: 0,
+    order: 200,
   },
   region: {
     label: 'field-names.3d.region',
-    order: 0,
+    order: 110,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.3d.classification',
-    order: 0,
+    order: 101,
     fullWidth: true,
     isBriefField: {
       order: 10,
@@ -165,31 +164,33 @@ const pycsw3DCatalogRecordAspects = {
   },
   productionSystem: {
     label: 'field-names.3d.productionSystem',
-    order: 0,
+    order: 103,
   },
   productionSystemVer: {
     label: 'field-names.3d.productionSystemVer',
-    order: 0,
+    order: 104,
   },
   producerName: {
     label: 'field-names.3d.producerName',
-    order: 0,
+    order: 102,
+    fullWidth: true,
   },
   minFlightAlt: {
     label: 'field-names.3d.minFlightAlt',
-    order: 0,
+    order: 209,
   },
   maxFlightAlt: {
     label: 'field-names.3d.maxFlightAlt',
-    order: 0,
+    order: 210,
   },
   geographicArea: {
     label: 'field-names.3d.geographicArea',
-    order: 0,
+    order: 111,
+    fullWidth: true,
   },
   productSource: {
     label: 'field-names.3d.productSource',
-    order: 0,
+    order: 9,
     fullWidth: true,
     isBriefField: {
       order: 11,
@@ -197,14 +198,14 @@ const pycsw3DCatalogRecordAspects = {
   },
   productStatus: {
     label: 'field-names.3d.productStatus',
-    order: 2,
+    order: 10,
     isBriefField: {
       order: 2,
     },
   },
   productBoundingBox: {
     label: 'field-names.3d.productBoundingBox',
-    order: 0,
+    order: 211,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'bbox',
@@ -212,33 +213,33 @@ const pycsw3DCatalogRecordAspects = {
   },
   links: {
     label: 'field-names.3d.links',
-    order: 0,
+    order: 113,
     fullWidth: true,
   },
   'link.name': {
     label: 'field-names.3d.link.name',
-    order: 0,
+    order: 114,
     isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
     label: 'field-names.3d.link.description',
-    order: 0,
+    order: 115,
     fullWidth: true,
   },
   'link.protocol': {
     label: 'field-names.3d.link.protocol',
-    order: 0,
+    order: 116,
     fullWidth: true,
   },
   'link.url': {
     label: 'field-names.3d.link.url',
-    order: 0,
+    order: 117,
     fullWidth: true,
   },
   type: {
     label: 'field-names.3d.type',
-    order: 0,
+    order: 999,
     isFilterable: {
       participateInFilterPanel: false,
       operation: 'eq',
@@ -246,31 +247,31 @@ const pycsw3DCatalogRecordAspects = {
   },
   typeName: {
     label: 'field-names.3d.typeName',
-    order: 0,
+    order: 999,
   },
   schema: {
     label: 'field-names.3d.schema',
-    order: 0,
+    order: 999,
   },
   mdSource: {
     label: 'field-names.3d.mdSource',
-    order: 0,
+    order: 999,
   },
   xml: {
     label: 'field-names.3d.xml',
-    order: 0,
+    order: 999,
   },
   anyText: {
     label: 'field-names.3d.anyText',
-    order: 0,
+    order: 999,
   },
   insertDate: {
     label: 'field-names.3d.insertDate',
-    order: 0,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
-      operation: 'dateRange', // Date filters will be ranges. requires special treatment.
+      operation: 'dateRange', // Date filters will be ranges and require special treatment
       order: 0,
     },
     isBriefField: {
@@ -280,11 +281,11 @@ const pycsw3DCatalogRecordAspects = {
   },
   wktGeometry: {
     label: 'field-names.3d.wktGeometry',
-    order: 0,
+    order: 212,
   },
   keywords: {
     label: 'field-names.3d.keywords',
-    order: 0,
+    order: 112,
     fullWidth: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
