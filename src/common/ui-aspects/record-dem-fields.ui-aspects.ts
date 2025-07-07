@@ -3,14 +3,14 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycswDemCatalogRecordAspects = {
   id: {
     label: 'field-names.dem.id',
-    order: 2,
+    order: 4,
     isBriefField: {
       order: 2,
     },
   },
   productId: {
     label: 'field-names.dem.productId',
-    order: 1,
+    order: 2,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -22,7 +22,7 @@ const pycswDemCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.dem.productName',
-    order: 3,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -32,7 +32,7 @@ const pycswDemCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.dem.productType',
-    order: 4,
+    order: 3,
     isBriefField: {
       order: 3,
     },
@@ -40,7 +40,7 @@ const pycswDemCatalogRecordAspects = {
   },
   description: {
     label: 'field-names.dem.description',
-    order: 100,
+    order: 108,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -99,7 +99,7 @@ const pycswDemCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.dem.sensors',
-    order: 106,
+    order: 102,
     fullWidth: true,
   },
   footprint: {
@@ -131,12 +131,12 @@ const pycswDemCatalogRecordAspects = {
   },
   region: {
     label: 'field-names.dem.region',
-    order: 107,
+    order: 101,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.dem.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 10,
@@ -149,7 +149,7 @@ const pycswDemCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.dem.producerName',
-    order: 102,
+    order: 106,
     fullWidth: true,
   },
   productStatus: {
@@ -265,7 +265,7 @@ const pycswDemCatalogRecordAspects = {
   },
   keywords: {
     label: 'field-names.dem.keywords',
-    order: 108,
+    order: 107,
     fullWidth: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
