@@ -5,7 +5,7 @@ export const vectorCatalogRecordAspects = {
   },
   classification: {
     label: 'field-names.vector.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 3,
@@ -13,12 +13,12 @@ export const vectorCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.vector.productName',
-    order: 2,
+    order: 1,
     isInfoTooltip: true,
   },
   description: {
     label: 'field-names.vector.description',
-    order: 100,
+    order: 103,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -31,7 +31,8 @@ export const vectorCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.vector.producerName',
-    order: 102,
+    order: 101,
+    fullWidth: true,
   },
   productType: {
     label: 'field-names.vector.productType',
@@ -60,14 +61,14 @@ export const vectorCatalogRecordAspects = {
   },
   id: {
     label: 'field-names.vector.id',
-    order: 1,
+    order: 2,
     isBriefField: {
       order: 1,
     },
   },
   keywords: {
     label: 'field-names.vector.keywords',
-    order: 103,
+    order: 102,
     fullWidth: true,
   },
   links: {

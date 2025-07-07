@@ -3,14 +3,14 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 export const pycswQuantizedMeshBestCatalogRecordAspects = {
   id: {
     label: 'field-names.quantized-mesh.id',
-    order: 2,
+    order: 4,
     isBriefField: {
       order: 1,
     },
   },
   productId: {
     label: 'field-names.quantized-mesh.productId',
-    order: 1,
+    order: 2,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -19,7 +19,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.quantized-mesh.productName',
-    order: 3,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -29,14 +29,14 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.quantized-mesh.productVersion',
-    order: 6,
+    order: 3,
     isBriefField: {
       order: 6,
     },
   },
   productType: {
     label: 'field-names.quantized-mesh.productType',
-    order: 4,
+    order: 5,
     isBriefField: {
       order: 2,
     },
@@ -44,7 +44,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   description: {
     label: 'field-names.quantized-mesh.description',
-    order: 100,
+    order: 112,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -53,17 +53,17 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.quantized-mesh.creationDate',
-    order: 107,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.quantized-mesh.updateDate',
-    order: 5,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.quantized-mesh.sourceDateStart',
-    order: 105,
+    order: 104,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 3,
@@ -71,7 +71,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   sourceDateEnd: {
     label: 'field-names.quantized-mesh.sourceDateEnd',
-    order: 106,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -98,7 +98,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.quantized-mesh.sensors',
-    order: 109,
+    order: 103,
     fullWidth: true,
   },
   footprint: {
@@ -125,12 +125,12 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   region: {
     label: 'field-names.quantized-mesh.region',
-    order: 110,
+    order: 101,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.quantized-mesh.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 7,
@@ -143,20 +143,20 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   productionSystem: {
     label: 'field-names.quantized-mesh.productionSystem',
-    order: 103,
+    order: 109,
   },
   productionSystemVer: {
     label: 'field-names.quantized-mesh.productionSystemVer',
-    order: 104,
+    order: 110,
   },
   producerName: {
     label: 'field-names.quantized-mesh.producerName',
-    order: 102,
+    order: 108,
     fullWidth: true,
   },
   geographicArea: {
     label: 'field-names.quantized-mesh.geographicArea',
-    order: 111,
+    order: 102,
     fullWidth: true,
   },
   productSource: {
@@ -178,28 +178,28 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   links: {
     label: 'field-names.quantized-mesh.links',
-    order: 112,
+    order: 113,
     fullWidth: true,
   },
   'link.name': {
     label: 'field-names.quantized-mesh.link.name',
-    order: 113,
+    order: 114,
     isCopyable: true,
     fullWidth: true,
   },
   'link.description': {
     label: 'field-names.quantized-mesh.link.description',
-    order: 114,
+    order: 115,
     fullWidth: true,
   },
   'link.protocol': {
     label: 'field-names.quantized-mesh.link.protocol',
-    order: 115,
+    order: 116,
     fullWidth: true,
   },
   'link.url': {
     label: 'field-names.quantized-mesh.link.url',
-    order: 116,
+    order: 117,
     fullWidth: true,
   },
   type: {
@@ -232,7 +232,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.quantized-mesh.insertDate',
-    order: 108,
+    order: 107,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -250,7 +250,7 @@ export const pycswQuantizedMeshBestCatalogRecordAspects = {
   },
   keywords: {
     label: 'field-names.quantized-mesh.keywords',
-    order: 112,
+    order: 111,
     fullWidth: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

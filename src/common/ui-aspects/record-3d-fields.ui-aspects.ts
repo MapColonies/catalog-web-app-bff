@@ -3,14 +3,14 @@ import { DateGranularity } from '../../graphql/entityDescriptor';
 const pycsw3DCatalogRecordAspects = {
   id: {
     label: 'field-names.3d.id',
-    order: 2,
+    order: 4,
     isBriefField: {
       order: 1,
     },
   },
   productId: {
     label: 'field-names.3d.productId',
-    order: 1,
+    order: 2,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -19,7 +19,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.3d.productName',
-    order: 3,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -29,21 +29,21 @@ const pycsw3DCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.3d.productVersion',
-    order: 6,
+    order: 3,
     isBriefField: {
       order: 6,
     },
   },
   productType: {
     label: 'field-names.3d.productType',
-    order: 4,
+    order: 5,
     isBriefField: {
       order: 9,
     },
   },
   description: {
     label: 'field-names.3d.description',
-    order: 100,
+    order: 112,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -52,17 +52,17 @@ const pycsw3DCatalogRecordAspects = {
   },
   creationDate: {
     label: 'field-names.3d.creationDate',
-    order: 107,
+    order: 106,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   updateDate: {
     label: 'field-names.3d.updateDate',
-    order: 5,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
     label: 'field-names.3d.sourceDateStart',
-    order: 105,
+    order: 104,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 3,
@@ -70,7 +70,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   sourceDateEnd: {
     label: 'field-names.3d.sourceDateEnd',
-    order: 106,
+    order: 105,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -119,7 +119,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.3d.sensors',
-    order: 109,
+    order: 103,
     fullWidth: true,
   },
   footprint: {
@@ -146,12 +146,12 @@ const pycsw3DCatalogRecordAspects = {
   },
   region: {
     label: 'field-names.3d.region',
-    order: 110,
+    order: 101,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.3d.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 10,
@@ -164,15 +164,15 @@ const pycsw3DCatalogRecordAspects = {
   },
   productionSystem: {
     label: 'field-names.3d.productionSystem',
-    order: 103,
+    order: 109,
   },
   productionSystemVer: {
     label: 'field-names.3d.productionSystemVer',
-    order: 104,
+    order: 110,
   },
   producerName: {
     label: 'field-names.3d.producerName',
-    order: 102,
+    order: 108,
     fullWidth: true,
   },
   minFlightAlt: {
@@ -185,7 +185,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   geographicArea: {
     label: 'field-names.3d.geographicArea',
-    order: 111,
+    order: 102,
     fullWidth: true,
   },
   productSource: {
@@ -267,7 +267,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   insertDate: {
     label: 'field-names.3d.insertDate',
-    order: 108,
+    order: 107,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isFilterable: {
       participateInFilterPanel: true,
@@ -285,7 +285,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   keywords: {
     label: 'field-names.3d.keywords',
-    order: 112,
+    order: 111,
     fullWidth: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

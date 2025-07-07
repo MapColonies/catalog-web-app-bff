@@ -51,7 +51,7 @@ const polygonPartRecordAspects = {
   },
   description: {
     label: 'field-names.raster.description',
-    order: 100,
+    order: 106,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -60,22 +60,22 @@ const polygonPartRecordAspects = {
   },
   sensors: {
     label: 'field-names.raster.sensors',
-    order: 104,
+    order: 101,
     fullWidth: true,
   },
   countries: {
     label: 'field-names.polygon-parts.countries',
-    order: 105,
+    order: 104,
     fullWidth: true,
   },
   cities: {
     label: 'field-names.polygon-parts.cities',
-    order: 106,
+    order: 105,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.raster.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 11,

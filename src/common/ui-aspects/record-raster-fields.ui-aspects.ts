@@ -3,14 +3,14 @@ import { DateGranularity, FractionType, OperationType } from '../../graphql/enti
 const pycswLayerCatalogRecordAspects = {
   id: {
     label: 'field-names.raster.id',
-    order: 2,
+    order: 4,
     isBriefField: {
       order: 2,
     },
   },
   productId: {
     label: 'field-names.raster.productId',
-    order: 1,
+    order: 2,
     updateRules: {
       freeze: true,
       value: {
@@ -30,7 +30,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productVersion: {
     label: 'field-names.raster.productVersion',
-    order: 4,
+    order: 3,
     updateRules: {
       freeze: true,
       value: {
@@ -47,7 +47,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productType: {
     label: 'field-names.raster.productType',
-    order: 5,
+    order: 7,
     updateRules: {
       freeze: true,
     },
@@ -57,7 +57,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   productName: {
     label: 'field-names.raster.productName',
-    order: 3,
+    order: 1,
     isFilterable: {
       participateInFilterPanel: true,
       operation: 'like',
@@ -75,7 +75,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   maxResolutionDeg: {
     label: 'field-names.raster.maxResolutionDeg',
-    order: 8,
+    order: 10,
     lookupTable: 'zoomlevelresolutions',
     lookupTableBinding: {
       valueFromPropertyName: 'resolutionDeg',
@@ -97,12 +97,12 @@ const pycswLayerCatalogRecordAspects = {
   },
   updateDateUTC: {
     label: 'field-names.raster.update-date',
-    order: 14,
+    order: 6,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   description: {
     label: 'field-names.raster.description',
-    order: 100,
+    order: 109,
     fullWidth: true,
     rows: 4,
     isBriefField: {
@@ -111,17 +111,17 @@ const pycswLayerCatalogRecordAspects = {
   },
   sensors: {
     label: 'field-names.raster.sensors',
-    order: 107,
+    order: 102,
     fullWidth: true,
   },
   region: {
     label: 'field-names.raster.region',
-    order: 108,
+    order: 101,
     fullWidth: true,
   },
   classification: {
     label: 'field-names.raster.classification',
-    order: 101,
+    order: 100,
     fullWidth: true,
     isBriefField: {
       order: 11,
@@ -165,7 +165,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   ingestionDate: {
     label: 'field-names.raster.ingestion-date',
-    order: 13,
+    order: 5,
     dateGranularity: DateGranularity.DATE_AND_TIME,
     isBriefField: {
       order: 5,
@@ -214,27 +214,27 @@ const pycswLayerCatalogRecordAspects = {
   },
   keywords: {
     label: 'field-names.raster.keywords',
-    order: 109,
+    order: 108,
     fullWidth: true,
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
-    order: 6,
+    order: 8,
     isBriefField: {
       order: 10,
     },
   },
   minResolutionDeg: {
     label: 'field-names.raster.minResolutionDeg',
-    order: 7,
+    order: 9,
   },
   minResolutionMeter: {
     label: 'field-names.raster.minResolutionMeter',
-    order: 9,
+    order: 11,
   },
   maxResolutionMeter: {
     label: 'field-names.raster.maxResolutionMeter',
-    order: 10,
+    order: 12,
     isBriefField: {
       order: 7,
     },
@@ -261,7 +261,7 @@ const pycswLayerCatalogRecordAspects = {
   },
   producerName: {
     label: 'field-names.raster.producerName',
-    order: 102,
+    order: 107,
     fullWidth: true,
   },
   layerPolygonParts: {
@@ -272,14 +272,14 @@ const pycswLayerCatalogRecordAspects = {
   },
   transparency: {
     label: 'field-names.raster.transparency',
-    order: 11,
+    order: 13,
     isBriefField: {
       order: 8,
     },
   },
   productStatus: {
     label: 'field-names.raster.productStatus',
-    order: 12,
+    order: 14,
     isBriefField: {
       order: 12,
     },
