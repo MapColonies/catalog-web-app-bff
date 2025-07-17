@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -15,12 +15,17 @@ import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-
 import { Services } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
 import { getResolvers } from './graphql/resolvers';
+import { STREAM_FILE_ROUTER_SYMBOL } from './stream-route/streamRouter';
 
 @injectable()
 export class ServerBuilder {
   private readonly serverInstance: express.Application;
 
-  public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
+  public constructor(
+    @inject(Services.CONFIG) private readonly config: IConfig,
+    @inject(Services.LOGGER) private readonly logger: Logger,
+    @inject(STREAM_FILE_ROUTER_SYMBOL) private readonly streamRouter: Router
+  ) {
     this.serverInstance = express();
   }
 
@@ -41,6 +46,13 @@ export class ServerBuilder {
 
   private buildRoutes(): void {
     this.buildDocsRoutes();
+    this.buildCRUDRoutes(); // Register the new file routes
+  }
+
+  private buildCRUDRoutes(): void {
+    // this.serverInstance.get('/api/files', this.fetchFilesFromNFS.bind(this)); // New route for fetching files
+    // this.serverInstance.get('/api/files', this.handleStreamFileRequest.bind(this));
+    this.serverInstance.use('/', this.streamRouter);
   }
 
   private registerPreRoutesMiddleware(): void {

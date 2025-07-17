@@ -11,6 +11,7 @@ import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
+import { Stream } from 'stream';
 
 type ExplorerServices = Record<CatalogRecordItems, IStorageExplorerManagerService>;
 
@@ -54,6 +55,14 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
 
     return transformedMetadata;
+  }
+
+  public async getStreamFile(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<Stream> {
+    this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
+
+    const storageExplorerManagerInstance = this.getManagerInstance(data.type);
+
+    return await storageExplorerManagerInstance.getStreamFile(data, ctx);
   }
 
   public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {

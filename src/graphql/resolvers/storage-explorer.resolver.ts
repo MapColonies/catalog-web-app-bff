@@ -9,6 +9,7 @@ import { StorageExplorerManager } from '../../common/storage-explorer-manager/st
 import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../inputTypes';
 import { DecryptedId, File } from '../storage-explorer';
 import { LayerMetadataMixedUnion } from './csw.resolver';
+import { Stream } from 'stream';
 
 @Resolver((of) => File)
 export class StorageExplorerResolver {
@@ -109,5 +110,12 @@ export class StorageExplorerResolver {
     }
 
     return null;
+  }
+
+  public async getStreamFile(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<Stream> {
+    const { pathSuffix, type } = data;
+    const fileContent = await this.storageExplorerManager.getStreamFile({ pathSuffix, type }, ctx);
+
+    return fileContent; // This is a Readable stream
   }
 }
