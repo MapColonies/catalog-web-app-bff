@@ -125,15 +125,15 @@ export class CSW {
           break;
         case RecordType.RECORD_RASTER:
           getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
-          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
+          // this.addVectorRecord(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
         case RecordType.RECORD_3D:
         case RecordType.RECORD_DEM:
           getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
-          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
+          // this.addVectorRecord(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
         case RecordType.RECORD_VECTOR:
-          this.addVectorRecordIfExist(getCatalogs, catalog, ctx, newOpts, opts, start, end);
+          getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, newOpts));
           break;
       }
     } else {
@@ -169,7 +169,7 @@ export class CSW {
     return data;
   }
 
-  private addVectorRecordIfExist(
+  private addVectorRecord(
     getCatalogs: Promise<CatalogRecordType[]>[],
     catalog: CatalogRecordItems,
     ctx: IContext,
@@ -179,9 +179,9 @@ export class CSW {
     end?: number
   ): void {
     const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
-    const minFiltersForCatalogSearch = 2;
+    const filtersForCatalog = 1;
 
-    if (size(opts?.filter) < minFiltersForCatalogSearch && isIncludeVector) {
+    if (size(opts?.filter) > filtersForCatalog && isIncludeVector) {
       getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
     }
   }
