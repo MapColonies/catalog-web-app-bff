@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.10](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.9...v1.27.10) (2025-07-20)
+
+
+### Bug Fixes
+
+* remove fetch vector in other catalogs ([#197](https://github.com/MapColonies/catalog-web-app-bff/issues/197)) ([601fe7b](https://github.com/MapColonies/catalog-web-app-bff/commit/601fe7b18a99c3d816a42c8516485ef605a1d34f))
+
 ### [1.27.9](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.8...v1.27.9) (2025-07-07)
 
 
