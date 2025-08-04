@@ -125,7 +125,7 @@
   },
   "wfs": {
     "url": "http://geoserver-url",
-    "exposureType": "SERVICE"
+    "exposureType": "ROUTE"
   },
   "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
