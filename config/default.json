@@ -35,21 +35,21 @@
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "NOT_DEPLOYED",
+      "url": "https://3d-csw-url",
       "exposureType": "ROUTE"
     },
     "dem": {
-      "url": "NOT_DEPLOYED",
+      "url": "https://dem-csw-url",
       "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "https://raster-catalog-url",
+      "url": "http://raster-catalog-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "NOT_DEPLOYED",
+      "url": "http://3d-ingestion-url",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -58,11 +58,11 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "https://raster-ingestion-url",
+      "url": "http://raster-ingestion-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "NOT_DEPLOYED",
+      "url": "http://3d-ingestion-url",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -71,44 +71,44 @@
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "https://raster-ingestion-url",
+      "url": "http://raster-ingestion-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "NOT_DEPLOYED",
+      "url": "http://3d-ingestion-url",
       "exposureType": "SERVICE"
     }
   },
   "validationService": {
     "raster": {
-      "url": "https://raster-ingestion-url",
+      "url": "http://raster-ingestion-url",
       "exposureType": "SERVICE"
     }
   },
   "exportLayerServices": {
     "raster": {
-      "url": "https://raster-export-url",
+      "url": "http://raster-export-url",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "https://3d_export.com"
+      "url": "NOT_AVAILABLE"
     },
     "dem": {
-      "url": "https://dem_export.com"
+      "url": "NOT_AVAILABLE"
     }
   },
   "jobServices": {
     "common": {
-      "url": "https://common-job-manager-url",
+      "url": "http://common-job-manager-url",
       "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "https://common-lookup-tables-url",
+    "url": "http://common-lookup-tables-url",
     "exposureType": "SERVICE"
   },
   "serviceDiscovery": {
-    "url": "https://app-service-discovery-url",
+    "url": "http://app-service-discovery-url",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -124,7 +124,7 @@
     }
   },
   "wfs": {
-    "url": "http://geoserver-url",
+    "url": "https://vector-geoserver-url",
     "exposureType": "ROUTE"
   },
   "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
@@ -133,7 +133,7 @@
     "exposureType": "ROUTE"
   },
   "demHeightsService": {
-    "url": "NOT_AVAILABLE",
+    "url": "https://dem-heights-url",
     "exposureType": "ROUTE"
   }
 }
