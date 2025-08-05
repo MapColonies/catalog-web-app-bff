@@ -48,7 +48,7 @@ export const requestHandlerWithToken = async (url: string, method: string, param
       ...reqConfig.headers,
       [attributeName]: tokenValue,
     } as Record<string, unknown>;
-  } else if (injectionType.toLowerCase() === 'queryparam') {
+  } else if (isQueryParam(injectionType)) {
     reqConfig.params = {
       ...reqConfig.params,
       [attributeName]: tokenValue,
@@ -69,9 +69,13 @@ export const urlHandler = (service: IService): string => {
   const attributeName = config.get<string>('accessToken.attributeName');
   const tokenValue = config.get<string>('accessToken.tokenValue');
 
-  if (service.exposureType === 'ROUTE' && injectionType.toLowerCase() === 'queryparam') {
+  if (service.exposureType === 'ROUTE' && isQueryParam(injectionType)) {
     return `${service.url}?${attributeName}=${tokenValue}`;
   }
 
   return service.url;
+};
+
+const isQueryParam = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'queryparam';
 };
