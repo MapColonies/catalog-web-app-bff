@@ -69,9 +69,8 @@ export const urlHandler = (service: IService): string => {
   const attributeName = config.get<string>('accessToken.attributeName');
   const tokenValue = config.get<string>('accessToken.tokenValue');
 
-  if (service.exposureType === 'ROUTE' && injectionType.toLowerCase() === 'queryparam') {
-    const urlSeparator = service.url.includes('?') ? '&' : '?';
-    return `${service.url}${urlSeparator}${attributeName}=${tokenValue}`;
+  if (service.exposureType === 'ROUTE' && injectionType.toLowerCase() === 'queryparam' && !service.url.includes(`${attributeName}`)) {
+    return `${service.url}?${attributeName}=${tokenValue}`;
   }
 
   return service.url;
