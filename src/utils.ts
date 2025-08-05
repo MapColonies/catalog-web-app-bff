@@ -71,7 +71,7 @@ export const urlHandler = (service: IService): string => {
 
   if (service.exposureType === 'ROUTE' && injectionType.toLowerCase() === 'queryparam') {
     const urlSeparator = service.url.includes('?') ? '&' : '?';
-    return `${service.url}${urlSeparator}${[attributeName]}=${tokenValue}`;
+    return `${service.url}${urlSeparator}${attributeName}=${tokenValue}`;
   }
 
   return service.url;
