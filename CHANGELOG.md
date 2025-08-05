@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.11](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.10...v1.27.11) (2025-08-05)
+
+
+### Bug Fixes
+
+* wfs exposure type ([#199](https://github.com/MapColonies/catalog-web-app-bff/issues/199)) ([4b5fae6](https://github.com/MapColonies/catalog-web-app-bff/commit/4b5fae6b4346b7c41f0f153e3c1ea2ceb235e03e))
+* wfs url should be route for app and support token according to config (MAPCO-8477) ([#200](https://github.com/MapColonies/catalog-web-app-bff/issues/200)) ([16f0b7f](https://github.com/MapColonies/catalog-web-app-bff/commit/16f0b7f14ca6b223123b4fd705e83ff59a413a98))
+
 ### [1.27.10](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.9...v1.27.10) (2025-07-20)
 
 
