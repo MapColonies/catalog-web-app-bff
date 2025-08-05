@@ -9,6 +9,14 @@ axiosRetry(axios, {
   retries: 0,
 });
 
+const isHeader = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'header';
+};
+
+const isQueryParam = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'queryparam';
+};
+
 export enum CatalogRecordItems {
   RASTER = 'RASTER',
   '3D' = '3D',
@@ -74,12 +82,4 @@ export const urlHandler = (service: IService): string => {
   }
 
   return service.url;
-};
-
-const isHeader = (injectionType: string): boolean => {
-  return injectionType.toLowerCase() === 'header';
-};
-
-const isQueryParam = (injectionType: string): boolean => {
-  return injectionType.toLowerCase() === 'queryparam';
 };
