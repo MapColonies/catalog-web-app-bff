@@ -12,7 +12,7 @@
     "port": "8080",
     "request": {
       "payload": {
-        "limit": "1mb"
+        "limit": "15mb"
       }
     },
     "response": {

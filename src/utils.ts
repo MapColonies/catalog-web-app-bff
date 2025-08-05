@@ -63,3 +63,16 @@ export const requestExecutor = async (service: IService, method: string, params:
     ? requestHandlerWithToken(service.url, method, params, ctx)
     : requestHandler(service.url, method, params, ctx);
 };
+
+export const urlHandler = (service: IService): string => {
+  const injectionType = config.get<string>('accessToken.injectionType');
+  const attributeName = config.get<string>('accessToken.attributeName');
+  const tokenValue = config.get<string>('accessToken.tokenValue');
+
+  if (service.exposureType === 'ROUTE' && injectionType.toLowerCase() === 'queryparam') {
+    const urlSeparator = service.url.includes('?') ? '&' : '?';
+    return `${service.url}${urlSeparator}${[attributeName]}=${tokenValue}`;
+  }
+
+  return service.url;
+};
