@@ -43,7 +43,7 @@ export const requestHandlerWithToken = async (url: string, method: string, param
   const tokenValue = config.get<string>('accessToken.tokenValue');
   const reqConfig = { ...params };
 
-  if (injectionType.toLowerCase() === 'header') {
+  if (isHeader(injectionType)) {
     reqConfig.headers = {
       ...reqConfig.headers,
       [attributeName]: tokenValue,
@@ -74,6 +74,10 @@ export const urlHandler = (service: IService): string => {
   }
 
   return service.url;
+};
+
+const isHeader = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'header';
 };
 
 const isQueryParam = (injectionType: string): boolean => {
