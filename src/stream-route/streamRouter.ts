@@ -1,13 +1,15 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
 import { FactoryFunction } from 'tsyringe';
 import { StreamController } from './streamController';
+import multer from 'multer';
 
 const streamFileRouterFactory: FactoryFunction<Router> = (dependencyContainer) => {
   const router = Router();
   const controller = dependencyContainer.resolve(StreamController);
+  const upload = multer();
 
-  router.get('/api/files', controller.getStreamFile);
-  // router.get('/:longitude/:latitude', controller.getHeight);
+  router.get('/file', controller.getStreamFile);
+  router.post('/file', upload.single('file'), controller.writeStreamFile);
 
   return router;
 };

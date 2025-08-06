@@ -4,7 +4,7 @@ import { inject, singleton } from 'tsyringe';
 import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
-import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
+import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
 import { CSW } from '../../csw/csw';
 import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
@@ -28,7 +28,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     this.explorerServices['3D'] = new StorageExplorerManager3D(this.config, this.logger);
   }
 
-  public async getDirectory(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<File[]> {
+  public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
     this.logger.info(`[StorageExplorerManager][getDirectory] start getting directory for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
@@ -46,7 +46,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     return directoryContent;
   }
 
-  public async getFile(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
+  public async getFile(data: ExplorerGetByPath, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
     this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
@@ -57,12 +57,20 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     return transformedMetadata;
   }
 
-  public async getStreamFile(data: ExplorerGetByPathSuffix, ctx: IContext): Promise<Stream> {
-    this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
+  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<Stream> {
+    this.logger.info(`[StorageExplorerManager][getStreamFile] start getting file for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
 
     return await storageExplorerManagerInstance.getStreamFile(data, ctx);
+  }
+
+  public async writeStreamFile(data: ExplorerGetByPath, file: Express.Multer.File, ctx: IContext): Promise<Stream> {
+    this.logger.info(`[StorageExplorerManager][writeStreamFile] start writing file for type ${data.type}.`);
+
+    const storageExplorerManagerInstance = this.getManagerInstance(data.type);
+
+    return await storageExplorerManagerInstance.writeStreamFile(data, file, ctx);
   }
 
   public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {

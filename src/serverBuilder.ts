@@ -30,6 +30,7 @@ export class ServerBuilder {
   }
 
   public build(): express.Application {
+    this.buildAPIRoutes();
     this.registerPreRoutesMiddleware();
     this.buildRoutes();
     this.buildGraphQL();
@@ -46,12 +47,10 @@ export class ServerBuilder {
 
   private buildRoutes(): void {
     this.buildDocsRoutes();
-    this.buildCRUDRoutes(); // Register the new file routes
+    // this.buildAPIRoutes();
   }
 
-  private buildCRUDRoutes(): void {
-    // this.serverInstance.get('/api/files', this.fetchFilesFromNFS.bind(this)); // New route for fetching files
-    // this.serverInstance.get('/api/files', this.handleStreamFileRequest.bind(this));
+  private buildAPIRoutes(): void {
     this.serverInstance.use('/', this.streamRouter);
   }
 
