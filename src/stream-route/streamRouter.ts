@@ -1,19 +1,21 @@
-import express, { Router } from 'express';
-import { FactoryFunction } from 'tsyringe';
+import { Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { StreamController } from './streamController';
-import multer from 'multer';
+/* FOR UPLOAD API */
+// import multer from 'multer';
 
-const streamFileRouterFactory: FactoryFunction<Router> = (dependencyContainer) => {
+export const streamFileRouter = (): Router => {
   const router = Router();
-  const controller = dependencyContainer.resolve(StreamController);
-  const upload = multer();
+  const controller = new StreamController();
 
-  router.get('/file', controller.getStreamFile);
-  router.post('/file', upload.single('file'), controller.writeStreamFile);
+  router.get('/file', (req, res) => {
+    controller.getStreamFile(req, res).catch((err) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+    });
+  });
+  /* FOR UPLOAD API */
+  // const upload = multer();
+  // router.post('/file', upload.single('file'), controller.writeStreamFile);
 
   return router;
 };
-
-export const STREAM_FILE_ROUTER_SYMBOL = Symbol('streamFileRouterFactory');
-
-export { streamFileRouterFactory };

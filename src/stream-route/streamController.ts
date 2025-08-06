@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import { container, injectable } from 'tsyringe';
 import { Stream } from 'stream';
-import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
+import { Request, Response } from 'express';
+import { container, injectable } from 'tsyringe';
 import { RecordType } from '@map-colonies/types';
+import { StatusCodes } from 'http-status-codes';
+import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 
 export type GetStreamer = Stream;
 
@@ -17,7 +18,7 @@ export class StreamController {
   public getStreamFile = async (req: Request, res: Response): Promise<void> => {
     try {
       const { path, type } = req.query;
-      const ctx = req.body;
+      const ctx = { requestHeaders: req.headers };
 
       const stream = await this.storageExplorerManager.getStreamFile(
         {
@@ -30,14 +31,14 @@ export class StreamController {
       stream.pipe(res);
 
       stream.on('error', (err) => {
-        res.status(400).send('Error streaming file: File not found');
+        res.status(StatusCodes.BAD_REQUEST).send(`Error streaming file: ${JSON.stringify(err)}`);
       });
     } catch (err) {
-      res.status(500).send(err);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
     }
   };
 
-  public writeStreamFile = async (req: Request, res: Response, next: NextFunction) => {
+  public writeStreamFile = async (req: Request, res: Response): Promise<void> => {
     try {
       const { path, type } = req.query;
       const ctx = { requestHeaders: req.headers };
@@ -45,13 +46,13 @@ export class StreamController {
 
       const stream = await this.storageExplorerManager.writeStreamFile({ path: path as string, type: type as RecordType }, file, ctx);
 
-      stream.pipe(res);
+      req.pipe(stream);
 
       stream.on('error', (err) => {
-        res.status(400).send('Error streaming file: File not found');
+        res.status(StatusCodes.BAD_REQUEST).send(`Error streaming file: ${JSON.stringify(err)}`);
       });
     } catch (err) {
-      res.status(500).send(err);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
     }
   };
 }

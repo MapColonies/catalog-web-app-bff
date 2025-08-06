@@ -69,50 +69,50 @@ paths:
                     type: array
                     items:
                       type: string
-
-    post:
-      tags:
-        - File APIs
-      summary: Write stream file to path
-      parameters:
-        - name: path
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: type
-          in: query
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-              required:
-                - file
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-      responses:
-        200:
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  files:
-                    type: array
-                    items:
-                      type: string
+    # /* FOR UPLOAD API */
+    # post:
+    #   tags:
+    #     - File APIs
+    #   summary: Write stream file to path
+    #   parameters:
+    #     - name: path
+    #       in: query
+    #       required: true
+    #       schema:
+    #         type: string
+    #     - name: type
+    #       in: query
+    #       required: true
+    #       schema:
+    #         type: string
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       multipart/form-data:
+    #         schema:
+    #           type: object
+    #           properties:
+    #             file:
+    #               type: string
+    #               format: binary
+    #           required:
+    #             - file
+    #       application/octet-stream:
+    #         schema:
+    #           type: string
+    #           format: binary
+    #   responses:
+    #     200:
+    #       description: Successful response
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
 
 components:
   schemas:

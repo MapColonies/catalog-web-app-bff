@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -15,17 +15,13 @@ import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-
 import { Services } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
 import { getResolvers } from './graphql/resolvers';
-import { STREAM_FILE_ROUTER_SYMBOL } from './stream-route/streamRouter';
+import { streamFileRouter } from './stream-route/streamRouter';
 
 @injectable()
 export class ServerBuilder {
   private readonly serverInstance: express.Application;
 
-  public constructor(
-    @inject(Services.CONFIG) private readonly config: IConfig,
-    @inject(Services.LOGGER) private readonly logger: Logger,
-    @inject(STREAM_FILE_ROUTER_SYMBOL) private readonly streamRouter: Router
-  ) {
+  public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.serverInstance = express();
   }
 
@@ -47,11 +43,10 @@ export class ServerBuilder {
 
   private buildRoutes(): void {
     this.buildDocsRoutes();
-    // this.buildAPIRoutes();
   }
 
   private buildAPIRoutes(): void {
-    this.serverInstance.use('/', this.streamRouter);
+    this.serverInstance.use('/', streamFileRouter());
   }
 
   private registerPreRoutesMiddleware(): void {
