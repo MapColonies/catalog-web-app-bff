@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { StreamController } from './streamController';
-/* FOR UPLOAD API */
-// import multer from 'multer';
 
 export const streamFileRouter = (): Router => {
   const router = Router();
@@ -13,9 +11,7 @@ export const streamFileRouter = (): Router => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
     });
   });
-  /* FOR UPLOAD API */
-  // const upload = multer();
-  // router.post('/file', upload.single('file'), controller.writeStreamFile);
+  // router.post('/file', controller.writeStreamFile);
 
   return router;
 };

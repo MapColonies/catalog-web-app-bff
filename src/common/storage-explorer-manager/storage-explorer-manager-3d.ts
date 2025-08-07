@@ -1,5 +1,7 @@
 import { Stream } from 'stream';
 import { Logger } from '@map-colonies/js-logger';
+import { Request } from 'express';
+import { AxiosResponse } from 'axios';
 import { File } from '../../graphql/storage-explorer';
 import { ExplorerGetByPath, ExplorerGetById, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { requestExecutor } from '../../utils';
@@ -100,7 +102,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
     return res.data as NodeJS.ReadableStream; // <-- this is a stream
   }
 
-  public async writeStreamFile(data: ExplorerGetByPath, file: Express.Multer.File, ctx: IContext): Promise<NodeJS.WritableStream> {
+  public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
     this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}.`);
 
     const res = await requestExecutor(
@@ -110,13 +112,12 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
       },
       'GET',
       {
-        responseType: 'stream',
-        data: file,
+        data: req,
       },
       ctx
     );
 
-    return res.data as NodeJS.WriteStream; // <-- this is a stream
+    return res.data as AxiosResponse;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

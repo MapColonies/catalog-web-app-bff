@@ -1,7 +1,9 @@
 import { Stream } from 'stream';
+import { Request } from 'express';
+import { AxiosResponse } from 'axios';
+import { File } from '../../graphql/storage-explorer';
 import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
-import { File } from '../../graphql/storage-explorer';
 import { IContext } from '../interfaces';
 
 export interface IStorageExplorerManagerService {
@@ -9,7 +11,7 @@ export interface IStorageExplorerManagerService {
   getDirectoryById: (data: ExplorerGetById, ctx: IContext) => Promise<File[]>;
   getFile: (data: ExplorerGetByPath, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
   getStreamFile: (data: ExplorerGetByPath, ctx: IContext) => Promise<Stream>;
-  writeStreamFile: (data: ExplorerGetByPath, file: Express.Multer.File, ctx: IContext) => Promise<NodeJS.WritableStream>;
+  writeStreamFile: (data: ExplorerGetByPath, req: Request, ctx: IContext) => Promise<AxiosResponse>;
   resolveMetadataAsModel: (data: ExplorerResolveMetadataAsModel, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
   getFileById: (data: ExplorerGetById, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
   getDecryptedId: (data: ExplorerGetById, ctx: IContext) => Promise<{ data: string }>;

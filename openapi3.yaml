@@ -102,8 +102,30 @@ paths:
     #           type: string
     #           format: binary
     #   responses:
-    #     200:
-    #       description: Successful response
+    #     '201':
+    #       description: file CREATED at path
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
+    #     '409':
+    #       description: Conflict Error, file already exist
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
+    #     '500':
+    #       description: Internal server error
     #       content:
     #         application/json:
     #           schema:

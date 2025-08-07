@@ -1,8 +1,10 @@
-import { Stream } from 'stream';
+import { Readable, Stream } from 'stream';
 import { Request, Response } from 'express';
+import { AxiosError } from 'axios';
 import { container, injectable } from 'tsyringe';
-import { RecordType } from '@map-colonies/types';
 import { StatusCodes } from 'http-status-codes';
+import { RecordType } from '@map-colonies/types';
+import { HttpError } from '@map-colonies/error-types';
 import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 
 export type GetStreamer = Stream;
@@ -28,6 +30,10 @@ export class StreamController {
         ctx
       );
 
+      if (stream instanceof Readable) {
+        console.log('The response is instance of Readable');
+      }
+
       stream.pipe(res);
 
       stream.on('error', (err) => {
@@ -42,17 +48,19 @@ export class StreamController {
     try {
       const { path, type } = req.query;
       const ctx = { requestHeaders: req.headers };
-      const file = req.file;
 
-      const stream = await this.storageExplorerManager.writeStreamFile({ path: path as string, type: type as RecordType }, file, ctx);
+      const response = await this.storageExplorerManager.writeStreamFile({ path: path as string, type: type as RecordType }, req, ctx);
 
-      req.pipe(stream);
+      // if(response instanceof Readable){
+      //   console.log('The response is instance of Readable')
+      // }
+      // stream.pipe(res);
 
-      stream.on('error', (err) => {
-        res.status(StatusCodes.BAD_REQUEST).send(`Error streaming file: ${JSON.stringify(err)}`);
-      });
+      // res.status(response.status).send(response.data);
+      res.status(StatusCodes.CREATED).send(response.data);
     } catch (err) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+      // res.status(StatusCodes.INTERNAL_SERVER_ERROR).send((err as HttpError).message);
+      res.status((err as AxiosError).response?.status ?? StatusCodes.INTERNAL_SERVER_ERROR).send((err as HttpError).message);
     }
   };
 }

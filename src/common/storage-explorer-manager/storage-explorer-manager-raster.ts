@@ -1,5 +1,7 @@
 import { Stream } from 'stream';
 import { Logger } from '@map-colonies/js-logger';
+import { Request } from 'express';
+import { AxiosResponse } from 'axios';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
@@ -101,24 +103,25 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   /* FOR UPLOAD API */
-  // For this to work, need to include the headers in the request.
-  public async writeStreamFile(data: ExplorerGetByPath, file: Express.Multer.File, ctx: IContext): Promise<NodeJS.WritableStream> {
+  public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
     this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}.`);
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?path=${data.path}`,
+        url: `${this.service.url}/explorer/file?path=${data.path}&buffersize=1000000`,
         exposureType: this.service.exposureType,
       },
       'POST',
       {
-        responseType: 'stream',
-        data: file,
+        data: req,
+        headers: {
+          ...ctx.requestHeaders,
+        },
       },
       ctx
     );
 
-    return res.data as NodeJS.WritableStream; // <-- this is a stream
+    return res.data as AxiosResponse;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

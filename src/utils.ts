@@ -25,7 +25,7 @@ export const requestHandler = async (url: string, method: string, params: AxiosR
     maxContentLength: Infinity,
     ...params,
     headers: {
-      ...{ ...(params.headers ?? {}), ...(ctx ? { origin: ctx.requestHeaders.origin ? ctx.requestHeaders.origin : {} } : {}) },
+      ...{ ...(params.headers ?? {}), ...(ctx?.requestHeaders.origin && { origin: ctx.requestHeaders.origin }) },
     } as Record<string, unknown>,
   };
 
