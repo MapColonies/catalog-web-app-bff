@@ -1,12 +1,17 @@
-import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
-import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
+import { Stream } from 'stream';
+import { Request } from 'express';
+import { AxiosResponse } from 'axios';
 import { File } from '../../graphql/storage-explorer';
+import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
+import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { IContext } from '../interfaces';
 
 export interface IStorageExplorerManagerService {
-  getDirectory: (data: ExplorerGetByPathSuffix, ctx: IContext) => Promise<File[]>;
+  getDirectory: (data: ExplorerGetByPath, ctx: IContext) => Promise<File[]>;
   getDirectoryById: (data: ExplorerGetById, ctx: IContext) => Promise<File[]>;
-  getFile: (data: ExplorerGetByPathSuffix, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
+  getFile: (data: ExplorerGetByPath, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
+  getStreamFile: (data: ExplorerGetByPath, ctx: IContext) => Promise<Stream>;
+  writeStreamFile: (data: ExplorerGetByPath, req: Request, ctx: IContext) => Promise<AxiosResponse>;
   resolveMetadataAsModel: (data: ExplorerResolveMetadataAsModel, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
   getFileById: (data: ExplorerGetById, ctx: IContext) => Promise<typeof LayerMetadataMixedUnion>;
   getDecryptedId: (data: ExplorerGetById, ctx: IContext) => Promise<{ data: string }>;

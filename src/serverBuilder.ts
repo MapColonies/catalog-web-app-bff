@@ -15,6 +15,7 @@ import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-
 import { Services } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
 import { getResolvers } from './graphql/resolvers';
+import { streamFileRouter } from './stream-route/streamRouter';
 
 @injectable()
 export class ServerBuilder {
@@ -25,6 +26,7 @@ export class ServerBuilder {
   }
 
   public build(): express.Application {
+    this.buildAPIRoutes();
     this.registerPreRoutesMiddleware();
     this.buildRoutes();
     this.buildGraphQL();
@@ -41,6 +43,10 @@ export class ServerBuilder {
 
   private buildRoutes(): void {
     this.buildDocsRoutes();
+  }
+
+  private buildAPIRoutes(): void {
+    this.serverInstance.use('/', streamFileRouter());
   }
 
   private registerPreRoutesMiddleware(): void {

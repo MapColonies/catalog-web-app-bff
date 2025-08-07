@@ -6,7 +6,7 @@ import { Resolver, Query, Arg, FieldResolver, Root, Ctx } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
-import { ExplorerGetById, ExplorerGetByPathSuffix, ExplorerResolveMetadataAsModel } from '../inputTypes';
+import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../inputTypes';
 import { DecryptedId, File } from '../storage-explorer';
 import { LayerMetadataMixedUnion } from './csw.resolver';
 
@@ -24,12 +24,12 @@ export class StorageExplorerResolver {
   @Query((type) => [File])
   public async getDirectory(
     @Arg('data')
-    data: ExplorerGetByPathSuffix,
+    data: ExplorerGetByPath,
     @Ctx()
     ctx: IContext
   ): Promise<File[]> {
-    const { pathSuffix, type } = data;
-    const dirContent = await this.storageExplorerManager.getDirectory({ pathSuffix, type }, ctx);
+    const { path, type } = data;
+    const dirContent = await this.storageExplorerManager.getDirectory({ path, type }, ctx);
 
     return dirContent;
   }
@@ -50,12 +50,12 @@ export class StorageExplorerResolver {
   @Query((type) => LayerMetadataMixedUnion)
   public async getFile(
     @Arg('data')
-    data: ExplorerGetByPathSuffix,
+    data: ExplorerGetByPath,
     @Ctx()
     ctx: IContext
   ): Promise<typeof LayerMetadataMixedUnion> {
-    const { pathSuffix, type } = data;
-    const fileContent = await this.storageExplorerManager.getFile({ pathSuffix, type }, ctx);
+    const { path, type } = data;
+    const fileContent = await this.storageExplorerManager.getFile({ path, type }, ctx);
 
     return fileContent;
   }
