@@ -11,7 +11,11 @@ export const streamFileRouter = (): Router => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
     });
   });
-  // router.post('/file', controller.writeStreamFile);
+  // router.post('/file', (req, res) => {
+  //   controller.writeStreamFile(req, res).catch((err) => {
+  //     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+  //   });
+  // });
 
   return router;
 };
