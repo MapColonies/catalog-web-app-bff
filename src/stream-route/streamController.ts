@@ -4,7 +4,7 @@ import axios from 'axios';
 import { container, injectable } from 'tsyringe';
 import { StatusCodes } from 'http-status-codes';
 import { RecordType } from '@map-colonies/types';
-import { HttpError } from '@map-colonies/error-types';
+import { get } from 'lodash';
 import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 
 export type GetStreamer = Stream;
@@ -66,8 +66,8 @@ export class StreamController {
       const axiosMessage: string = data?.error?.message ?? err.message;
       res.status(err.response?.status ?? StatusCodes.INTERNAL_SERVER_ERROR).send(axiosMessage);
     } else {
-      const message = (err as HttpError)?.message ?? 'Internal server error';
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(message);
+      const message = get(err as Record<string, unknown>, 'message');
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(message ?? 'Internal server error');
     }
   }
 }
