@@ -87,28 +87,33 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<Stream> {
     this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}.`);
 
+    const configBufferSize = this.service.bufferSize;
+    const bufferSizeQuery = configBufferSize !== undefined ? `&buffersize=${configBufferSize}` : '';
+
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?path=${data.path}`,
+        url: `${this.service.url}/explorer/file?path=${data.path}${bufferSizeQuery}`,
         exposureType: this.service.exposureType,
       },
       'GET',
       {
         responseType: 'stream',
+        headers: {
+          'x-client-response-type': 'stream',
+        },
       },
       ctx
     );
 
-    return res.data as NodeJS.ReadableStream; // <-- this is a stream
+    return res.data as NodeJS.ReadableStream;
   }
 
-  /* FOR UPLOAD API */
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
     this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}.`);
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?path=${data.path}&buffersize=1000000`,
+        url: `${this.service.url}/explorer/file?path=${data.path}`, //&buffersize=1000000 should be revisited
         exposureType: this.service.exposureType,
       },
       'POST',
