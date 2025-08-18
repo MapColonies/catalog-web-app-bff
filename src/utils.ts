@@ -9,6 +9,14 @@ axiosRetry(axios, {
   retries: 0,
 });
 
+const isHeader = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'header';
+};
+
+const isQueryParam = (injectionType: string): boolean => {
+  return injectionType.toLowerCase() === 'queryparam';
+};
+
 export enum CatalogRecordItems {
   RASTER = 'RASTER',
   '3D' = '3D',
@@ -48,12 +56,12 @@ export const requestHandlerWithToken = async (url: string, method: string, param
   const tokenValue = config.get<string>('accessToken.tokenValue');
   const reqConfig = { ...params };
 
-  if (injectionType.toLowerCase() === 'header') {
+  if (isHeader(injectionType)) {
     reqConfig.headers = {
       ...reqConfig.headers,
       [attributeName]: tokenValue,
     } as Record<string, unknown>;
-  } else if (injectionType.toLowerCase() === 'queryparam') {
+  } else if (isQueryParam(injectionType)) {
     reqConfig.params = {
       ...reqConfig.params,
       [attributeName]: tokenValue,
@@ -67,4 +75,16 @@ export const requestExecutor = async (service: IService, method: string, params:
   return service.exposureType === 'ROUTE'
     ? requestHandlerWithToken(service.url, method, params, ctx)
     : requestHandler(service.url, method, params, ctx);
+};
+
+export const urlHandler = (service: IService): string => {
+  const injectionType = config.get<string>('accessToken.injectionType');
+  const attributeName = config.get<string>('accessToken.attributeName');
+  const tokenValue = config.get<string>('accessToken.tokenValue');
+
+  if (service.exposureType === 'ROUTE' && isQueryParam(injectionType)) {
+    return `${service.url}?${attributeName}=${tokenValue}`;
+  }
+
+  return service.url;
 };
