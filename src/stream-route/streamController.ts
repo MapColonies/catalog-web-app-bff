@@ -33,7 +33,7 @@ export class StreamController {
 
       const ctx = { requestHeaders: req.headers };
 
-      const stream = await this.storageExplorerManager.getStreamFile(
+      const response = await this.storageExplorerManager.getStreamFile(
         {
           path: path as string,
           type: type as RecordType,
@@ -41,10 +41,14 @@ export class StreamController {
         ctx
       );
 
-      stream.pipe(res);
+      Object.entries(response.headers).forEach(([key, value]) => {
+        res.setHeader(key, value as string);
+      });
 
-      stream.on('error', (streamErr) => {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send((streamErr as Error).message);
+      response.data.pipe(res);
+
+      response.data.on('error', (streamErr: Error) => {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(streamErr.message);
       });
     } catch (err) {
       this.handleError(err, res);

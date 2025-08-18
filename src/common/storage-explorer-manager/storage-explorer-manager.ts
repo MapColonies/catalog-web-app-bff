@@ -1,4 +1,4 @@
-import { Stream } from 'stream';
+import { Readable } from 'stream';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
@@ -59,7 +59,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     return transformedMetadata;
   }
 
-  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<Stream> {
+  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
     this.logger.info(`[StorageExplorerManager][getStreamFile] start getting file for type ${data.type}.`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);

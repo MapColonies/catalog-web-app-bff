@@ -1,4 +1,4 @@
-import { Stream } from 'stream';
+import { Readable } from 'stream';
 import { Logger } from '@map-colonies/js-logger';
 import { Request } from 'express';
 import { AxiosResponse } from 'axios';
@@ -13,9 +13,11 @@ import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 export class StorageExplorerManager3D implements IStorageExplorerManagerService {
   private readonly service: IService;
+  private readonly bufferSize: number | undefined;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('storageExplorerServices.3d');
+    this.bufferSize = this.config.get('storageExplorerServices.raster.bufferSize');
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
@@ -84,22 +86,27 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
     // return Promise.resolve(MOCK_FILE);
   }
 
-  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<Stream> {
-    this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file in path: ${data.path}.`);
+  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
+    this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}.`);
+
+    const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?path=${data.path}`,
+        url: `${this.service.url}/explorer/file?path=${data.path}${bufferSizeQuery}`,
         exposureType: this.service.exposureType,
       },
       'GET',
       {
         responseType: 'stream',
+        headers: {
+          'x-client-response-type': 'stream',
+        },
       },
       ctx
     );
 
-    return res.data as NodeJS.ReadableStream; // <-- this is a stream
+    return res;
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {

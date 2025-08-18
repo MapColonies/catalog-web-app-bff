@@ -1,4 +1,4 @@
-import { Stream } from 'stream';
+import { Readable } from 'stream';
 import { Logger } from '@map-colonies/js-logger';
 import { Request } from 'express';
 import { AxiosResponse } from 'axios';
@@ -13,9 +13,11 @@ import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 export class StorageExplorerManagerRaster implements IStorageExplorerManagerService {
   private readonly service: IService;
+  private readonly bufferSize: number | undefined;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('storageExplorerServices.raster');
+    this.bufferSize = this.config.get('storageExplorerServices.raster.bufferSize');
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
@@ -84,11 +86,10 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // return Promise.resolve(MOCK_FILE);
   }
 
-  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<Stream> {
+  public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
     this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}.`);
 
-    const configBufferSize = this.service.bufferSize;
-    const bufferSizeQuery = configBufferSize !== undefined ? `&buffersize=${configBufferSize}` : '';
+    const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
     const res = await requestExecutor(
       {
@@ -105,7 +106,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
       ctx
     );
 
-    return res.data as NodeJS.ReadableStream;
+    return res;
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
