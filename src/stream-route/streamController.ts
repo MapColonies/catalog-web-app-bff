@@ -45,11 +45,12 @@ export class StreamController {
         res.setHeader(key, value as string);
       });
 
-      response.data.pipe(res);
-
-      response.data.on('error', (streamErr: Error) => {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(streamErr.message);
+      response.data.on('error', (streamErr) => {
+        this.logger.error('Stream error: ', streamErr.message);
+        res.destroy(streamErr);
       });
+
+      response.data.pipe(res);
     } catch (err) {
       this.handleError(err, res);
     }
