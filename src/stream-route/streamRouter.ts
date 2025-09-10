@@ -11,6 +11,11 @@ export const streamFileRouter = (): Router => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
     });
   });
+  router.get('/zipshape', (req, res) => {
+    controller.getZipShapefile(req, res).catch((error) => {
+      res.send(error);
+    });
+  });
   // router.post('/file', (req, res) => {
   //   controller.writeStreamFile(req, res).catch((err) => {
   //     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);

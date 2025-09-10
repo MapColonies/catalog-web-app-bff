@@ -8,7 +8,7 @@ import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { CatalogRecordItems } from '../../utils';
-import { ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
+import { ExplorerGetByFolderPath, ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
 import { CSW } from '../../csw/csw';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
@@ -57,6 +57,14 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
 
     return transformedMetadata;
+  }
+
+  public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
+    this.logger.info(`[StorageExplorerManager][getStreamFile] start getting file for type ${data.type}.`);
+
+    const storageExplorerManagerInstance = this.getManagerInstance(data.type);
+
+    return storageExplorerManagerInstance.getZipShapefile(data, ctx);
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {

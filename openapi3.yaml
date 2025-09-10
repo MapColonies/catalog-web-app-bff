@@ -83,6 +83,53 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/error'
+  /zipshape:
+    get:
+      tags:
+        - Shapefile ZIP API
+      summary: Find all files with a specific name in a folder and return them in a zip file using a stream.
+      parameters:
+        - name: folder
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/octet-stream':
+              schema:
+                type: object
+                format: binary
+        400:
+          description: BAD REQUEST
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        404:
+          description: NOT FOUND
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
     # /* FOR UPLOAD API */
     # post:
     #   tags:

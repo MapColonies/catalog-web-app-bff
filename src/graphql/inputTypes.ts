@@ -207,6 +207,18 @@ export class ExplorerGetByPath {
 }
 
 @InputType()
+export class ExplorerGetByFolderPath {
+  @Field((type) => String, { nullable: false })
+  public folder!: string;
+
+  @Field((type) => String, { nullable: false })
+  public name!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
 export class ExplorerResolveMetadataAsModel {
   @Field((type) => String, { nullable: false })
   public metadata!: string;
