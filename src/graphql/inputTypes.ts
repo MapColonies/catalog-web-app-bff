@@ -84,6 +84,15 @@ export class RecordUpdatePartial {
 }
 
 @InputType()
+export class RecordDeletePartial {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type: RecordType;
+}
+
+@InputType()
 export class IngestionDemData {
   @Field({ nullable: false })
   public directory: string;
