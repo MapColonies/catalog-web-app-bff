@@ -249,7 +249,7 @@ export class LayerMetadataMixedResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
-  public async delete3DLayer(
+  public async deleteLayer(
     @Arg('data')
     data: RecordDeletePartial,
     @Ctx()
