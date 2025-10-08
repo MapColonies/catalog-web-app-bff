@@ -26,6 +26,8 @@ export enum CatalogRecordItems {
 }
 
 export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig, ctx?: IContext): Promise<AxiosResponse> => {
+  const origin = ctx?.requestHeaders.origin;
+
   const requestConfig: AxiosRequestConfig = {
     url,
     method: method as Method,
@@ -33,7 +35,10 @@ export const requestHandler = async (url: string, method: string, params: AxiosR
     maxContentLength: Infinity,
     ...params,
     headers: {
-      ...{ ...(params.headers ?? {}), ...(ctx ? { origin: ctx.requestHeaders.origin } : {}) },
+      ...{
+        ...(params.headers ?? {}),
+        ...(typeof origin === 'string' && { origin }),
+      },
     } as Record<string, unknown>,
   };
 

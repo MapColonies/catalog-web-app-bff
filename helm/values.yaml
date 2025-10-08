@@ -118,6 +118,7 @@ env:
   storageExplorerRasterUrl: ''
   storageExplorer3DUrl: ''
   storageExplorerDEMUrl: NOT_IMPLEMENTED
+  storageExplorerBufferSize: 1048576
   validationServiceRasterUrl: ''
   exportLayerRasterUrl: ''
   exportLayer3DUrl: NOT_IMPLEMENTED

@@ -72,11 +72,13 @@
   "storageExplorerServices": {
     "raster": {
       "url": "http://raster-ingestion-url",
-      "exposureType": "SERVICE"
+      "exposureType": "SERVICE",
+      "bufferSize": 1048576
     },
     "3d": {
       "url": "http://3d-ingestion-url",
-      "exposureType": "SERVICE"
+      "exposureType": "SERVICE",
+      "bufferSize": 1048576
     }
   },
   "validationService": {

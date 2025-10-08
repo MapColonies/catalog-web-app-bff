@@ -63,10 +63,12 @@
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "STORAGE_EXPLORER_RASTER_URL"
+      "url": "STORAGE_EXPLORER_RASTER_URL",
+      "bufferSize": "STORAGE_EXPLORER_BUFFER_SIZE"
     },
     "3d": {
-      "url": "STORAGE_EXPLORER_3D_URL"
+      "url": "STORAGE_EXPLORER_3D_URL",
+      "bufferSize": "STORAGE_EXPLORER_BUFFER_SIZE"
     }
   },
   "validationService": {

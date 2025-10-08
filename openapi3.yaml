@@ -41,6 +41,162 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/acceptall'
+  /file:
+    get:
+      tags:
+        - File APIs
+      summary: Get stream file by path
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/octet-stream':
+              schema:
+                type: object
+                format: binary
+        400:
+          description: BAD REQUEST
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        404:
+          description: NOT FOUND
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
+  /zipshape:
+    get:
+      tags:
+        - Shapefile ZIP API
+      summary: Find all files with a specific name in a folder and return them in a zip file using a stream.
+      parameters:
+        - name: folder
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/octet-stream':
+              schema:
+                type: object
+                format: binary
+        400:
+          description: BAD REQUEST
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        404:
+          description: NOT FOUND
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/res'
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
+    # /* FOR UPLOAD API */
+    # post:
+    #   tags:
+    #     - File APIs
+    #   summary: Write stream file to path
+    #   parameters:
+    #     - name: path
+    #       in: query
+    #       required: true
+    #       schema:
+    #         type: string
+    #     - name: type
+    #       in: query
+    #       required: true
+    #       schema:
+    #         type: string
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       multipart/form-data:
+    #         schema:
+    #           type: object
+    #           properties:
+    #             file:
+    #               type: string
+    #               format: binary
+    #           required:
+    #             - file
+    #       application/octet-stream:
+    #         schema:
+    #           type: string
+    #           format: binary
+    #   responses:
+    #     '201':
+    #       description: file CREATED at path
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
+    #     '409':
+    #       description: Conflict Error, file already exist
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
+    #     '500':
+    #       description: Internal server error
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: object
+    #             properties:
+    #               files:
+    #                 type: array
+    #                 items:
+    #                   type: string
+
 components:
   schemas:
     acceptall:
@@ -54,4 +210,16 @@ components:
         variables:
           type: object
         query:
+          type: string
+    res:
+      type: object
+      properties:
+        data:
+          oneOf:
+            - type: object
+            - type: string
+    error:
+      type: object
+      properties:
+        error:
           type: string

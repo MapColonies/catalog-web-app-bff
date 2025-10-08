@@ -198,9 +198,21 @@ export class ExplorerGetById {
 }
 
 @InputType()
-export class ExplorerGetByPathSuffix {
+export class ExplorerGetByPath {
   @Field((type) => String, { nullable: false })
-  public pathSuffix!: string;
+  public path!: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+@InputType()
+export class ExplorerGetByFolderPath {
+  @Field((type) => String, { nullable: false })
+  public folder!: string;
+
+  @Field((type) => String, { nullable: false })
+  public name!: string;
 
   @Field((type) => RecordType, { nullable: false })
   public type!: RecordType;
