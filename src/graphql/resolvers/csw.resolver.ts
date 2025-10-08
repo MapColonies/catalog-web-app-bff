@@ -9,7 +9,15 @@ import { END, Services, START } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
 import { IContext } from '../../common/interfaces';
 import { CSW } from '../../csw/csw';
-import { Ingestion3DData, IngestionDemData, IngestionRasterData, RecordUpdatePartial, SearchOptions, StringArray } from '../inputTypes';
+import {
+  Ingestion3DData,
+  IngestionDemData,
+  IngestionRasterData,
+  RecordDeletePartial,
+  RecordUpdatePartial,
+  SearchOptions,
+  StringArray,
+} from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -232,6 +240,23 @@ export class LayerMetadataMixedResolver {
   ): Promise<string> {
     try {
       await this.ingestionManager.ingest(data, ctx);
+      return 'ok';
+    } catch (err) {
+      this.logger.error(err);
+      throw err;
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation((type) => String)
+  public async deleteLayer(
+    @Arg('data')
+    data: RecordDeletePartial,
+    @Ctx()
+    ctx: IContext
+  ): Promise<string> {
+    try {
+      await this.catalogManager.deleteLayer(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(err);

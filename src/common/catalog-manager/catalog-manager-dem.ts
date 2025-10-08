@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
@@ -17,6 +17,10 @@ export class CatalogManagerDem implements ICatalogManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
+    return Promise.reject('Unimplemented service');
+  }
+
+  public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
     return Promise.reject('Unimplemented service');
   }
 }
