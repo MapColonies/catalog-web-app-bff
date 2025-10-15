@@ -26,7 +26,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // REAL LOGIC
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/directory?pathSuffix=${data.path}`,
+        url: `${this.service.url}/explorer/directory?path=${data.path}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -72,7 +72,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     // REAL LOGIC
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?pathSuffix=${data.path}`,
+        url: `${this.service.url}/explorer/file?path=${data.path}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -93,7 +93,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?pathSuffix=${data.path}${bufferSizeQuery}`,
+        url: `${this.service.url}/explorer/file?path=${data.path}${bufferSizeQuery}`,
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -137,7 +137,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/explorer/file?pathSuffix=${data.path}`, //&buffersize=1000000 should be revisited
+        url: `${this.service.url}/explorer/file?path=${data.path}`, //&buffersize=1000000 should be revisited
         exposureType: this.service.exposureType,
       },
       'POST',
