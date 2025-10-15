@@ -17,7 +17,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('storageExplorerServices.3d');
-    this.bufferSize = this.config.get('storageExplorerServices.raster.bufferSize');
+    this.bufferSize = this.config.get('storageExplorerServices.3d.bufferSize');
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
