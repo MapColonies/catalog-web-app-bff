@@ -3,7 +3,7 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { SourceValidationParams } from '../../graphql/inputTypes';
+import { SourceValidationInputParams } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
 import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
@@ -22,7 +22,7 @@ export class SourceValidatorManager implements ISourceInfoService {
     // this.ingestionServices.DEM = new IngestionManagerDem(this.config, this.logger);
   }
 
-  public async sourceInfo(data: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
+  public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
     this.logger.info(`[SourceValidatorManager][sourceInfo] get source info  ${data.type}.`);
 
     const sourceValidatorInstance = this.getManagerInstance(data.type);

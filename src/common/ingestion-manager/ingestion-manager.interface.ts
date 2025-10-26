@@ -1,4 +1,4 @@
-import { IngestionData, SourceValidationParams } from '../../graphql/inputTypes';
+import { IngestionData, SourceValidationInputParams } from '../../graphql/inputTypes';
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { IContext } from '../interfaces';
 
@@ -9,5 +9,5 @@ export interface IIngestionManagerService {
 }
 
 export interface ISourceInfoService {
-  sourceInfo: (data: SourceValidationParams, ctx: IContext) => Promise<SourceValidation>;
+  sourceInfo: (data: SourceValidationInputParams, ctx: IContext) => Promise<SourceValidation>;
 }
