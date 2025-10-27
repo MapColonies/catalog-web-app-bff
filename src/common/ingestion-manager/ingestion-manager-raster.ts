@@ -120,7 +120,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     };
   }
 
-  private buildValidationPayload_NEW(data: SourceGPKGValidationParams): AxiosRequestConfig {
+  private buildValidationPayloadNEW(data: SourceGPKGValidationParams): AxiosRequestConfig {
     this.logger.info(`[IngestionManagerRaster][buildValidationPayload] generated validation payload: ${JSON.stringify(data)}.`);
 
     return {
