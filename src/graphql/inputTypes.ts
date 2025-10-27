@@ -403,4 +403,15 @@ export class SourceValidationParams {
   public type!: RecordType;
 }
 
+@InputType()
+export class SourceGPKGValidationParams {
+  @Field((type) => [String], { nullable: false })
+  public gpkgFilesPath!: string[];
+
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+}
+
+export type SourceValidationInputParams = SourceValidationParams | SourceGPKGValidationParams;
+
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
