@@ -5,6 +5,7 @@ import { absoluteToRelativePath } from '../../helpers/string';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { SourceValidation } from '../../graphql/sourceValidation';
+import { RasterIngestion } from '../../graphql/ingestion';
 import { IIngestionManagerService, ISourceInfoService } from './ingestion-manager.interface';
 
 export class IngestionManagerRaster implements IIngestionManagerService, ISourceInfoService {
@@ -53,8 +54,8 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     };
   }
 
-  public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionData> {
-    await requestExecutor(
+  public async ingest(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
+    const result = await requestExecutor(
       {
         url: `${this.service.url}/ingestion`,
         exposureType: this.service.exposureType,
@@ -63,11 +64,13 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       this.buildPayload(data as IngestionRasterData),
       ctx
     );
-    return data;
+    return {
+      jobId: result.data.jobId,
+    };
   }
 
-  public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<IngestionData> {
-    await requestExecutor(
+  public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
+    const result = await requestExecutor(
       {
         url: `${this.service.url}/ingestion/${data.metadata.id}`,
         exposureType: this.service.exposureType,
@@ -76,7 +79,9 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       this.buildPayload(data as IngestionRasterData),
       ctx
     );
-    return data;
+    return {
+      jobId: result.data.jobId,
+    };
   }
 
   private buildPayload(data: IngestionRasterData): AxiosRequestConfig {
@@ -84,16 +89,17 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     const { id, ...metadata } = data.metadata;
     const payloadData = {
       inputFiles: {
-        originDirectory: absoluteToRelativePath(data.directory),
-        fileNames: data.fileNames,
+        gpkgFilesPath: data.inputFiles.gpkgFilesPath.map((filePath) => absoluteToRelativePath(filePath)),
+        metadataShapefilePath: absoluteToRelativePath(data.inputFiles.metadataShapefilePath),
+        productShapefilePath: absoluteToRelativePath(data.inputFiles.productShapefilePath),
       },
       metadata: metadata,
-      partsData: data.partsData,
+      ingestionResolution: data.ingestionResolution,
+      callbackUrls: ['https://bff/api/callback'],
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { partsData, ...payloadWithoutParts } = payloadData;
-    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadWithoutParts)}.`);
+    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
 
     return {
       data: {

@@ -123,18 +123,27 @@ export class Ingestion3DData {
 }
 
 @InputType()
+export class InputFilesRaster {
+  @Field((type) => [String], { nullable: false })
+  public gpkgFilesPath: string[];
+
+  @Field({ nullable: false })
+  public metadataShapefilePath: string;
+
+  @Field({ nullable: false })
+  public productShapefilePath: string;
+}
+
+@InputType()
 export class IngestionRasterData {
   @Field({ nullable: false })
-  public directory: string;
-
-  @Field((type) => [String], { nullable: false })
-  public fileNames: string[];
+  public inputFiles: InputFilesRaster;
 
   @Field({ nullable: false })
   public metadata: LayerRasterRecordInput;
 
-  @Field((type) => [PolygonPartRecordInput], { nullable: false })
-  public partsData: PolygonPartRecordInput[];
+  @Field({ nullable: false })
+  public ingestionResolution: number;
 
   @Field((type) => RecordType, { nullable: false })
   public type?: RecordType;
