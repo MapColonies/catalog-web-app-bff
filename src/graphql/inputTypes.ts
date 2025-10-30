@@ -213,6 +213,9 @@ export class ExplorerGetByPath {
 
   @Field((type) => RecordType, { nullable: false })
   public type!: RecordType;
+
+  @Field((type) => String, { nullable: true })
+  public selectableFile?: string;
 }
 
 @InputType()

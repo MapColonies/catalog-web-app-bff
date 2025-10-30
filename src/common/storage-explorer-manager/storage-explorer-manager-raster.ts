@@ -35,6 +35,18 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     )
       .then((res) => res.data as File[])
       .then((files) => {
+        if (data.selectableFile) {
+          return Object.values(
+            files.map((file) => {
+              const selectable = !file.isDir && file.name !== 'metadata.json' && file.name.endsWith(data.selectableFile as string);
+
+              return {
+                ...file,
+                selectable,
+              };
+            })
+          );
+        }
         return Object.values(files.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' })));
       });
 
