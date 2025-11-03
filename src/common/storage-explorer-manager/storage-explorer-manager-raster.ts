@@ -54,12 +54,15 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
         return files.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
       });
 
-    if (data.fileType != undefined) {
+    if (data.fileType === undefined) {
       return res;
     }
 
     const filteredRes = res.filter((file) => {
-      return SELECTION_TYPE_SATELITES[data.fileType as FileType].some((ext) => path.extname(file.name) === ext || file.isDir);
+      return SELECTION_TYPE_SATELITES[data.fileType as FileType].some((ext) => {
+        const isExist = path.extname(file.name) === ext || file.isDir;
+        return isExist;
+      });
     });
 
     return filteredRes;
