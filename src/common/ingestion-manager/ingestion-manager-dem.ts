@@ -1,8 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IngestionData } from '../../graphql/inputTypes';
+import { IngestionResultData } from '../../graphql/ingestion';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IIngestionManagerService } from './ingestion-manager.interface';
-import { IngestionResultData } from '../../graphql/ingestion';
 
 export class IngestionManagerDem implements IIngestionManagerService {
   private readonly service: IService;

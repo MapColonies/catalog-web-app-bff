@@ -201,12 +201,12 @@ export class LayerMetadataMixedResolver {
     ctx: IContext
   ): Promise<RasterIngestion> {
     try {
-      const updateGeopgkRes = (await this.ingestionManager.updateGeopkg(data, ctx)) as RasterIngestion;
+      const updateGeopgkRes = await this.ingestionManager.updateGeopkg(data, ctx);
       if (updateGeopgkRes) {
-        return updateGeopgkRes;
+        return updateGeopgkRes as RasterIngestion;
       }
 
-      throw new Error(`Could not update with the provided data(${data.metadata.productId}).`);
+      throw new Error(`Could not update with the provided data(${data.metadata.productId as string}).`);
     } catch (err) {
       this.logger.error(err);
       throw err;

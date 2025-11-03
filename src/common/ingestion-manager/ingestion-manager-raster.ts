@@ -55,7 +55,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   public async ingest(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
-    const result = await requestExecutor(
+    const result: AxiosResponse<Record<string, string>> | null = await requestExecutor(
       {
         url: `${this.service.url}/ingestion`,
         exposureType: this.service.exposureType,
@@ -70,7 +70,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
-    const result = await requestExecutor(
+    const result: AxiosResponse<Record<string, string>> | null = await requestExecutor(
       {
         url: `${this.service.url}/ingestion/${data.metadata.id}`,
         exposureType: this.service.exposureType,

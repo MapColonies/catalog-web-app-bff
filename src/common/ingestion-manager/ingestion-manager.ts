@@ -7,11 +7,11 @@ import { IngestionData } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
 import { FieldConfig } from '../../graphql/entityDescriptor';
+import { IngestionResultData } from '../../graphql/ingestion';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 import { IngestionManagerRaster } from './ingestion-manager-raster';
 import { IngestionManager3D } from './ingestion-manager-3d';
 import { IngestionManagerDem } from './ingestion-manager-dem';
-import { IngestionResultData } from '../../graphql/ingestion';
 
 type IngestionServices = Record<CatalogRecordItems, IIngestionManagerService>;
 
