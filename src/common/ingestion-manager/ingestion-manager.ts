@@ -7,6 +7,7 @@ import { IngestionData } from '../../graphql/inputTypes';
 import { CatalogRecordItems } from '../../utils';
 import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
 import { FieldConfig } from '../../graphql/entityDescriptor';
+import { IngestionResultData } from '../../graphql/ingestion';
 import { IIngestionManagerService } from './ingestion-manager.interface';
 import { IngestionManagerRaster } from './ingestion-manager-raster';
 import { IngestionManager3D } from './ingestion-manager-3d';
@@ -24,7 +25,7 @@ export class IngestionManager implements IIngestionManagerService {
     this.ingestionServices.DEM = new IngestionManagerDem(this.config, this.logger);
   }
 
-  public async ingest(record: IngestionData, ctx: IContext): Promise<IngestionData> {
+  public async ingest(record: IngestionData, ctx: IContext): Promise<IngestionResultData> {
     this.logger.info(`[IngestionManager][ingest] start ingestion for entity ${record.type as RecordType}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
@@ -33,7 +34,7 @@ export class IngestionManager implements IIngestionManagerService {
     return updatedData;
   }
 
-  public async updateGeopkg(record: IngestionData, ctx: IContext): Promise<IngestionData | null> {
+  public async updateGeopkg(record: IngestionData, ctx: IContext): Promise<IngestionResultData | null> {
     this.logger.info(`[IngestionManager][updateGeopkg] start updateGeopkg for entity ${record.type as RecordType}.`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);

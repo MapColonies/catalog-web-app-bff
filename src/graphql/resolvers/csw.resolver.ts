@@ -19,6 +19,7 @@ import {
   StringArray,
 } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
+import { RasterIngestion } from '../ingestion';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
@@ -176,16 +177,15 @@ export class LayerMetadataMixedResolver {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Mutation((type) => String)
+  @Mutation((type) => RasterIngestion)
   public async startRasterIngestion(
     @Arg('data')
     data: IngestionRasterData,
     @Ctx()
     ctx: IContext
-  ): Promise<string> {
+  ): Promise<RasterIngestion> {
     try {
-      await this.ingestionManager.ingest(data, ctx);
-      return 'ok';
+      return (await this.ingestionManager.ingest(data, ctx)) as RasterIngestion;
     } catch (err) {
       this.logger.error(err);
       throw err;
@@ -193,20 +193,20 @@ export class LayerMetadataMixedResolver {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Mutation((type) => String)
+  @Mutation((type) => RasterIngestion)
   public async startRasterUpdateGeopkg(
     @Arg('data')
     data: IngestionRasterData,
     @Ctx()
     ctx: IContext
-  ): Promise<string> {
+  ): Promise<RasterIngestion> {
     try {
       const updateGeopgkRes = await this.ingestionManager.updateGeopkg(data, ctx);
       if (updateGeopgkRes) {
-        return 'ok';
+        return updateGeopgkRes as RasterIngestion;
       }
 
-      throw new Error('Could not update geopkg with the provided data.');
+      throw new Error(`Could not update with the provided data(${data.metadata.productId as string}).`);
     } catch (err) {
       this.logger.error(err);
       throw err;
