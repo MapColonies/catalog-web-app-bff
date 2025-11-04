@@ -28,8 +28,8 @@ export class StorageExplorerResolver {
     @Ctx()
     ctx: IContext
   ): Promise<File[]> {
-    const { path, type, fileType } = data;
-    const dirContent = await this.storageExplorerManager.getDirectory({ path, type, fileType }, ctx);
+    const { path, type, fileType, fileNamePattern } = data;
+    const dirContent = await this.storageExplorerManager.getDirectory({ path, type, fileType, fileNamePattern }, ctx);
 
     return dirContent;
   }

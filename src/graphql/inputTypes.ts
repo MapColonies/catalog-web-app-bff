@@ -223,6 +223,9 @@ export class ExplorerGetByPath {
 
   @Field((type) => FileType, { nullable: true })
   public fileType?: FileType;
+
+  @Field((type) => String, { nullable: true })
+  public fileNamePattern?: string;
 }
 
 @InputType()
