@@ -12,10 +12,12 @@ import { geojsonFeatureProperties, geoJsonObject } from './common-scalars';
 
 const paramsObject = new GraphQLScalarType({ name: 'paramsObject' });
 
-export enum FileType {
+enum FileType {
   SHP = 'shp',
   GPKG = 'gpkg',
 }
+
+registerEnumType(FileType, { name: 'FileType' });
 
 @InputType()
 export class BBOX extends BBOXCswClient {
@@ -429,4 +431,4 @@ export type SourceValidationInputParams = SourceValidationParams | SourceGPKGVal
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
 
-const FileTypeRegister = registerEnumType(FileType, { name: 'FileType' });
+export { FileType };
