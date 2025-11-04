@@ -35,6 +35,10 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
     this.logger.info(`[StorageExplorerManagerRaster][getDirectory] fetching directory with data: ${JSON.stringify(data)}.`);
 
+    const targetFileType = data.fileType;
+    const targetFileName = data.fileNamePattern;
+    const isValidTargetFileName = data.fileNamePattern != undefined && data.fileNamePattern != '';
+
     // REAL LOGIC
     const res = await requestExecutor(
       {
@@ -47,13 +51,10 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     )
       .then((res) => res.data as File[])
       .then((files) => {
-        if (data.fileType != undefined) {
+        if (targetFileType != undefined) {
           return files.map((file) => {
             const fileExtension = path.extname(file.name);
-            const fileTypeSelectable =
-              data.fileType != undefined
-                ? FILE_TYPE_EXTENSIONS[data.fileType].selectable.some((selecableExt) => fileExtension === selecableExt)
-                : true;
+            const fileTypeSelectable = FILE_TYPE_EXTENSIONS[targetFileType].selectable.some((selecableExt) => fileExtension === selecableExt);
             const selectable = !file.isDir && file.name !== 'metadata.json' && fileTypeSelectable;
 
             return {
@@ -65,31 +66,31 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
         return files.map((file) => ({ ...file, selectable: !file.isDir && file.name !== 'metadata.json' }));
       });
 
-    if (data.fileType == undefined && data.fileNamePattern == undefined) {
+    if (targetFileType == undefined && isValidTargetFileName) {
       return res;
     }
 
     let filteredRes = res;
 
-    if (data.fileType != undefined) {
+    if (targetFileType != undefined) {
       filteredRes = res.filter((file) => {
-        return FILE_TYPE_EXTENSIONS[data.fileType as FileType].allowedExt.some((ext) => {
+        return FILE_TYPE_EXTENSIONS[targetFileType].allowedExt.some((ext) => {
           const isExist = path.extname(file.name) === ext || file.isDir;
           return isExist;
         });
       });
     }
 
-    const desiredFileName = data.fileNamePattern;
-
-    if (desiredFileName != undefined) {
+    if (isValidTargetFileName) {
       filteredRes = filteredRes.filter((file) => {
         const parsed = path.parse(file.name);
-        if (desiredFileName.endsWith('*')) {
+
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        if (targetFileName?.endsWith('*')) {
           const REMOVE_LAST_CHAR_INDEX = -1;
-          return file.name.startsWith(desiredFileName.slice(0, REMOVE_LAST_CHAR_INDEX)) || file.isDir;
+          return file.name.startsWith(targetFileName.slice(0, REMOVE_LAST_CHAR_INDEX)) || file.isDir;
         } else {
-          return parsed.name === desiredFileName || file.isDir;
+          return parsed.name === targetFileName || file.isDir;
         }
       });
     }
