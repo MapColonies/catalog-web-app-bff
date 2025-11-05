@@ -57,6 +57,9 @@ export class AvailableActions {
 
   @Field({ nullable: true })
   public isAbortable: boolean;
+
+  @Field({ nullable: true })
+  public isRestorable: boolean;
 }
 
 @ObjectType()

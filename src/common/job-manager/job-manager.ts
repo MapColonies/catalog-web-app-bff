@@ -23,6 +23,12 @@ export class JobManager implements JobManagerType {
     this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
 
     const jobsData = await this.jobManager.getJobs(ctx, params);
+
+    jobsData.forEach((job) => {
+      const isRestorable = job.domain === 'RASTER' && (job.type === 'Ingestion_New' || job.type === 'Ingestion_Update'); // && job.parameters?.ingestionResolution;
+      job.availableActions = { ...(job.availableActions ?? { isResumable: false, isAbortable: false }), isRestorable };
+    });
+
     return jobsData;
   }
 
