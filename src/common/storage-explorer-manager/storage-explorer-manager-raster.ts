@@ -36,7 +36,9 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('storageExplorerServices.raster');
     this.bufferSize = this.config.get('storageExplorerServices.raster.bufferSize');
-    this.rasterIngestionFilesStructureConfig = JSON.parse(this.config.get('rasterIngestionFilesStructure')) as IRasterIngestionFilesStructureConfig;
+    this.rasterIngestionFilesStructureConfig = JSON.parse(
+      this.config.get('rasterIngestionFilesStructureConfig')
+    ) as IRasterIngestionFilesStructureConfig;
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
