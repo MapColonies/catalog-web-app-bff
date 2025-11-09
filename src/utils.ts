@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
 import { IContext, IService } from './common/interfaces';
+import { Job } from './graphql/job';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -24,6 +25,16 @@ export enum CatalogRecordItems {
   VECTOR = 'VECTOR',
   QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
+
+export const addRasterJobActions = (job: Job): void => {
+  if (job.domain === CatalogRecordItems.RASTER) {
+    const isRestorable = job.type === 'Ingestion_New' || job.type === 'Ingestion_Update'; // && !!job.parameters && job.parameters.ingestionResolution;
+    job.availableActions = {
+      ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
+      ...(isRestorable ? { isRestorable: true } : {}),
+    };
+  }
+};
 
 export const requestHandler = async (url: string, method: string, params: AxiosRequestConfig, ctx?: IContext): Promise<AxiosResponse> => {
   const origin = ctx?.requestHeaders.origin;
