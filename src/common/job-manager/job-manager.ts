@@ -1,10 +1,11 @@
 import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
-import { IConfig, IContext } from '../interfaces';
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
+import { addRasterJobActions, CatalogRecordItems } from '../../utils';
+import { Services } from '../constants';
+import { IConfig, IContext } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 
@@ -23,6 +24,17 @@ export class JobManager implements JobManagerType {
     this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
 
     const jobsData = await this.jobManager.getJobs(ctx, params);
+
+    jobsData.forEach((job) => {
+      switch (job.domain) {
+        case CatalogRecordItems.RASTER:
+          addRasterJobActions(job);
+          break;
+        default:
+          break;
+      }
+    });
+
     return jobsData;
   }
 
