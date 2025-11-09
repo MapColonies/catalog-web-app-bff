@@ -12,13 +12,13 @@ import { geojsonFeatureProperties, geoJsonObject } from './common-scalars';
 
 const paramsObject = new GraphQLScalarType({ name: 'paramsObject' });
 
-enum RasterIngestionFilesType {
+enum RasterIngestionFilesTypeConfig {
   DATA = 'data',
   PRODUCT = 'product',
   SHAPEMETADATA = 'shapeMetadata',
 }
 
-registerEnumType(RasterIngestionFilesType, { name: 'RasterIngestionFilesType' });
+registerEnumType(RasterIngestionFilesTypeConfig, { name: 'RasterIngestionFilesTypeConfig' });
 
 @InputType()
 export class BBOX extends BBOXCswClient {
@@ -224,8 +224,8 @@ export class ExplorerGetByPath {
   @Field((type) => RecordType, { nullable: false })
   public type!: RecordType;
 
-  @Field((type) => RasterIngestionFilesType, { nullable: true })
-  public rasterIngestionFilesType?: RasterIngestionFilesType;
+  @Field((type) => RasterIngestionFilesTypeConfig, { nullable: true })
+  public rasterIngestionFilesTypeConfig?: RasterIngestionFilesTypeConfig;
 }
 
 @InputType()
@@ -429,4 +429,4 @@ export type SourceValidationInputParams = SourceValidationParams | SourceGPKGVal
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
 
-export { RasterIngestionFilesType };
+export { RasterIngestionFilesTypeConfig };
