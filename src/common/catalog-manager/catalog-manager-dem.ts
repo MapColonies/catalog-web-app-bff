@@ -20,6 +20,7 @@ export class CatalogManagerDem implements ICatalogManagerService {
     return Promise.reject('Unimplemented service');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
     return Promise.reject('Unimplemented service');
   }

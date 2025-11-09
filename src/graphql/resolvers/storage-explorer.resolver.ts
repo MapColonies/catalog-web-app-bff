@@ -28,8 +28,8 @@ export class StorageExplorerResolver {
     @Ctx()
     ctx: IContext
   ): Promise<File[]> {
-    const { path, type } = data;
-    const dirContent = await this.storageExplorerManager.getDirectory({ path, type }, ctx);
+    const { path, type, rasterIngestionFilesTypeConfig } = data;
+    const dirContent = await this.storageExplorerManager.getDirectory({ path, type, rasterIngestionFilesTypeConfig }, ctx);
 
     return dirContent;
   }
