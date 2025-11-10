@@ -51,7 +51,6 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     const targetFileType = data.rasterIngestionFilesTypeConfig;
     const targetFileName = fileConfig?.selectablePattern;
-    const isValidTargetFileName = fileConfig?.selectablePattern != '';
 
     // REAL LOGIC
     const res = await requestExecutor(
@@ -91,7 +90,8 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
       });
     }
 
-    if (isValidTargetFileName) {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (fileConfig?.selectablePattern) {
       filteredRes = filteredRes.filter((file) => {
         const parsed = path.parse(file.name);
 
