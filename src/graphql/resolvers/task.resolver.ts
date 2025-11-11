@@ -2,7 +2,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg, Ctx } from 'type-graphql';
+import { Resolver, Query, Arg, Ctx, Mutation } from 'type-graphql';
 import moment from 'moment';
 import { Services } from '../../common/constants';
 import { TasksSearchParams } from '../inputTypes';
@@ -34,10 +34,24 @@ export class TaskResolver {
   ): Promise<TasksGroup[]> {
     try {
       const data: Task[] = await this.jobManager.getTasks(params, ctx);
-
       return this.groupTasks(data);
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
       // return data;
+    } catch (err) {
+      this.logger.error(err as string);
+      throw err;
+    }
+  }
+
+  @Mutation((type) => [Task])
+  public async findTasks(
+    @Arg('params', { nullable: true })
+    params: TasksSearchParams,
+    @Ctx()
+    ctx: IContext
+  ): Promise<Task[]> {
+    try {
+      return (await this.jobManager.findTasks(params, ctx)) as Task[];
     } catch (err) {
       this.logger.error(err as string);
       throw err;
@@ -48,7 +62,7 @@ export class TaskResolver {
     We should group tasks by:
     type and status.
     if status Failed, then we should group by fail reason as well.
-    add count column to sum the group members and return it as well. (istead of attempts).
+    add count column to sum the group members and return it as well. (instead of attempts).
   */
 
   private readonly groupsMapToArray = (groupsMap: Map<string, Task[] | Task | TasksGroup[]>, removeKeys?: string[]): TasksGroup[] => {

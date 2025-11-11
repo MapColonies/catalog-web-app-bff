@@ -1,9 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
 import { isEmpty } from 'lodash';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
+// import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
@@ -119,6 +118,24 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       'GET',
       {},
+      ctx
+    );
+
+    return res.data as Task[];
+  }
+
+  public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/tasks/find`,
+        exposureType: this.service.exposureType,
+      },
+      'POST',
+      {
+        data: {
+          ...params,
+        },
+      },
       ctx
     );
 

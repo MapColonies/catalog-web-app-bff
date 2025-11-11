@@ -186,7 +186,7 @@ export class TasksSearchParams {
   @Field({ nullable: false })
   public jobId: string;
   @Field({ nullable: true })
-  public jobType?: string;
+  public type?: string;
 }
 
 @InputType()

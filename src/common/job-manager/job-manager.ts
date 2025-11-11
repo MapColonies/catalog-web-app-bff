@@ -10,6 +10,7 @@ import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 
 type JobManagerType = Omit<IJobManagerService, 'transformRecordToEntity'>;
+
 @singleton()
 export class JobManager implements JobManagerType {
   private readonly jobManager: IJobManagerService;
@@ -29,6 +30,8 @@ export class JobManager implements JobManagerType {
       switch (job.domain) {
         case CatalogRecordItems.RASTER:
           addRasterJobActions(job);
+          break;
+        case CatalogRecordItems['3D']:
           break;
         default:
           break;
@@ -78,6 +81,13 @@ export class JobManager implements JobManagerType {
     this.logger.info(`[JobManager][getTasks] Fetching tasks with params ${JSON.stringify(params)}`);
 
     const response = await this.jobManager.getTasks(params, ctx);
+    return response;
+  }
+
+  public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    this.logger.info(`[JobManager][findTasks] Fetching tasks with params ${JSON.stringify(params)}`);
+
+    const response = await this.jobManager.findTasks(params, ctx);
     return response;
   }
 }
