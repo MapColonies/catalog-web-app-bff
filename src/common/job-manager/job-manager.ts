@@ -48,12 +48,12 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(cswArray: Job[] | Job): Job[] | Job {
-    return isArray(cswArray)
-      ? cswArray.map((job) => {
-          return this.jobManager.transformRecordToEntity(job);
+  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task)[] | Job | Task {
+    return isArray(records)
+      ? records.map((record) => {
+          return this.jobManager.transformRecordToEntity(record);
         })
-      : this.jobManager.transformRecordToEntity(cswArray);
+      : this.jobManager.transformRecordToEntity(records);
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {

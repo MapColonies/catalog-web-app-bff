@@ -43,15 +43,16 @@ export class TaskResolver {
     }
   }
 
-  @Mutation((type) => [Task])
+  @Query((type) => [Task])
   public async findTasks(
-    @Arg('params', { nullable: true })
+    @Arg('params')
     params: TasksSearchParams,
     @Ctx()
     ctx: IContext
   ): Promise<Task[]> {
     try {
-      return (await this.jobManager.findTasks(params, ctx)) as Task[];
+      const data: Task[] = await this.jobManager.findTasks(params, ctx);
+      return this.jobManager.transformRecordsToEntity(data) as Task[];
     } catch (err) {
       this.logger.error(err as string);
       throw err;

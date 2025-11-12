@@ -142,17 +142,16 @@ export default class JobManagerCommon implements IJobManagerService {
     return res.data as Task[];
   }
 
-  public readonly transformRecordToEntity = (cswJob: Job): Job => {
-    return Object.entries(cswJob).reduce((transformedJob, [key, value]) => {
+  public readonly transformRecordToEntity = (record: Job | Task): Job | Task => {
+    return Object.entries(record).reduce((transformed, [key, value]) => {
       switch (key) {
         case 'created':
         case 'updated':
         case 'expirationDate':
-          return { ...transformedJob, [key]: new Date(value as string) };
-
+          return { ...transformed, [key]: new Date(value as string) };
         default:
-          return { ...transformedJob, [key]: value as unknown };
+          return { ...transformed, [key]: value as unknown };
       }
-    }, {} as Job);
+    }, {} as Job | Task);
   };
 }
