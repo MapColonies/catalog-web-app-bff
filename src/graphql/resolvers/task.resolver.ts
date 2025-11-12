@@ -2,7 +2,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
-import { Resolver, Query, Arg, Ctx, Mutation } from 'type-graphql';
+import { Resolver, Query, Arg, Ctx } from 'type-graphql';
 import moment from 'moment';
 import { Services } from '../../common/constants';
 import { TasksSearchParams } from '../inputTypes';
