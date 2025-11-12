@@ -3,10 +3,10 @@ import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
 import { Services } from '../../common/constants';
-import { JobsSearchParams, JobUpdateData } from '../inputTypes';
-import { Job } from '../job';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
+import { JobsSearchParams, JobUpdateData } from '../inputTypes';
+import { Job } from '../job';
 
 @Resolver()
 export class JobResolver {
