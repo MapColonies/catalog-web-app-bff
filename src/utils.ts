@@ -28,7 +28,7 @@ export enum CatalogRecordItems {
 
 export const addRasterJobActions = (job: Job): void => {
   if (job.domain === CatalogRecordItems.RASTER) {
-    const isRestorable = job.type === 'Ingestion_New' || job.type === 'Ingestion_Update'; // && !!job.parameters && job.parameters.ingestionResolution;
+    const isRestorable = job.type === 'Ingestion_New' || job.type === 'Ingestion_Update'; // Important: job.parameters === null, getJobs API excludes parameters field
     job.availableActions = {
       ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
       ...(isRestorable ? { isRestorable: true } : {}),

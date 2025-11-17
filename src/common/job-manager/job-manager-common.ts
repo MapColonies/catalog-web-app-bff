@@ -1,9 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
 import { isEmpty } from 'lodash';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
+// import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
@@ -125,17 +124,34 @@ export default class JobManagerCommon implements IJobManagerService {
     return res.data as Task[];
   }
 
-  public readonly transformRecordToEntity = (cswJob: Job): Job => {
-    return Object.entries(cswJob).reduce((transformedJob, [key, value]) => {
+  public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    const res = await requestExecutor(
+      {
+        url: `${this.service.url}/tasks/find`,
+        exposureType: this.service.exposureType,
+      },
+      'POST',
+      {
+        data: {
+          ...params,
+        },
+      },
+      ctx
+    );
+
+    return res.data as Task[];
+  }
+
+  public readonly transformRecordToEntity = (record: Job | Task): Job | Task => {
+    return Object.entries(record).reduce((transformed, [key, value]) => {
       switch (key) {
         case 'created':
         case 'updated':
         case 'expirationDate':
-          return { ...transformedJob, [key]: new Date(value as string) };
-
+          return { ...transformed, [key]: new Date(value as string) };
         default:
-          return { ...transformedJob, [key]: value as unknown };
+          return { ...transformed, [key]: value as unknown };
       }
-    }, {} as Job);
+    }, {} as Job | Task);
   };
 }

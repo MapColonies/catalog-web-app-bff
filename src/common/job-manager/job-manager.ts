@@ -10,6 +10,7 @@ import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 
 type JobManagerType = Omit<IJobManagerService, 'transformRecordToEntity'>;
+
 @singleton()
 export class JobManager implements JobManagerType {
   private readonly jobManager: IJobManagerService;
@@ -30,6 +31,8 @@ export class JobManager implements JobManagerType {
         case CatalogRecordItems.RASTER:
           addRasterJobActions(job);
           break;
+        case CatalogRecordItems['3D']:
+          break;
         default:
           break;
       }
@@ -45,12 +48,12 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(cswArray: Job[] | Job): Job[] | Job {
-    return isArray(cswArray)
-      ? cswArray.map((job) => {
-          return this.jobManager.transformRecordToEntity(job);
+  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task)[] | Job | Task {
+    return isArray(records)
+      ? records.map((record) => {
+          return this.jobManager.transformRecordToEntity(record);
         })
-      : this.jobManager.transformRecordToEntity(cswArray);
+      : this.jobManager.transformRecordToEntity(records);
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
@@ -78,6 +81,13 @@ export class JobManager implements JobManagerType {
     this.logger.info(`[JobManager][getTasks] Fetching tasks with params ${JSON.stringify(params)}`);
 
     const response = await this.jobManager.getTasks(params, ctx);
+    return response;
+  }
+
+  public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    this.logger.info(`[JobManager][findTasks] Fetching tasks with params ${JSON.stringify(params)}`);
+
+    const response = await this.jobManager.findTasks(params, ctx);
     return response;
   }
 }

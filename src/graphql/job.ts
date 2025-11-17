@@ -15,7 +15,7 @@ export enum Status {
   Suspended = 'Suspended',
 }
 
-// @ObjectType()
+@ObjectType()
 export class Task {
   @Field({ nullable: false })
   public id: string;
@@ -50,6 +50,7 @@ export class Task {
   @Field({ nullable: true })
   public attempts?: number;
 }
+
 @ObjectType()
 export class AvailableActions {
   @Field({ nullable: false })
