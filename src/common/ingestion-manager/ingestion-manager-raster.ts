@@ -20,7 +20,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     // 2. ingestion-trigger/ingestion/sourcesInfo
     const validateSourcesResp: AxiosResponse<SourceValidation> = (await requestExecutor(
       {
-        url: `${this.service.url}/ingestion/validateSources`,
+        url: `${this.service.url}/validate/gpkgs`,
         exposureType: this.service.exposureType,
       },
       'POST',
@@ -32,7 +32,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     if (validateSourcesResp.data.isValid) {
       sourcesInfo = await requestExecutor(
         {
-          url: `${this.service.url}/ingestion/sourcesInfo`,
+          url: `${this.service.url}/info/gpkgs`,
           exposureType: this.service.exposureType,
         },
         'POST',
@@ -109,24 +109,6 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   private buildValidationPayload(data: SourceGPKGValidationParams): AxiosRequestConfig {
-    //TODO: REPLACE WITH NEW
-    const gpkgFileNameSplitted = data.gpkgFilesPath[0].split('/');
-    const gpkgFileName = gpkgFileNameSplitted.pop();
-    const payloadData = {
-      originDirectory: absoluteToRelativePath(gpkgFileNameSplitted.join('/')),
-      fileNames: [gpkgFileName],
-    };
-
-    this.logger.info(`[IngestionManagerRaster][buildValidationPayload] generated validation payload: ${JSON.stringify(payloadData)}.`);
-
-    return {
-      data: {
-        ...payloadData,
-      },
-    };
-  }
-
-  private buildValidationPayloadNEW(data: SourceGPKGValidationParams): AxiosRequestConfig {
     this.logger.info(`[IngestionManagerRaster][buildValidationPayload] generated validation payload: ${JSON.stringify(data)}.`);
 
     return {
