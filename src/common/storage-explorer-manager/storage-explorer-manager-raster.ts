@@ -45,7 +45,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorerManagerRaster][getDirectory] fetching directory with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getDirectory] fetching directory with data: ${JSON.stringify(data)}`);
 
     const fileConfig =
       data.rasterIngestionFilesTypeConfig !== undefined ? this.rasterIngestionFilesStructureConfig[data.rasterIngestionFilesTypeConfig] : undefined;
@@ -114,7 +114,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDirectoryById(data: ExplorerGetById, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorerManagerRaster][getDirectoryById] fetching directory by id with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getDirectoryById] fetching directory by id with data: ${JSON.stringify(data)}`);
 
     const res = await requestExecutor(
       {
@@ -134,7 +134,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getFile(data: ExplorerGetByPath, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorerManagerRaster][getFile] fetching file with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getFile] fetching file with data: ${JSON.stringify(data)}`);
 
     // REAL LOGIC
     const res = await requestExecutor(
@@ -154,7 +154,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -177,7 +177,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManagerRaster][getZipShapefile] fetching file from path: ${data.folder}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getZipShapefile] fetching file from path: ${data.folder}`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -200,7 +200,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
-    this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}`);
 
     const res = await requestExecutor(
       {
@@ -222,7 +222,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorerManagerRaster][resolveMetadataAsModel] resolve file metadata: ${JSON.stringify(metadata)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][resolveMetadataAsModel] resolve file metadata: ${JSON.stringify(metadata)}`);
 
     const res = await Promise.resolve(JSON.parse(metadata) as LayerRasterRecord);
 
@@ -230,7 +230,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorerManagerRaster][getFileById] fetching file by id with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getFileById] fetching file by id with data: ${JSON.stringify(data)}`);
 
     const res = await requestExecutor(
       {
@@ -246,7 +246,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDecryptedId(data: ExplorerGetById, ctx: IContext): Promise<{ data: string }> {
-    this.logger.info(`[StorageExplorerManagerRaster][getDecryptedId] decrypting id with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[StorageExplorerManagerRaster][getDecryptedId] decrypting id with data: ${JSON.stringify(data)}`);
 
     const res = await requestExecutor(
       {

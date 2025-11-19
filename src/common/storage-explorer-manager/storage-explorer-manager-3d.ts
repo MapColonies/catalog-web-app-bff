@@ -87,7 +87,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManagerRaster][getStreamFile] fetching file from path: ${data.path}.`);
+    this.logger.info(`[StorageExplorerManager3D][getStreamFile] fetching file from path: ${data.path}.`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -110,7 +110,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManagerRaster][getZipShapefile] fetching file from path: ${data.folder}.`);
+    this.logger.info(`[StorageExplorerManager3D][getZipShapefile] fetching file from path: ${data.folder}.`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -133,7 +133,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
-    this.logger.info(`[StorageExplorerManagerRaster][writeStreamFile] writing file in path: ${data.path}.`);
+    this.logger.info(`[StorageExplorerManager3D][writeStreamFile] writing file in path: ${data.path}.`);
 
     const res = await requestExecutor(
       {
