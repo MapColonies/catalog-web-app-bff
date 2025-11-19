@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.10...v2.0.0) (2025-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* Ingest related api synch ( MAPCO-8421 ) ([#216](https://github.com/MapColonies/catalog-web-app-bff/issues/216))
+* new raster ingestion api sync ( MAPCO-8421 ) ([#210](https://github.com/MapColonies/catalog-web-app-bff/issues/210))
+
+### Features
+
+* find tasks (MAPCO-8436) ([#214](https://github.com/MapColonies/catalog-web-app-bff/issues/214)) ([d1a961c](https://github.com/MapColonies/catalog-web-app-bff/commit/d1a961cf3be12f647265386fe7603939905e8f01))
+* Ingest related api synch ( MAPCO-8421 ) ([#216](https://github.com/MapColonies/catalog-web-app-bff/issues/216)) ([f340f47](https://github.com/MapColonies/catalog-web-app-bff/commit/f340f471d324e74816cd48ba9210a29639f633f2))
+* new raster ingestion api sync ( MAPCO-8421 ) ([#210](https://github.com/MapColonies/catalog-web-app-bff/issues/210)) ([4385a60](https://github.com/MapColonies/catalog-web-app-bff/commit/4385a603f4c1ca3a637414183f05461992787112))
+* raster file selection by file type[shp, gpkg] ( MAPCO-8627 ) ([#209](https://github.com/MapColonies/catalog-web-app-bff/issues/209)) ([1b0e74f](https://github.com/MapColonies/catalog-web-app-bff/commit/1b0e74fb0d3a6140d6585c321accff1952a3fb4e))
+* split source info queries ([#208](https://github.com/MapColonies/catalog-web-app-bff/issues/208)) ([4ecc1e1](https://github.com/MapColonies/catalog-web-app-bff/commit/4ecc1e1e0ebb296cb4bcebb8d223dd4de7fc0550))
+
+
+### Bug Fixes
+
+* bff api cors and logging ([#217](https://github.com/MapColonies/catalog-web-app-bff/issues/217)) ([19156c9](https://github.com/MapColonies/catalog-web-app-bff/commit/19156c999fa809d8d8f4eb9cbebece090b32613a))
+* condition of target name in raster SE ([#212](https://github.com/MapColonies/catalog-web-app-bff/issues/212)) ([bf6c87e](https://github.com/MapColonies/catalog-web-app-bff/commit/bf6c87e4db2c635b37ac8d44fb5ad1f163c280d1))
+* mount dir for restore (MAPCO-8436) ([#211](https://github.com/MapColonies/catalog-web-app-bff/issues/211)) ([65a9865](https://github.com/MapColonies/catalog-web-app-bff/commit/65a98654b11e2783ba780aada30076e0a5b8463d))
+* use pathsuffix instead of new path ([#206](https://github.com/MapColonies/catalog-web-app-bff/issues/206)) ([8863810](https://github.com/MapColonies/catalog-web-app-bff/commit/886381019c2772fc1c676d8534565aa655344c1b))
+* wfs exposure type ([#199](https://github.com/MapColonies/catalog-web-app-bff/issues/199)) ([4b5fae6](https://github.com/MapColonies/catalog-web-app-bff/commit/4b5fae6b4346b7c41f0f153e3c1ea2ceb235e03e))
+* wfs url should be route for app and support token according to config (MAPCO-8477) ([#200](https://github.com/MapColonies/catalog-web-app-bff/issues/200)) ([16f0b7f](https://github.com/MapColonies/catalog-web-app-bff/commit/16f0b7f14ca6b223123b4fd705e83ff59a413a98))
+
 ### [1.27.10](https://github.com/MapColonies/catalog-web-app-bff/compare/v1.27.9...v1.27.10) (2025-07-20)
 
 
