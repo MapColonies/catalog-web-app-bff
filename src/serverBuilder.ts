@@ -26,8 +26,8 @@ export class ServerBuilder {
   }
 
   public build(): express.Application {
-    this.buildAPIRoutes();
     this.registerPreRoutesMiddleware();
+    this.buildAPIRoutes();
     this.buildRoutes();
     this.buildGraphQL();
     this.registerPostRoutesMiddleware();
