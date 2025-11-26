@@ -27,6 +27,7 @@
     "injectionType": "ACCESS_TOKEN_INJECTION_TYPE",
     "tokenValue": "ACCESS_TOKEN_TOKEN_VALUE"
   },
+  "rasterIngestionFilesStructure": "RASTER_INGESTION_FILES_STRUCTURE",
   "adminPassword": "ADMIN_PASSWORD",
   "csw": {
     "raster": {
