@@ -19,6 +19,7 @@
   ACCESS_TOKEN_ATTRIBUTE_NAME: {{ quote .Values.global.shared.accessToken.attributeName }}
   ACCESS_TOKEN_INJECTION_TYPE: {{ quote .Values.global.shared.accessToken.injectionType }}
   ACCESS_TOKEN_TOKEN_VALUE: {{ quote .Values.global.shared.accessToken.tokenValue }}
+  RASTER_INGESTION_FILES_STRUCTURE: {{ quote .Values.global.shared.rasterIngestionFilesStructure }}
   OPENAPI_FILE_PATH: {{ quote .Values.env.openapiFilePath }}
   ADMIN_PASSWORD: {{ quote .Values.env.adminPassword }}
   CSW_RASTER_URL: {{ quote .Values.env.cswRasterUrl }}
