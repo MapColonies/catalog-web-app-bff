@@ -28,6 +28,7 @@
     "injectionType": "queryParam",
     "tokenValue": "TOKEN_VALUE"
   },
+  "rasterIngestionFilesStructureConfig": "{\"data\": {\"allowedExt\": [\".gpkg\"],\"selectableExt\": [\".gpkg\"],\"relativeToAOIDirPath\": \"./data\",\"producerFileName\": \"*\",\"selectablePattern\": \"*\"},\"product\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"Product\",\"selectablePattern\": \"Product\"},\"shapeMetadata\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"ShapeMetadata\",\"selectablePattern\": \"ShapeMetadata\"}}",
   "adminPassword": "123456",
   "csw": {
     "raster": {
@@ -129,7 +130,7 @@
     "url": "https://vector-geoserver-url",
     "exposureType": "ROUTE"
   },
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465B0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\", \"markerIcon\": \"buildings-marker\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
     "url": "https://raster-pp-url",
     "exposureType": "ROUTE"
@@ -137,6 +138,5 @@
   "demHeightsService": {
     "url": "https://dem-heights-url",
     "exposureType": "ROUTE"
-  },
-  "rasterIngestionFilesStructureConfig": "{\"data\": {\"allowedExt\": [\".gpkg\"],\"selectableExt\": [\".gpkg\"],\"relativeToAOIDirPath\": \"./data\",\"producerFileName\": \"*\",\"selectablePattern\": \"*\"},\"product\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"Product\",\"selectablePattern\": \"Product\"},\"shapeMetadata\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"ShapeMetadata\",\"selectablePattern\": \"ShapeMetadata\"}}"
+  }
 }
