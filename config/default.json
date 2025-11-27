@@ -26,30 +26,32 @@
   "accessToken": {
     "attributeName": "token",
     "injectionType": "queryParam",
-    "tokenValue": "TOKEN_VALUE"
+    "tokenValue": "eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJkIjpbInJhc3RlciIsInJhc3RlcldtcyIsInJhc3RlckV4cG9ydCIsImRlbSIsInZlY3RvciIsIjNkIl0sImlhdCI6MTY3NDYzMjM0Niwic3ViIjoibWFwY29sb25pZXMtYXBwIiwiaXNzIjoibWFwY29sb25pZXMtdG9rZW4tY2xpIn0.D1u28gFlxf_Z1bzIiRHZonUgrdWwhZy8DtmQj15cIzaABRUrGV2n_OJlgWTuNfrao0SbUZb_s0_qUUW6Gz_zO3ET2bVx5xQjBu0CaIWdmUPDjEYr6tw-eZx8EjFFIyq3rs-Fo0daVY9cX1B2aGW_GeJir1oMnJUURhABYRoh60azzl_utee9UdhDpnr_QElNtzJZIKogngsxCWp7tI7wkTuNCBaQM7aLEcymk0ktxlWEAt1E0nGt1R-bx-HnPeeQyZlxx4UQ1nuYTijpz7N8poaCCExOFeafj9T7megv2BzTrKWgfM1eai8srSgNa3I5wKuW0EyYnGZxdbJe8aseZg"
   },
+  "rasterIngestionFilesStructureConfig": "{\"data\": {\"allowedExt\": [\".gpkg\"],\"selectableExt\": [\".gpkg\"],\"relativeToAOIDirPath\": \"./data\",\"producerFileName\": \"*\",\"selectablePattern\": \"*\"},\"product\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"Product\",\"selectablePattern\": \"Product\"},\"shapeMetadata\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"ShapeMetadata\",\"selectablePattern\": \"ShapeMetadata\"}}",
   "adminPassword": "123456",
   "csw": {
     "raster": {
-      "url": "https://raster-csw-url",
+      "url": "https://raster-serving-int-pycsw-private-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     },
     "3d": {
-      "url": "https://3d-csw-url",
+      "url": "https://serving-3d-pycsw-all-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/3d/v1/all",
       "exposureType": "ROUTE"
     },
     "dem": {
-      "url": "https://dem-csw-url",
+      "url": "https://dem-pycsw-all-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/dem/v1/all",
       "exposureType": "ROUTE"
     }
   },
   "catalogServices": {
     "raster": {
-      "url": "http://raster-catalog-url",
+      "url": "https://raster-core-int-raster-catalog-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://3d-ingestion-url",
+      "url_int": "https://ingestion-3d-gateway-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://ingestion-3d-gateway-route-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -58,11 +60,13 @@
   },
   "ingestionServices": {
     "raster": {
-      "url": "http://raster-ingestion-url",
+      "url_int": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-ingestion-dev-ingestion-trigger-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
-      "url": "http://3d-ingestion-url",
+      "url_int": "https://ingestion-3d-gateway-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://ingestion-3d-gateway-route-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "dem": {
@@ -71,25 +75,28 @@
   },
   "storageExplorerServices": {
     "raster": {
-      "url": "http://raster-ingestion-url",
+      "url_int": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-ingestion-dev-ingestion-trigger-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE",
       "bufferSize": 1048576
     },
     "3d": {
-      "url": "http://3d-ingestion-url",
+      "url_int": "https://ingestion-3d-gateway-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://ingestion-3d-gateway-route-3d-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE",
       "bufferSize": 1048576
     }
   },
   "validationService": {
     "raster": {
-      "url": "http://raster-ingestion-url",
+      "url_int": "https://ingestion-trigger-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://raster-ingestion-dev-ingestion-trigger-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "exportLayerServices": {
     "raster": {
-      "url": "http://raster-export-url",
+      "url": "https://raster-export-int-exporter-trigger-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     },
     "3d": {
@@ -101,16 +108,17 @@
   },
   "jobServices": {
     "common": {
-      "url": "http://common-job-manager-url",
+      "url_int": "https://common-job-manager-route-integration.apps.j1lk3njp.eastus.aroapp.io",
+      "url": "https://common-job-manager-route-raster-dev.apps.j1lk3njp.eastus.aroapp.io",
       "exposureType": "SERVICE"
     }
   },
   "lookupTablesService": {
-    "url": "http://common-lookup-tables-url",
+    "url": "https://common-lookup-tables-integration.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "serviceDiscovery": {
-    "url": "http://app-service-discovery-url",
+    "url": "https://app-k8s-services-list-integration.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "SERVICE"
   },
   "externalServices": {
@@ -121,22 +129,22 @@
   },
   "mapServices": {
     "raster": {
-      "url": "https://raster-mapproxy-url",
+      "url": "https://raster-serving-int-mapproxy-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/api/raster/v1",
       "exposureType": "ROUTE"
     }
   },
   "wfs": {
-    "url": "https://vector-geoserver-url",
+    "url_insecured": "http://geoserver-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/core/ows",
+    "url": "https://geoserver-secured-vector-dev.apps.j1lk3njp.eastus.aroapp.io/geoserver/mock/wfs",
     "exposureType": "ROUTE"
   },
-  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465b0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
+  "wfsServicesConfig": "{\"buildings\": {\"color\": \"#0465B0\", \"outlineColor\": \"#0465B0\", \"dWithin\": 3, \"isVisualized\": true, \"translationId\": \"actions.wfs.buildings-title\", \"icon\": \"location_city\", \"markerIcon\": \"buildings-marker\"}, \"addrs\": {\"translationId\": \"תשאול כתובת\", \"isVisualized\": \"false\"}, \"roads\": {\"translationId\": \"תשאול כביש\", \"isVisualized\": \"true\", \"icon\": \"drive_eta\", \"color\": \"orange\"}  }",
   "polygonParts": {
-    "url": "https://raster-pp-url",
+    "url": "https://raster-serving-int-pp-geoserver-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io/geoserver/wfs",
     "exposureType": "ROUTE"
   },
   "demHeightsService": {
-    "url": "https://dem-heights-url",
+    "url": "https://dem-dem-heights-nginx-route-manual-integration.apps.j1lk3njp.eastus.aroapp.io",
     "exposureType": "ROUTE"
-  },
-  "rasterIngestionFilesStructureConfig": "{\"data\": {\"allowedExt\": [\".gpkg\"],\"selectableExt\": [\".gpkg\"],\"relativeToAOIDirPath\": \"./data\",\"producerFileName\": \"*\",\"selectablePattern\": \"*\"},\"product\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"Product\",\"selectablePattern\": \"Product\"},\"shapeMetadata\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"ShapeMetadata\",\"selectablePattern\": \"ShapeMetadata\"}}"
+  }
 }
