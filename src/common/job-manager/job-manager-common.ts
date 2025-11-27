@@ -151,7 +151,7 @@ export default class JobManagerCommon implements IJobManagerService {
         case 'expirationDate':
           return { ...transformed, [key]: new Date(value as string) };
         case 'parameters':
-          if (value?.metadata) {
+          if (value?.metadata && 'domain' in record && record.domain === 'RASTER') {
             const productTypeKey = Object.entries(ProductType).find(([_, v]) => v === value.metadata.productType)?.[0] as
               | keyof typeof ProductType
               | undefined;
