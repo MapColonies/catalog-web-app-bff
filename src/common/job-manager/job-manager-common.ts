@@ -1,6 +1,5 @@
 import { isEmpty } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { ProductType } from '@map-colonies/types';
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
@@ -150,17 +149,6 @@ export default class JobManagerCommon implements IJobManagerService {
         case 'updated':
         case 'expirationDate':
           return { ...transformed, [key]: new Date(value as string) };
-        case 'parameters':
-          if (value?.metadata && 'domain' in record && record.domain === 'RASTER') {
-            const productTypeKey = Object.entries(ProductType).find(([_, v]) => v === value.metadata.productType)?.[0] as
-              | keyof typeof ProductType
-              | undefined;
-            if (productTypeKey) {
-              value.metadata.productType = productTypeKey;
-            }
-            return { ...transformed, [key]: { ...value, metadata: { ...value.metadata } } };
-          }
-          return { ...transformed, [key]: value as unknown };
         default:
           return { ...transformed, [key]: value as unknown };
       }
