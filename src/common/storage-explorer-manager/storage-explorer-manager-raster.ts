@@ -229,8 +229,11 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     function getRequiredFields(cls: Function): string[] {
       const metadata = getMetadataStorage();
       const objectType = metadata.objectTypes.find((o) => o.target === cls);
-      if (!objectType) return [];
-      //@ts-ignore
+      if (!objectType) {
+        return [];
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return objectType.fields?.filter((f) => f.typeOptions.nullable === false).map((f) => f.name);
     }
 
