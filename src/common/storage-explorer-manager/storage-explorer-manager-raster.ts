@@ -226,23 +226,23 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
     this.logger.info(`[StorageExplorerManagerRaster][resolveMetadataAsModel] resolve file metadata: ${JSON.stringify(metadata)}`);
 
-    function getRequiredFields(cls: Function): string[] {
+    function getRequiredFields<T>(cls: new () => T): string[] {
       const metadata = getMetadataStorage();
       const objectType = metadata.objectTypes.find((o) => o.target === cls);
       if (!objectType) {
         return [];
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return objectType.fields?.filter((f) => f.typeOptions.nullable === false).map((f) => f.name);
+      return objectType.fields?.filter((f) => f.typeOptions.nullable === false).map((f) => f.name) ?? [];
     }
 
-    function completeRecord<T extends object>(cls: new () => T, partial: Partial<T>, defaults: Record<string, any>): T {
+    function completeRecord<T>(cls: new (...args: unknown[]) => T, partial: Partial<T>, defaults: Partial<Record<keyof T, unknown>>): T {
       const required = getRequiredFields(cls);
-      const full: any = { ...partial };
+      const full: Record<string, unknown> = { ...partial };
+
       for (const field of required) {
-        if (full[field] === undefined) {
-          full[field] = defaults[field];
+        const key = field as keyof T;
+        if (full[key as string] === undefined) {
+          full[key as string] = defaults[key];
         }
       }
       return full as T;
