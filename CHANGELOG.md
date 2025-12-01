@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.0.3...v2.0.4) (2025-12-01)
+
+
+### Bug Fixes
+
+* lint raster resovle metadata as model ([#228](https://github.com/MapColonies/catalog-web-app-bff/issues/228)) ([d24db34](https://github.com/MapColonies/catalog-web-app-bff/commit/d24db340106a9058377840bc6f95bd2c3085e3ca))
+
 ## [2.0.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.0.2...v2.0.3) (2025-12-01)
 
 
