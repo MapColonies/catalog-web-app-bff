@@ -3,7 +3,9 @@ import { Readable } from 'stream';
 import { AxiosResponse } from 'axios';
 import { Request } from 'express';
 import { isEmpty } from 'lodash';
+import { getMetadataStorage } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
+import { ProductType, Transparency } from '@map-colonies/types';
 import { requestExecutor } from '../../utils';
 import {
   ExplorerGetByFolderPath,
@@ -38,7 +40,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('storageExplorerServices.raster');
-    this.bufferSize = this.config.get('storageExplorerServices.raster.bufferSize');
+    this.bufferSize = Number(this.config.get('storageExplorerServices.raster.bufferSize'));
     this.rasterIngestionFilesStructureConfig = JSON.parse(
       this.config.get('rasterIngestionFilesStructureConfig')
     ) as IRasterIngestionFilesStructureConfig;
@@ -224,9 +226,49 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
     this.logger.info(`[StorageExplorerManagerRaster][resolveMetadataAsModel] resolve file metadata: ${JSON.stringify(metadata)}`);
 
+    function getRequiredFields(cls: Function): string[] {
+      const metadata = getMetadataStorage();
+      const objectType = metadata.objectTypes.find((o) => o.target === cls);
+      if (!objectType) {
+        return [];
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return objectType.fields?.filter((f) => f.typeOptions.nullable === false).map((f) => f.name);
+    }
+
+    function completeRecord<T extends object>(cls: new () => T, partial: Partial<T>, defaults: Record<string, any>): T {
+      const required = getRequiredFields(cls);
+      const full: any = { ...partial };
+      for (const field of required) {
+        if (full[field] === undefined) {
+          full[field] = defaults[field];
+        }
+      }
+      return full as T;
+    }
+
     const res = await Promise.resolve(JSON.parse(metadata) as LayerRasterRecord);
 
-    return res;
+    const full = completeRecord(LayerRasterRecord, res, {
+      classification: '3',
+      productName: '',
+      srs: '',
+      producerName: '',
+      imagingTimeBeginUTC: new Date(),
+      imagingTimeEndUTC: new Date(),
+      maxHorizontalAccuracyCE90: 0,
+      sensors: [],
+      region: [],
+      productType: ProductType.ORTHOPHOTO,
+      srsName: '',
+      minResolutionDeg: 0,
+      minResolutionMeter: 0,
+      footprint: {},
+      transparency: Transparency.OPAQUE,
+    });
+
+    return full;
   }
 
   public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<LayerRasterRecord> {
