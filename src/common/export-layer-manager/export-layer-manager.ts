@@ -2,9 +2,9 @@ import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
+import { Domain } from '../../graphql/domain';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
-import { CatalogRecordItems } from '../../utils';
 import { Services } from '../constants';
 import { IContext } from '../interfaces';
 import { ExportLayerManager3D } from './export-layer-manager-3d';
@@ -12,7 +12,7 @@ import { ExportLayerManagerDEM } from './export-layer-manager-dem';
 import { ExportLayerManagerRaster } from './export-layer-manager-raster';
 import { IExportLayerManagerService } from './export-layer.interface';
 
-type ExportLayerServices = Record<CatalogRecordItems, IExportLayerManagerService>;
+type ExportLayerServices = Record<Domain, IExportLayerManagerService>;
 
 @singleton()
 export class ExportLayerManager implements IExportLayerManagerService {

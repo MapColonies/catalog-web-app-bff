@@ -1,9 +1,10 @@
 import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
+import { Domain } from '../../graphql/domain';
 import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
-import { addRasterJobActions, CatalogRecordItems } from '../../utils';
+import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
@@ -28,10 +29,10 @@ export class JobManager implements JobManagerType {
 
     jobsData.forEach((job) => {
       switch (job.domain) {
-        case CatalogRecordItems.RASTER:
+        case Domain.RASTER:
           addRasterJobActions(job);
           break;
-        case CatalogRecordItems['3D']:
+        case Domain['3D']:
           break;
         default:
           break;
