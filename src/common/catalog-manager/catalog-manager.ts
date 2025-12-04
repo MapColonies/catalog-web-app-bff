@@ -3,14 +3,14 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
+import { Domain } from '../../graphql/domain';
 import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
-import { CatalogRecordItems } from '../../utils';
 import { ICatalogManagerService } from './catalog-manager.interface';
 import { CatalogManagerRaster } from './catalog-manager-raster';
 import { CatalogManager3D } from './catalog-manager-3d';
 import { CatalogManagerDem } from './catalog-manager-dem';
 
-type CatalogServices = Record<CatalogRecordItems, ICatalogManagerService>;
+type CatalogServices = Record<Domain, ICatalogManagerService>;
 
 @singleton()
 export class CatalogManager implements ICatalogManagerService {

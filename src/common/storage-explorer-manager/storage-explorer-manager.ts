@@ -7,15 +7,15 @@ import { AxiosResponse } from 'axios';
 import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
 import { CatalogRecordType, fieldTypes, Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { CatalogRecordItems } from '../../utils';
 import { ExplorerGetByFolderPath, ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { File } from '../../graphql/storage-explorer';
 import { CSW } from '../../csw/csw';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
+import { Domain } from '../../graphql/domain';
 
-type ExplorerServices = Record<CatalogRecordItems, IStorageExplorerManagerService>;
+type ExplorerServices = Record<Domain, IStorageExplorerManagerService>;
 
 @singleton()
 export class StorageExplorerManager implements IStorageExplorerManagerService {

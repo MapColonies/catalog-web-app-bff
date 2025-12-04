@@ -14,8 +14,8 @@ import { inject, singleton } from 'tsyringe';
 import { get, intersection, size } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
+import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
-import { CatalogRecordItems } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
@@ -24,7 +24,7 @@ interface CswClient {
   entities: RecordType[];
 }
 
-type CswClients = Record<CatalogRecordItems, CswClient>;
+type CswClients = Record<Domain, CswClient>;
 const NOT_FOUND = -1;
 
 @singleton()
@@ -108,7 +108,7 @@ export class CSW {
 
     if (typeFilterIdx > NOT_FOUND) {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
-      const catalog: CatalogRecordItems = this.recordTypeToEntity(RecordType[fetchRecordType]);
+      const catalog: Domain = this.recordTypeToEntity(RecordType[fetchRecordType]);
       switch (RecordType[fetchRecordType]) {
         case RecordType.RECORD_ALL:
           getCatalogs.push(
@@ -133,7 +133,7 @@ export class CSW {
           // this.addVectorRecord(getCatalogs, catalog, ctx, newOpts, opts, start, end);
           break;
         case RecordType.RECORD_VECTOR:
-          getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, newOpts));
+          getCatalogs.push(this.fetchRecords(this.cswClients[Domain.VECTOR].instance, catalog, ctx, start, end, newOpts));
           break;
       }
     } else {
@@ -171,7 +171,7 @@ export class CSW {
 
   private addVectorRecord(
     getCatalogs: Promise<CatalogRecordType[]>[],
-    catalog: CatalogRecordItems,
+    catalog: Domain,
     ctx: IContext,
     searchOptions: SearchOptions,
     opts?: SearchOptions,
@@ -182,20 +182,20 @@ export class CSW {
     const filtersForCatalog = 1;
 
     if (size(opts?.filter) > filtersForCatalog && isIncludeVector) {
-      getCatalogs.push(this.fetchRecords(this.cswClients[CatalogRecordItems.VECTOR].instance, catalog, ctx, start, end, searchOptions));
+      getCatalogs.push(this.fetchRecords(this.cswClients[Domain.VECTOR].instance, catalog, ctx, start, end, searchOptions));
     }
   }
 
-  private recordTypeToEntity(recordType: RecordType): CatalogRecordItems {
+  private recordTypeToEntity(recordType: RecordType): Domain {
     switch (recordType) {
       case RecordType.RECORD_DEM:
-        return CatalogRecordItems.DEM;
+        return Domain.DEM;
       case RecordType.RECORD_3D:
-        return CatalogRecordItems['3D'];
+        return Domain['3D'];
       case RecordType.RECORD_VECTOR:
-        return CatalogRecordItems.VECTOR;
+        return Domain.VECTOR;
       default:
-        return CatalogRecordItems.RASTER;
+        return Domain.RASTER;
     }
   }
 
@@ -208,7 +208,7 @@ export class CSW {
 
   private async fetchRecords(
     instance: CswClientWrapper | CswWfsClientWrapper,
-    catalog: CatalogRecordItems,
+    catalog: Domain,
     ctx: IContext,
     start?: number,
     end?: number,
