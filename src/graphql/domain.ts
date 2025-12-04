@@ -8,4 +8,4 @@ export enum Domain {
   QUANTIZED_MESH_BEST = 'QUANTIZED_MESH_BEST',
 }
 
-registerEnumType(Domain, { name: 'CatalogRecordItems' });
+registerEnumType(Domain, { name: 'Domain' });
