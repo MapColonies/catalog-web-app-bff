@@ -9,6 +9,7 @@ import { LookupTableField } from './lookupTablesData';
 import { Status } from './job';
 import { GeojsonFeature, GeojsonFeatureCollection } from './export-layer';
 import { geojsonFeatureProperties, geoJsonObject } from './common-scalars';
+import { Domain } from './domain';
 
 const paramsObject = new GraphQLScalarType({ name: 'paramsObject' });
 
@@ -208,6 +209,14 @@ export class JobUpdateData {
 
   @Field((type) => Int, { nullable: true })
   public priority?: number;
+}
+
+@InputType()
+export class JobAbortParams {
+  @Field({ nullable: false })
+  public id: string;
+  @Field({ nullable: true })
+  public domain: Domain;
 }
 
 @InputType()
