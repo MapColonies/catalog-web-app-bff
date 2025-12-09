@@ -180,6 +180,9 @@ export class JobsSearchParams {
 
   @Field((type) => Date, { nullable: true })
   public tillDate?: Date;
+
+  @Field({ nullable: false })
+  public domain: Domain;
 }
 
 @InputType()
@@ -215,7 +218,17 @@ export class JobUpdateData {
 export class JobAbortParams {
   @Field({ nullable: false })
   public id: string;
-  @Field({ nullable: true })
+
+  @Field({ nullable: false })
+  public domain: Domain;
+}
+
+@InputType()
+export class ResetJobHandlerParams {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field({ nullable: false })
   public domain: Domain;
 }
 
