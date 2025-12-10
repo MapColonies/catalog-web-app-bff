@@ -9,7 +9,6 @@ import { LookupTableField } from './lookupTablesData';
 import { Status } from './job';
 import { GeojsonFeature, GeojsonFeatureCollection } from './export-layer';
 import { geojsonFeatureProperties, geoJsonObject } from './common-scalars';
-import { Domain } from './domain';
 
 const paramsObject = new GraphQLScalarType({ name: 'paramsObject' });
 
@@ -180,9 +179,6 @@ export class JobsSearchParams {
 
   @Field((type) => Date, { nullable: true })
   public tillDate?: Date;
-
-  @Field((type) => Domain, { nullable: true })
-  public domain?: Domain;
 }
 
 @InputType()
@@ -219,8 +215,8 @@ export class JobActionParams {
   @Field({ nullable: false })
   public id: string;
 
-  @Field((type) => Domain, { nullable: false })
-  public domain: Domain;
+  @Field({ nullable: false })
+  public domain: string;
 }
 
 @InputType()

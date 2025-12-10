@@ -11,7 +11,10 @@ import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 import JobManagerRaster from './job-manager-raster';
 
-type JobManagerServiceType = 'RASTER' | 'COMMON';
+export enum JobManagerServiceType {
+  RASTER = 'RASTER',
+  COMMON = 'COMMON',
+}
 
 type JobManagerType = Omit<IJobManagerService, 'transformRecordToEntity'>;
 type JobServices = Record<JobManagerServiceType, IJobManagerService>;
@@ -25,11 +28,11 @@ export class JobManager implements JobManagerType {
     this.jobrServices.COMMON = new JobManagerCommon(this.config, this.logger);
   }
 
-  private convertDomainToJobManagerServiceType(domain: Domain): JobManagerServiceType {
-    if (domain === Domain.RASTER) {
-      return 'RASTER';
+  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
+    if (str === JobManagerServiceType.RASTER) {
+      return JobManagerServiceType.RASTER;
     } else {
-      return 'COMMON';
+      return JobManagerServiceType.COMMON;
     }
   }
 
@@ -89,7 +92,7 @@ export class JobManager implements JobManagerType {
   public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
     this.logger.info(`[JobManager][abortJobHandler] Aborting job with id ${jobAbortParams.id}`);
 
-    const jobManagerServiceType = this.convertDomainToJobManagerServiceType(jobAbortParams.domain);
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(jobAbortParams.domain);
     const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
     const response = await jobManagerInstance.abortJobHandler(jobAbortParams, ctx);
     return response;
@@ -98,7 +101,7 @@ export class JobManager implements JobManagerType {
   public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
     this.logger.info(`[JobManager][resetJobHandler] Aborting job with id ${resetJobHandlerParams.id}`);
 
-    const jobManagerServiceType = this.convertDomainToJobManagerServiceType(resetJobHandlerParams.domain);
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(resetJobHandlerParams.domain);
     const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
     const response = await jobManagerInstance.resetJobHandler(resetJobHandlerParams, ctx);
     return response;
