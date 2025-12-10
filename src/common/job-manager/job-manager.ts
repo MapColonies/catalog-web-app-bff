@@ -11,7 +11,7 @@ import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 import JobManagerRaster from './job-manager-raster';
 
-export enum JobManagerServiceType {
+enum JobManagerServiceType {
   RASTER = 'RASTER',
   COMMON = 'COMMON',
 }
