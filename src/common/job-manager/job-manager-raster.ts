@@ -1,8 +1,8 @@
 import { Logger } from '@map-colonies/js-logger';
-import JobManagerCommon from './job-manager-common';
-import { IConfig, IContext, IService } from '../interfaces';
 import { requestExecutor } from '../../utils';
 import { JobActionParams } from '../../graphql/inputTypes';
+import { IConfig, IContext, IService } from '../interfaces';
+import JobManagerCommon from './job-manager-common';
 
 export default class JobManagerRaster extends JobManagerCommon {
   public constructor(config: IConfig, logger: Logger) {
@@ -10,10 +10,11 @@ export default class JobManagerRaster extends JobManagerCommon {
   }
 
   public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
+    const service: IService = this.config.get('ingestionServices.raster');
     await requestExecutor(
       {
-        url: `${(this.config.get('ingestionServices.raster') as IService).url}/KUKU/abort/${jobAbortParams.id}`,
-        exposureType: (this.config.get('ingestionServices.raster') as IService).exposureType,
+        url: `${service.url}/KUKU/abort/${jobAbortParams.id}`,
+        exposureType: service.exposureType,
       },
       'POST',
       {},
@@ -23,10 +24,11 @@ export default class JobManagerRaster extends JobManagerCommon {
   }
 
   public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
+    const service: IService = this.config.get('ingestionServices.raster');
     await requestExecutor(
       {
-        url: `${(this.config.get('ingestionServices.raster') as IService).url}/KUKU/${resetJobHandlerParams.id}/reset`,
-        exposureType: (this.config.get('ingestionServices.raster') as IService).exposureType,
+        url: `${service.url}/KUKU/${resetJobHandlerParams.id}/reset`,
+        exposureType: service.exposureType,
       },
       'POST',
       {
