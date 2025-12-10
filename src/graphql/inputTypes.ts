@@ -211,6 +211,15 @@ export class JobUpdateData {
 }
 
 @InputType()
+export class JobActionParams {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field({ nullable: false })
+  public domain: string;
+}
+
+@InputType()
 export class StringArray {
   @Field((type) => [String])
   public value: string[];

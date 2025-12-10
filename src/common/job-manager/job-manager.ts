@@ -1,37 +1,63 @@
 import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
-import { JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { Domain } from '../../graphql/domain';
+import { JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
-import { addRasterJobActions, CatalogRecordItems } from '../../utils';
+import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
+import JobManagerRaster from './job-manager-raster';
+
+enum JobManagerServiceType {
+  RASTER = 'RASTER',
+  COMMON = 'COMMON',
+}
 
 type JobManagerType = Omit<IJobManagerService, 'transformRecordToEntity'>;
+type JobServices = Record<JobManagerServiceType, IJobManagerService>;
 
 @singleton()
 export class JobManager implements JobManagerType {
-  private readonly jobManager: IJobManagerService;
+  private readonly jobrServices: JobServices = {} as JobServices;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
-    const commonJobManager = new JobManagerCommon(config, logger);
+    this.jobrServices.RASTER = new JobManagerRaster(this.config, this.logger);
+    this.jobrServices.COMMON = new JobManagerCommon(this.config, this.logger);
+  }
 
-    this.jobManager = commonJobManager;
+  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
+    if (str === JobManagerServiceType.RASTER) {
+      return JobManagerServiceType.RASTER;
+    } else {
+      return JobManagerServiceType.COMMON;
+    }
+  }
+
+  private getManagerInstance(JobManagerServiceType: JobManagerServiceType): IJobManagerService {
+    switch (JobManagerServiceType) {
+      case 'COMMON':
+        return this.jobrServices.COMMON;
+      case 'RASTER':
+        return this.jobrServices.RASTER;
+      default:
+        return this.jobrServices.COMMON;
+    }
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
 
-    const jobsData = await this.jobManager.getJobs(ctx, params);
+    const jobsData = await this.jobrServices.COMMON.getJobs(ctx, params);
 
     jobsData.forEach((job) => {
       switch (job.domain) {
-        case CatalogRecordItems.RASTER:
+        case Domain.RASTER:
           addRasterJobActions(job);
           break;
-        case CatalogRecordItems['3D']:
+        case Domain['3D']:
           break;
         default:
           break;
@@ -44,50 +70,54 @@ export class JobManager implements JobManagerType {
   public async getJob(id: string, ctx: IContext): Promise<Job> {
     this.logger.info(`[JobManager][getJobs] Fetching job ${id}`);
 
-    const jobsData = await this.jobManager.getJob(id, ctx);
+    const jobsData = await this.jobrServices.COMMON.getJob(id, ctx);
     return jobsData;
   }
 
   public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task)[] | Job | Task {
     return isArray(records)
       ? records.map((record) => {
-          return this.jobManager.transformRecordToEntity(record);
+          return this.jobrServices.COMMON.transformRecordToEntity(record);
         })
-      : this.jobManager.transformRecordToEntity(records);
+      : this.jobrServices.COMMON.transformRecordToEntity(records);
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
     this.logger.info(`[JobManager][updateJobHandler] Updating job with params ${JSON.stringify(params)}`);
 
-    const response = await this.jobManager.updateJobHandler(id, params, ctx);
+    const response = await this.jobrServices.COMMON.updateJobHandler(id, params, ctx);
     return response;
   }
 
-  public async abortJobHandler(id: string, ctx: IContext): Promise<string> {
-    this.logger.info(`[JobManager][abortJobHandler] Aborting job with id ${id}`);
+  public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][abortJobHandler] Aborting job with id ${jobAbortParams.id}`);
 
-    const response = await this.jobManager.abortJobHandler(id, ctx);
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(jobAbortParams.domain);
+    const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
+    const response = await jobManagerInstance.abortJobHandler(jobAbortParams, ctx);
     return response;
   }
 
-  public async resetJobHandler(id: string, ctx: IContext): Promise<string> {
-    this.logger.info(`[JobManager][resetJobHandler] Aborting job with id ${id}`);
+  public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][resetJobHandler] Aborting job with id ${resetJobHandlerParams.id}`);
 
-    const response = await this.jobManager.resetJobHandler(id, ctx);
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(resetJobHandlerParams.domain);
+    const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
+    const response = await jobManagerInstance.resetJobHandler(resetJobHandlerParams, ctx);
     return response;
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     this.logger.info(`[JobManager][getTasks] Fetching tasks with params ${JSON.stringify(params)}`);
 
-    const response = await this.jobManager.getTasks(params, ctx);
+    const response = await this.jobrServices.COMMON.getTasks(params, ctx);
     return response;
   }
 
   public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     this.logger.info(`[JobManager][findTasks] Fetching tasks with params ${JSON.stringify(params)}`);
 
-    const response = await this.jobManager.findTasks(params, ctx);
+    const response = await this.jobrServices.COMMON.findTasks(params, ctx);
     return response;
   }
 }
