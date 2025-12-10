@@ -181,8 +181,8 @@ export class JobsSearchParams {
   @Field((type) => Date, { nullable: true })
   public tillDate?: Date;
 
-  @Field({ nullable: false })
-  public domain: Domain;
+  @Field((type) => Domain, { nullable: true })
+  public domain?: Domain;
 }
 
 @InputType()
@@ -215,20 +215,11 @@ export class JobUpdateData {
 }
 
 @InputType()
-export class JobAbortParams {
+export class JobActionParams {
   @Field({ nullable: false })
   public id: string;
 
-  @Field({ nullable: false })
-  public domain: Domain;
-}
-
-@InputType()
-export class ResetJobHandlerParams {
-  @Field({ nullable: false })
-  public id: string;
-
-  @Field({ nullable: false })
+  @Field((type) => Domain, { nullable: false })
   public domain: Domain;
 }
 

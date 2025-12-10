@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { JobAbortParams, JobsSearchParams, JobUpdateData, ResetJobHandlerParams, TasksSearchParams } from '../../graphql/inputTypes';
+import { JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor } from '../../utils';
@@ -11,7 +11,7 @@ export default class JobManagerCommon implements IJobManagerService {
   private readonly service: IService;
   // private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
-  public constructor(private readonly config: IConfig, private readonly logger: Logger) {
+  public constructor(public readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('jobServices.common');
   }
 
@@ -80,7 +80,7 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
-  public async abortJobHandler(jobAbortParams: JobAbortParams, ctx: IContext): Promise<string> {
+  public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
     await requestExecutor(
       {
         url: `${this.service.url}/tasks/abort/${jobAbortParams.id}`,
@@ -93,7 +93,7 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
-  public async resetJobHandler(resetJobHandlerParams: ResetJobHandlerParams, ctx: IContext): Promise<string> {
+  public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
     await requestExecutor(
       {
         url: `${this.service.url}/jobs/${resetJobHandlerParams.id}/reset`,

@@ -5,7 +5,7 @@ import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
-import { JobAbortParams, JobsSearchParams, JobUpdateData } from '../inputTypes';
+import { JobActionParams, JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 
 @Resolver()
@@ -72,13 +72,13 @@ export class JobResolver {
 
   @Mutation((type) => String)
   public async jobRetry(
-    @Arg('id')
-    id: string,
+    @Arg('resetJobHandlerParams')
+    resetJobHandlerParams: JobActionParams,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      const response = await this.jobManager.resetJobHandler(id, ctx);
+      const response = await this.jobManager.resetJobHandler(resetJobHandlerParams, ctx);
       return response;
     } catch (err) {
       this.logger.error(err as string);
@@ -88,8 +88,8 @@ export class JobResolver {
 
   @Mutation((type) => String)
   public async jobAbort(
-    @Arg('JobAbortParams')
-    jobAbortParams: JobAbortParams,
+    @Arg('jobAbortParams')
+    jobAbortParams: JobActionParams,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
