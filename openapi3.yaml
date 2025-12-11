@@ -132,6 +132,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+  /callback:
+    post:
+      operationId: jobStatusCallback
+      tags:
+        - Job Manager
+      summary: Callback endpoint for job manager status updates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jobId:
+                  type: string
+                status:
+                  type: string
+                  enum: [completed, failed]
+      responses:
+        '200':
+          description: Status received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 components:
   schemas:
     acceptall:
