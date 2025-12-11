@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
+import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
 import { IContext, IService } from './common/interfaces';
 import { Job } from './graphql/job';
 import { Domain } from './graphql/domain';
@@ -21,7 +22,7 @@ const isQueryParam = (injectionType: string): boolean => {
 
 export const addRasterJobActions = (job: Job): void => {
   if (job.domain === Domain.RASTER) {
-    const isRestorable = job.type === 'Ingestion_New' || job.type === 'Ingestion_Update'; // Important: job.parameters === null, getJobs API excludes parameters field
+    const isRestorable = job.type === RasterJobTypeEnum.NEW || job.type === RasterJobTypeEnum.UPDATE; // Important: job.parameters === null, getJobs API excludes parameters field
     job.availableActions = {
       ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
       ...(isRestorable ? { isRestorable: true } : {}),
