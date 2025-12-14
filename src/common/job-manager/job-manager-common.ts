@@ -52,7 +52,11 @@ export default class JobManagerCommon implements IJobManagerService {
         exposureType: this.service.exposureType,
       },
       'GET',
-      {},
+      {
+        params: {
+          shouldReturnAvailableActions: true,
+        },
+      },
       ctx
     );
 

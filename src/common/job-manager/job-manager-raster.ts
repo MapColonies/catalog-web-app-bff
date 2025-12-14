@@ -27,15 +27,11 @@ export default class JobManagerRaster extends JobManagerCommon {
     const service: IService = this.config.get('ingestionServices.raster');
     await requestExecutor(
       {
-        url: `${service.url}/KUKU/${resetJobHandlerParams.id}/reset`,
+        url: `${service.url}/injestion/${resetJobHandlerParams.id}/retry`,
         exposureType: service.exposureType,
       },
-      'POST',
-      {
-        data: {
-          newExpirationDate: undefined,
-        },
-      },
+      'PUT',
+      {},
       ctx
     );
     return 'ok';
