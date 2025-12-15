@@ -97,10 +97,10 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
-  public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
+  public async resetJobHandler(jobRetryParams: JobActionParams, ctx: IContext): Promise<string> {
     await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${resetJobHandlerParams.id}/reset`,
+        url: `${this.service.url}/jobs/${jobRetryParams.id}/reset`,
         exposureType: this.service.exposureType,
       },
       'POST',
