@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.0.4...v2.1.0) (2025-12-15)
+
+
+### Features
+
+* New Job Manager for Raster (MAPCO: 8438) ([#230](https://github.com/MapColonies/catalog-web-app-bff/issues/230)) ([6c3f32e](https://github.com/MapColonies/catalog-web-app-bff/commit/6c3f32e4b66569b0b1fa24420966f36f7ed6fd07))
+* tasks notifications web socket (MAPCO-8444) ([#233](https://github.com/MapColonies/catalog-web-app-bff/issues/233)) ([44660e0](https://github.com/MapColonies/catalog-web-app-bff/commit/44660e01bc2ab23ba1f86451e1df03ce607ad6a8))
+
+
+### Bug Fixes
+
+* add RasterJobTypeEnum ([#232](https://github.com/MapColonies/catalog-web-app-bff/issues/232)) ([213b883](https://github.com/MapColonies/catalog-web-app-bff/commit/213b883a6a142eca5979fb34509b46678d01d35d))
+* raster job retry (MAPCO: 8438) ([#234](https://github.com/MapColonies/catalog-web-app-bff/issues/234)) ([8a513fd](https://github.com/MapColonies/catalog-web-app-bff/commit/8a513fd8766121ebe8341a741de2a41fe77d3af9))
+
 ## [2.0.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.0.3...v2.0.4) (2025-12-01)
 
 
