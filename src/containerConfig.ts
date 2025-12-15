@@ -1,5 +1,6 @@
 import { container } from 'tsyringe';
 import config from 'config';
+import { PubSub } from 'graphql-subscriptions';
 import { logMethod } from '@map-colonies/telemetry';
 import jsLogger, { LoggerOptions } from '@map-colonies/js-logger';
 import { Tracing, Metrics } from '@map-colonies/telemetry';
@@ -11,6 +12,7 @@ function registerExternalValues(tracing: Tracing): void {
   const logger = jsLogger({ ...loggerConfig, prettyPrint: false, hooks: { logMethod } });
   container.register(Services.CONFIG, { useValue: config });
   container.register(Services.LOGGER, { useValue: logger });
+  container.registerInstance(Services.PUBSUB, new PubSub());
 
   const tracer = tracing.start();
   container.register(Services.TRACER, { useValue: tracer });

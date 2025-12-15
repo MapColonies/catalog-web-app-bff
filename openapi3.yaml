@@ -26,7 +26,7 @@ paths:
       operationId: graphqlFetchData
       tags:
         - GraphQL
-      summary: fetch deta from GraphQL server
+      summary: fetch data from GraphQL server
       requestBody:
         description: data to retrieve from server
         required: true
@@ -41,11 +41,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/acceptall'
-  /file:
+  /api/file:
     get:
       tags:
-        - File APIs
-      summary: Get stream file by path
+        - api
+      summary: get file by path
       parameters:
         - name: path
           in: query
@@ -63,7 +63,7 @@ paths:
           content:
             application/octet-stream:
               schema:
-                type: object
+                type: string
                 format: binary
         '400':
           description: BAD REQUEST
@@ -83,13 +83,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-  /zipshape:
+  /api/zipshape:
     get:
       tags:
-        - Shapefile ZIP API
-      summary: >-
-        Find all files with a specific name in a folder and return them in a zip
-        file using a stream.
+        - api
+      summary: get all files of a specific shape file and return them in a zip
       parameters:
         - name: folder
           in: query
@@ -112,7 +110,7 @@ paths:
           content:
             application/octet-stream:
               schema:
-                type: object
+                type: string
                 format: binary
         '400':
           description: BAD REQUEST
@@ -132,6 +130,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+  /callback/task:
+    post:
+      operationId: taskUpdateCallback
+      tags:
+        - callback
+      summary: publish task update notification to app
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskNotification'
+      responses:
+        '200':
+          description: Status received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 components:
   schemas:
     acceptall:
@@ -158,3 +178,37 @@ components:
       properties:
         error:
           type: string
+    TaskNotification:
+      type: object
+      required:
+        - jobId
+      properties:
+        jobId:
+          type: string
+          description: Job identifier
+        taskId:
+          type: string
+        jobType:
+          type: string
+        taskType:
+          type: string
+        productId:
+          type: string
+        productType:
+          type: string
+        version:
+          type: string
+        status:
+          type: string
+          default: Pending
+        progress:
+          type: number
+          format: int32
+          minimum: 0
+          maximum: 100
+        message:
+          type: string
+        error:
+          type: string
+        params:
+          type: object

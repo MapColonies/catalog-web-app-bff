@@ -1,4 +1,5 @@
 import { NonEmptyArray } from 'type-graphql';
+import { IResolvers } from '@graphql-tools/utils';
 import { CapabilitiesResolver } from './resolvers/capabilities.resolver';
 import { LayerMetadataMixedResolver } from './resolvers/csw.resolver';
 import { EntityDescriptorResolver } from './resolvers/entity-descriptor.resolver';
@@ -15,6 +16,7 @@ import { ServicesAvailabilityResolver } from './resolvers/services-availability.
 import { PolygonPartsWfsResolver } from './resolvers/polygon-parts-wfs.resolver';
 import { UserLoginResolver } from './resolvers/user-login.resolver';
 import { SourceValidationResolver } from './resolvers/source-validation.resolver';
+import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
@@ -36,4 +38,8 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     UserLoginResolver,
     SourceValidationResolver,
   ];
+}
+
+export function getWSResolvers(): IResolvers | Array<IResolvers> {
+  return [TaskSubscriptionResolver];
 }

@@ -72,13 +72,13 @@ export class JobResolver {
 
   @Mutation((type) => String)
   public async jobRetry(
-    @Arg('resetJobHandlerParams')
-    resetJobHandlerParams: JobActionParams,
+    @Arg('jobRetryParams')
+    jobRetryParams: JobActionParams,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      const response = await this.jobManager.resetJobHandler(resetJobHandlerParams, ctx);
+      const response = await this.jobManager.resetJobHandler(jobRetryParams, ctx);
       return response;
     } catch (err) {
       this.logger.error(err as string);

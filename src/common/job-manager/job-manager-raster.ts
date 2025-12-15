@@ -28,11 +28,11 @@ export default class JobManagerRaster extends JobManagerCommon {
     return 'ok';
   }
 
-  public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
+  public async resetJobHandler(jobRetryParams: JobActionParams, ctx: IContext): Promise<string> {
     const service: IService = this.config.get('ingestionServices.raster');
     await requestExecutor(
       {
-        url: `${service.url}/injestion/${resetJobHandlerParams.id}/retry`,
+        url: `${service.url}/ingestion/${jobRetryParams.id}/retry`,
         exposureType: service.exposureType,
       },
       'PUT',

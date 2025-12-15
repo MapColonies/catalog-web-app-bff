@@ -10,7 +10,7 @@ export interface IJobManagerService {
   findTasks: (params: TasksSearchParams, ctx: IContext) => Promise<Task[]>;
   updateJobHandler: (id: string, params: JobUpdateData, ctx: IContext) => Promise<string>;
   abortJobHandler: (jobAbortParams: JobActionParams, ctx: IContext) => Promise<string>;
-  resetJobHandler: (resetJobHandlerParams: JobActionParams, ctx: IContext) => Promise<string>;
+  resetJobHandler: (jobRetryParams: JobActionParams, ctx: IContext) => Promise<string>;
   transformRecordsToEntity?: (records: (Job | Task)[] | Job | Task) => (Job | Task)[] | Job | Task;
   transformRecordToEntity: (record: Job | Task) => Job | Task;
 }

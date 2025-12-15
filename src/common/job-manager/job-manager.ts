@@ -98,12 +98,12 @@ export class JobManager implements JobManagerType {
     return response;
   }
 
-  public async resetJobHandler(resetJobHandlerParams: JobActionParams, ctx: IContext): Promise<string> {
-    this.logger.info(`[JobManager][resetJobHandler] Aborting job with id ${resetJobHandlerParams.id}`);
+  public async resetJobHandler(jobRetryParams: JobActionParams, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][resetJobHandler] Retrying job with id ${jobRetryParams.id}`);
 
-    const jobManagerServiceType = this.convertStringToJobManagerServiceType(resetJobHandlerParams.domain);
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(jobRetryParams.domain);
     const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
-    const response = await jobManagerInstance.resetJobHandler(resetJobHandlerParams, ctx);
+    const response = await jobManagerInstance.resetJobHandler(jobRetryParams, ctx);
     return response;
   }
 

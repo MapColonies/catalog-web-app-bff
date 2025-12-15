@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { StreamController } from './streamController';
+import { StreamingController } from './streamingController';
 
-export const streamFileRouter = (): Router => {
+export const streamingRouter = (): Router => {
   const router = Router();
-  const controller = new StreamController();
+  const controller = new StreamingController();
 
   router.get('/file', (req, res) => {
     controller.getStreamFile(req, res).catch((err) => {

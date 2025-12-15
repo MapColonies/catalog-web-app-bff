@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import he from 'he';
+import { Status } from '../graphql/job';
 import { LayerMetadataUnionType } from '../graphql/resolvers/csw.resolver';
 
 export const DEFAULT_SERVER_PORT = 80;
@@ -15,6 +16,7 @@ export const IGNORED_INCOMING_TRACE_ROUTES = [/^.*\/docs.*$/];
 export enum Services {
   LOGGER = 'ILogger',
   CONFIG = 'IConfig',
+  PUBSUB = 'PUBSUB',
   TRACER = 'TRACER',
   METER = 'METER',
 }
@@ -92,3 +94,31 @@ export const xmlParserOptions = {
   tagValueProcessor: (val: string): string => he.decode(val),
   alwaysCreateTextNode: false,
 };
+
+export const statusMap: Record<Status, string> = {
+  [Status.Pending]: 'PENDING',
+  [Status.InProgress]: 'IN_PROGRESS',
+  [Status.Completed]: 'COMPLETED',
+  [Status.Failed]: 'FAILED',
+  [Status.Expired]: 'EXPIRED',
+  [Status.Aborted]: 'ABORTED',
+  [Status.Suspended]: 'SUSPENDED',
+};
+
+// #region to be removed
+// TODO: should be taken from @map-colonies/types
+export type CallBack<T> = {
+  jobId: string;
+  taskId: string;
+  jobType: string;
+  taskType: string;
+  productId: string;
+  productType: string;
+  version: string;
+  status: Status;
+  progress: number;
+  message?: string;
+  error?: string;
+  params: T;
+};
+// #endregion to be removed

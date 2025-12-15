@@ -1,17 +1,17 @@
-import { Readable, Stream } from 'stream';
-import { Request, Response } from 'express';
 import axios from 'axios';
-import { container, injectable } from 'tsyringe';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { RecordType } from '@map-colonies/types';
+import { Readable, Stream } from 'stream';
+import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
+import { RecordType } from '@map-colonies/types';
 import { Services } from '../common/constants';
+import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 
 export type GetStreamer = Stream;
 
 @injectable()
-export class StreamController {
+export class StreamingController {
   private readonly storageExplorerManager: StorageExplorerManager;
   private readonly logger: Logger;
 
