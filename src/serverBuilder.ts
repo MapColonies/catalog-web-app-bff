@@ -12,8 +12,9 @@ import { buildSchemaSync } from 'type-graphql';
 import httpLogger from '@map-colonies/express-access-log-middleware';
 import { Logger } from '@map-colonies/js-logger';
 import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-express-viewer';
-import { Services } from './common/constants';
+import { CallBack, Services, statusMap } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
+import { Status } from './graphql/job';
 import { getResolvers } from './graphql/resolvers';
 import { streamFileRouter } from './stream-route/streamRouter';
 
@@ -48,16 +49,21 @@ export class ServerBuilder {
   }
 
   private buildRestRoutes(): void {
-    this.serverInstance.use('/', streamFileRouter());
+    this.serverInstance.use('/api', streamFileRouter());
+    // this.serverInstance.use('/callback', callbackRouter());
     this.buildJobRoutes();
   }
 
   private buildJobRoutes(): void {
     const pubSub = container.resolve<PubSub>(Services.PUBSUB);
-    this.serverInstance.post('/callback', async (req, res) => {
-      const { jobId, status } = req.body;
-      await pubSub.publish('JOB_STATUS_UPDATE', { jobId, status });
-      res.status(200).json({ message: 'Job status update received' });
+    this.serverInstance.post('/callback', async (req: express.Request, res: express.Response) => {
+      const payload = req.body as CallBack<unknown>;
+      const statusKey = (payload.status ?? Status.Pending) as Status;
+      await pubSub.publish('TASK_UPDATE', {
+        ...payload,
+        status: statusMap[statusKey],
+      });
+      res.status(200).json({ message: 'Task update received' });
     });
   }
 

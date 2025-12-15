@@ -1,17 +1,42 @@
 import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from 'graphql-tools';
 import { container } from 'tsyringe';
+import { CallBack } from '../../common/constants';
 
 export const TaskSubscriptionTypeDefs = `
+  scalar parametersObject
+
+  enum Status {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+    FAILED
+    EXPIRED
+    ABORTED
+    SUSPENDED
+  }
+
   type Query {
     _empty: String
   }
+
   type Subscription {
-    jobStatusUpdate: JobStatus!
+    taskUpdateDetails: TaskNotification!
   }
-  type JobStatus {
+    
+  type TaskNotification {
     jobId: String!
-    status: String!
+    taskId: String
+    jobType: String
+    taskType: String
+    productId: String
+    productType: String
+    version: String
+    status: Status
+    progress: Int
+    message: String
+    error: String
+    params: parametersObject
   }
 `;
 
@@ -20,17 +45,14 @@ export const TaskSubscriptionResolver: IResolvers = {
     _empty: () => 'This is a placeholder query',
   },
   Subscription: {
-    jobStatusUpdate: {
+    taskUpdateDetails: {
       subscribe: () => {
         const pubSub = container.resolve<PubSub>('PUBSUB');
-        return pubSub.asyncIterator('JOB_STATUS_UPDATE');
+        return pubSub.asyncIterator('TASK_UPDATE');
       },
-      resolve: (payload: any) => {
+      resolve: (payload: CallBack<any>) => {
         console.log('Subscription received payload:', payload);
-        return {
-          jobId: payload.jobId || '',
-          status: payload.status || '',
-        };
+        return { ...payload };
       },
     },
   },
