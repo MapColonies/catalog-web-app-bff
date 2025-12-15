@@ -4,6 +4,11 @@ import { JobActionParams } from '../../graphql/inputTypes';
 import { IConfig, IContext, IService } from '../interfaces';
 import JobManagerCommon from './job-manager-common';
 
+export enum RasterJobTypeEnum {
+  NEW = 'Ingestion_New',
+  UPDATE = 'Ingestion_Update',
+}
+
 export default class JobManagerRaster extends JobManagerCommon {
   public constructor(config: IConfig, logger: Logger) {
     super(config, logger);
