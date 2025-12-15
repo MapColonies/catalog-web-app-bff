@@ -3,9 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/types';
 import { CallBack, Services, statusMap } from '../common/constants';
-import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 import { Status } from '../graphql/job';
 
 @injectable()
