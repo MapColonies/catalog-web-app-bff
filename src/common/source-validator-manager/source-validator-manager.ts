@@ -3,14 +3,14 @@ import { RecordType } from '@map-colonies/mc-model-types';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
+import { Domain } from '../../graphql/domain';
 import { SourceValidationInputParams } from '../../graphql/inputTypes';
-import { CatalogRecordItems } from '../../utils';
 import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
 import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
 import { ISourceInfoService } from '../ingestion-manager/ingestion-manager.interface';
 import { SourceValidation } from '../../graphql/sourceValidation';
 
-type IngestionServices = Record<CatalogRecordItems, ISourceInfoService>;
+type IngestionServices = Record<Domain, ISourceInfoService>;
 
 @singleton()
 export class SourceValidatorManager implements ISourceInfoService {

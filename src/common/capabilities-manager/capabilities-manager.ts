@@ -1,15 +1,15 @@
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
+import { Domain } from '../../graphql/domain';
 import { Capability } from '../../graphql/capability';
 import { CapabilitiesLayersSearchParams } from '../../graphql/inputTypes';
-import { CatalogRecordItems } from '../../utils';
 import { IConfig, IContext } from '../interfaces';
 import { Services } from '../constants';
 import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
 import { ICapabilitiesManagerInstance, ICapabilitiesManagerService } from './capabilities-manager.interface';
 
-type MapServices = Record<CatalogRecordItems, ICapabilitiesManagerInstance>;
+type MapServices = Record<Domain, ICapabilitiesManagerInstance>;
 
 @singleton()
 export class CapabilitiesManager implements ICapabilitiesManagerService {

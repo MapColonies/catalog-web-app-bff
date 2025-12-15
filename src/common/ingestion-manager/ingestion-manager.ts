@@ -3,8 +3,8 @@ import { Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswLayerCatalogRecord, R
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
+import { Domain } from '../../graphql/domain';
 import { IngestionData } from '../../graphql/inputTypes';
-import { CatalogRecordItems } from '../../utils';
 import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
 import { FieldConfig } from '../../graphql/entityDescriptor';
 import { IngestionResultData } from '../../graphql/ingestion';
@@ -13,7 +13,7 @@ import { IngestionManagerRaster } from './ingestion-manager-raster';
 import { IngestionManager3D } from './ingestion-manager-3d';
 import { IngestionManagerDem } from './ingestion-manager-dem';
 
-type IngestionServices = Record<CatalogRecordItems, IIngestionManagerService>;
+type IngestionServices = Record<Domain, IIngestionManagerService>;
 
 @singleton()
 export class IngestionManager implements IIngestionManagerService {
