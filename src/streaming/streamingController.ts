@@ -11,7 +11,7 @@ import { StorageExplorerManager } from '../common/storage-explorer-manager/stora
 export type GetStreamer = Stream;
 
 @injectable()
-export class StreamController {
+export class StreamingController {
   private readonly storageExplorerManager: StorageExplorerManager;
   private readonly logger: Logger;
 

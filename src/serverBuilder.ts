@@ -1,22 +1,21 @@
-import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
+import express from 'express';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
 import { GraphQLError, printSchema } from 'graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { get, isEmpty } from 'lodash';
-import { container, inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
 import httpLogger from '@map-colonies/express-access-log-middleware';
 import { Logger } from '@map-colonies/js-logger';
 import { OpenapiViewerRouter, OpenapiRouterConfig } from '@map-colonies/openapi-express-viewer';
-import { CallBack, Services, statusMap } from './common/constants';
+import { callbackRouter } from './callback/callbackRouter';
+import { Services } from './common/constants';
 import { IConfig, IContext } from './common/interfaces';
-import { Status } from './graphql/job';
 import { getResolvers } from './graphql/resolvers';
-import { streamFileRouter } from './stream-route/streamRouter';
+import { streamingRouter } from './streaming/streamingRouter';
 
 @injectable()
 export class ServerBuilder {
@@ -28,8 +27,7 @@ export class ServerBuilder {
 
   public build(): express.Application {
     this.registerPreRoutesMiddleware();
-    this.buildRestRoutes();
-    this.buildDocsRoutes();
+    this.buildRoutes();
     this.setupGraphQL();
     this.registerPostRoutesMiddleware();
 
@@ -48,23 +46,14 @@ export class ServerBuilder {
     this.serverInstance.use(OpenApiMiddleware({ apiSpec: apiSpecPath, validateRequests: true, ignorePaths: ignorePathRegex }));
   }
 
-  private buildRestRoutes(): void {
-    this.serverInstance.use('/api', streamFileRouter());
-    // this.serverInstance.use('/callback', callbackRouter());
-    this.buildJobRoutes();
+  private buildRoutes(): void {
+    this.buildRestRoutes();
+    this.buildDocsRoutes();
   }
 
-  private buildJobRoutes(): void {
-    const pubSub = container.resolve<PubSub>(Services.PUBSUB);
-    this.serverInstance.post('/callback', async (req: express.Request, res: express.Response) => {
-      const payload = req.body as CallBack<unknown>;
-      const statusKey = (payload.status ?? Status.Pending) as Status;
-      await pubSub.publish('TASK_UPDATE', {
-        ...payload,
-        status: statusMap[statusKey],
-      });
-      res.status(200).json({ message: 'Task update received' });
-    });
+  private buildRestRoutes(): void {
+    this.serverInstance.use('/api', streamingRouter());
+    this.serverInstance.use('/callback', callbackRouter());
   }
 
   private buildDocsRoutes(): void {

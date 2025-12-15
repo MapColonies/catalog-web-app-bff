@@ -45,7 +45,7 @@ paths:
     get:
       tags:
         - api
-      summary: Get stream file by path
+      summary: get file by path
       parameters:
         - name: path
           in: query
@@ -87,9 +87,7 @@ paths:
     get:
       tags:
         - api
-      summary: >
-        Find all files with a specific name in a folder and return them in a zip
-        file using streaming
+      summary: get all files of a specific shape file and return them in a zip
       parameters:
         - name: folder
           in: query
@@ -132,12 +130,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-  /callback:
+  /callback/task:
     post:
       operationId: taskUpdateCallback
       tags:
         - callback
-      summary: Callback endpoint for notifying job manager task updates
+      summary: publish task update notification to app
       requestBody:
         required: true
         content:

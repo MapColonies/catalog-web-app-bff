@@ -1,0 +1,35 @@
+import { Request, Response } from 'express';
+import { PubSub } from 'graphql-subscriptions';
+import { StatusCodes } from 'http-status-codes';
+import { container, injectable } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
+import { RecordType } from '@map-colonies/types';
+import { CallBack, Services, statusMap } from '../common/constants';
+import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
+import { Status } from '../graphql/job';
+
+@injectable()
+export class CallbackController {
+  private readonly pubSub: PubSub;
+  private readonly logger: Logger;
+
+  public constructor() {
+    this.pubSub = container.resolve<PubSub>(Services.PUBSUB);
+    this.logger = container.resolve(Services.LOGGER);
+  }
+
+  public publishTaskUpdate = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const payload = req.body as CallBack<unknown>;
+      const statusKey = (payload.status ?? Status.Pending) as Status;
+      await this.pubSub.publish('TASK_UPDATE', {
+        ...payload,
+        status: statusMap[statusKey],
+      });
+      res.status(StatusCodes.OK).json({ message: 'Task update received' });
+    } catch (err) {
+      this.logger.error('[publishTaskUpdate] Error:', err);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to process task update' });
+    }
+  };
+}
