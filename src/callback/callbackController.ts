@@ -4,7 +4,6 @@ import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { CallBack, Services, statusMap } from '../common/constants';
-import { Status } from '../graphql/job';
 
 @injectable()
 export class CallbackController {
@@ -19,7 +18,7 @@ export class CallbackController {
   public publishTaskUpdate = async (req: Request, res: Response): Promise<void> => {
     try {
       const payload = req.body as CallBack<unknown>;
-      const statusKey = (payload.status ?? Status.Pending) as Status;
+      const statusKey = payload.status;
       await this.pubSub.publish('TASK_UPDATE', {
         ...payload,
         status: statusMap[statusKey],

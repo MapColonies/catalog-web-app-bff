@@ -40,6 +40,6 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
   ];
 }
 
-export function getWSResolvers(): IResolvers | Array<IResolvers> {
+export function getWSResolvers(): IResolvers | IResolvers[] {
   return [TaskSubscriptionResolver];
 }
