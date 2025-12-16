@@ -1,12 +1,12 @@
 /* eslint-disable import/first */
 // this import must be called before the first import of tsyring
 import 'reflect-metadata';
-import { get } from 'config';
 import { execute, subscribe } from 'graphql';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { createServer } from 'http';
 import { container } from 'tsyringe';
 import * as WebSocket from 'ws';
+import { get } from 'config';
 import { createTerminus } from '@godaddy/terminus';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
