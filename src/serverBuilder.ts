@@ -35,7 +35,8 @@ export class ServerBuilder {
   }
 
   private registerPreRoutesMiddleware(): void {
-    this.serverInstance.use(httpLogger({ logger: this.logger as unknown as any }));
+    // @ts-expect-error the signature is wrong
+    this.serverInstance.use(httpLogger({ logger: this.logger }));
     this.serverInstance.use(cors());
     if (this.config.get<boolean>('server.response.compression.enabled')) {
       this.serverInstance.use(compression(this.config.get<compression.CompressionFilter>('server.response.compression.options')));

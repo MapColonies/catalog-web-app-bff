@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from 'graphql-tools';
 import { container } from 'tsyringe';
 import { CallBack } from '../../common/constants';
 
-export const TaskSubscriptionTypeDefs = `
+export const taskSubscriptionTypeDefs = `
   scalar parametersObject
 
   enum Status {

@@ -155,6 +155,9 @@ export class IngestionRasterData {
 
   @Field((type) => RecordType, { nullable: false })
   public type?: RecordType;
+
+  @Field((type) => [String], { nullable: false })
+  public callbackUrls: string[];
 }
 
 @InputType()

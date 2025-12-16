@@ -107,7 +107,7 @@ export const statusMap: Record<Status, string> = {
 
 // #region to be removed
 // TODO: should be taken from @map-colonies/types
-export type CallBack<T> = {
+export interface CallBack<T> {
   jobId: string;
   taskId: string;
   jobType: string;
@@ -120,5 +120,5 @@ export type CallBack<T> = {
   message?: string;
   error?: string;
   params: T;
-};
+}
 // #endregion to be removed
