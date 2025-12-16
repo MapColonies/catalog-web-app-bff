@@ -93,9 +93,9 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
         metadataShapefilePath: absoluteToRelativePath(data.inputFiles.metadataShapefilePath),
         productShapefilePath: absoluteToRelativePath(data.inputFiles.productShapefilePath),
       },
-      metadata: metadata,
+      metadata,
       ingestionResolution: data.ingestionResolution,
-      callbackUrls: ['https://bff/api/callback'],
+      callbackUrls: data.callbackUrls,
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
