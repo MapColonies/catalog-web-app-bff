@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.1.0...v2.1.1) (2025-12-16)
+
+
+### Bug Fixes
+
+* callback urls (MAPCO-8444) ([#236](https://github.com/MapColonies/catalog-web-app-bff/issues/236)) ([95994af](https://github.com/MapColonies/catalog-web-app-bff/commit/95994afcde6051923f0e7cf6f2a93be77c677c81))
+
 ## [2.1.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.0.4...v2.1.0) (2025-12-15)
 
 
