@@ -28,25 +28,6 @@ export class JobManager implements JobManagerType {
     this.jobrServices.COMMON = new JobManagerCommon(this.config, this.logger);
   }
 
-  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
-    if (str === JobManagerServiceType.RASTER) {
-      return JobManagerServiceType.RASTER;
-    } else {
-      return JobManagerServiceType.COMMON;
-    }
-  }
-
-  private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
-    switch (jobManagerServiceType) {
-      case 'COMMON':
-        return this.jobrServices.COMMON;
-      case 'RASTER':
-        return this.jobrServices.RASTER;
-      default:
-        return this.jobrServices.COMMON;
-    }
-  }
-
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     this.logger.info(`[JobManager][getJobs] Fetching jobs with params ${JSON.stringify(params)}`);
 
@@ -128,5 +109,24 @@ export class JobManager implements JobManagerType {
 
     const response = await this.jobrServices.COMMON.findTasks(params, ctx);
     return response;
+  }
+
+  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
+    if (str === JobManagerServiceType.RASTER) {
+      return JobManagerServiceType.RASTER;
+    } else {
+      return JobManagerServiceType.COMMON;
+    }
+  }
+
+  private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
+    switch (jobManagerServiceType) {
+      case 'COMMON':
+        return this.jobrServices.COMMON;
+      case 'RASTER':
+        return this.jobrServices.RASTER;
+      default:
+        return this.jobrServices.COMMON;
+    }
   }
 }
