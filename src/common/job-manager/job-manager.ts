@@ -2,7 +2,7 @@ import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
 import { Domain } from '../../graphql/domain';
-import { JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
@@ -26,25 +26,6 @@ export class JobManager implements JobManagerType {
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.jobrServices.RASTER = new JobManagerRaster(this.config, this.logger);
     this.jobrServices.COMMON = new JobManagerCommon(this.config, this.logger);
-  }
-
-  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
-    if (str === JobManagerServiceType.RASTER) {
-      return JobManagerServiceType.RASTER;
-    } else {
-      return JobManagerServiceType.COMMON;
-    }
-  }
-
-  private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
-    switch (jobManagerServiceType) {
-      case 'COMMON':
-        return this.jobrServices.COMMON;
-      case 'RASTER':
-        return this.jobrServices.RASTER;
-      default:
-        return this.jobrServices.COMMON;
-    }
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
@@ -74,7 +55,7 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task)[] | Job | Task {
+  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task | null)[] | Job | Task | null {
     return isArray(records)
       ? records.map((record) => {
           return this.jobrServices.COMMON.transformRecordToEntity(record);
@@ -107,6 +88,15 @@ export class JobManager implements JobManagerType {
     return response;
   }
 
+  public async findActiveJob(activeJob: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
+    this.logger.info(`[JobManager][findActiveJob] Find Active job for resourceId ${activeJob.resourceId}`);
+
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(activeJob.domain);
+    const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
+    const res = await jobManagerInstance.findActiveJob(activeJob, ctx);
+    return res;
+  }
+
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
     this.logger.info(`[JobManager][getTasks] Fetching tasks with params ${JSON.stringify(params)}`);
 
@@ -119,5 +109,24 @@ export class JobManager implements JobManagerType {
 
     const response = await this.jobrServices.COMMON.findTasks(params, ctx);
     return response;
+  }
+
+  private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
+    if (str === JobManagerServiceType.RASTER) {
+      return JobManagerServiceType.RASTER;
+    } else {
+      return JobManagerServiceType.COMMON;
+    }
+  }
+
+  private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
+    switch (jobManagerServiceType) {
+      case 'COMMON':
+        return this.jobrServices.COMMON;
+      case 'RASTER':
+        return this.jobrServices.RASTER;
+      default:
+        return this.jobrServices.COMMON;
+    }
   }
 }
