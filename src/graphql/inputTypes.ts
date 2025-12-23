@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
 import { RecordType } from '@map-colonies/mc-model-types';
+import { ProductType } from '@map-colonies/types';
 import { GraphQLScalarType } from 'graphql';
 import { InputType, Field, Int, registerEnumType } from 'type-graphql';
 import { Feature, Geometry, GeoJsonProperties } from 'geojson';
@@ -182,6 +183,18 @@ export class JobsSearchParams {
 
   @Field((type) => Date, { nullable: true })
   public tillDate?: Date;
+}
+
+@InputType()
+export class ActiveJobFindParams {
+  @Field({ nullable: false })
+  public resourceId: string;
+
+  @Field((type) => ProductType, { nullable: false })
+  public productType: ProductType;
+
+  @Field({ nullable: false })
+  public domain: string;
 }
 
 @InputType()

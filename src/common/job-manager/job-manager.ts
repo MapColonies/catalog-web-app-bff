@@ -2,7 +2,7 @@ import { isArray } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
 import { inject, singleton } from 'tsyringe';
 import { Domain } from '../../graphql/domain';
-import { JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
@@ -74,7 +74,7 @@ export class JobManager implements JobManagerType {
     return jobsData;
   }
 
-  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task)[] | Job | Task {
+  public transformRecordsToEntity(records: (Job | Task)[] | Job | Task): (Job | Task | null)[] | Job | Task | null {
     return isArray(records)
       ? records.map((record) => {
           return this.jobrServices.COMMON.transformRecordToEntity(record);
@@ -105,6 +105,15 @@ export class JobManager implements JobManagerType {
     const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
     const response = await jobManagerInstance.resetJobHandler(jobRetryParams, ctx);
     return response;
+  }
+
+  public async findActiveJob(activeJob: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
+    this.logger.info(`[JobManager][findActiveJob] Find Active job for resourceId ${activeJob.resourceId}`);
+
+    const jobManagerServiceType = this.convertStringToJobManagerServiceType(activeJob.domain);
+    const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
+    const res = await jobManagerInstance.findActiveJob(activeJob, ctx);
+    return res;
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {

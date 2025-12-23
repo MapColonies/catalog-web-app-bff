@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor } from '../../utils';
@@ -8,7 +8,7 @@ import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 
 export default class JobManagerCommon implements IJobManagerService {
-  private readonly service: IService;
+  protected readonly service: IService;
   // private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
   public constructor(public readonly config: IConfig, private readonly logger: Logger) {
@@ -43,6 +43,10 @@ export default class JobManagerCommon implements IJobManagerService {
     // return result.map((job) => ({ ...job, domain: this.jobManagerType }));
 
     return result;
+  }
+
+  public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
+    throw 'Not implemented';
   }
 
   public async getJob(id: string, ctx: IContext): Promise<Job> {
@@ -146,16 +150,18 @@ export default class JobManagerCommon implements IJobManagerService {
     return res.data as Task[];
   }
 
-  public readonly transformRecordToEntity = (record: Job | Task): Job | Task => {
-    return Object.entries(record).reduce((transformed, [key, value]) => {
-      switch (key) {
-        case 'created':
-        case 'updated':
-        case 'expirationDate':
-          return { ...transformed, [key]: new Date(value as string) };
-        default:
-          return { ...transformed, [key]: value as unknown };
-      }
-    }, {} as Job | Task);
+  public readonly transformRecordToEntity = (record: Job | Task): Job | Task | null => {
+    return record
+      ? Object.entries(record).reduce((transformed, [key, value]) => {
+          switch (key) {
+            case 'created':
+            case 'updated':
+            case 'expirationDate':
+              return { ...transformed, [key]: new Date(value as string) };
+            default:
+              return { ...transformed, [key]: value as unknown };
+          }
+        }, {} as Job | Task)
+      : null;
   };
 }
