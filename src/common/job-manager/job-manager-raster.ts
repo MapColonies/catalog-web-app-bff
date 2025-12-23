@@ -61,7 +61,7 @@ export default class JobManagerRaster extends JobManagerCommon {
       },
       ctx
     );
-
-    return res.data.length !== 0 ? res.data[0] : null;
+    const resJobs = res.data as Job[];
+    return resJobs.length !== 0 ? resJobs[0] : null;
   }
 }

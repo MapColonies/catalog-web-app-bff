@@ -46,7 +46,8 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
-    throw 'Not implemented';
+    await Promise.resolve();
+    throw new Error('Not implemented');
   }
 
   public async getJob(id: string, ctx: IContext): Promise<Job> {
@@ -150,7 +151,7 @@ export default class JobManagerCommon implements IJobManagerService {
     return res.data as Task[];
   }
 
-  public readonly transformRecordToEntity = (record: Job | Task): Job | Task | null => {
+  public readonly transformRecordToEntity = (record: Job | Task | null): Job | Task | null => {
     return record
       ? Object.entries(record).reduce((transformed, [key, value]) => {
           switch (key) {
