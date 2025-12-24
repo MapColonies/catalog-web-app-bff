@@ -45,6 +45,7 @@ export default class JobManagerCommon implements IJobManagerService {
     return result;
   }
 
+  // eslint-disable-next-line
   public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
     await Promise.resolve();
     throw new Error('Not implemented');
