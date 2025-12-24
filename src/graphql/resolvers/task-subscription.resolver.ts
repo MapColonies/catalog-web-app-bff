@@ -43,15 +43,15 @@ export const taskSubscriptionTypeDefs = `
 
 export const TaskSubscriptionResolver: IResolvers = {
   Query: {
-    _empty: () => 'This is a placeholder query',
+    _empty: (): string => 'This is a placeholder query',
   },
   Subscription: {
     taskUpdateDetails: {
-      subscribe: () => {
+      subscribe: (): AsyncIterator<PubSub> => {
         const pubSub = container.resolve<PubSub>('PUBSUB');
         return pubSub.asyncIterator('TASK_UPDATE');
       },
-      resolve: (payload: CallBack<any>) => {
+      resolve: (payload: CallBack<Record<string, unknown>>): Record<string, unknown> => {
         console.log('Subscription received payload:', payload);
         return { ...payload };
       },
