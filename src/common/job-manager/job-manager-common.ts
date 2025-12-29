@@ -18,15 +18,19 @@ export default class JobManagerCommon implements IJobManagerService {
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     const res = await requestExecutor(
       {
-        url: `${this.service.url}/jobs`,
+        url: `${this.service.url}/jobs/find`,
         exposureType: this.service.exposureType,
       },
-      'GET',
+      'POST',
       {
-        params: {
+        data: {
           ...params,
-          fromDate: encodeURIComponent((params?.fromDate as Date).toISOString()),
-          tillDate: encodeURIComponent((params?.tillDate as Date).toISOString()),
+          fromDate: (params?.fromDate as Date).toISOString(),
+          tillDate: (params?.tillDate as Date).toISOString(),
+          types: (this.config.get('jobServices.types') as string)
+            .split(',')
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0),
           shouldReturnTasks: false,
           shouldReturnAvailableActions: true,
         },
