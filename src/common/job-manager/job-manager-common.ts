@@ -27,7 +27,7 @@ export default class JobManagerCommon implements IJobManagerService {
           ...params,
           fromDate: (params?.fromDate as Date).toISOString(),
           tillDate: (params?.tillDate as Date).toISOString(),
-          types: (this.config.get('jobServices.types') as string)
+          types: String(this.config.get('jobServices.types') ?? '')
             .split(',')
             .map((s) => s.trim())
             .filter((s) => s.length > 0),
