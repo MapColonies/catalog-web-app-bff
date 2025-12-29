@@ -124,7 +124,7 @@ env:
   exportLayer3DUrl: NOT_IMPLEMENTED
   exportLayerDEMUrl: NOT_IMPLEMENTED
   jobManagerServiceCommonUrl: ''
-  jobManagerServiceTypes: Ingestion_New,Ingestion_Update,Ingestion_Swap_Update,TilesSeeding,Ingestion_New_3D
+  jobManagerServiceTypes: Ingestion_New,Ingestion_Update,Ingestion_Swap_Update,TilesSeeding,Ingestion_New_3D,3D_Ingestion,3D_Deletion,3D_Delete
   lookupTablesServiceUrl: ''
   serviceDiscoveryUrl: ''
   externalServices:
