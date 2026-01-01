@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.1.2...v2.1.3) (2026-01-01)
+
+
+### Bug Fixes
+
+* wmts capabilities path injection ([#243](https://github.com/MapColonies/catalog-web-app-bff/issues/243)) ([045275d](https://github.com/MapColonies/catalog-web-app-bff/commit/045275d13ea1fa4848e8ac14cb7236a3b3792ece))
+
 ## [2.1.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v2.1.1...v2.1.2) (2025-12-24)
 
 
