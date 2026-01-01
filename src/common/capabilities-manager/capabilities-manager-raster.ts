@@ -8,18 +8,16 @@ import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';
 
 export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
   private readonly service: IService;
+  private readonly injectionPath = '/wmts/1.0.0/WMTSCapabilities.xml';
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('mapServices.raster');
   }
-
   public async getCapabilities(idList: string[], ctx: IContext): Promise<Capability[]> {
-    this.logger.info(
-      `[CapabilitiesManagerRaster][getCapabilities] calling RASTER getCapabilities: ${this.service.url}/wmts/1.0.0/WMTSCapabilities.xml`
-    );
+    this.logger.info(`[CapabilitiesManagerRaster][getCapabilities] calling RASTER getCapabilities: ${this.service.url}${this.injectionPath}`);
     const response = await requestExecutor(
       {
-        url: `${this.service.url}/wmts/1.0.0/WMTSCapabilities.xml`,
+        url: this.injectWmts(this.service.url),
         exposureType: this.service.exposureType,
       },
       'GET',
@@ -30,5 +28,16 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end
     return xmlToCapabilities(idList, response.data);
+  }
+
+  private injectWmts(urlString: string): string {
+    const url = new URL(urlString);
+
+    // Avoid double-injecting
+    if (!url.pathname.endsWith(this.injectionPath)) {
+      url.pathname = url.pathname.replace(/\/$/, '') + this.injectionPath;
+    }
+
+    return url.toString();
   }
 }
