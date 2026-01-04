@@ -33,6 +33,7 @@ export default class JobManagerCommon implements IJobManagerService {
             .filter((s) => s.length > 0),
           shouldReturnTasks: false,
           shouldReturnAvailableActions: true,
+          shouldExcludeParameters: true,
         },
       },
       ctx
