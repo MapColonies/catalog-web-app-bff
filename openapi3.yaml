@@ -41,6 +41,7 @@ paths:
                 $ref: '#/components/schemas/acceptall'
   /api/file:
     get:
+      operationId: getFileByPath
       tags:
         - api
       summary: get file by path
@@ -83,6 +84,7 @@ paths:
                 $ref: '#/components/schemas/error'
   /api/zipshape:
     get:
+      operationId: getShapeFilesAsZip
       tags:
         - api
       summary: get all files of a specific shape file and return them in a zip
