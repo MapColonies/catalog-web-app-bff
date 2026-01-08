@@ -3,10 +3,11 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
-import * as fs from 'fs';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
+import * as fs from 'fs';
 import { GraphQLError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
+import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
 import httpLogger from '@map-colonies/express-access-log-middleware';
@@ -21,9 +22,12 @@ import { streamingRouter } from './streaming/streamingRouter';
 @injectable()
 export class ServerBuilder {
   private readonly serverInstance: express.Application;
+  private openapiSpecFolder: string;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.serverInstance = express();
+    const serverBasePath = this.config.get<string>('server.basePath');
+    this.openapiSpecFolder = serverBasePath ? '/tmp' : '';
   }
 
   public build(): express.Application {
@@ -47,7 +51,7 @@ export class ServerBuilder {
     const apiSpecPath = this.config.get<string>('openapiConfig.filePath');
     const serverBasePath = this.config.get<string>('server.basePath');
     const spec = fs.readFileSync(apiSpecPath, 'utf8').replace(/\${BASE_PATH}/g, serverBasePath || "''");
-    fs.writeFileSync(apiSpecPath, spec, 'utf8');
+    fs.writeFileSync(path.join(this.openapiSpecFolder, apiSpecPath), spec, 'utf8');
     this.serverInstance.use(OpenApiMiddleware({ apiSpec: apiSpecPath, validateRequests: true, ignorePaths: ignorePathRegex }));
   }
 
