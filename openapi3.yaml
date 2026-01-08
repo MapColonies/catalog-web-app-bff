@@ -6,6 +6,14 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8080
+    description: Local development
+  - url: /{basePath}
+    description: Deployed environments
+    variables:
+      basePath:
+        default: bff
 paths:
   /graphql:
     get:
