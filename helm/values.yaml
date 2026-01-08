@@ -89,6 +89,8 @@ configValues:
       subPath: production.json
     - name: root-ca
       mountPath: '{{ (include "common.secrets.getSecretByName" (dict "name" "root-ca" "key" "path" "context" .)) }}'
+    - name: openapi-spec
+      mountPath: /tmp
   extraVolumes:
     - name: production-json
       configMap:
