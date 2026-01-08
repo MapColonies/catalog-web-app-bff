@@ -147,7 +147,7 @@ route:
     duration: 60s
   routesMapping:
     - hostname:
-      path: /'{{ .Values.env.basePath }}'
+      path: /bff
       suffix:
   targetPort: http
   tls:
@@ -165,7 +165,7 @@ ingress:
   hostname: libot.wwest.local
   extraHosts: []
   extraPaths: []
-  path: /'{{ .Values.env.basePath }}'
+  path: /bff
   extraRules: []
   extraTls: []
   selfSigned: false
