@@ -19,7 +19,8 @@
           "__format": "boolean"
         }
       }
-    }
+    },
+    "basePath": "BASE_PATH"
   },
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "accessToken": {
