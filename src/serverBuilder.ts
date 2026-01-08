@@ -1,13 +1,13 @@
+import * as fs from 'fs';
+import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
-import * as fs from 'fs';
 import { GraphQLError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
-import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
 import httpLogger from '@map-colonies/express-access-log-middleware';
@@ -22,7 +22,7 @@ import { streamingRouter } from './streaming/streamingRouter';
 @injectable()
 export class ServerBuilder {
   private readonly serverInstance: express.Application;
-  private openapiSpecFolder: string;
+  private readonly openapiSpecFolder: string;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.serverInstance = express();
