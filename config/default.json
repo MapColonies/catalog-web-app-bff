@@ -20,7 +20,8 @@
         "enabled": true,
         "options": null
       }
-    }
+    },
+    "basePath": ""
   },
   "servedEntityTypes": "RECORD_ALL,RECORD_RASTER,RECORD_3D,RECORD_DEM,RECORD_VECTOR",
   "accessToken": {

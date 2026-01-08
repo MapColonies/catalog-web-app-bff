@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
+import * as fs from 'fs';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
 import { GraphQLError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
@@ -44,6 +45,9 @@ export class ServerBuilder {
     this.serverInstance.use(bodyParser.json(this.config.get<bodyParser.Options>('server.request.payload')));
     const ignorePathRegex = new RegExp(`^${this.config.get<string>('openapiConfig.basePath')}/.*`, 'i');
     const apiSpecPath = this.config.get<string>('openapiConfig.filePath');
+    const serverBasePath = this.config.get<string>('server.basePath');
+    const spec = fs.readFileSync(apiSpecPath, 'utf8').replace(/\${BASE_PATH}/g, serverBasePath || "''");
+    fs.writeFileSync(apiSpecPath, spec, 'utf8');
     this.serverInstance.use(OpenApiMiddleware({ apiSpec: apiSpecPath, validateRequests: true, ignorePaths: ignorePathRegex }));
   }
 

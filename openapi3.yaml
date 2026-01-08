@@ -11,7 +11,7 @@ servers:
     description: For deployed environments
     variables:
       basePath:
-        default: bff
+        default: ${BASE_PATH}
 paths:
   /graphql:
     get:
