@@ -104,6 +104,7 @@ env:
   logPrettyPrintEnabled: false
   responseCompressionEnabled: true
   requestPayloadLimit: 1mb
+  basePath: bff
   openapiFilePath: ./openapi3.yaml
   adminPassword: 123456
   cswRasterUrl: ''
@@ -146,7 +147,7 @@ route:
     duration: 60s
   routesMapping:
     - hostname:
-      path: /bff
+      path: /'{{ .Values.env.basePath }}'
       suffix:
   targetPort: http
   tls:
@@ -164,7 +165,7 @@ ingress:
   hostname: libot.wwest.local
   extraHosts: []
   extraPaths: []
-  path: /bff
+  path: /'{{ .Values.env.basePath }}'
   extraRules: []
   extraTls: []
   selfSigned: false
