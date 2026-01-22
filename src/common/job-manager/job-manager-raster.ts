@@ -19,7 +19,7 @@ export default class JobManagerRaster extends JobManagerCommon {
     const service: IService = this.config.get('ingestionServices.raster');
     await requestExecutor(
       {
-        url: `${service.url}/KUKU/abort/${jobAbortParams.id}`,
+        url: `${service.url}/ingestion/${jobAbortParams.id}/abort`,
         exposureType: service.exposureType,
       },
       'POST',
