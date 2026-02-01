@@ -22,7 +22,7 @@ const isQueryParam = (injectionType: string): boolean => {
 
 export const addRasterJobActions = (job: Job): void => {
   if (job.domain === Domain.RASTER) {
-    const isRestorable = job.type === RasterJobTypeEnum.NEW || job.type === RasterJobTypeEnum.UPDATE; // Important: job.parameters === null, getJobs API excludes parameters field
+    const isRestorable = job.type === RasterJobTypeEnum.NEW || job.type === RasterJobTypeEnum.UPDATE || job.type === RasterJobTypeEnum.SWAP_UPDATE; // Important: job.parameters === null, getJobs API excludes parameters field
     job.availableActions = {
       ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
       ...(isRestorable ? { isRestorable: true } : {}),
