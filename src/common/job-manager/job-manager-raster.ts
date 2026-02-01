@@ -8,6 +8,7 @@ import JobManagerCommon from './job-manager-common';
 export enum RasterJobTypeEnum {
   NEW = 'Ingestion_New',
   UPDATE = 'Ingestion_Update',
+  SWAP_UPDATE = 'Ingestion_Swap_Update',
 }
 
 export default class JobManagerRaster extends JobManagerCommon {
@@ -54,7 +55,7 @@ export default class JobManagerRaster extends JobManagerCommon {
         data: {
           ...params,
           statuses: [Status.Pending, Status.InProgress, Status.Suspended, Status.Failed],
-          types: [RasterJobTypeEnum.NEW, RasterJobTypeEnum.UPDATE],
+          types: [RasterJobTypeEnum.NEW, RasterJobTypeEnum.UPDATE, RasterJobTypeEnum.SWAP_UPDATE],
           shouldReturnTasks: false,
           shouldReturnAvailableActions: true,
         },
