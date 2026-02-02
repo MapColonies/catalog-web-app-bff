@@ -233,6 +233,9 @@ export class JobActionParams {
 
   @Field({ nullable: false })
   public domain: string;
+
+  @Field({ nullable: false })
+  public type: string;
 }
 
 @InputType()
