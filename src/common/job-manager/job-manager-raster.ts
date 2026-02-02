@@ -17,30 +17,38 @@ export default class JobManagerRaster extends JobManagerCommon {
   }
 
   public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
-    const service: IService = this.config.get('ingestionServices.raster');
-    await requestExecutor(
-      {
-        url: `${service.url}/ingestion/${jobAbortParams.id}/abort`,
-        exposureType: service.exposureType,
-      },
-      'POST',
-      {},
-      ctx
-    );
+    if (this.shouldBeTreatedByRaster(jobAbortParams.type)) {
+      const service: IService = this.config.get('ingestionServices.raster');
+      await requestExecutor(
+        {
+          url: `${service.url}/ingestion/${jobAbortParams.id}/abort`,
+          exposureType: service.exposureType,
+        },
+        'POST',
+        {},
+        ctx
+      );
+    } else {
+      await super.abortJobHandler(jobAbortParams, ctx);
+    }
     return 'ok';
   }
 
   public async resetJobHandler(jobRetryParams: JobActionParams, ctx: IContext): Promise<string> {
-    const service: IService = this.config.get('ingestionServices.raster');
-    await requestExecutor(
-      {
-        url: `${service.url}/ingestion/${jobRetryParams.id}/retry`,
-        exposureType: service.exposureType,
-      },
-      'PUT',
-      {},
-      ctx
-    );
+    if (this.shouldBeTreatedByRaster(jobRetryParams.type)) {
+      const service: IService = this.config.get('ingestionServices.raster');
+      await requestExecutor(
+        {
+          url: `${service.url}/ingestion/${jobRetryParams.id}/retry`,
+          exposureType: service.exposureType,
+        },
+        'PUT',
+        {},
+        ctx
+      );
+    } else {
+      await super.resetJobHandler(jobRetryParams, ctx);
+    }
     return 'ok';
   }
 
@@ -64,5 +72,9 @@ export default class JobManagerRaster extends JobManagerCommon {
     );
     const resJobs = res.data as Job[];
     return resJobs.length !== 0 ? resJobs[0] : null;
+  }
+
+  private shouldBeTreatedByRaster(type: string): boolean {
+    return [RasterJobTypeEnum.NEW, RasterJobTypeEnum.UPDATE, RasterJobTypeEnum.SWAP_UPDATE].includes(type as RasterJobTypeEnum);
   }
 }
