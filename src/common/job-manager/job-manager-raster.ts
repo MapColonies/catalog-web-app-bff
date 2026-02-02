@@ -16,10 +16,6 @@ export default class JobManagerRaster extends JobManagerCommon {
     super(config, logger);
   }
 
-  private shouldBeTreatedByRaster(type: string): boolean {
-    return [RasterJobTypeEnum.NEW, RasterJobTypeEnum.UPDATE, RasterJobTypeEnum.SWAP_UPDATE].includes(type as RasterJobTypeEnum);
-  }
-
   public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
     if (this.shouldBeTreatedByRaster(jobAbortParams.type)) {
       const service: IService = this.config.get('ingestionServices.raster');
@@ -33,7 +29,7 @@ export default class JobManagerRaster extends JobManagerCommon {
         ctx
       );
     } else {
-      super.abortJobHandler(jobAbortParams, ctx);
+      await super.abortJobHandler(jobAbortParams, ctx);
     }
     return 'ok';
   }
@@ -51,7 +47,7 @@ export default class JobManagerRaster extends JobManagerCommon {
         ctx
       );
     } else {
-      super.resetJobHandler(jobRetryParams, ctx);
+      await super.resetJobHandler(jobRetryParams, ctx);
     }
     return 'ok';
   }
@@ -76,5 +72,9 @@ export default class JobManagerRaster extends JobManagerCommon {
     );
     const resJobs = res.data as Job[];
     return resJobs.length !== 0 ? resJobs[0] : null;
+  }
+
+  private shouldBeTreatedByRaster(type: string): boolean {
+    return [RasterJobTypeEnum.NEW, RasterJobTypeEnum.UPDATE, RasterJobTypeEnum.SWAP_UPDATE].includes(type as RasterJobTypeEnum);
   }
 }
