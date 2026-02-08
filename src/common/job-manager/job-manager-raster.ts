@@ -24,7 +24,7 @@ export default class JobManagerRaster extends JobManagerCommon {
           url: `${service.url}/ingestion/${jobAbortParams.id}/abort`,
           exposureType: service.exposureType,
         },
-        'POST',
+        'PUT',
         {},
         ctx
       );
