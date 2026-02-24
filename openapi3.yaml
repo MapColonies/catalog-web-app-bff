@@ -12,6 +12,7 @@ servers:
     variables:
       basePath:
         default: ${BASE_PATH}
+security: []
 paths:
   /graphql:
     get:
@@ -26,6 +27,12 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/acceptall'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
     post:
       operationId: graphqlFetchData
       tags:
@@ -45,6 +52,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/acceptall'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
   /api/file:
     get:
       operationId: getFileByPath
@@ -158,6 +171,12 @@ paths:
                 properties:
                   message:
                     type: string
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 components:
   schemas:
     acceptall:
