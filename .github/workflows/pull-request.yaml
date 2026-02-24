@@ -41,7 +41,7 @@ jobs:
       uses: MapColonies/shared-workflows/actions/openapi-lint@openapi-lint-v1.0.0
       with:
         node_version: ${{ matrix.node }}
-        openapi_file: "./bundledApi.yaml"
+        openapi_file: "./openapi3.yaml"
 
   tests:
     name: Run Tests
