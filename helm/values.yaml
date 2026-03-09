@@ -70,7 +70,7 @@ configValues:
     failureThreshold: 3
     successThreshold: 1
     httpGet:
-      path: /docs/api
+      path: /liveness
       port: http
   customReadinessProbe:
     initialDelaySeconds: 60
@@ -79,7 +79,7 @@ configValues:
     failureThreshold: 3
     successThreshold: 1
     httpGet:
-      path: /docs/api
+      path: /liveness
       port: http
   startupProbe:
     enabled: false

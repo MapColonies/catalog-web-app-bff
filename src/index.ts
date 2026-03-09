@@ -34,9 +34,9 @@ const port: number = parseInt(serverConfig.port) || DEFAULT_SERVER_PORT;
 const app = getApp(tracing);
 
 const logger = container.resolve<Logger>(Services.LOGGER);
-createTerminus(app, { healthChecks: { '/liveness': true }, onSignal: container.resolve('onSignal') });
 
 const httpServer = createServer(app);
+createTerminus(httpServer, { healthChecks: { '/liveness': async () => Promise.resolve() }, onSignal: container.resolve('onSignal') });
 const schema = makeExecutableSchema({
   typeDefs: taskSubscriptionTypeDefs,
   resolvers: getWSResolvers(),
