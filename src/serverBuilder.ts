@@ -41,7 +41,7 @@ export class ServerBuilder {
   }
 
   private registerPreRoutesMiddleware(): void {
-    const customLogLevel = (req: object, res: { statusCode: number | undefined }, err: object | undefined): LevelWithSilent => {
+    const customLogLevel = (_req: Record<string, unknown>, res: { statusCode: number | undefined }, err: unknown): LevelWithSilent => {
       return err !== undefined ||
         (res.statusCode !== undefined &&
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -49,6 +49,7 @@ export class ServerBuilder {
         ? 'error'
         : 'debug';
     };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.serverInstance.use(httpLogger({ logger: this.logger, customLogLevel }));
     this.serverInstance.use(cors());

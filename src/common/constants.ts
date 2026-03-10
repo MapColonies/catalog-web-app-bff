@@ -23,13 +23,13 @@ export enum Services {
 
 export type CatalogRecordType = LayerMetadataUnionType;
 
-export type HttpError = {
+export interface HttpError {
   response?: {
     data?: {
       message?: string;
     };
   };
-};
+}
 
 export const fieldTypes = {
   isFootprint: (fieldName: string): boolean => fieldName === 'footprint',

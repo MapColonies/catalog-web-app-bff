@@ -69,7 +69,7 @@ export class CSW {
   }
 
   public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
-    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${start}, end: ${end}`);
+    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
 
     const getCatalogs: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;

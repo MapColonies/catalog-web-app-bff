@@ -278,6 +278,7 @@ export class CswWfsClientWrapper {
     try {
       return await requestExecutor(this.service, method, params, null as unknown as IContext);
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       this.logger.error('[WFS][requestExecutor][ERROR]', { error, params });
       throw new Error('Failed to execute request to WFS service. Please check the service availability');
     }
