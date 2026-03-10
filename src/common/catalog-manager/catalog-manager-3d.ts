@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
 import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
-import { requestExecutor } from '../../utils';
+import { requestExecutor, stringifyParams } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
@@ -56,7 +56,7 @@ export class CatalogManager3D implements ICatalogManagerService {
       ...data.partialRecordData,
     };
 
-    this.logger.info(`[CatalogManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+    this.logger.info(`[CatalogManager][3D][buildPayload] ${stringifyParams(payloadData)}`);
 
     return {
       data: {

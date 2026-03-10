@@ -31,7 +31,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorerManager][getDirectory] start getting directory for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getDirectory] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data, ctx);
@@ -40,7 +40,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectoryById(data: ExplorerGetById, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorerManager][getDirectoryById] start getting directory by id for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getDirectoryById] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data, ctx);
@@ -49,7 +49,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getFile(data: ExplorerGetByPath, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorerManager][getFile] start getting file for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getFile] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data, ctx);
@@ -60,7 +60,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManager][getStreamFile] start getting file for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getZipShapefile] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
 
@@ -68,7 +68,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorerManager][getStreamFile] start getting file for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getStreamFile] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
 
@@ -76,7 +76,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
-    this.logger.info(`[StorageExplorerManager][writeStreamFile] start writing file for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][writeStreamFile] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
 
@@ -84,7 +84,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorerManager][resolveMetadataAsModel] resolving metadata for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][resolveMetadataAsModel] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.resolveMetadataAsModel(data, ctx);
@@ -95,7 +95,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorerManager][getFileById] start getting file by id for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getFileById] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data, ctx);
@@ -104,7 +104,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDecryptedId(data: ExplorerGetById, ctx: IContext): Promise<{ data: string }> {
-    this.logger.info(`[StorageExplorerManager][getFileById] start decrypting id for type ${data.type}.`);
+    this.logger.info(`[StorageExplorer][getDecryptedId] type: ${data.type}`);
 
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data, ctx);

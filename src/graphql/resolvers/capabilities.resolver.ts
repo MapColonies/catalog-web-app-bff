@@ -28,11 +28,10 @@ export class CapabilitiesResolver {
     ctx: IContext
   ): Promise<Capability[]> {
     try {
-      this.logger.info(`[CapabilitiesResolver][capabilities] fetching layers capabilities`);
       const capabilityList = await this.capabilitiesManager.getCapabilities(params, ctx);
       return capabilityList;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[Capabilities][capabilities][ERROR]', err);
       throw err;
     }
   }

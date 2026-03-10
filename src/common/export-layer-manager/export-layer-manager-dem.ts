@@ -1,5 +1,5 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
+import { Logger } from '@map-colonies/js-logger';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import {
@@ -7,6 +7,7 @@ import {
   // getFreeDiskSpace,
   triggerExportTask,
 } from '../../graphql/MOCKS/export-layer';
+import { stringifyParams } from '../../utils';
 import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
@@ -20,7 +21,7 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayerManagerDEM][getEstimatedSize] estimating export size with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[ExportLayer][DEM][getEstimatedSize] ${stringifyParams(data)}`);
 
     // MOCK RES
     // const res = await Promise.resolve(getEstimatedSize);
@@ -34,7 +35,7 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayerManagerDEM][getFreeDiskSpace] getting free disk space for domain.`);
+    this.logger.info(`[ExportLayer][DEM][getFreeDiskSpace] ${stringifyParams(data)}`);
 
     // // MOCK RES
     // const res = await Promise.resolve(getFreeDiskSpace);
@@ -48,7 +49,7 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayerManagerDEM][triggerExportTask] triggering export task with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[ExportLayer][DEM][triggerExportTask] ${stringifyParams(data)}`);
 
     // MOCK RES
     const res = await Promise.resolve(triggerExportTask);

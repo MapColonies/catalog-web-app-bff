@@ -277,8 +277,8 @@ export class CswWfsClientWrapper {
   private async requestExecutor(url: string, method: string, params: AxiosRequestConfig): Promise<unknown> {
     try {
       return await requestExecutor(this.service, method, params, null as unknown as IContext);
-    } catch (error: unknown) {
-      this.logger.error('[WFS][requestExecutor]', { error, params });
+    } catch (error) {
+      this.logger.error('[WFS][requestExecutor][ERROR]', { error, params });
       throw new Error('Failed to execute request to WFS service. Please check the service availability');
     }
   }

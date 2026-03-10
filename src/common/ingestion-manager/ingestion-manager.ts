@@ -26,7 +26,7 @@ export class IngestionManager implements IIngestionManagerService {
   }
 
   public async ingest(record: IngestionData, ctx: IContext): Promise<IngestionResultData> {
-    this.logger.info(`[IngestionManager][ingest] start ingestion for entity ${record.type as RecordType}.`);
+    this.logger.info(`[Ingestion][ingest] type: ${record.type}`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
 
@@ -35,7 +35,7 @@ export class IngestionManager implements IIngestionManagerService {
   }
 
   public async updateGeopkg(record: IngestionData, ctx: IContext): Promise<IngestionResultData | null> {
-    this.logger.info(`[IngestionManager][updateGeopkg] start updateGeopkg for entity ${record.type as RecordType}.`);
+    this.logger.info(`[Ingestion][updateGeopkg] type: ${record.type}`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type as RecordType);
 

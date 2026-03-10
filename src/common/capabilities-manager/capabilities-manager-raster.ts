@@ -14,7 +14,7 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     this.service = this.config.get('mapServices.raster');
   }
   public async getCapabilities(idList: string[], ctx: IContext): Promise<Capability[]> {
-    this.logger.info(`[CapabilitiesManagerRaster][getCapabilities] calling RASTER getCapabilities: ${this.service.url}${this.injectionPath}`);
+    this.logger.info(`[Capabilities][Raster][getCapabilities] ${this.service.url}${this.injectionPath}`);
     const response = await requestExecutor(
       {
         url: this.injectWmts(this.service.url),

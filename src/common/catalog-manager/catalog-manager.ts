@@ -23,7 +23,7 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info(`[CatalogManager][updateStatus] starting status update for entity ${record.type}.`);
+    this.logger.info(`[CatalogManager][updateStatus] type: ${record.type}`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const updatedData = await catalogManagerInstance.updateStatus(record, ctx);
@@ -31,7 +31,7 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info(`[CatalogManager][updateMetadata] starting metadata update for entity ${record.type}.`);
+    this.logger.info(`[CatalogManager][updateMetadata] type: ${record.type}`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const updatedData = await catalogManagerInstance.updateMetadata(record, ctx);
@@ -39,7 +39,7 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info(`[CatalogManager][deleteLayer] starting deleting layer for entity ${record.type}.`);
+    this.logger.info(`[CatalogManager][deleteLayer] type: ${record.type}`);
 
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const deletedLayer = await catalogManagerInstance.deleteLayer(record, ctx);

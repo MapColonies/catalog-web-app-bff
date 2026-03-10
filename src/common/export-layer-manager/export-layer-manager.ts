@@ -25,7 +25,7 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayerManager][getEstimatedSize] start estimated export size for type ${data.type}.`);
+    this.logger.info(`[ExportLayer][getEstimatedSize] type: ${data.type}`);
 
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const estimatedSize = await exportLayerManagerInstance.getEstimatedSize(data, ctx);
@@ -34,7 +34,7 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayerManager][getFreeDiskSpace] start getting free disk space for type ${data.type}.`);
+    this.logger.info(`[ExportLayer][getFreeDiskSpace] type: ${data.type}`);
 
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const freeDiskSpace = await exportLayerManagerInstance.getFreeDiskSpace(data, ctx);
@@ -43,7 +43,7 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayerManager][triggerExportTask] start triggering export task for type ${data.type}.`);
+    this.logger.info(`[ExportLayer][triggerExportTask] type: ${data.type}`);
 
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const triggerExportTaskRes = await exportLayerManagerInstance.triggerExportTask(data, ctx);

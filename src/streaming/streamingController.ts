@@ -45,7 +45,7 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('[getZipShapefile] Stream error: ', streamErr.message);
+        this.logger.error('[Streaming][getZipShapefile][ERROR]', streamErr.message);
         res.destroy(streamErr);
       });
 
@@ -79,7 +79,7 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('Stream error: ', streamErr.message);
+        this.logger.error('[Streaming][getStreamFile][ERROR]', streamErr.message);
         res.destroy(streamErr);
       });
 
@@ -115,7 +115,7 @@ export class StreamingController {
   };
 
   private async handleError(err: unknown, res: Response): Promise<void> {
-    this.logger.error(err);
+    this.logger.error('[Streaming][ERROR]', err);
 
     if (axios.isAxiosError(err)) {
       const status = err.response?.status ?? StatusCodes.INTERNAL_SERVER_ERROR;
@@ -133,7 +133,7 @@ export class StreamingController {
 
           errorMessage = (parsed.message as string | undefined) ?? JSON.stringify(parsed);
         } catch (streamParseErr) {
-          this.logger.error('Failed to parse stream error response:', streamParseErr);
+          this.logger.error('[Streaming][parse][ERROR]', streamParseErr);
           errorMessage = 'Unexpected response stream received';
         }
       } else if (typeof data === 'string') {

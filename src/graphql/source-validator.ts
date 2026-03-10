@@ -18,7 +18,7 @@ export class SourceValidator {
   }
 
   public async validateSources(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
-    this.logger.info(`[SourceValidator][validateSources] start validation for source ${sourceData.originDirectory}.`);
+    this.logger.info(`[SourceValidator][validateSources] originDirectory: ${sourceData.originDirectory}`);
 
     const response = await requestExecutor(
       {

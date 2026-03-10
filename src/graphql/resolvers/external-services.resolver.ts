@@ -25,7 +25,7 @@ export class ExternalServicesResolver {
   }
 
   private generateExternalServices(): ExternalService[] {
-    this.logger.info(`[ExternalServicesResolver][generateExternalServices] generating external services`);
+    this.logger.info(`[ExternalServices][generateExternalServices]`);
 
     const extServices = this.externalServices;
     const extServicesArr: ExternalService[] = [];

@@ -33,16 +33,16 @@ export class LookupTablesResolver {
     { lookupFields }: GetLookupTablesParams
   ): Promise<LookupTableData> {
     try {
+      this.logger.info('[LookupTables][getLookupTablesData]');
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
-    } catch (error) {
-      this.logger.error('[LookupTablesResolver][getLookupTablesData]', error);
+    } catch (err) {
+      this.logger.error('[LookupTables][getLookupTablesData][ERROR]', err);
       throw new Error('Failed to fetch lookup tables data');
     }
   }
 
   private async fetchLookupTablesData(ctx: IContext, lookupFields?: LookupTableField[]): Promise<LookupTableData> {
-    this.logger.info('[LookupTablesResolver][fetchLookupTablesData] fetching lookup tables data');
     const requestedLookupTables = lookupFields ?? ([] as LookupTableField[]);
     const lookupTableField: LookupTableField[] = [...this.extractLookupFieldsFromDescriptors(), ...requestedLookupTables];
     const lookupKeyToExcludeFields = this.mapLookupKeyToExcludeFields(lookupTableField);

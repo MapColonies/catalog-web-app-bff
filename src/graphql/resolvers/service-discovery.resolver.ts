@@ -26,17 +26,16 @@ export class ServiceDiscoveryResolver {
     ctx: IContext
   ): Promise<DeploymentWithServices[]> {
     try {
+      this.logger.info(`[ServiceDiscovery][getClusterServices]`);
       const clusterServices = await this.discoverClusterServices(ctx);
       return clusterServices;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[ServiceDiscovery][getClusterServices][ERROR]', err);
       throw err;
     }
   }
 
   private async discoverClusterServices(ctx: IContext): Promise<DeploymentWithServices[]> {
-    this.logger.info(`[ServiceDiscoveryResolver][discoverClusterServices] fetching services from cluster.`);
-
     const res = await requestExecutor(
       {
         url: `${this.service.url}/getDeploymentsAndServices`,
@@ -46,7 +45,6 @@ export class ServiceDiscoveryResolver {
       {},
       ctx
     );
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return res.data;
     // return Promise.resolve(MOCK_DEPS_AND_SERVICES);

@@ -27,9 +27,9 @@ export class SourceValidationResolver {
     try {
       const sourceValidationResponse = await this.sourceValidator.sourceInfo(data, ctx);
       return [sourceValidationResponse];
-    } catch (error) {
-      this.logger.error(error as string);
-      throw error;
+    } catch (err) {
+      this.logger.error('[SourceValidation][validateSource][ERROR]', err);
+      throw err;
     }
   }
 
@@ -43,9 +43,9 @@ export class SourceValidationResolver {
     try {
       const sourceValidationResponse = await this.sourceValidator.sourceInfo(data, ctx);
       return [sourceValidationResponse];
-    } catch (error) {
-      this.logger.error(error as string);
-      throw error;
+    } catch (err) {
+      this.logger.error('[SourceValidation][validateGPKGSource][ERROR]', err);
+      throw err;
     }
   }
 }

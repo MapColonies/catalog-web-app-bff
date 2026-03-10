@@ -38,7 +38,7 @@ export class TaskResolver {
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
       // return data;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[Task][tasks][ERROR]', err);
       throw err;
     }
   }
@@ -54,7 +54,7 @@ export class TaskResolver {
       const data: Task[] = await this.jobManager.findTasks(params, ctx);
       return this.jobManager.transformRecordsToEntity(data) as Task[];
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[Task][findTasks][ERROR]', err);
       throw err;
     }
   }
@@ -96,7 +96,7 @@ export class TaskResolver {
 
       const groupRepresentor: TasksGroup = taskGroup[0];
 
-      // Remove requested non-relevant keys from the representor.
+      // Remove requested non-relevant keys from the representor
       if (typeof removeKeys !== 'undefined') {
         for (const removeKey of removeKeys) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -105,11 +105,11 @@ export class TaskResolver {
         }
       }
 
-      // Add counts, and min-max dates of the groups to task data.
+      // Add counts, and min-max dates of the groups to task data
 
       groupRepresentor.counts = (value as []).length;
 
-      // Convert moment back to Date Object.
+      // Convert moment back to Date Object
       groupRepresentor.created = dates.minDate.toDate();
       groupRepresentor.updated = dates.maxDate.toDate();
 
@@ -130,7 +130,7 @@ export class TaskResolver {
     for (const task of tasksArr) {
       let groupKey: { [key: string]: string } | string = {};
 
-      // Building group key.
+      // Building group key
       for (const key of GROUPING_KEYS) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IngestionData, IngestionRasterData, SourceGPKGValidationParams, SourceValidationInputParams } from '../../graphql/inputTypes';
 import { absoluteToRelativePath } from '../../helpers/string';
-import { requestExecutor } from '../../utils';
+import { requestExecutor, stringifyParams } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { RasterIngestion } from '../../graphql/ingestion';
@@ -99,7 +99,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.logger.info(`[IngestionManagerRaster][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
+    this.logger.info(`[Ingestion][Raster][buildPayload] ${stringifyParams(payloadData)}`);
 
     return {
       data: {
@@ -109,7 +109,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   private buildValidationPayload(data: SourceGPKGValidationParams): AxiosRequestConfig {
-    this.logger.info(`[IngestionManagerRaster][buildValidationPayload] generated validation payload: ${JSON.stringify(data)}.`);
+    this.logger.info(`[Ingestion][Raster][buildValidationPayload] ${stringifyParams(data)}`);
 
     return {
       data: {

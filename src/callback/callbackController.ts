@@ -26,7 +26,7 @@ export class CallbackController {
       res.status(StatusCodes.OK).json({ message: 'Task update received' });
       next();
     } catch (err) {
-      this.logger.error('[publishTaskUpdate] Error:', err);
+      this.logger.error('[NotifyUpdate][ERROR]', err);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to process task update' });
       next(err);
     }

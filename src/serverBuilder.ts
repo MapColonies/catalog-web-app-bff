@@ -8,6 +8,7 @@ import express from 'express';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
 import { GraphQLError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
+import { LevelWithSilent } from 'pino';
 import { inject, injectable } from 'tsyringe';
 import { buildSchemaSync } from 'type-graphql';
 import httpLogger from '@map-colonies/express-access-log-middleware';
@@ -40,8 +41,16 @@ export class ServerBuilder {
   }
 
   private registerPreRoutesMiddleware(): void {
-    // @ts-expect-error the signature is wrong
-    this.serverInstance.use(httpLogger({ logger: this.logger }));
+    const customLogLevel = (req: object, res: { statusCode: number | undefined }, err: object | undefined): LevelWithSilent => {
+      return err !== undefined ||
+        (res.statusCode !== undefined &&
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          res.statusCode >= 400)
+        ? 'error'
+        : 'debug';
+    };
+    // @ts-ignore
+    this.serverInstance.use(httpLogger({ logger: this.logger, customLogLevel }));
     this.serverInstance.use(cors());
     if (this.config.get<boolean>('server.response.compression.enabled')) {
       this.serverInstance.use(compression(this.config.get<compression.CompressionFilter>('server.response.compression.options')));

@@ -31,7 +31,7 @@ export class JobResolver {
       const data = await Promise.resolve(this.jobManager.getJobs(ctx, params));
       return this.jobManager.transformRecordsToEntity(data) as Job[];
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][jobs][ERROR]', err);
       throw err;
     }
   }
@@ -47,7 +47,7 @@ export class JobResolver {
       const data = await Promise.resolve(this.jobManager.getJob(id, ctx));
       return this.jobManager.transformRecordsToEntity(data) as Job;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][job][ERROR]', err);
       throw err;
     }
   }
@@ -65,7 +65,7 @@ export class JobResolver {
       await this.jobManager.updateJobHandler(id, data, ctx);
       return 'ok';
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][updateJob][ERROR]', err);
       throw err;
     }
   }
@@ -81,7 +81,7 @@ export class JobResolver {
       const response = await this.jobManager.resetJobHandler(jobRetryParams, ctx);
       return response;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][jobRetry][ERROR]', err);
       throw err;
     }
   }
@@ -97,7 +97,7 @@ export class JobResolver {
       await this.jobManager.abortJobHandler(jobAbortParams, ctx);
       return 'ok';
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][jobAbort][ERROR]', err);
       throw err;
     }
   }
@@ -113,7 +113,7 @@ export class JobResolver {
       const data = await Promise.resolve(this.jobManager.findActiveJob(activeJobParams, ctx));
       return this.jobManager.transformRecordsToEntity(data as Job) as Job;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error('[JobManager][activeJob][ERROR]', err);
       throw err;
     }
   }

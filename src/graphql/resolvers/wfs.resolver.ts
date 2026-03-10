@@ -39,8 +39,8 @@ export class WfsResolver {
         ctx
       );
       return getFeatureResponse;
-    } catch (error) {
-      console.error('[WfsResolver][getFeature]', error);
+    } catch (err) {
+      console.error('[WFS][getFeature][ERROR]', err);
       throw new Error('Failed to retrieve WFS feature data');
     }
   }
@@ -54,8 +54,8 @@ export class WfsResolver {
       const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
       const featureTypesConfigs = this.getFeatureTypesConfigs(getFeatureTypesResponse);
       return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
-    } catch (error) {
-      console.error('[WfsResolver][getFeatureTypes]', error);
+    } catch (err) {
+      console.error('[WFS][getFeatureTypes][ERROR]', err);
       throw new Error('Failed to retrieve WFS feature types');
     }
   }
@@ -80,10 +80,9 @@ export class WfsResolver {
       for (const [key, val] of Object.entries(defaultFeaturesConfigs)) {
         featureDescFromConfig[key] = { ...val, ...((featureTypesConfig[key] as Record<string, unknown> | undefined) ?? {}) };
       }
-
       return featureDescFromConfig;
-    } catch (e) {
-      console.error('[WfsResolver][getFeatureTypesConfigs][JSONParseError]', e);
+    } catch (err) {
+      console.error('[WFS][getFeatureTypesConfigs][ERROR]', err);
       return defaultFeaturesConfigs;
     }
   }

@@ -22,7 +22,7 @@ export class EntityDescriptorResolver {
       const data = await Promise.resolve(getDescriptors());
       return data;
     } catch (err) {
-      this.logger.error(err);
+      this.logger.error('[EntityDescriptor][entityDescriptors][ERROR]', err);
       throw err;
     }
   }
@@ -33,7 +33,7 @@ export class EntityDescriptorResolver {
       const data = await Promise.resolve(mcEnums);
       return { enums: data };
     } catch (err) {
-      this.logger.error(err);
+      this.logger.error('[EntityDescriptor][getMcEnums][ERROR]', err);
       throw err;
     }
   }
@@ -44,7 +44,7 @@ export class EntityDescriptorResolver {
       const data = await Promise.resolve([]);
       return data;
     } catch (err) {
-      this.logger.error(err);
+      this.logger.error('[EntityDescriptor][getPolygonPartsDUMMY][ERROR]', err);
       throw err;
     }
   }

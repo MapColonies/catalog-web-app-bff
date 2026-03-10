@@ -23,8 +23,8 @@ export class PolygonPartsWFS {
       // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
       const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
       return res as IGetFeatureResponse;
-    } catch (error) {
-      this.logger.error('[PolygonPartsWFS][getFeature]', error);
+    } catch (err) {
+      this.logger.error('[PolygonPartsWFS][getFeature][ERROR]', err);
       throw new Error('Failed to retrieve Polygon Parts feature data');
     }
   }
@@ -35,8 +35,8 @@ export class PolygonPartsWFS {
       requestExecutor: async (url, method, params): Promise<unknown> => {
         try {
           return await requestExecutor(this.service, method, params, ctx as IContext);
-        } catch (error) {
-          this.logger.error('[PolygonPartsWFS][requestExecutor]', error);
+        } catch (err) {
+          this.logger.error('[PolygonPartsWFS][requestExecutor][ERROR]', err);
           throw new Error('Failed to execute request to Polygon Parts WFS service. Please check the service availability');
         }
       },
