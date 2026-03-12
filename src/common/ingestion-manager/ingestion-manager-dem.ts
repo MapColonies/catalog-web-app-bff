@@ -13,6 +13,7 @@ export class IngestionManagerDem implements IIngestionManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionResultData> {
+    this.logger.info('[Ingestion][DEM][ingest]');
     return Promise.reject('Unimplemented service');
   }
 }

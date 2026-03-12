@@ -2,7 +2,7 @@ import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IngestionData, IngestionRasterData, SourceGPKGValidationParams, SourceValidationInputParams } from '../../graphql/inputTypes';
 import { absoluteToRelativePath } from '../../helpers/string';
-import { requestExecutor, stringifyParams } from '../../utils';
+import { requestExecutor } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { RasterIngestion } from '../../graphql/ingestion';
@@ -14,7 +14,9 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('ingestionServices.raster');
   }
+
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
+    this.logger.info('[Ingestion][Raster][sourceInfo]');
     const ONLY_ONE_SOURCE = 0;
     // 1. ingestion-trigger/ingestion/validateSources
     // 2. ingestion-trigger/ingestion/sourcesInfo
@@ -55,6 +57,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   public async ingest(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
+    this.logger.info('[Ingestion][Raster][ingest]');
     const result: AxiosResponse<Record<string, string>> | null = await requestExecutor(
       {
         url: `${this.service.url}/ingestion`,
@@ -70,6 +73,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   public async updateGeopkg(data: IngestionData, ctx: IContext): Promise<RasterIngestion> {
+    this.logger.info('[Ingestion][Raster][updateGeopkg]');
     const result: AxiosResponse<Record<string, string>> | null = await requestExecutor(
       {
         url: `${this.service.url}/ingestion/${data.metadata.id}`,
@@ -97,10 +101,6 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       ingestionResolution: data.ingestionResolution,
       callbackUrls: data.callbackUrls,
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.logger.info(`[Ingestion][Raster][buildPayload] ${stringifyParams(payloadData)}`);
-
     return {
       data: {
         ...payloadData,
@@ -109,8 +109,6 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   private buildValidationPayload(data: SourceGPKGValidationParams): AxiosRequestConfig {
-    this.logger.info(`[Ingestion][Raster][buildValidationPayload] ${stringifyParams(data)}`);
-
     return {
       data: {
         gpkgFilesPath: data.gpkgFilesPath.map((filePath) => absoluteToRelativePath(filePath)),

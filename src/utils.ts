@@ -2,6 +2,8 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
 import _ from 'lodash';
+import { container } from 'tsyringe';
+import { Services } from './common/constants';
 import { IContext, IService } from './common/interfaces';
 import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
 import { Domain } from './graphql/domain';
@@ -68,6 +70,11 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 };
 
 export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
+  const logger = container.resolve(Services.LOGGER) as any;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { headers, handleAs, ...rest } = params;
+  logger.debug(`[Utils][requestExecutor] {_METHOD: '${method}', _SERVICE: {${stringifyParams(service)}}, ${stringifyParams(rest)}}`);
   return service.exposureType === 'ROUTE'
     ? requestHandlerWithToken(service.url, method, params, ctx)
     : requestHandler(service.url, method, params, ctx);
@@ -97,5 +104,10 @@ export const addRasterJobActions = (job: Job): void => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const stringifyParams = (obj: any): string => {
-  return _.map(obj, (value, key) => `${key}: ${JSON.stringify(value)}`).join(', ');
+  return _.map(obj, (value, key) => {
+    return `${key}: ${JSON.stringify(value)}`;
+  })
+    .join(', ')
+    .replace(/\\*"/g, "'")
+    .replace(/data:\s*'(.*)>'/, 'data: "$1>"');
 };

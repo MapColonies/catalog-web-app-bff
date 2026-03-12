@@ -25,35 +25,25 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayer][getEstimatedSize] type: ${data.type}`);
-
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const estimatedSize = await exportLayerManagerInstance.getEstimatedSize(data, ctx);
-
     return estimatedSize;
   }
 
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayer][getFreeDiskSpace] type: ${data.type}`);
-
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const freeDiskSpace = await exportLayerManagerInstance.getFreeDiskSpace(data, ctx);
-
     return freeDiskSpace;
   }
 
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayer][triggerExportTask] type: ${data.type}`);
-
     const exportLayerManagerInstance = this.getManagerInstance(data.type);
     const triggerExportTaskRes = await exportLayerManagerInstance.triggerExportTask(data, ctx);
-
     return triggerExportTaskRes;
   }
 
   private getManagerInstance(recordType: RecordType): IExportLayerManagerService {
     let exportLayerManagerInstance: IExportLayerManagerService;
-
     switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
         exportLayerManagerInstance = this.exportServices['3D'];
@@ -68,7 +58,6 @@ export class ExportLayerManager implements IExportLayerManagerService {
         exportLayerManagerInstance = this.exportServices.RASTER;
         break;
     }
-
     return exportLayerManagerInstance;
   }
 }

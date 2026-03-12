@@ -23,8 +23,6 @@ export class SourceValidatorManager implements ISourceInfoService {
   }
 
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
-    this.logger.info(`[SourceValidator][sourceInfo] type: ${data.type}`);
-
     const sourceValidatorInstance = this.getManagerInstance(data.type);
 
     const updatedData = await sourceValidatorInstance.sourceInfo(data, ctx);

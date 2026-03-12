@@ -21,7 +21,7 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorer][3D][getDirectory] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][3D][getDirectory] path: ${data.path}`);
 
     // REAL LOGIC
     const res = await requestExecutor(

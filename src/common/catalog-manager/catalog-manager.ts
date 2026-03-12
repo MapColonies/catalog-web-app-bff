@@ -23,24 +23,18 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info(`[CatalogManager][updateStatus] type: ${record.type}`);
-
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const updatedData = await catalogManagerInstance.updateStatus(record, ctx);
     return updatedData;
   }
 
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info(`[CatalogManager][updateMetadata] type: ${record.type}`);
-
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const updatedData = await catalogManagerInstance.updateMetadata(record, ctx);
     return updatedData;
   }
 
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info(`[CatalogManager][deleteLayer] type: ${record.type}`);
-
     const catalogManagerInstance = this.getManagerInstance(record.type);
     const deletedLayer = await catalogManagerInstance.deleteLayer(record, ctx);
     return deletedLayer;
@@ -48,7 +42,6 @@ export class CatalogManager implements ICatalogManagerService {
 
   private getManagerInstance(recordType: RecordType): ICatalogManagerService {
     let catalogManagerInstance: ICatalogManagerService;
-
     switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
         catalogManagerInstance = this.catalogServices.DEM;
@@ -60,7 +53,6 @@ export class CatalogManager implements ICatalogManagerService {
         catalogManagerInstance = this.catalogServices.RASTER;
         break;
     }
-
     return catalogManagerInstance;
   }
 }

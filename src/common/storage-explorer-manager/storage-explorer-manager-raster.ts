@@ -47,7 +47,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorer][Raster][getDirectory] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getDirectory] path: ${data.path}`);
 
     const fileConfig =
       data.rasterIngestionFilesTypeConfig !== undefined ? this.rasterIngestionFilesStructureConfig[data.rasterIngestionFilesTypeConfig] : undefined;

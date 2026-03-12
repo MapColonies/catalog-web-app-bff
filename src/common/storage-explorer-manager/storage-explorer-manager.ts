@@ -31,84 +31,55 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   public async getDirectory(data: ExplorerGetByPath, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorer][getDirectory] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectory(data, ctx);
-
     return directoryContent;
   }
 
   public async getDirectoryById(data: ExplorerGetById, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorer][getDirectoryById] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const directoryContent = await storageExplorerManagerInstance.getDirectoryById(data, ctx);
-
     return directoryContent;
   }
 
   public async getFile(data: ExplorerGetByPath, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorer][getFile] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFile(data, ctx);
-
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
-
     return transformedMetadata;
   }
 
   public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorer][getZipShapefile] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-
     return storageExplorerManagerInstance.getZipShapefile(data, ctx);
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorer][getStreamFile] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-
     return storageExplorerManagerInstance.getStreamFile(data, ctx);
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
-    this.logger.info(`[StorageExplorer][writeStreamFile] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
-
     return storageExplorerManagerInstance.writeStreamFile(data, req, ctx);
   }
 
   public async resolveMetadataAsModel(data: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorer][resolveMetadataAsModel] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.resolveMetadataAsModel(data, ctx);
-
     const transformedMetadata = this.transformMetadataJsonToEntity(fileContent);
-
     return transformedMetadata;
   }
 
   public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<typeof LayerMetadataMixedUnion> {
-    this.logger.info(`[StorageExplorer][getFileById] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const fileContent = await storageExplorerManagerInstance.getFileById(data, ctx);
-
     return fileContent;
   }
 
   public async getDecryptedId(data: ExplorerGetById, ctx: IContext): Promise<{ data: string }> {
-    this.logger.info(`[StorageExplorer][getDecryptedId] type: ${data.type}`);
-
     const storageExplorerManagerInstance = this.getManagerInstance(data.type);
     const decryptedId = await storageExplorerManagerInstance.getDecryptedId(data, ctx);
-
     return decryptedId;
   }
 
