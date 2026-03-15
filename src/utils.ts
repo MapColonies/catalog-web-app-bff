@@ -70,9 +70,11 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 };
 
 export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
+  /* eslint-disable */
   const logger = container.resolve(Services.LOGGER) as { debug: (message: string) => void };
   // @ts-ignore
   const { headers, handleAs, ...rest } = params;
+  /* eslint-enable */
   logger.debug(`[Utils][requestExecutor] {_METHOD: '${method}', _SERVICE: {${stringifyParams(service)}}, ${stringifyParams(rest)}}`);
   return service.exposureType === 'ROUTE'
     ? requestHandlerWithToken(service.url, method, params, ctx)
