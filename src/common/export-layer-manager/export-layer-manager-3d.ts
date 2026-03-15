@@ -7,7 +7,7 @@ import {
   // getFreeDiskSpace,
   triggerExportTask,
 } from '../../graphql/MOCKS/export-layer';
-import { stringifyParams } from '../../utils';
+import { stringifyObject } from '../../utils';
 import { IContext } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
@@ -21,7 +21,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayer][3D][getEstimatedSize] ${stringifyParams(data)}`);
+    this.logger.info(`[ExportLayer][3D][getEstimatedSize] ${stringifyObject(data)}`);
 
     // MOCK RES
     // const res = await Promise.resolve(getEstimatedSize);
@@ -35,7 +35,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayer][3D][getFreeDiskSpace] ${stringifyParams(data)}`);
+    this.logger.info(`[ExportLayer][3D][getFreeDiskSpace] ${stringifyObject(data)}`);
 
     // MOCK RES
     // const res = await Promise.resolve(getFreeDiskSpace);
@@ -49,7 +49,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayer][3D][triggerExportTask] ${stringifyParams(data)}`);
+    this.logger.info(`[ExportLayer][3D][triggerExportTask] ${stringifyObject(data)}`);
 
     // MOCK RES
     const res = await Promise.resolve(triggerExportTask);

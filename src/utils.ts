@@ -75,7 +75,7 @@ export const requestExecutor = async (service: IService, method: string, params:
   // @ts-ignore
   const { headers, handleAs, ...rest } = params;
   /* eslint-enable */
-  logger.debug(`[Utils][requestExecutor] {_METHOD: '${method}', _SERVICE: {${stringifyParams(service)}}, ${stringifyParams(rest)}}`);
+  logger.debug(`[Utils][requestExecutor] {_METHOD: '${method}', _SERVICE: {${stringifyObject(service)}}, ${stringifyObject(rest)}}`);
   return service.exposureType === 'ROUTE'
     ? requestHandlerWithToken(service.url, method, params, ctx)
     : requestHandler(service.url, method, params, ctx);
@@ -104,7 +104,7 @@ export const addRasterJobActions = (job: Job): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const stringifyParams = (obj: any): string => {
+export const stringifyObject = (obj: any): string => {
   return _.map(obj, (value, key) => {
     return `${key}: ${JSON.stringify(value)}`;
   })

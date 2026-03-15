@@ -17,7 +17,7 @@ import {
 import { File } from '../../graphql/storage-explorer';
 // import searchMockData from '../../graphql/MOCKS/storage-explorer/mock_utils';
 // import RASTER_MOCK_DATA, { MOCK_FILE } from '../../graphql/MOCKS/storage-explorer/RASTER/MOCK_DATA';
-import { requestExecutor, stringifyParams } from '../../utils';
+import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
@@ -116,7 +116,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDirectoryById(data: ExplorerGetById, ctx: IContext): Promise<File[]> {
-    this.logger.info(`[StorageExplorer][Raster][getDirectoryById] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getDirectoryById] ${stringifyObject(data)}`);
 
     const res = await requestExecutor(
       {
@@ -136,7 +136,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getFile(data: ExplorerGetByPath, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorer][Raster][getFile] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getFile] ${stringifyObject(data)}`);
 
     // REAL LOGIC
     const res = await requestExecutor(
@@ -156,7 +156,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getStreamFile(data: ExplorerGetByPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorer][Raster][getStreamFile] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getStreamFile] ${stringifyObject(data)}`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -179,7 +179,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getZipShapefile(data: ExplorerGetByFolderPath, ctx: IContext): Promise<AxiosResponse<Readable>> {
-    this.logger.info(`[StorageExplorer][Raster][getZipShapefile] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getZipShapefile] ${stringifyObject(data)}`);
 
     const bufferSizeQuery = this.bufferSize !== undefined ? `&buffersize=${this.bufferSize}` : '';
 
@@ -202,7 +202,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async writeStreamFile(data: ExplorerGetByPath, req: Request, ctx: IContext): Promise<AxiosResponse> {
-    this.logger.info(`[StorageExplorer][Raster][writeStreamFile] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][writeStreamFile] ${stringifyObject(data)}`);
 
     const res = await requestExecutor(
       {
@@ -224,7 +224,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorer][Raster][resolveMetadataAsModel] metadata: ${JSON.stringify(metadata)}`);
+    this.logger.info(`[StorageExplorer][Raster][resolveMetadataAsModel] ${stringifyObject({ metadata })}`);
 
     function getRequiredFields<T>(cls: new () => T): string[] {
       const metadata = getMetadataStorage();
@@ -272,7 +272,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getFileById(data: ExplorerGetById, ctx: IContext): Promise<LayerRasterRecord> {
-    this.logger.info(`[StorageExplorer][Raster][getFileById] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getFileById] ${stringifyObject(data)}`);
 
     const res = await requestExecutor(
       {
@@ -288,7 +288,7 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
   }
 
   public async getDecryptedId(data: ExplorerGetById, ctx: IContext): Promise<{ data: string }> {
-    this.logger.info(`[StorageExplorer][Raster][getDecryptedId] ${stringifyParams(data)}`);
+    this.logger.info(`[StorageExplorer][Raster][getDecryptedId] ${stringifyObject(data)}`);
 
     const res = await requestExecutor(
       {

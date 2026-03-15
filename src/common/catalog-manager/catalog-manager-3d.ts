@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
 import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
-import { requestExecutor } from '../../utils';
+import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
@@ -13,7 +13,7 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info('[CatalogManager][3D][updateStatus]');
+    this.logger.info(`[CatalogManager][3D][updateStatus] ${stringifyObject(record)}`);
     await requestExecutor(
       {
         url: `${this.service.url}/metadata/status/${record.id}`,
@@ -27,7 +27,7 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
-    this.logger.info('[CatalogManager][3D][updateMetadata]');
+    this.logger.info(`[CatalogManager][3D][updateMetadata] ${stringifyObject(record)}`);
     await requestExecutor(
       {
         url: `${this.service.url}/metadata/${record.id}`,
@@ -41,7 +41,7 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info('[CatalogManager][3D][deleteLayer]');
+    this.logger.info(`[CatalogManager][3D][deleteLayer] ${stringifyObject(record)}`);
     await requestExecutor(
       {
         url: `${this.service.url}/models/${record.id}`,
@@ -58,7 +58,6 @@ export class CatalogManager3D implements ICatalogManagerService {
     const payloadData = {
       ...data.partialRecordData,
     };
-
     return {
       data: {
         ...payloadData,

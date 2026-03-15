@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from 'graphql-tools';
 import { container } from 'tsyringe';
 import { CallBack, Services } from '../../common/constants';
-import { stringifyParams } from '../../utils';
+import { stringifyObject } from '../../utils';
 
 export const taskSubscriptionTypeDefs = `
   scalar parametersObject
@@ -54,7 +54,7 @@ export const TaskSubscriptionResolver: IResolvers = {
       },
       resolve: (payload: CallBack<Record<string, unknown>>): Record<string, unknown> => {
         const logger = container.resolve<{ debug: (message: string) => void }>(Services.LOGGER);
-        logger.debug(`[PUBSUB][TASK_UPDATE] ${stringifyParams(payload)}`);
+        logger.debug(`[PUBSUB][TASK_UPDATE] ${stringifyObject(payload)}`);
         return { ...payload };
       },
     },

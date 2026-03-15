@@ -1,10 +1,10 @@
+import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { IConfig } from 'config';
 import { Position, PositionsWithHeights } from '../../graphql/dem-heights';
+import { requestExecutor, stringifyObject } from '../../utils';
 import { Services } from '../constants';
 import { IContext, IService } from '../interfaces';
-import { requestExecutor } from '../../utils';
 import { IDemHeightsManagerService } from './dem-heights.interface';
 
 @singleton()
@@ -16,6 +16,7 @@ export default class DemHeightsManager implements IDemHeightsManagerService {
   }
 
   public async getPointsHeights(positions: Position[], ctx: IContext, productType?: string): Promise<PositionsWithHeights> {
+    this.logger.info(`[DemHeightsManager][DEM][getPointsHeights] ${stringifyObject({ positions, productType })}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/points`,

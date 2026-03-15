@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { CallBack, Services, statusMap } from '../common/constants';
-import { stringifyParams } from '../utils';
+import { stringifyObject } from '../utils';
 
 @injectable()
 export class CallbackController {
@@ -17,7 +17,7 @@ export class CallbackController {
   }
 
   public publishTaskUpdate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    this.logger.info(`[Callback][TaskNotification] ${stringifyParams(req?.body ?? '')}`);
+    this.logger.info(`[Callback][TaskNotification] ${stringifyObject(req?.body ?? '')}`);
     try {
       const payload = req.body as CallBack<unknown>;
       const statusKey = payload.status;
