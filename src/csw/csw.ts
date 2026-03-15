@@ -151,7 +151,7 @@ export class CSW {
   }
 
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
-    this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
+    this.logger.info(`[CSW][getRecordsById] idList: ${JSON.stringify(idList)}`);
 
     const getRecords = [];
     getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList, ctx)));
@@ -160,7 +160,7 @@ export class CSW {
   }
 
   public async getDomain(domain: string, recType: RecordType, ctx: IContext): Promise<string[]> {
-    this.logger.info(`[CSW][getDomain] getting domain ${domain}, for entity ${recType}`);
+    this.logger.info(`[CSW][getDomain] domain: ${domain}, entity: ${recType}`);
 
     const clientType = this.recordTypeToEntity(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);

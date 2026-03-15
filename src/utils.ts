@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
@@ -9,7 +10,6 @@ import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
 import { Domain } from './graphql/domain';
 import { Job } from './graphql/job';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 axiosRetry(axios, {
   retries: 0,
@@ -70,8 +70,7 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 };
 
 export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
-  const logger = container.resolve(Services.LOGGER) as any;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  const logger = container.resolve(Services.LOGGER) as { debug: (message: string) => void };
   // @ts-ignore
   const { headers, handleAs, ...rest } = params;
   logger.debug(`[Utils][requestExecutor] {_METHOD: '${method}', _SERVICE: {${stringifyParams(service)}}, ${stringifyParams(rest)}}`);

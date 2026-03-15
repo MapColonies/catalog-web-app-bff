@@ -5,7 +5,7 @@ import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { requestExecutor } from '../utils';
+import { requestExecutor, stringifyParams } from '../utils';
 import { SourceValidationParams } from './inputTypes';
 import { SourceValidation } from './sourceValidation';
 
@@ -18,7 +18,7 @@ export class SourceValidator {
   }
 
   public async validateSources(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
-    this.logger.info(`[SourceValidator][validateSources] originDirectory: ${sourceData.originDirectory}`);
+    this.logger.info(`[SourceValidator][validateSources] ${stringifyParams(sourceData)}`);
 
     const response = await requestExecutor(
       {
