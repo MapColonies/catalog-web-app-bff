@@ -71,7 +71,7 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 
 export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
   /* eslint-disable */
-  const logger = container.resolve(Services.LOGGER) as { debug: (message: string) => void };
+  const logger = container.resolve<{ debug: (message: string) => void }>(Services.LOGGER);
   // @ts-ignore
   const { headers, handleAs, ...rest } = params;
   /* eslint-enable */
