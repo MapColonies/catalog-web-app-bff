@@ -52,7 +52,7 @@ export const TaskSubscriptionResolver: IResolvers = {
         return pubSub.asyncIterator('TASK_UPDATE');
       },
       resolve: (payload: CallBack<Record<string, unknown>>): Record<string, unknown> => {
-        console.log('Subscription received payload:', payload);
+        console.log('[PUBSUB][TASK_UPDATE]', payload);
         return { ...payload };
       },
     },
