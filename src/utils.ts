@@ -103,7 +103,7 @@ export const addRasterJobActions = (job: Job): void => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any @typescript-eslint/explicit-module-boundary-types
 export const stringifyObject = (obj: any): string => {
   return _.map(obj, (value, key) => {
     return `${key}: ${JSON.stringify(value)}`;

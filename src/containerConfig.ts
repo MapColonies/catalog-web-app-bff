@@ -8,6 +8,7 @@ import { Services } from './common/constants';
 
 function registerExternalValues(tracing: Tracing): void {
   const loggerConfig = config.get<LoggerOptions>('logger');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const logger = jsLogger({ ...loggerConfig, prettyPrint: false, hooks: { logMethod } });
   container.register(Services.CONFIG, { useValue: config });
