@@ -1,5 +1,5 @@
-import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
+import { Logger } from '@map-colonies/js-logger';
 import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';

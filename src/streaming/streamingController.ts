@@ -1,12 +1,13 @@
-import { Readable, Stream } from 'stream';
 import axios from 'axios';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Readable, Stream } from 'stream';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/types';
 import { Services } from '../common/constants';
 import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
+import { extractErrorMessage } from '../utils';
 
 export type GetStreamer = Stream;
 
@@ -51,6 +52,7 @@ export class StreamingController {
 
       response.data.pipe(res);
     } catch (err) {
+      this.logger.error(`[Streaming][getZipShapefile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
@@ -85,6 +87,7 @@ export class StreamingController {
 
       response.data.pipe(res);
     } catch (err) {
+      this.logger.error(`[Streaming][getStreamFile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
@@ -110,13 +113,12 @@ export class StreamingController {
 
       res.status(StatusCodes.CREATED).send(response.data);
     } catch (err) {
+      this.logger.error(`[Streaming][writeStreamFile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
 
   private async handleError(err: unknown, res: Response): Promise<void> {
-    this.logger.error('[Streaming][ERROR]', err);
-
     if (axios.isAxiosError(err)) {
       const status = err.response?.status ?? StatusCodes.INTERNAL_SERVER_ERROR;
       const data: unknown = err.response?.data;

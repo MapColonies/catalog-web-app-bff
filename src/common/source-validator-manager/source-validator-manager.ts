@@ -1,14 +1,14 @@
+import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
-import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
-import { IConfig, IContext } from '../interfaces';
 import { Domain } from '../../graphql/domain';
 import { SourceValidationInputParams } from '../../graphql/inputTypes';
-import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
-import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
-import { ISourceInfoService } from '../ingestion-manager/ingestion-manager.interface';
 import { SourceValidation } from '../../graphql/sourceValidation';
+import { Services } from '../constants';
+import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
+import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
+import { ISourceInfoService } from '../ingestion-manager/ingestion-manager.interface';
+import { IConfig, IContext } from '../interfaces';
 
 type IngestionServices = Record<Domain, ISourceInfoService>;
 

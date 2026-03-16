@@ -1,11 +1,11 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
-import { requestExecutor } from '../utils';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import WfsClient from './wfs-client/wfs-client';
+import { extractErrorMessage, requestExecutor } from '../utils';
 import { IGetFeatureOptionsByFeature, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
+import WfsClient from './wfs-client/wfs-client';
 
 @singleton()
 export class PolygonPartsWFS {
@@ -24,7 +24,7 @@ export class PolygonPartsWFS {
       const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
       return res as IGetFeatureResponse;
     } catch (err) {
-      this.logger.error('[PolygonPartsWFS][getFeature][ERROR]', err);
+      this.logger.error(`[PolygonPartsWFS][getFeature][ERROR] ${extractErrorMessage(err)}`);
       throw new Error('Failed to retrieve Polygon Parts feature data');
     }
   }
@@ -35,8 +35,8 @@ export class PolygonPartsWFS {
       requestExecutor: async (url, method, params): Promise<unknown> => {
         try {
           return await requestExecutor(this.service, method, params, ctx as IContext);
-        } catch (err) {
-          this.logger.error('[PolygonPartsWFS][requestExecutor][ERROR]', err);
+        } catch (error) {
+          this.logger.error('[PolygonPartsWFS][requestExecutor][ERROR]', { error, params });
           throw new Error('Failed to execute request to Polygon Parts WFS service. Please check the service availability');
         }
       },

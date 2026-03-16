@@ -1,5 +1,7 @@
-import { Logger } from '@map-colonies/js-logger';
+import { get, intersection, size } from 'lodash';
+import { inject, singleton } from 'tsyringe';
 import { FilterField } from '@map-colonies/csw-client';
+import { Logger } from '@map-colonies/js-logger';
 import {
   PycswLayerCatalogRecord,
   Pycsw3DCatalogRecord,
@@ -10,8 +12,6 @@ import {
   VectorBestMetadata,
 } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
-import { inject, singleton } from 'tsyringe';
-import { get, intersection, size } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { Domain } from '../graphql/domain';

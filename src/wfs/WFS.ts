@@ -1,11 +1,11 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
-import { requestExecutor } from '../utils';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import WfsClient from './wfs-client/wfs-client';
+import { requestExecutor } from '../utils';
 import { IGetFeatureOptions, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
+import WfsClient from './wfs-client/wfs-client';
 
 @singleton()
 export class WFS {

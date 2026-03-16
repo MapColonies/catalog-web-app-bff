@@ -1,19 +1,19 @@
+import { AxiosResponse } from 'axios';
+import { Request } from 'express';
 import { Readable } from 'stream';
+import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
-import { inject, singleton } from 'tsyringe';
-import { Request } from 'express';
-import { AxiosResponse } from 'axios';
-import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
-import { CatalogRecordType, fieldTypes, Services } from '../constants';
-import { IConfig, IContext } from '../interfaces';
-import { ExplorerGetByFolderPath, ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
-import { File } from '../../graphql/storage-explorer';
 import { CSW } from '../../csw/csw';
 import { Domain } from '../../graphql/domain';
-import { IStorageExplorerManagerService } from './storage-explorer.interface';
-import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
+import { ExplorerGetByFolderPath, ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
+import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';
+import { File } from '../../graphql/storage-explorer';
+import { CatalogRecordType, fieldTypes, Services } from '../constants';
+import { IConfig, IContext } from '../interfaces';
 import { StorageExplorerManager3D } from './storage-explorer-manager-3d';
+import { StorageExplorerManagerRaster } from './storage-explorer-manager-raster';
+import { IStorageExplorerManagerService } from './storage-explorer.interface';
 
 type ExplorerServices = Record<Domain, IStorageExplorerManagerService>;
 

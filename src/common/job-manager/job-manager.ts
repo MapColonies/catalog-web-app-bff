@@ -7,9 +7,9 @@ import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-import { IJobManagerService } from './job-manager.interface';
 import JobManagerCommon from './job-manager-common';
 import JobManagerRaster from './job-manager-raster';
+import { IJobManagerService } from './job-manager.interface';
 
 enum JobManagerServiceType {
   RASTER = 'RASTER',

@@ -1,8 +1,8 @@
-import { RecordType } from '@map-colonies/mc-model-types';
 import { IConfig } from 'config';
-import { Logger } from 'pino';
 import { container } from 'tsyringe';
 import { Query, Resolver } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
+import { RecordType } from '@map-colonies/mc-model-types';
 import { Services } from '../../common/constants';
 import { ExternalService, ServiceType } from '../external-services';
 
@@ -21,12 +21,11 @@ export class ExternalServicesResolver {
 
   @Query((type) => [ExternalService])
   public getExternalServices(): ExternalService[] {
+    this.logger.info(`[ExternalServices][getExternalServices]`);
     return this.generateExternalServices();
   }
 
   private generateExternalServices(): ExternalService[] {
-    this.logger.info(`[ExternalServices][generateExternalServices]`);
-
     const extServices = this.externalServices;
     const extServicesArr: ExternalService[] = [];
 

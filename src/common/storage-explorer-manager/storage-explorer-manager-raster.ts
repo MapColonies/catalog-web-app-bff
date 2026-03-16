@@ -14,9 +14,9 @@ import {
   ExplorerResolveMetadataAsModel,
   RasterIngestionFilesTypeConfig,
 } from '../../graphql/inputTypes';
-import { File } from '../../graphql/storage-explorer';
 // import searchMockData from '../../graphql/MOCKS/storage-explorer/mock_utils';
 // import RASTER_MOCK_DATA, { MOCK_FILE } from '../../graphql/MOCKS/storage-explorer/RASTER/MOCK_DATA';
+import { File } from '../../graphql/storage-explorer';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IStorageExplorerManagerService } from './storage-explorer.interface';

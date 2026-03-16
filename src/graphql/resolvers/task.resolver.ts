@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
+import moment from 'moment';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
-import moment from 'moment';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../../common/constants';
-import { TasksSearchParams } from '../inputTypes';
-import { TasksGroup } from '../tasksGroup';
-import { Task } from '../job';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
+import { extractErrorMessage } from '../../utils';
+import { TasksSearchParams } from '../inputTypes';
+import { Task } from '../job';
 //import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
+import { TasksGroup } from '../tasksGroup';
 
 @Resolver()
 export class TaskResolver {
@@ -38,7 +39,7 @@ export class TaskResolver {
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
       // return data;
     } catch (err) {
-      this.logger.error('[Task][tasks][ERROR]', err);
+      this.logger.error(`[Task][tasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
@@ -54,7 +55,7 @@ export class TaskResolver {
       const data: Task[] = await this.jobManager.findTasks(params, ctx);
       return this.jobManager.transformRecordsToEntity(data) as Task[];
     } catch (err) {
-      this.logger.error('[Task][findTasks][ERROR]', err);
+      this.logger.error(`[Task][findTasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

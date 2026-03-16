@@ -65,7 +65,7 @@ class WfsClient {
    * @returns Promise of a processed list of typeNames
    */
   public async getFeatureTypeList(): Promise<string[]> {
-    this.logger.info(`[WFS][getFeatureTypeList]`);
+    this.logger.info('[WFS][getFeatureTypeList]');
 
     const describeFeatureData = await this.request({ request: 'DescribeFeatureType' });
 
@@ -95,6 +95,7 @@ class WfsClient {
   }: // filter,
   IGetFeatureOptions): Promise<unknown> {
     const pointCoordinatesStr = pointCoordinates.join(',');
+    this.logger.info(`[WFS][getFeatureByPoint] type: ${typeName}, point: ${pointCoordinatesStr}`);
 
     const XML_BODY_TEMPLATE = getQueryPointXMLBody(
       geomRefFieldName,
@@ -105,8 +106,6 @@ class WfsClient {
       dWithin,
       filterProperties
     );
-
-    this.logger.info(`[WFS][getFeatureByPoint] type: ${typeName}, point: ${pointCoordinatesStr}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -142,6 +141,8 @@ class WfsClient {
     filterProperties,
   }: // filter,
   IGetFeatureOptionsByFeature): Promise<unknown> {
+    this.logger.info(`[WFS][getFeatureByFeature] type: ${typeName}, feature: ${JSON.stringify(feature)}`);
+
     const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(
       geomRefFieldName,
       count,
@@ -152,8 +153,6 @@ class WfsClient {
       dWithin,
       filterProperties
     );
-
-    this.logger.info(`[WFS][getFeatureByFeature] type: ${typeName}, feature: ${JSON.stringify(feature)}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -172,7 +171,6 @@ class WfsClient {
     }
 
     return getFeatureData;
-    // return {};
   }
 
   private async request({ request, method = 'GET', config = {} }: IRequestOptions): Promise<unknown> {

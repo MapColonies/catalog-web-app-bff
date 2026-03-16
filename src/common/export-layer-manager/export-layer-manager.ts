@@ -1,7 +1,7 @@
-import { Logger } from '@map-colonies/js-logger';
-import { RecordType } from '@map-colonies/mc-model-types';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
+import { RecordType } from '@map-colonies/mc-model-types';
 import { Domain } from '../../graphql/domain';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';

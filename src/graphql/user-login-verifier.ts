@@ -1,6 +1,6 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext } from '../common/interfaces';
 import { UserLoginParams } from './inputTypes';

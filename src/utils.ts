@@ -4,7 +4,7 @@ import axiosRetry from 'axios-retry';
 import config from 'config';
 import _ from 'lodash';
 import { container } from 'tsyringe';
-import { Services } from './common/constants';
+import { HttpError, Services } from './common/constants';
 import { IContext, IService } from './common/interfaces';
 import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
 import { Domain } from './graphql/domain';
@@ -112,4 +112,8 @@ export const stringifyObject = (obj: any): string => {
     .join(', ')
     .replace(/\\*"/g, "'")
     .replace(/data:\s*'(.*)>'/, 'data: "$1>"');
+};
+
+export const extractErrorMessage = (err: unknown): string => {
+  return (err as HttpError).response?.data?.message ?? (err as Error).message;
 };

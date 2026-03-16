@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { Capability } from '../../graphql/capability';
-import { xmlToCapabilities } from '../../helpers/xml';
 // import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
+import { xmlToCapabilities } from '../../helpers/xml';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';

@@ -1,17 +1,17 @@
+import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswLayerCatalogRecord, RecordType } from '@map-colonies/mc-model-types';
-import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
-import { IConfig, IContext } from '../interfaces';
 import { Domain } from '../../graphql/domain';
-import { IngestionData } from '../../graphql/inputTypes';
-import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
 import { FieldConfig } from '../../graphql/entityDescriptor';
 import { IngestionResultData } from '../../graphql/ingestion';
-import { IIngestionManagerService } from './ingestion-manager.interface';
-import { IngestionManagerRaster } from './ingestion-manager-raster';
+import { IngestionData } from '../../graphql/inputTypes';
+import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
+import { Services } from '../constants';
+import { IConfig, IContext } from '../interfaces';
 import { IngestionManager3D } from './ingestion-manager-3d';
 import { IngestionManagerDem } from './ingestion-manager-dem';
+import { IngestionManagerRaster } from './ingestion-manager-raster';
+import { IIngestionManagerService } from './ingestion-manager.interface';
 
 type IngestionServices = Record<Domain, IIngestionManagerService>;
 

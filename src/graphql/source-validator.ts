@@ -1,8 +1,8 @@
-import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
-import { get } from 'lodash';
 import { IConfig } from 'config';
+import { get } from 'lodash';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
 import { requestExecutor, stringifyObject } from '../utils';

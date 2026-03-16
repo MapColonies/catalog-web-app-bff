@@ -7,7 +7,7 @@ import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colon
 import { Services } from '../../common/constants';
 import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
-import { requestExecutor } from '../../utils';
+import { extractErrorMessage, requestExecutor, stringifyObject } from '../../utils';
 import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
 
@@ -33,11 +33,11 @@ export class LookupTablesResolver {
     { lookupFields }: GetLookupTablesParams
   ): Promise<LookupTableData> {
     try {
-      this.logger.info('[LookupTables][getLookupTablesData]');
+      this.logger.info(`[LookupTables][getLookupTablesData] ${stringifyObject(lookupFields)}`);
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
     } catch (err) {
-      this.logger.error('[LookupTables][getLookupTablesData][ERROR]', err);
+      this.logger.error(`[LookupTables][getLookupTablesData][ERROR] ${extractErrorMessage(err)}`);
       throw new Error('Failed to fetch lookup tables data');
     }
   }

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, FieldResolver, Root, Ctx } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { StorageExplorerManager } from '../../common/storage-explorer-manager/storage-explorer-manager';
