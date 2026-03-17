@@ -13,12 +13,12 @@ export type GetStreamer = Stream;
 
 @injectable()
 export class StreamingController {
-  private readonly storageExplorerManager: StorageExplorerManager;
   private readonly logger: Logger;
+  private readonly storageExplorerManager: StorageExplorerManager;
 
   public constructor() {
-    this.storageExplorerManager = container.resolve(StorageExplorerManager);
     this.logger = container.resolve(Services.LOGGER);
+    this.storageExplorerManager = container.resolve(StorageExplorerManager);
   }
 
   public getZipShapefile = async (req: Request, res: Response): Promise<void> => {

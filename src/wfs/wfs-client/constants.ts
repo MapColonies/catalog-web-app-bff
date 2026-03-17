@@ -64,9 +64,9 @@ const getPropertiesFilter = (filterProperties?: PropertyFilter[]) => {
   return filterProperties
     ?.map(({ propertyName, propertyValue }) => {
       return `<fes:PropertyIsEqualTo>
-              <fes:ValueReference>${propertyName}</fes:ValueReference>
-              <fes:Literal>${propertyValue}</fes:Literal>
-            </fes:PropertyIsEqualTo>`;
+                <fes:ValueReference>${propertyName}</fes:ValueReference>
+                <fes:Literal>${propertyValue}</fes:Literal>
+              </fes:PropertyIsEqualTo>`;
     })
     .join('\n');
 };
@@ -95,26 +95,26 @@ export const getQueryPointXMLBody = (
   const propertiesFilter = getPropertiesFilter(filterProperties);
 
   const getFeatureQuery = `<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" 
-                  xmlns:fes="http://www.opengis.net/fes/2.0"
-                  xmlns:gml="http://www.opengis.net/gml/3.2"
-                  xmlns:sf="http://www.openplans.org/spearfish" 
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  service="WFS" 
-                  version="2.0.0" count="${count}"
-                  xsi:schemaLocation="http://www.opengis.net/wfs/2.0
-                  http://schemas.opengis.net/wfs/2.0/wfs.xsd 
-                  http://www.opengis.net/gml/3.2 
-                  http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
-                  outputFormat="${outputFormat}">
-                          <wfs:Query typeNames="${typeName}">
+                            xmlns:fes="http://www.opengis.net/fes/2.0"
+                            xmlns:gml="http://www.opengis.net/gml/3.2"
+                            xmlns:sf="http://www.openplans.org/spearfish" 
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            service="WFS" 
+                            version="2.0.0" count="${count}"
+                            xsi:schemaLocation="http://www.opengis.net/wfs/2.0
+                            http://schemas.opengis.net/wfs/2.0/wfs.xsd 
+                            http://www.opengis.net/gml/3.2 
+                            http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
+                            outputFormat="${outputFormat}">
+                            <wfs:Query typeNames="${typeName}">
                               <fes:Filter>
                               <fes:And>
-                                  ${pointIntersectionFilter}
-                                  ${propertiesFilter ?? ''}
+                                ${pointIntersectionFilter}
+                                ${propertiesFilter ?? ''}
                               </fes:And>
                               </fes:Filter>
-                          </wfs:Query>
-               </wfs:GetFeature>`;
+                            </wfs:Query>
+                          </wfs:GetFeature>`;
 
   return compactXML(getFeatureQuery);
 };
@@ -153,31 +153,32 @@ export const getQueryFeatureXMLBody = (
   const propertiesFilter = getPropertiesFilter(filterProperties);
 
   const getFeatureQuery = `<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" 
-                  xmlns:fes="http://www.opengis.net/fes/2.0"
-                  xmlns:gml="http://www.opengis.net/gml/3.2"
-                  xmlns:sf="http://www.openplans.org/spearfish" 
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  service="WFS" 
-                  version="2.0.0"
-                  xsi:schemaLocation="http://www.opengis.net/wfs/2.0
-                  http://schemas.opengis.net/wfs/2.0/wfs.xsd 
-                  http://www.opengis.net/gml/3.2 
-                  http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
-                  outputFormat="${outputFormat}">
-                          <wfs:Query typeNames="${typeName}">
+                            xmlns:fes="http://www.opengis.net/fes/2.0"
+                            xmlns:gml="http://www.opengis.net/gml/3.2"
+                            xmlns:sf="http://www.openplans.org/spearfish" 
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            service="WFS" 
+                            version="2.0.0"
+                            xsi:schemaLocation="http://www.opengis.net/wfs/2.0
+                            http://schemas.opengis.net/wfs/2.0/wfs.xsd 
+                            http://www.opengis.net/gml/3.2 
+                            http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
+                            outputFormat="${outputFormat}">
+                            <wfs:Query typeNames="${typeName}">
                               <fes:Filter>
                               <fes:And>
-                                  ${polygonIntersectionFilter}
-                                  ${propertiesFilter ?? ''}
+                                ${polygonIntersectionFilter}
+                                ${propertiesFilter ?? ''}
                               </fes:And>
                               </fes:Filter>
-                          </wfs:Query>
-                          <wfs:Count>${count}</wfs:Count>
-                          <wfs:StartIndex>${startIndex}</wfs:StartIndex>
-               </wfs:GetFeature>`;
+                            </wfs:Query>
+                            <wfs:Count>${count}</wfs:Count>
+                            <wfs:StartIndex>${startIndex}</wfs:StartIndex>
+                          </wfs:GetFeature>`;
 
   return compactXML(getFeatureQuery);
 };
+/* eslint-enable */
 
 export const DEFAULT_OUTPUT_FORMAT: OutputFormat = 'application/json';
 export const DEFAULT_COUNT = 100;

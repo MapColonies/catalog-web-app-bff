@@ -43,14 +43,14 @@ export const LayerMetadataMixedUnion = createUnionType({
 
 @Resolver()
 export class LayerMetadataMixedResolver {
+  private readonly logger: Logger;
   private readonly csw: CSW;
   private readonly catalogManager: CatalogManager;
   private readonly ingestionManager: IngestionManager;
-  private readonly logger: Logger;
 
   public constructor() {
-    this.csw = container.resolve(CSW);
     this.logger = container.resolve(Services.LOGGER);
+    this.csw = container.resolve(CSW);
     this.catalogManager = container.resolve(CatalogManager);
     this.ingestionManager = container.resolve(IngestionManager);
   }
@@ -206,7 +206,9 @@ export class LayerMetadataMixedResolver {
       if (updateGeopgkRes) {
         return updateGeopgkRes as RasterIngestion;
       }
-      throw new Error(`Could not update with the provided data (${data.metadata.productId as string})`);
+      const error = `Could not update gpkg with the provided data (${data.metadata.productId as string})`;
+      this.logger.error(`[CSW][startRasterUpdateGeopkg][ERROR] ${error}`);
+      throw new Error(error);
     } catch (err) {
       this.logger.error(`[CSW][startRasterUpdateGeopkg][ERROR] ${extractErrorMessage(err)}`);
       throw err;
