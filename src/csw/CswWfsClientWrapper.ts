@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import bboxPolygon from '@turf/bbox-polygon';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { BBox } from '@turf/helpers/dist/js/lib/geojson';
+import { ResultType } from '@map-colonies/csw-client';
 import { IPropWFSMapping } from '@map-colonies/mc-model-types';
 import { ProductType, RecordType } from '@map-colonies/types';
 import { WfsClient, WFSPayload, DEFAULT_VERSION } from '@map-colonies/wfs-client';
@@ -13,6 +14,7 @@ import { CatalogRecordType, fieldTypesVector } from '../common/constants';
 import { SearchOptions } from '../graphql/inputTypes';
 import { requestExecutor, urlHandler } from '../utils';
 import { IContext, IService } from '../common/interfaces';
+import { GetRecordsResponse } from './cswClientWrapper';
 
 interface IField {
   fieldName: string;
@@ -60,7 +62,13 @@ export class CswWfsClientWrapper {
   }
 
   // eslint-disable-next-line
-  public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<VectorBestRecord[]> {
+  public async getRecords(
+    ctx: IContext,
+    resultType?: ResultType,
+    start?: number,
+    end?: number,
+    opts?: SearchOptions
+  ): Promise<GetRecordsResponse> {
     const wfsClient200: WfsClient = this.getWfsClient();
 
     const getCapabilitesRequest: WFSPayload = wfsClient200.GetCapabilitiesRequest();
@@ -74,7 +82,9 @@ export class CswWfsClientWrapper {
 
     try {
       const parsedEntitys = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[]);
-      return parsedEntitys;
+      return {
+        records: parsedEntitys
+      };
     } catch (err) {
       throw new Error(`${JSON.stringify(err)}`);
     }
