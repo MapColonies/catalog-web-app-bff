@@ -36,6 +36,7 @@ export class PolygonPartsWFS {
         try {
           return await requestExecutor(this.service, method, params, ctx as IContext);
         } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           this.logger.error('[PolygonPartsWFS][requestExecutor][ERROR]', { error, params });
           throw new Error('Failed to execute request to Polygon Parts WFS service. Please check the service availability');
         }

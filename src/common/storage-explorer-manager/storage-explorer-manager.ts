@@ -1,6 +1,6 @@
+import { Readable } from 'stream';
 import { AxiosResponse } from 'axios';
 import { Request } from 'express';
-import { Readable } from 'stream';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
