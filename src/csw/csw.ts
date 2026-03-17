@@ -16,6 +16,7 @@ import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
+import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
@@ -116,7 +117,7 @@ export class CSW {
                   ? await client.instance.getRecords(ctx, start, end, rasterOpts)
                   : await client.instance.getRecords(ctx, start, end, newOpts);
               } catch (error) {
-                throw this.cswError(client);
+                throw this.cswError(client, error);
               }
             })
           );
@@ -140,7 +141,7 @@ export class CSW {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
           } catch (error) {
-            throw this.cswError(client);
+            throw this.cswError(client, error);
           }
         })
       );
@@ -215,12 +216,14 @@ export class CSW {
     try {
       return await instance.getRecords(ctx, start, end, options);
     } catch (error) {
+      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(error)}`);
       throw new Error(`Failed to fetch ${catalog} records`);
     }
   }
 
-  private cswError(client: CswClient): Error {
+  private cswError(client: CswClient, error: unknown): Error {
     const catalog = this.recordTypeToEntity(client.entities[0]);
+    this.logger.error(`[CSW][${catalog}][ERROR] ${extractErrorMessage(error)}`);
     return new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
   }
 }

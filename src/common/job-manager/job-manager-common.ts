@@ -66,8 +66,7 @@ export default class JobManagerCommon implements IJobManagerService {
   // eslint-disable-next-line
   public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
     this.logger.info(`[JobManager][Common][findActiveJob] ${stringifyObject(params)}`);
-    await Promise.resolve();
-    throw new Error('Not implemented');
+    throw new Error('NOT IMPLEMENTED');
   }
 
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {

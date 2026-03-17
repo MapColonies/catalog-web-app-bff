@@ -74,7 +74,9 @@ class WfsClient {
     const featuresArr = jsonXmlData.value?.element?.map((el) => el.name as string);
 
     if (!featuresArr) {
-      throw new Error('There was an error parsing featureTypes data');
+      const error = 'There was an error parsing featureTypes data';
+      this.logger.error('[WFS][getFeatureTypeList][ERROR]', error);
+      throw new Error(error);
     }
 
     return featuresArr;
