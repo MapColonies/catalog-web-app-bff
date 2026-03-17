@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { extractErrorMessage } from '../../utils';
 import {
   DEFAULT_COUNT,
   DEFAULT_DWITHIN,
@@ -75,7 +76,7 @@ class WfsClient {
 
     if (!featuresArr) {
       const error = 'There was an error parsing featureTypes data';
-      this.logger.error('[WFS][getFeatureTypeList][ERROR]', error);
+      this.logger.error(`[WFS][getFeatureTypeList][ERROR] ${error}`);
       throw new Error(error);
     }
 
@@ -121,7 +122,7 @@ class WfsClient {
 
     if (!(getFeatureData as boolean)) {
       const error = 'There was an error targeting the WFS features';
-      this.logger.error('[WFS][getFeatureByPoint][ERROR]', error);
+      this.logger.error(`[WFS][getFeatureByPoint][ERROR] ${error}`);
       throw new Error(error);
     }
 
@@ -168,7 +169,7 @@ class WfsClient {
 
     if (!(getFeatureData as boolean)) {
       const error = 'There was an error targeting the WFS features';
-      this.logger.error('[WFS][getFeatureByFeature][ERROR]', error);
+      this.logger.error(`[WFS][getFeatureByFeature][ERROR] ${error}`);
       throw new Error(error);
     }
 
@@ -176,39 +177,33 @@ class WfsClient {
   }
 
   private async request({ request, method = 'GET', config = {} }: IRequestOptions): Promise<unknown> {
-    try {
-      const { params, ...restConf } = config;
+    const { params, ...restConf } = config;
 
-      const baseParams = {
-        service: 'WFS',
-        version: this.version,
-        request,
-        count: this.count,
-        srsName: this.srsName,
-      };
+    const baseParams = {
+      service: 'WFS',
+      version: this.version,
+      request,
+      count: this.count,
+      srsName: this.srsName,
+    };
 
-      const requestConfig = {
-        params: { ...baseParams, ...((params as Record<string, unknown> | undefined) ?? {}) },
-        ...restConf,
-      };
+    const requestConfig = {
+      params: { ...baseParams, ...((params as Record<string, unknown> | undefined) ?? {}) },
+      ...restConf,
+    };
 
-      const res = (await this.requestExecutor(this.baseUrl, method, requestConfig)) as { data: unknown };
+    const res = (await this.requestExecutor(this.baseUrl, method, requestConfig)) as { data: unknown };
 
-      return res.data;
-    } catch (e) {
-      const error = `Failed to fetch WFS data. ${(e as Error).message}`;
-      this.logger.error('[WFS][request][ERROR]', error);
-      throw new Error(error);
-    }
+    return res.data;
   }
 
   private xmlToJson(xml: string): Record<string, unknown> {
     try {
       // eslint-disable-next-line
       return jsonixUnmarshaller.unmarshalString(xml) as Record<string, unknown>;
-    } catch (e) {
-      const error = `Could not parse the XML for this request. ${(e as Error).message}`;
-      this.logger.error('[WFS][xmlToJson][ERROR]', error);
+    } catch (err) {
+      const error = 'Could not parse the XML for this request';
+      this.logger.error(`[WFS][xmlToJson][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(error);
     }
   }

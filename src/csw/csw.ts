@@ -116,8 +116,8 @@ export class CSW {
                 return client.entities.includes(RecordType.RECORD_RASTER)
                   ? await client.instance.getRecords(ctx, start, end, rasterOpts)
                   : await client.instance.getRecords(ctx, start, end, newOpts);
-              } catch (error) {
-                throw this.cswError(client, error);
+              } catch (err) {
+                throw this.cswError(client, err);
               }
             })
           );
@@ -140,8 +140,8 @@ export class CSW {
         ...this.getEntitiesCswInstances().map(async (client) => {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
-          } catch (error) {
-            throw this.cswError(client, error);
+          } catch (err) {
+            throw this.cswError(client, err);
           }
         })
       );
@@ -215,8 +215,8 @@ export class CSW {
   ): Promise<CatalogRecordType[]> {
     try {
       return await instance.getRecords(ctx, start, end, options);
-    } catch (error) {
-      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(error)}`);
+    } catch (err) {
+      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(`Failed to fetch ${catalog} records`);
     }
   }

@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { CallBack, Services, statusMap } from '../common/constants';
-import { stringifyObject } from '../utils';
+import { extractErrorMessage, stringifyObject } from '../utils';
 
 @injectable()
 export class CallbackController {
@@ -28,7 +28,7 @@ export class CallbackController {
       res.status(StatusCodes.OK).json({ message: 'Task update received' });
       next();
     } catch (err) {
-      this.logger.error('[Callback][TaskNotification][ERROR]', err);
+      this.logger.error(`[Callback][TaskNotification][ERROR] ${extractErrorMessage(err)}`);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to process task update notification' });
       next(err);
     }
