@@ -15,8 +15,9 @@ import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
-import { CswClientWrapper, GetRecordsResponse } from './cswClientWrapper';
+import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
+import { CSWCatalog, CSWCatalogs } from '../graphql/csw';
 
 type SecondaryFilter = {
   recordType: RecordType;
@@ -30,16 +31,16 @@ type Entities = {
   // main record and are intended for viewing only.
   // secondary?: RecordType | RecordType[];
   secondary: SecondaryFilter[];
-}
+};
 
 interface CswClient {
   instance: CswClientWrapper | CswWfsClientWrapper;
   entities: Entities;
 }
 
-type PromiseRecordsResponse = Partial<Record<Domain, Promise<GetRecordsResponse>>>;
+type PromiseRecordsResponse = Partial<Record<string, Promise<CSWCatalog>>>;
 
-export type RecordResponse = Partial<Record<Domain, GetRecordsResponse>>;
+// export type RecordsResponse = Partial<Record<Domain, CSWRecordResult>>;
 
 type CswClients = Record<Domain, CswClient>;
 const NOT_FOUND = -1;
@@ -58,7 +59,7 @@ export class CSW {
       ),
       entities: {
         main: RecordType.RECORD_RASTER,
-        secondary: []
+        secondary: [],
       },
     };
 
@@ -74,10 +75,10 @@ export class CSW {
         secondary: [
           {
             recordType: RecordType.RECORD_DEM,
-            include: false
-          }
-        ]
-      }
+            include: false,
+          },
+        ],
+      },
     };
 
     this.cswClients.DEM = {
@@ -89,16 +90,16 @@ export class CSW {
       ),
       entities: {
         main: RecordType.RECORD_DEM,
-        secondary: []
-      }
+        secondary: [],
+      },
     };
 
     this.cswClients.VECTOR = {
       instance: new CswWfsClientWrapper(VectorBestMetadata.getWFSMappings(), this.config.get('wfs')),
       entities: {
         main: RecordType.RECORD_VECTOR,
-        secondary: []
-      }
+        secondary: [],
+      },
     };
   }
 
@@ -111,29 +112,20 @@ export class CSW {
       return {
         field: 'mc:type',
         [entity.include ? 'eq' : 'neq']: entity.recordType,
-        ...(entity.include ? { or: true } : {})
-      }
+        ...(entity.include ? { or: true } : {}),
+      };
     }) as FilterField[];
 
     const updatedFilter = {
       ...baseFilterOpt,
-      filter: [
-        ...(baseFilterOpt?.filter ?? []),
-        ...filterWithEntities
-      ],
-      ...(baseFilterOpt?.sort ? { sort: baseFilterOpt?.sort } : {})
+      filter: [...(baseFilterOpt?.filter ?? []), ...filterWithEntities],
+      ...(baseFilterOpt?.sort ? { sort: baseFilterOpt?.sort } : {}),
     };
 
     return updatedFilter;
   }
 
-  public async getRecordsResponse(
-    ctx: IContext,
-    resultType?: ResultType,
-    start?: number,
-    end?: number,
-    opts?: SearchOptions
-  ): Promise<RecordResponse> {
+  public async getRecordsResponse(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalogs> {
     this.logger.info(
       `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
     );
@@ -159,20 +151,16 @@ export class CSW {
     const fetchRecordAll = () => {
       const filterWithoutRecordAllOpt: SearchOptions = {
         ...opts,
-        filter: (opts?.filter ?? []).filter(
-          (filterField) => filterField.field !== 'mc:type'
-        )
+        filter: (opts?.filter ?? []).filter((filterField) => filterField.field !== 'mc:type'),
       };
 
       const rasterWithoutRecordAllOpts: SearchOptions = {
         ...rasterOpts,
-        filter: (rasterOpts.filter ?? []).filter(
-          (filterField) => filterField.field !== 'mc:type'
-        )
+        filter: (rasterOpts.filter ?? []).filter((filterField) => filterField.field !== 'mc:type'),
       };
 
       for (const domain of this.getAllowedDomainsOfCswEntities()) {
-        promisesRecordsResponse[domain] = this.fetchRecords(
+        promisesRecordsResponse[`_${domain}`] = this.fetchRecords(
           domain,
           ctx,
           resultType,
@@ -184,9 +172,9 @@ export class CSW {
               ...(filterWithoutRecordAllOpt?.filter ?? []),
               {
                 field: 'mc:type',
-                eq: this.domainToRecordType(domain)
-              }
-            ]
+                eq: this.domainToRecordType(domain),
+              },
+            ],
           },
           {
             ...rasterWithoutRecordAllOpts,
@@ -194,10 +182,10 @@ export class CSW {
               ...(rasterWithoutRecordAllOpts?.filter ?? []),
               {
                 field: 'mc:type',
-                eq: this.domainToRecordType(domain)
-              }
-            ]
-          },
+                eq: this.domainToRecordType(domain),
+              },
+            ],
+          }
         );
       }
     };
@@ -211,15 +199,7 @@ export class CSW {
       } else {
         const domain = this.recordTypeToDomain(recordType);
 
-        promisesRecordsResponse[domain] = this.fetchRecords(
-          domain,
-          ctx,
-          resultType,
-          start,
-          end,
-          opts,
-          rasterOpts
-        );
+        promisesRecordsResponse[`_${domain}`] = this.fetchRecords(domain, ctx, resultType, start, end, opts, rasterOpts);
       }
     } else {
       fetchRecordAll();
@@ -229,12 +209,17 @@ export class CSW {
 
     const resolvedRecordsResponse = await Promise.all(
       entries.map(async ([domain, promise]) => {
-        const res = await promise as GetRecordsResponse;
-        return [domain, res] as [string, GetRecordsResponse];
+        const res = (await promise) as CSWCatalog;
+        return [domain, res] as [string, CSWCatalog];
       })
     );
 
-    const resolvedCatalogs: RecordResponse = Object.fromEntries(resolvedRecordsResponse);
+    const resolvedCatalogs: CSWCatalogs = Object.fromEntries(resolvedRecordsResponse) as unknown as CSWCatalogs;
+
+    // const resolvedCatalogs = new CSWRecords();
+    // for (const [domain, res] of resolvedRecordsResponse) {
+    //   resolvedCatalogs[domain] = res;
+    // }
 
     return resolvedCatalogs;
   }
@@ -298,22 +283,13 @@ export class CSW {
     end?: number,
     filterOpt?: SearchOptions,
     rasterOpts?: SearchOptions
-  ): Promise<GetRecordsResponse> {
+  ): Promise<CSWCatalog> {
     const baseOpts = domain === Domain.RASTER ? rasterOpts : filterOpt;
 
-    const optionsForClient = this.entitiesFilter(
-      this.cswClients[domain].entities.secondary,
-      baseOpts
-    );
+    const optionsForClient = this.entitiesFilter(this.cswClients[domain].entities.secondary, baseOpts);
 
     try {
-      return this.cswClients[domain].instance.getRecords(
-        ctx,
-        resultType,
-        start,
-        end,
-        optionsForClient
-      );
+      return this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
     } catch {
       throw this.cswError(domain);
     }

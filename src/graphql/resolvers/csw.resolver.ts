@@ -9,7 +9,7 @@ import { CatalogManager } from '../../common/catalog-manager/catalog-manager';
 import { END, Services, START } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
 import { IContext } from '../../common/interfaces';
-import { CSW, RecordResponse } from '../../csw/csw';
+import { CSW } from '../../csw/csw';
 import {
   Ingestion3DData,
   IngestionDemData,
@@ -22,6 +22,7 @@ import {
 import { StringArrayObjectType } from '../simpleTypes';
 import { RasterIngestion } from '../ingestion';
 import { Domain } from '../domain';
+import { CSWCatalogs } from '../csw';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
@@ -42,40 +43,6 @@ export const LayerMetadataMixedUnion = createUnionType({
   },
 }) as LayerMetadataUnionType;
 
-@ObjectType()
-export class CSWQueryOperationResult {
-  @Field(() => Number)
-  numberOfRecordsMatched: number;
-  @Field(() => Number)
-  numberOfRecordsReturned: number;
-  @Field(() => Number)
-  nextRecord: number;
-};
-
-@ObjectType()
-export class GetRecordsResponseClass {
-  @Field(() => [LayerMetadataMixedUnion])
-  records?: LayerMetadataUnionType[];
-
-  @Field(() => CSWQueryOperationResult, { nullable: true })
-  cswQueryOperationResult?: CSWQueryOperationResult;
-}
-
-@ObjectType()
-class RecordResponseClass {
-  @Field(() => GetRecordsResponseClass, { nullable: true })
-  RASTER?: GetRecordsResponseClass;
-
-  @Field(() => GetRecordsResponseClass, { nullable: true })
-  DEM?: GetRecordsResponseClass;
-
-  @Field(() => GetRecordsResponseClass, { nullable: true })
-  VECTOR?: GetRecordsResponseClass;
-
-  @Field(() => GetRecordsResponseClass, { nullable: true })
-  _3D?: GetRecordsResponseClass;
-}
-
 @Resolver()
 export class LayerMetadataMixedResolver {
   private readonly csw: CSW;
@@ -91,8 +58,7 @@ export class LayerMetadataMixedResolver {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // @Query((type) => [RecordResponseClass])
-  @Query((type) => RecordResponseClass)
+  @Query((type) => CSWCatalogs)
   public async search(
     @Ctx()
     ctx: IContext,
@@ -104,7 +70,7 @@ export class LayerMetadataMixedResolver {
     end?: number,
     @Arg('opts', { nullable: true })
     opts?: SearchOptions
-  ): Promise<RecordResponse> {
+  ): Promise<CSWCatalogs> {
     try {
       const data = await this.csw.getRecordsResponse(ctx, resultType, start, end, opts);
       return data;
@@ -176,8 +142,8 @@ export class LayerMetadataMixedResolver {
       });
 
       for (const domain of Object.keys(Domain) as (keyof typeof Domain)[]) {
-        const domainData = data[domain];
-        if (domainData && domainData.records.length > 0) {
+        const domainData = data[`_${domain}` as keyof CSWCatalogs];
+        if (domainData && domainData.records && domainData.records?.length > 0) {
           return domainData.records[0];
         }
       }

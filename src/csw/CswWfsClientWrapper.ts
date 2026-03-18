@@ -14,7 +14,7 @@ import { CatalogRecordType, fieldTypesVector } from '../common/constants';
 import { SearchOptions } from '../graphql/inputTypes';
 import { requestExecutor, urlHandler } from '../utils';
 import { IContext, IService } from '../common/interfaces';
-import { GetRecordsResponse } from './cswClientWrapper';
+import { CSWCatalog } from '../graphql/csw';
 
 interface IField {
   fieldName: string;
@@ -62,13 +62,7 @@ export class CswWfsClientWrapper {
   }
 
   // eslint-disable-next-line
-  public async getRecords(
-    ctx: IContext,
-    resultType?: ResultType,
-    start?: number,
-    end?: number,
-    opts?: SearchOptions
-  ): Promise<GetRecordsResponse> {
+  public async getRecords(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalog> {
     const wfsClient200: WfsClient = this.getWfsClient();
 
     const getCapabilitesRequest: WFSPayload = wfsClient200.GetCapabilitiesRequest();
@@ -83,7 +77,7 @@ export class CswWfsClientWrapper {
     try {
       const parsedEntitys = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[]);
       return {
-        records: parsedEntitys
+        records: parsedEntitys,
       };
     } catch (err) {
       throw new Error(`${JSON.stringify(err)}`);

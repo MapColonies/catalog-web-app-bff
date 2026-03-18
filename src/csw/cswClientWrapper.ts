@@ -6,17 +6,7 @@ import { CatalogRecordType, fieldTypes } from '../common/constants';
 import { SearchOptions } from '../graphql/inputTypes';
 import { requestExecutor } from '../utils';
 import { IContext, IService } from '../common/interfaces';
-
-type CSWQueryOperationResult = {
-  numberOfRecordsMatched: number;
-  numberOfRecordsReturned: number;
-  nextRecord: number;
-};
-
-export type GetRecordsResponse = {
-  records: CatalogRecordType[];
-  cswQueryOperationResult?: CSWQueryOperationResult;
-};
+import { CSWCatalog } from '../graphql/csw';
 
 export class CswClientWrapper {
   private readonly typename: string;
@@ -33,13 +23,7 @@ export class CswClientWrapper {
     this.defaultRequestHandler = request;
   }
 
-  public async getRecords(
-    ctx: IContext,
-    resultType?: ResultType,
-    start?: number,
-    end?: number,
-    opts?: SearchOptions
-  ): Promise<GetRecordsResponse> {
+  public async getRecords(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalog> {
     const cswClient = this.getCswClient(ctx);
 
     const response = await cswClient.GetRecords(this.outputSchema, resultType, start, end, opts);
@@ -50,14 +34,14 @@ export class CswClientWrapper {
     if (data === undefined) {
       return {
         records: [],
-        cswQueryOperationResult: metadata
+        cswQuerySummary: metadata,
       };
     }
     data = Array.isArray(data) ? data : [data];
     const parsedData = this.transformRecordsToEntity(data);
     return {
       records: parsedData,
-      cswQueryOperationResult: metadata
+      cswQuerySummary: metadata,
     };
   }
 
