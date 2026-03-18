@@ -116,6 +116,14 @@ export const stringifyObject = (obj: any): string => {
 };
 
 export const extractErrorMessage = (err: unknown): string => {
-  const message = (err as HttpError).response?.data?.message ?? (err as Error).message;
-  return message ?? String(err);
+  if (typeof err === 'object' && err !== null) {
+    const httpError = err as HttpError;
+    if (httpError.response?.data?.message) {
+      return httpError.response.data.message;
+    }
+    if ('message' in err && typeof (err as Error).message === 'string') {
+      return (err as Error).message;
+    }
+  }
+  return String(err);
 };
