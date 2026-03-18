@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.1...v4.0.2) (2026-03-18)
+
+
+### Bug Fixes
+
+* integer http status is missing from errors log ([#282](https://github.com/MapColonies/catalog-web-app-bff/issues/282)) ([a9f4455](https://github.com/MapColonies/catalog-web-app-bff/commit/a9f445586c9d412d49403df8ead99e26c64dde5e))
+
 ## [4.0.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.0...v4.0.1) (2026-03-18)
 
 
