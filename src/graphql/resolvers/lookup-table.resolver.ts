@@ -33,7 +33,7 @@ export class LookupTablesResolver {
     { lookupFields }: GetLookupTablesParams
   ): Promise<LookupTableData> {
     try {
-      this.logger.info(`[LookupTables][getLookupTablesData] ${stringifyObject(lookupFields)}`);
+      this.logger.info('[LookupTables][getLookupTablesData]');
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
     } catch (err) {
