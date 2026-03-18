@@ -121,7 +121,7 @@ export const extractErrorMessage = (err: unknown): string => {
   if (!isEmpty(err)) {
     const httpError = err as Record<string, unknown>;
     if (!isEmpty(httpError.response)) {
-      status = get(httpError, 'response.status', '');
+      status = String(get(httpError, 'response.status', ''));
       message = get(httpError, 'response.data.message', undefined) ?? get(httpError, 'response.statusText');
     } else if (!isEmpty(get(err, 'message'))) {
       message = get(err, 'message') as string;
