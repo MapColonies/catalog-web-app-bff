@@ -19,7 +19,7 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][Raster][getEstimatedSize] ${stringifyObject(data)}`);
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('N/A'), TIMEOUT);
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 

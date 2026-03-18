@@ -29,7 +29,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('N/A'), TIMEOUT);
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 
@@ -42,7 +42,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('N/A'), TIMEOUT);
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 
