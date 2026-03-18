@@ -1,6 +1,6 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext } from '../common/interfaces';
 import { UserLoginParams } from './inputTypes';
@@ -18,7 +18,8 @@ export class UserLoginVerifier {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async verifyAdminUser(userData: UserLoginParams, ctx?: IContext): Promise<IUserLogin> {
+  public async verifyAdmin(userData: UserLoginParams, ctx?: IContext): Promise<IUserLogin> {
+    this.logger.info(`[UserLoginVerifier][verifyAdmin]`);
     const isAdminVerified = this.adminPwd === userData.userPassword;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, reject) => {

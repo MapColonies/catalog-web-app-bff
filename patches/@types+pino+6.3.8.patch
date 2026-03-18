@@ -1,0 +1,31 @@
+diff --git a/node_modules/@types/pino/index.d.ts b/node_modules/@types/pino/index.d.ts
+index 155297e..5250781 100755
+--- a/node_modules/@types/pino/index.d.ts
++++ b/node_modules/@types/pino/index.d.ts
+@@ -20,7 +20,7 @@
+ import stream = require("stream");
+ import http = require("http");
+ import { EventEmitter } from "events";
+-import SonicBoom = require("sonic-boom");
++import SonicBoom from "sonic-boom";
+ import * as pinoStdSerializers from "pino-std-serializers";
+ import * as PinoPretty from "pino-pretty";
+ 
+@@ -194,7 +194,7 @@ declare namespace P {
+      */
+     function destination(
+         dest?: string | number | DestinationObjectOptions | DestinationStream | NodeJS.WritableStream,
+-    ): SonicBoom;
++    ): InstanceType<typeof SonicBoom>;
+ 
+     /**
+      * Create an extreme mode destination. This yields an additional 60% performance boost.
+@@ -202,7 +202,7 @@ declare namespace P {
+      * @param [fileDescriptor]: File path or numerical file descriptor, by default 1
+      * @returns A Sonic-Boom  stream to be used as destination for the pino function
+      */
+-    function extreme(fileDescriptor?: string | number): SonicBoom;
++    function extreme(fileDescriptor?: string | number): InstanceType<typeof SonicBoom>;
+ 
+     /**
+      * The pino.final method can be used to create an exit listener function.

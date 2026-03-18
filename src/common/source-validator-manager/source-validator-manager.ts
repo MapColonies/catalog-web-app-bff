@@ -1,14 +1,14 @@
+import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
-import { inject, singleton } from 'tsyringe';
-import { Services } from '../constants';
-import { IConfig, IContext } from '../interfaces';
 import { Domain } from '../../graphql/domain';
 import { SourceValidationInputParams } from '../../graphql/inputTypes';
-import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
-import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
-import { ISourceInfoService } from '../ingestion-manager/ingestion-manager.interface';
 import { SourceValidation } from '../../graphql/sourceValidation';
+import { Services } from '../constants';
+import { IngestionManager3D } from '../ingestion-manager/ingestion-manager-3d';
+import { IngestionManagerRaster } from '../ingestion-manager/ingestion-manager-raster';
+import { ISourceInfoService } from '../ingestion-manager/ingestion-manager.interface';
+import { IConfig, IContext } from '../interfaces';
 
 type IngestionServices = Record<Domain, ISourceInfoService>;
 
@@ -23,8 +23,6 @@ export class SourceValidatorManager implements ISourceInfoService {
   }
 
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
-    this.logger.info(`[SourceValidatorManager][sourceInfo] get source info  ${data.type}.`);
-
     const sourceValidatorInstance = this.getManagerInstance(data.type);
 
     const updatedData = await sourceValidatorInstance.sourceInfo(data, ctx);
@@ -49,46 +47,3 @@ export class SourceValidatorManager implements ISourceInfoService {
     return catalogManagerInstance;
   }
 }
-
-// import { Logger } from '@map-colonies/js-logger';
-// import { IConfig } from 'config';
-// import { inject, singleton } from 'tsyringe';
-// import { Services } from '../constants';
-// import { IContext } from '../interfaces';
-// import { SourceValidationParams } from '../../graphql/inputTypes';
-// import { SourceValidation } from '../../graphql/sourceValidation';
-
-// @singleton()
-// export class SourceValidator {
-//   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {}
-
-//   public async validateSource(sourceData: SourceValidationParams, ctx?: IContext): Promise<SourceValidation[]> {
-//     return new Promise((resolve, reject) => {
-//       // Currently returns DUMMY data
-//       // Should be performed two API calls
-//       // 1. ingestion-trigger/ingestion/validateSources
-//       // 2. ingestion-trigger/ingestion/sourcesInfo
-
-//       // *** Also should translate gdalinfo props to entity props
-//       resolve([
-//         {
-//           srs: '8888', //crs
-//           fileFormat: 'gpkg',
-//           resolutionDegree: 0.00274658203125, //pixelSize
-//           extentPolygon: {
-//             coordinates: [
-//               [
-//                 [45.55709751400781, 35.165318109968524],
-//                 [45.55709751400781, 29.371448852577814],
-//                 [50.94014988868878, 29.371448852577814],
-//                 [50.94014988868878, 35.165318109968524],
-//                 [45.55709751400781, 35.165318109968524],
-//               ],
-//             ],
-//             type: 'Polygon',
-//           },
-//         },
-//       ]);
-//     });
-//   }
-// }

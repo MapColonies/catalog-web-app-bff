@@ -3,19 +3,19 @@ import { Logger } from '@map-colonies/js-logger';
 import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
-import { requestExecutor } from '../../utils';
+import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 
 export default class JobManagerCommon implements IJobManagerService {
   protected readonly service: IService;
-  // private readonly jobManagerType: string = RecordType.RECORD_RASTER;
 
-  public constructor(public readonly config: IConfig, private readonly logger: Logger) {
+  public constructor(public readonly config: IConfig, protected readonly logger: Logger) {
     this.service = this.config.get('jobServices.common');
   }
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
+    this.logger.info(`[JobManager][Common][getJobs] ${stringifyObject(params)}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/jobs/find`,
@@ -38,25 +38,13 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const result = (!isEmpty(res.data) ? res.data : []) as Job[];
-
-    // // Mock Jobs
-    // const result = await Promise.resolve(MOCK_JOBS);
-
-    // return result.map((job) => ({ ...job, domain: this.jobManagerType }));
-
     return result;
   }
 
-  // eslint-disable-next-line
-  public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
-    await Promise.resolve();
-    throw new Error('Not implemented');
-  }
-
   public async getJob(id: string, ctx: IContext): Promise<Job> {
+    this.logger.info(`[JobManager][Common][getJob] id: ${id}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/jobs/${encodeURI(id)}`,
@@ -70,14 +58,19 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const result = (!isEmpty(res.data) ? res.data : []) as Job;
-
     return result;
   }
 
+  // eslint-disable-next-line
+  public async findActiveJob(params: ActiveJobFindParams, ctx: IContext): Promise<Job | null> {
+    this.logger.info(`[JobManager][Common][findActiveJob] ${stringifyObject(params)}`);
+    throw new Error('NOT IMPLEMENTED');
+  }
+
   public async updateJobHandler(id: string, params: JobUpdateData, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Common][updateJobHandler] id: ${id}, ${stringifyObject(params)}`);
     await requestExecutor(
       {
         url: `${this.service.url}/jobs/${id}`,
@@ -95,10 +88,11 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
-  public async abortJobHandler(jobAbortParams: JobActionParams, ctx: IContext): Promise<string> {
+  public async abortJobHandler(params: JobActionParams, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Common][abortJobHandler] ${stringifyObject(params)}`);
     await requestExecutor(
       {
-        url: `${this.service.url}/tasks/abort/${jobAbortParams.id}`,
+        url: `${this.service.url}/tasks/abort/${params.id}`,
         exposureType: this.service.exposureType,
       },
       'POST',
@@ -108,10 +102,11 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
-  public async resetJobHandler(jobRetryParams: JobActionParams, ctx: IContext): Promise<string> {
+  public async resetJobHandler(params: JobActionParams, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Common][resetJobHandler] ${stringifyObject(params)}`);
     await requestExecutor(
       {
-        url: `${this.service.url}/jobs/${jobRetryParams.id}/reset`,
+        url: `${this.service.url}/jobs/${params.id}/reset`,
         exposureType: this.service.exposureType,
       },
       'POST',
@@ -126,6 +121,7 @@ export default class JobManagerCommon implements IJobManagerService {
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    this.logger.info(`[JobManager][Common][getTasks] ${stringifyObject(params)}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/jobs/${params.jobId}/tasks?shouldExcludeParameters=true`,
@@ -135,11 +131,11 @@ export default class JobManagerCommon implements IJobManagerService {
       {},
       ctx
     );
-
     return res.data as Task[];
   }
 
   public async findTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
+    this.logger.info(`[JobManager][Common][findTasks] ${stringifyObject(params)}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/tasks/find`,
@@ -153,7 +149,6 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-
     return res.data as Task[];
   }
 

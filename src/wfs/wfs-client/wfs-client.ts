@@ -1,4 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
+import { extractErrorMessage } from '../../utils';
 import {
   DEFAULT_COUNT,
   DEFAULT_DWITHIN,
@@ -34,7 +35,6 @@ class WfsClient {
   private readonly logger: Logger;
 
   /**
-   *
    * A client-side API for OGC's WFS services, resolves to a JSON format
    * @param options of interface IWFSClientOptions
    * @param logger Used for logging functionalities
@@ -53,7 +53,7 @@ class WfsClient {
    * @returns Promise of the response from the getCapabilities request of the WFS service
    */
   public async getCapabilities(): Promise<unknown> {
-    this.logger.info('[WfsClient][getCapabilities] Fetching WFS getCapabilites data');
+    this.logger.info('[WFS][getCapabilities]');
 
     const getCapabilitiesRes = await this.request({ request: 'getCapabilities' });
     const jsonXmlData = this.xmlToJson(getCapabilitiesRes as string);
@@ -66,7 +66,7 @@ class WfsClient {
    * @returns Promise of a processed list of typeNames
    */
   public async getFeatureTypeList(): Promise<string[]> {
-    this.logger.info(`[WfsClient][getFeatureTypeList] Attempting query featureTypes.`);
+    this.logger.info('[WFS][getFeatureTypeList]');
 
     const describeFeatureData = await this.request({ request: 'DescribeFeatureType' });
 
@@ -75,7 +75,9 @@ class WfsClient {
     const featuresArr = jsonXmlData.value?.element?.map((el) => el.name as string);
 
     if (!featuresArr) {
-      throw new Error('There was an error parsing featureTypes data');
+      const error = 'There was an error parsing featureTypes data';
+      this.logger.error(`[WFS][getFeatureTypeList][ERROR] ${error}`);
+      throw new Error(error);
     }
 
     return featuresArr;
@@ -96,6 +98,7 @@ class WfsClient {
   }: // filter,
   IGetFeatureOptions): Promise<unknown> {
     const pointCoordinatesStr = pointCoordinates.join(',');
+    this.logger.info(`[WFS][getFeatureByPoint] type: ${typeName}, point: ${pointCoordinatesStr}`);
 
     const XML_BODY_TEMPLATE = getQueryPointXMLBody(
       geomRefFieldName,
@@ -106,8 +109,6 @@ class WfsClient {
       dWithin,
       filterProperties
     );
-
-    this.logger.info(`[WfsClient][getFeatureByPoint] Attempting query features of types ${typeName} at point ${pointCoordinatesStr}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -121,8 +122,7 @@ class WfsClient {
 
     if (!(getFeatureData as boolean)) {
       const error = 'There was an error targeting the WFS features';
-      this.logger.error(`[WfsClient][getFeatureByPoint] ${error}`);
-
+      this.logger.error(`[WFS][getFeatureByPoint][ERROR] ${error}`);
       throw new Error(error);
     }
 
@@ -144,6 +144,8 @@ class WfsClient {
     filterProperties,
   }: // filter,
   IGetFeatureOptionsByFeature): Promise<unknown> {
+    this.logger.info(`[WFS][getFeatureByFeature] type: ${typeName}, feature: ${JSON.stringify(feature)}`);
+
     const XML_BODY_TEMPLATE = getQueryFeatureXMLBody(
       geomRefFieldName,
       count,
@@ -154,8 +156,6 @@ class WfsClient {
       dWithin,
       filterProperties
     );
-
-    this.logger.info(`[WfsClient][getFeatureByFeature] Attempting query features of types ${typeName} for feature ${JSON.stringify(feature)}`);
 
     const getFeatureData = await this.request({
       request: 'GetFeature',
@@ -169,53 +169,41 @@ class WfsClient {
 
     if (!(getFeatureData as boolean)) {
       const error = 'There was an error targeting the WFS features';
-      this.logger.error(`[WfsClient][getFeatureByFeature] ${error}`);
-
+      this.logger.error(`[WFS][getFeatureByFeature][ERROR] ${error}`);
       throw new Error(error);
     }
 
     return getFeatureData;
-    // return {};
   }
 
   private async request({ request, method = 'GET', config = {} }: IRequestOptions): Promise<unknown> {
-    try {
-      const { params, ...restConf } = config;
+    const { params, ...restConf } = config;
 
-      const baseParams = {
-        service: 'WFS',
-        version: this.version,
-        request,
-        count: this.count,
-        srsName: this.srsName,
-      };
+    const baseParams = {
+      service: 'WFS',
+      version: this.version,
+      request,
+      count: this.count,
+      srsName: this.srsName,
+    };
 
-      const requestConfig = {
-        params: { ...baseParams, ...((params as Record<string, unknown> | undefined) ?? {}) },
-        ...restConf,
-      };
+    const requestConfig = {
+      params: { ...baseParams, ...((params as Record<string, unknown> | undefined) ?? {}) },
+      ...restConf,
+    };
 
-      const res = (await this.requestExecutor(this.baseUrl, method, requestConfig)) as { data: unknown };
+    const res = (await this.requestExecutor(this.baseUrl, method, requestConfig)) as { data: unknown };
 
-      return res.data;
-    } catch (e) {
-      const error = `Failed to fetch WFS data. error: ${(e as Error).message}`;
-      this.logger.error(`[WfsClient][request] ${error}`);
-
-      throw new Error(error);
-    }
+    return res.data;
   }
 
   private xmlToJson(xml: string): Record<string, unknown> {
     try {
-      this.logger.info('[WfsClient][xmlToJson] Attempting parse XML to JSON.');
-
       // eslint-disable-next-line
       return jsonixUnmarshaller.unmarshalString(xml) as Record<string, unknown>;
-    } catch (e) {
-      const error = `Could not parse the XML for this request. ${(e as Error).message}`;
-      this.logger.error(`[WfsClient][xmlToJson] ${error}`);
-
+    } catch (err) {
+      const error = 'Could not parse the XML for this request';
+      this.logger.error(`[WFS][xmlToJson][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(error);
     }
   }

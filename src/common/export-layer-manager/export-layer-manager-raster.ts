@@ -1,13 +1,13 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
+import { Logger } from '@map-colonies/js-logger';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
-// import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
-import { requestExecutor } from '../../utils';
+import { requestExecutor, stringifyObject } from '../../utils';
 import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
+
 export class ExportLayerManagerRaster implements IExportLayerManagerService {
   private readonly service: IService;
 
@@ -17,19 +17,14 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayerManagerRaster][getEstimatedSize] estimating export size with data: ${JSON.stringify(data)}.`);
-
-    // MOCK RES
-    // const res = await Promise.resolve(getEstimatedSize);
-
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    this.logger.info(`[ExportLayer][Raster][getEstimatedSize] ${stringifyObject(data)}`);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayerManagerRaster][getFreeDiskSpace] getting free disk space for domain.`);
-
+    this.logger.info(`[ExportLayer][Raster][getFreeDiskSpace] ${stringifyObject(data)}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/storage`,
@@ -40,22 +35,13 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
       ctx
     );
     const resData = res.data as Record<string, unknown>;
-
     return {
       freeDiskSpaceBytes: resData.free as number,
     };
-
-    // // MOCK RES
-    // const res = await Promise.resolve(getFreeDiskSpace);
-
-    // return new Promise((res, rej) => {
-    //   setTimeout(() => rej('N/A'), 2000);
-    // });
   }
 
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayerManagerRaster][triggerExportTask] triggering export task with data: ${JSON.stringify(data)}.`);
-
+    this.logger.info(`[ExportLayer][Raster][triggerExportTask] ${stringifyObject(data)}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/export`,
@@ -72,17 +58,9 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
       },
       ctx
     );
-
     const resData = res.data as Record<string, unknown>;
-
     return {
-      // jobId: resData.jobRequestId as string,
       jobId: resData.jobId as string,
     };
-
-    // MOCK RES
-    // const res = await Promise.resolve(triggerExportTask);
-
-    // return res;
   }
 }

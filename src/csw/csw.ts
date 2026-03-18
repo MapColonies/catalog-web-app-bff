@@ -1,5 +1,7 @@
-import { Logger } from '@map-colonies/js-logger';
+import { get, intersection, size } from 'lodash';
+import { inject, singleton } from 'tsyringe';
 import { FilterField } from '@map-colonies/csw-client';
+import { Logger } from '@map-colonies/js-logger';
 import {
   PycswLayerCatalogRecord,
   Pycsw3DCatalogRecord,
@@ -10,12 +12,11 @@ import {
   VectorBestMetadata,
 } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
-import { inject, singleton } from 'tsyringe';
-import { get, intersection, size } from 'lodash';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
+import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
@@ -69,9 +70,7 @@ export class CSW {
   }
 
   public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
-    this.logger.info(
-      `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
-    );
+    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
 
     const getCatalogs: Promise<CatalogRecordType[]>[] = [];
     const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
@@ -117,8 +116,8 @@ export class CSW {
                 return client.entities.includes(RecordType.RECORD_RASTER)
                   ? await client.instance.getRecords(ctx, start, end, rasterOpts)
                   : await client.instance.getRecords(ctx, start, end, newOpts);
-              } catch (error) {
-                throw this.cswError(client);
+              } catch (err) {
+                throw this.cswError(client, err);
               }
             })
           );
@@ -141,8 +140,8 @@ export class CSW {
         ...this.getEntitiesCswInstances().map(async (client) => {
           try {
             return await client.instance.getRecords(ctx, start, end, newOpts);
-          } catch (error) {
-            throw this.cswError(client);
+          } catch (err) {
+            throw this.cswError(client, err);
           }
         })
       );
@@ -153,7 +152,7 @@ export class CSW {
   }
 
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
-    this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
+    this.logger.info(`[CSW][getRecordsById] idList: ${JSON.stringify(idList)}`);
 
     const getRecords = [];
     getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList, ctx)));
@@ -162,7 +161,7 @@ export class CSW {
   }
 
   public async getDomain(domain: string, recType: RecordType, ctx: IContext): Promise<string[]> {
-    this.logger.info(`[CSW][getDomain] getting domain ${domain}, for entity ${recType}`);
+    this.logger.info(`[CSW][getDomain] domain: ${domain}, entity: ${recType}`);
 
     const clientType = this.recordTypeToEntity(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);
@@ -216,13 +215,15 @@ export class CSW {
   ): Promise<CatalogRecordType[]> {
     try {
       return await instance.getRecords(ctx, start, end, options);
-    } catch (error) {
+    } catch (err) {
+      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(`Failed to fetch ${catalog} records`);
     }
   }
 
-  private cswError(client: CswClient): Error {
+  private cswError(client: CswClient, error: unknown): Error {
     const catalog = this.recordTypeToEntity(client.entities[0]);
+    this.logger.error(`[CSW][${catalog}][ERROR] ${extractErrorMessage(error)}`);
     return new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
   }
 }

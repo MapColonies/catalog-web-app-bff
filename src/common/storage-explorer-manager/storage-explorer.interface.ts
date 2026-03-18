@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
-import { Request } from 'express';
 import { AxiosResponse } from 'axios';
+import { Request } from 'express';
 import { File } from '../../graphql/storage-explorer';
 import { ExplorerGetByFolderPath, ExplorerGetById, ExplorerGetByPath, ExplorerResolveMetadataAsModel } from '../../graphql/inputTypes';
 import { LayerMetadataMixedUnion } from '../../graphql/resolvers/csw.resolver';

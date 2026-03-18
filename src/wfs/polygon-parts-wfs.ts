@@ -1,11 +1,11 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, singleton } from 'tsyringe';
-import { requestExecutor } from '../utils';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import WfsClient from './wfs-client/wfs-client';
+import { extractErrorMessage, requestExecutor, stringifyObject } from '../utils';
 import { IGetFeatureOptionsByFeature, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
+import WfsClient from './wfs-client/wfs-client';
 
 @singleton()
 export class PolygonPartsWFS {
@@ -16,16 +16,17 @@ export class PolygonPartsWFS {
   }
 
   public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<IGetFeatureResponse> {
+    this.logger.info(`[PolygonPartsWFS][getFeature] ${stringifyObject(options)}`);
     const wfsClient = this.getWfsClient(ctx);
-
     try {
       // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
       // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
       const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
       return res as IGetFeatureResponse;
-    } catch (error) {
-      this.logger.error('[PolygonPartsWFS][getFeature]', error);
-      throw new Error('Failed to retrieve Polygon Parts feature data');
+    } catch (err) {
+      const error = 'Failed to retrieve Polygon Parts feature data';
+      this.logger.error(`[PolygonPartsWFS][getFeature][ERROR] ${extractErrorMessage(err)}`);
+      throw new Error(error);
     }
   }
 
@@ -35,9 +36,10 @@ export class PolygonPartsWFS {
       requestExecutor: async (url, method, params): Promise<unknown> => {
         try {
           return await requestExecutor(this.service, method, params, ctx as IContext);
-        } catch (error) {
-          this.logger.error('[PolygonPartsWFS][requestExecutor]', error);
-          throw new Error('Failed to execute request to Polygon Parts WFS service. Please check the service availability');
+        } catch (err) {
+          const error = 'Failed to execute request to Polygon Parts WFS service. Service is unavailable';
+          this.logger.error(`[PolygonPartsWFS][requestExecutor][ERROR] ${extractErrorMessage(err)}`);
+          throw new Error(error);
         }
       },
     };

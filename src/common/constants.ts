@@ -106,7 +106,7 @@ export const statusMap: Record<Status, string> = {
 };
 
 // #region to be removed
-// TODO: should be taken from @map-colonies/types
+// TODO: should be taken from @map-colonies/raster-shared
 export interface CallBack<T> {
   jobId: string;
   taskId: string;

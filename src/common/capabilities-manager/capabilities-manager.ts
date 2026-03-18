@@ -1,13 +1,13 @@
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
-import { Domain } from '../../graphql/domain';
 import { Capability } from '../../graphql/capability';
+import { Domain } from '../../graphql/domain';
 import { CapabilitiesLayersSearchParams } from '../../graphql/inputTypes';
-import { IConfig, IContext } from '../interfaces';
 import { Services } from '../constants';
-import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
+import { IConfig, IContext } from '../interfaces';
 import { ICapabilitiesManagerInstance, ICapabilitiesManagerService } from './capabilities-manager.interface';
+import { CapabilitiesManagerRaster } from './capabilities-manager-raster';
 
 type MapServices = Record<Domain, ICapabilitiesManagerInstance>;
 
@@ -20,7 +20,6 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
   }
 
   public async getCapabilities(params: CapabilitiesLayersSearchParams, ctx: IContext): Promise<Capability[]> {
-    this.logger.info(`[CapabilitiesManager][getCapabilities] calling getCapabilities manager`);
     const capabilities = await Promise.all(
       params.data.map(async (item) => {
         return this.getManagerInstance(item.recordType).getCapabilities(item.idList, ctx);

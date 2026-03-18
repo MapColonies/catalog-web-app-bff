@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { CallBack, Services, statusMap } from '../common/constants';
+import { extractErrorMessage, stringifyObject } from '../utils';
 
 @injectable()
 export class CallbackController {
@@ -16,6 +17,7 @@ export class CallbackController {
   }
 
   public publishTaskUpdate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    this.logger.info(`[Callback][TaskNotification] ${stringifyObject(req.body)}`);
     try {
       const payload = req.body as CallBack<unknown>;
       const statusKey = payload.status;
@@ -26,8 +28,8 @@ export class CallbackController {
       res.status(StatusCodes.OK).json({ message: 'Task update received' });
       next();
     } catch (err) {
-      this.logger.error('[publishTaskUpdate] Error:', err);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to process task update' });
+      this.logger.error(`[Callback][TaskNotification][ERROR] ${extractErrorMessage(err)}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to process task update notification' });
       next(err);
     }
   };

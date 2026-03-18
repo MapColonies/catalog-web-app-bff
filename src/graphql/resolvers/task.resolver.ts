@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
+import moment from 'moment';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
-import moment from 'moment';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../../common/constants';
-import { TasksSearchParams } from '../inputTypes';
-import { TasksGroup } from '../tasksGroup';
-import { Task } from '../job';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
+import { extractErrorMessage } from '../../utils';
+import { TasksSearchParams } from '../inputTypes';
+import { Task } from '../job';
 //import { MOCK_TASKS_DATA } from '../MOCKS/MOCK_TASKS_DATA';
+import { TasksGroup } from '../tasksGroup';
 
 @Resolver()
 export class TaskResolver {
@@ -38,7 +39,7 @@ export class TaskResolver {
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
       // return data;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error(`[JobManager][tasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
@@ -54,7 +55,7 @@ export class TaskResolver {
       const data: Task[] = await this.jobManager.findTasks(params, ctx);
       return this.jobManager.transformRecordsToEntity(data) as Task[];
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error(`[JobManager][findTasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
@@ -96,7 +97,7 @@ export class TaskResolver {
 
       const groupRepresentor: TasksGroup = taskGroup[0];
 
-      // Remove requested non-relevant keys from the representor.
+      // Remove requested non-relevant keys from the representor
       if (typeof removeKeys !== 'undefined') {
         for (const removeKey of removeKeys) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -105,11 +106,11 @@ export class TaskResolver {
         }
       }
 
-      // Add counts, and min-max dates of the groups to task data.
+      // Add counts, and min-max dates of the groups to task data
 
       groupRepresentor.counts = (value as []).length;
 
-      // Convert moment back to Date Object.
+      // Convert moment back to Date Object
       groupRepresentor.created = dates.minDate.toDate();
       groupRepresentor.updated = dates.maxDate.toDate();
 
@@ -130,7 +131,7 @@ export class TaskResolver {
     for (const task of tasksArr) {
       let groupKey: { [key: string]: string } | string = {};
 
-      // Building group key.
+      // Building group key
       for (const key of GROUPING_KEYS) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

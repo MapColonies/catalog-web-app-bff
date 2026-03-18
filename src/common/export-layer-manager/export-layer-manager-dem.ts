@@ -1,5 +1,5 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
+import { Logger } from '@map-colonies/js-logger';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import {
@@ -7,10 +7,12 @@ import {
   // getFreeDiskSpace,
   triggerExportTask,
 } from '../../graphql/MOCKS/export-layer';
+import { stringifyObject } from '../../utils';
 import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
+
 export class ExportLayerManagerDEM implements IExportLayerManagerService {
   private readonly service: IService;
 
@@ -20,35 +22,33 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
-    this.logger.info(`[ExportLayerManagerDEM][getEstimatedSize] estimating export size with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[ExportLayer][DEM][getEstimatedSize] ${stringifyObject(data)}`);
 
     // MOCK RES
     // const res = await Promise.resolve(getEstimatedSize);
-
     // return res;
 
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
-    this.logger.info(`[ExportLayerManagerDEM][getFreeDiskSpace] getting free disk space for domain.`);
+    this.logger.info(`[ExportLayer][DEM][getFreeDiskSpace] ${stringifyObject(data)}`);
 
     // // MOCK RES
     // const res = await Promise.resolve(getFreeDiskSpace);
-
     // return res;
 
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
-    this.logger.info(`[ExportLayerManagerDEM][triggerExportTask] triggering export task with data: ${JSON.stringify(data)}.`);
+    this.logger.info(`[ExportLayer][DEM][triggerExportTask] ${stringifyObject(data)}`);
 
     // MOCK RES
     const res = await Promise.resolve(triggerExportTask);
