@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from './common/constants';
@@ -121,14 +121,14 @@ export const extractErrorMessage = (err: unknown): string => {
   if (typeof err === 'object' && err !== null) {
     /* eslint-disable */
     const httpError = err as Record<string, any>;
-    /* eslint-enable */
     if (httpError.response) {
       status = httpError.response.status;
       message = httpError.response.data.message ?? httpError.response.statusText;
     } else if ('message' in err && typeof (err as Error).message === 'string') {
       message = (err as Error).message;
     }
+    /* eslint-enable */
   }
   const errorMessage = message ?? String(err);
-  return !!status ? `httpStatus: ${status} | ${errorMessage}` : errorMessage;
+  return !isEmpty(status) ? `httpStatus: ${status} | ${errorMessage}` : errorMessage;
 };
