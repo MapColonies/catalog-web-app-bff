@@ -12,6 +12,7 @@ import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
+
 export class ExportLayerManagerDEM implements IExportLayerManagerService {
   private readonly service: IService;
 
@@ -25,11 +26,10 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
     // MOCK RES
     // const res = await Promise.resolve(getEstimatedSize);
-
     // return res;
 
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('N/A'), TIMEOUT);
     });
   }
 
@@ -39,11 +39,10 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
 
     // // MOCK RES
     // const res = await Promise.resolve(getFreeDiskSpace);
-
     // return res;
 
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('N/A'), TIMEOUT);
     });
   }
 

@@ -3,7 +3,7 @@ import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { extractErrorMessage, requestExecutor } from '../utils';
+import { extractErrorMessage, requestExecutor, stringifyObject } from '../utils';
 import { IGetFeatureOptionsByFeature, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
 import WfsClient from './wfs-client/wfs-client';
 
@@ -16,16 +16,17 @@ export class PolygonPartsWFS {
   }
 
   public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<IGetFeatureResponse> {
+    this.logger.info(`[PolygonPartsWFS][getFeature] ${stringifyObject(options)}`);
     const wfsClient = this.getWfsClient(ctx);
-
     try {
       // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
       // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
       const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
       return res as IGetFeatureResponse;
     } catch (err) {
+      const error = 'Failed to retrieve Polygon Parts feature data';
       this.logger.error(`[PolygonPartsWFS][getFeature][ERROR] ${extractErrorMessage(err)}`);
-      throw new Error('Failed to retrieve Polygon Parts feature data');
+      throw new Error(error);
     }
   }
 

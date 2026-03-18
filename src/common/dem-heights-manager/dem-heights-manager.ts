@@ -16,7 +16,7 @@ export default class DemHeightsManager implements IDemHeightsManagerService {
   }
 
   public async getPointsHeights(positions: Position[], ctx: IContext, productType?: string): Promise<PositionsWithHeights> {
-    this.logger.info(`[DemHeightsManager][DEM][getPointsHeights] ${stringifyObject({ positions, productType })}`);
+    this.logger.info(`[DemHeights][getPointsHeights] ${stringifyObject({ positions, productType })}`);
     const res = await requestExecutor(
       {
         url: `${this.service.url}/points`,
@@ -31,7 +31,6 @@ export default class DemHeightsManager implements IDemHeightsManagerService {
       },
       ctx
     ).then((res) => res.data as PositionsWithHeights);
-
     return res;
   }
 }

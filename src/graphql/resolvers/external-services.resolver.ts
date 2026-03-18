@@ -4,6 +4,7 @@ import { Query, Resolver } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { Services } from '../../common/constants';
+import { extractErrorMessage } from '../../utils';
 import { ExternalService, ServiceType } from '../external-services';
 
 @Resolver((of) => ExternalService)
@@ -22,7 +23,12 @@ export class ExternalServicesResolver {
   @Query((type) => [ExternalService])
   public getExternalServices(): ExternalService[] {
     this.logger.info(`[ExternalServices][getExternalServices]`);
-    return this.generateExternalServices();
+    try {
+      return this.generateExternalServices();
+    } catch (err) {
+      this.logger.error(`[ExternalServices][getExternalServices][ERROR] ${extractErrorMessage(err)}`);
+      throw err;
+    }
   }
 
   private generateExternalServices(): ExternalService[] {

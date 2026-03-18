@@ -10,12 +10,12 @@ import { SourceValidation } from '../sourceValidation';
 
 @Resolver()
 export class SourceValidationResolver {
-  private readonly sourceValidator: SourceValidatorManager;
   private readonly logger: Logger;
+  private readonly sourceValidator: SourceValidatorManager;
 
   public constructor() {
-    this.sourceValidator = container.resolve(SourceValidatorManager);
     this.logger = container.resolve(Services.LOGGER);
+    this.sourceValidator = container.resolve(SourceValidatorManager);
   }
 
   @Query((type) => [SourceValidation])

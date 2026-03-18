@@ -4,6 +4,7 @@ import axiosRetry from 'axios-retry';
 import config from 'config';
 import _ from 'lodash';
 import { container } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
 import { HttpError, Services } from './common/constants';
 import { IContext, IService } from './common/interfaces';
 import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
@@ -71,7 +72,7 @@ export const requestHandlerWithToken = async (url: string, method: string, param
 
 export const requestExecutor = async (service: IService, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<AxiosResponse> => {
   /* eslint-disable */
-  const logger = container.resolve<{ debug: (message: string) => void }>(Services.LOGGER);
+  const logger = container.resolve<Logger>(Services.LOGGER);
   // @ts-ignore
   const { headers, handleAs, ...rest } = params;
   /* eslint-enable */
@@ -115,5 +116,6 @@ export const stringifyObject = (obj: any): string => {
 };
 
 export const extractErrorMessage = (err: unknown): string => {
-  return (err as HttpError).response?.data?.message ?? (err as Error).message;
+  const message = (err as HttpError).response?.data?.message ?? (err as Error).message;
+  return message ?? String(err);
 };

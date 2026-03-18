@@ -30,8 +30,8 @@ export class WfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeature> {
-    const { pointCoordinates, typeName, count, dWithin } = data;
     try {
+      const { pointCoordinates, typeName, count, dWithin } = data;
       const getFeatureResponse = await this.wfs.getFeature(
         {
           pointCoordinates,

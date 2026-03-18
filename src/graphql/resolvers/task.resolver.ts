@@ -39,7 +39,7 @@ export class TaskResolver {
       // const data = await Promise.resolve(this.groupTasks(MOCK_TASKS_DATA));
       // return data;
     } catch (err) {
-      this.logger.error(`[Task][tasks][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[JobManager][tasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
@@ -55,7 +55,7 @@ export class TaskResolver {
       const data: Task[] = await this.jobManager.findTasks(params, ctx);
       return this.jobManager.transformRecordsToEntity(data) as Task[];
     } catch (err) {
-      this.logger.error(`[Task][findTasks][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[JobManager][findTasks][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

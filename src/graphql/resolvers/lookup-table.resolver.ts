@@ -37,8 +37,9 @@ export class LookupTablesResolver {
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
     } catch (err) {
-      this.logger.error(`[LookupTables][getLookupTablesData][ERROR] ${extractErrorMessage(err)}`);
-      throw new Error('Failed to fetch lookup tables data');
+      const error = 'Failed to fetch lookup tables data';
+      this.logger.error(`[LookupTables][getLookupTablesData][ERROR] ${error}: ${extractErrorMessage(err)}`);
+      throw new Error(error);
     }
   }
 
@@ -111,7 +112,6 @@ export class LookupTablesResolver {
         ) as Promise<AxiosResponse<LookupOption[]>>
       );
     }
-
     return promises;
   }
 
@@ -119,7 +119,6 @@ export class LookupTablesResolver {
     if (lookupExcludeFields.length === 0) {
       return {};
     }
-
     const excludeFieldsQuery = lookupExcludeFields.join(',');
     return {
       params: {
@@ -136,13 +135,11 @@ export class LookupTablesResolver {
         lookupMap.set(lookupTable, lookupExcludeFields ?? []);
       }
     }
-
     return lookupMap;
   }
 
   private extractLookupFieldsFromDescriptors(): LookupTableField[] {
     const descriptors = getDescriptors();
-
     return descriptors
       .map((e) =>
         e.categories

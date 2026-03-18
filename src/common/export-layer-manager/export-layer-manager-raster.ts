@@ -2,12 +2,12 @@ import { IConfig } from 'config';
 import { Logger } from '@map-colonies/js-logger';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
-// import { getEstimatedSize, getFreeDiskSpace, triggerExportTask } from '../../graphql/MOCKS/export-layer';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IContext, IService } from '../interfaces';
 import { IExportLayerManagerService } from './export-layer.interface';
 
 const TIMEOUT = 2000;
+
 export class ExportLayerManagerRaster implements IExportLayerManagerService {
   private readonly service: IService;
 
@@ -18,8 +18,8 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][Raster][getEstimatedSize] ${stringifyObject(data)}`);
-    return new Promise((res, rej) => {
-      setTimeout(() => rej('N/A'), TIMEOUT);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('N/A'), TIMEOUT);
     });
   }
 
