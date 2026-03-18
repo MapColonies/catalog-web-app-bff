@@ -5,7 +5,7 @@ import config from 'config';
 import _ from 'lodash';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { HttpError, Services } from './common/constants';
+import { Services } from './common/constants';
 import { IContext, IService } from './common/interfaces';
 import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
 import { Domain } from './graphql/domain';
