@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
-import _, { isEmpty } from 'lodash';
+import _, { get, isEmpty } from 'lodash';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from './common/constants';
@@ -116,19 +116,17 @@ export const stringifyObject = (obj: any): string => {
 };
 
 export const extractErrorMessage = (err: unknown): string => {
-  let message: string | undefined;
-  let status: number | string | undefined;
-  if (typeof err === 'object' && err !== null) {
-    /* eslint-disable */
-    const httpError = err as Record<string, any>;
-    if (httpError.response) {
-      status = httpError.response.status;
-      message = httpError.response.data.message ?? httpError.response.statusText;
-    } else if ('message' in err && typeof (err as Error).message === 'string') {
-      message = (err as Error).message;
+  let message;
+  let status;
+  if (!isEmpty(err)) {
+    const httpError = err as Record<string, unknown>;
+    if (!isEmpty(httpError.response)) {
+      status = get(httpError, 'response.status', '');
+      message = get(httpError, 'response.data.message', undefined) ?? get(httpError, 'response.statusText');
+    } else if (!isEmpty(get(err, 'message'))) {
+      message = get(err, 'message') as string;
     }
-    /* eslint-enable */
   }
   const errorMessage = message ?? String(err);
-  return !isEmpty(status) ? `httpStatus: ${status} | ${errorMessage}` : errorMessage;
+  return !isEmpty(status) ? `httpStatus: ${status as string} | ${errorMessage as string}` : (errorMessage as string);
 };
