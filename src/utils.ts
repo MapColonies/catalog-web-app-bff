@@ -119,7 +119,9 @@ export const extractErrorMessage = (err: unknown): string => {
   let message: string | undefined;
   let status: number | string | undefined;
   if (typeof err === 'object' && err !== null) {
+    /* eslint-disable */
     const httpError = err as Record<string, any>;
+    /* eslint-enable */
     if (httpError.response) {
       status = httpError.response.status;
       message = httpError.response.data.message ?? httpError.response.statusText;
@@ -128,5 +130,5 @@ export const extractErrorMessage = (err: unknown): string => {
     }
   }
   const errorMessage = message ?? String(err);
-  return status ? `httpStatus: ${status} | ${errorMessage}` : errorMessage;
+  return !!status ? `httpStatus: ${status} | ${errorMessage}` : errorMessage;
 };
