@@ -7,7 +7,7 @@ import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colon
 import { Services } from '../../common/constants';
 import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
-import { extractErrorMessage, requestExecutor, stringifyObject } from '../../utils';
+import { extractErrorMessage, requestExecutor } from '../../utils';
 import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
 
