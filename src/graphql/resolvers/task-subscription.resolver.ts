@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from 'graphql-tools';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { CallBack, Services } from '../../common/constants';
+import { CallbackResponse, Services } from '../../common/constants';
 import { stringifyObject } from '../../utils';
 
 export const taskSubscriptionTypeDefs = `
@@ -53,7 +53,7 @@ export const TaskSubscriptionResolver: IResolvers = {
         const pubSub = container.resolve<PubSub>(Services.PUBSUB);
         return pubSub.asyncIterator('TASK_UPDATE');
       },
-      resolve: (payload: CallBack<Record<string, unknown>>): Record<string, unknown> => {
+      resolve: (payload: CallbackResponse<Record<string, unknown>>): Record<string, unknown> => {
         const logger = container.resolve<Logger>(Services.LOGGER);
         logger.debug(`[PUBSUB][TASK_UPDATE] ${stringifyObject(payload)}`);
         return { ...payload };

@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { StatusCodes } from 'http-status-codes';
 import { container, injectable } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { CallBack, Services, statusMap } from '../common/constants';
+import { CallbackResponse, Services, statusMap } from '../common/constants';
 import { extractErrorMessage, stringifyObject } from '../utils';
 
 @injectable()
@@ -19,7 +19,7 @@ export class CallbackController {
   public publishTaskUpdate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     this.logger.info(`[Callback][TaskNotification] ${stringifyObject(req.body)}`);
     try {
-      const payload = req.body as CallBack<unknown>;
+      const payload = req.body as CallbackResponse<Record<string, unknown>>;
       const statusKey = payload.status;
       await this.pubSub.publish('TASK_UPDATE', {
         ...payload,
