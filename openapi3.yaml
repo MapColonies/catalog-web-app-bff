@@ -253,5 +253,5 @@ components:
           type: string
         error:
           type: string
-        params:
+        data:
           type: object
