@@ -1,5 +1,6 @@
 import { container } from 'tsyringe';
 import { Resolver, Query, Mutation, createUnionType, Arg, Ctx } from 'type-graphql';
+import { ResultType } from '@map-colonies/csw-client';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
@@ -21,6 +22,8 @@ import {
   StringArray,
 } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
+import { CSWCatalogs } from '../csw';
+import { Domain } from '../domain';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
@@ -56,19 +59,21 @@ export class LayerMetadataMixedResolver {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Query((type) => [LayerMetadataMixedUnion])
+  @Query((type) => CSWCatalogs)
   public async search(
     @Ctx()
     ctx: IContext,
+    @Arg('resultType', () => ResultType, { nullable: true })
+    resultType?: ResultType,
     @Arg('start', { nullable: true })
     start?: number,
     @Arg('end', { nullable: true })
     end?: number,
     @Arg('opts', { nullable: true })
     opts?: SearchOptions
-  ): Promise<LayerMetadataUnionType[]> {
+  ): Promise<CSWCatalogs> {
     try {
-      const data = await this.csw.getRecords(ctx, start, end, opts);
+      const data = await this.csw.getRecordsResponse(ctx, resultType, start, end, opts);
       return data;
     } catch (err) {
       this.logger.error(`[CSW][search][ERROR] ${extractErrorMessage(err)}`);
@@ -124,7 +129,7 @@ export class LayerMetadataMixedResolver {
     productType: ProductType
   ): Promise<LayerMetadataUnionType | null> {
     try {
-      const data = await this.csw.getRecords(ctx, START, END, {
+      const data = await this.csw.getRecordsResponse(ctx, undefined, START, END, {
         filter: [
           {
             field: 'mc:productId',
@@ -136,7 +141,15 @@ export class LayerMetadataMixedResolver {
           },
         ],
       });
-      return data[0];
+
+      for (const domain of Object.keys(Domain) as (keyof typeof Domain)[]) {
+        const domainData = data[`_${domain}` as keyof CSWCatalogs];
+        if (domainData && domainData.records && domainData.records?.length > 0) {
+          return domainData.records[0];
+        }
+      }
+
+      return null;
     } catch (err) {
       this.logger.error(`[CSW][getProduct][ERROR] ${extractErrorMessage(err)}`);
       throw err;
