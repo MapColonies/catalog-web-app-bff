@@ -7,17 +7,18 @@ import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/types';
 import { Services } from '../common/constants';
 import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
+import { extractErrorMessage } from '../utils';
 
 export type GetStreamer = Stream;
 
 @injectable()
 export class StreamingController {
-  private readonly storageExplorerManager: StorageExplorerManager;
   private readonly logger: Logger;
+  private readonly storageExplorerManager: StorageExplorerManager;
 
   public constructor() {
-    this.storageExplorerManager = container.resolve(StorageExplorerManager);
     this.logger = container.resolve(Services.LOGGER);
+    this.storageExplorerManager = container.resolve(StorageExplorerManager);
   }
 
   public getZipShapefile = async (req: Request, res: Response): Promise<void> => {
@@ -45,12 +46,13 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('[getZipShapefile] Stream error: ', streamErr.message);
+        this.logger.error('[Streaming][getZipShapefile][ERROR]', streamErr.message);
         res.destroy(streamErr);
       });
 
       response.data.pipe(res);
     } catch (err) {
+      this.logger.error(`[Streaming][getZipShapefile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
@@ -79,12 +81,13 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('Stream error: ', streamErr.message);
+        this.logger.error('[Streaming][getStreamFile][ERROR]', streamErr.message);
         res.destroy(streamErr);
       });
 
       response.data.pipe(res);
     } catch (err) {
+      this.logger.error(`[Streaming][getStreamFile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
@@ -110,13 +113,12 @@ export class StreamingController {
 
       res.status(StatusCodes.CREATED).send(response.data);
     } catch (err) {
+      this.logger.error(`[Streaming][writeStreamFile][ERROR] ${extractErrorMessage(err)}`);
       await this.handleError(err, res);
     }
   };
 
   private async handleError(err: unknown, res: Response): Promise<void> {
-    this.logger.error(err);
-
     if (axios.isAxiosError(err)) {
       const status = err.response?.status ?? StatusCodes.INTERNAL_SERVER_ERROR;
       const data: unknown = err.response?.data;
@@ -133,7 +135,7 @@ export class StreamingController {
 
           errorMessage = (parsed.message as string | undefined) ?? JSON.stringify(parsed);
         } catch (streamParseErr) {
-          this.logger.error('Failed to parse stream error response:', streamParseErr);
+          this.logger.error('[Streaming][parse][ERROR]', streamParseErr);
           errorMessage = 'Unexpected response stream received';
         }
       } else if (typeof data === 'string') {

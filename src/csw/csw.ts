@@ -15,6 +15,7 @@ import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
+import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 import { CSWCatalog, CSWCatalogs } from '../graphql/csw';
@@ -126,9 +127,7 @@ export class CSW {
   }
 
   public async getRecordsResponse(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalogs> {
-    this.logger.info(
-      `[CSW][getRecords] getting records. start: ${start?.toString() as string}, end: ${end?.toString() as string}, options: ${JSON.stringify(opts)}.`
-    );
+    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
 
     /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts: SearchOptions = {
@@ -216,16 +215,11 @@ export class CSW {
 
     const resolvedCatalogs: CSWCatalogs = Object.fromEntries(resolvedRecordsResponse) as unknown as CSWCatalogs;
 
-    // const resolvedCatalogs = new CSWRecords();
-    // for (const [domain, res] of resolvedRecordsResponse) {
-    //   resolvedCatalogs[domain] = res;
-    // }
-
     return resolvedCatalogs;
   }
 
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
-    this.logger.info(`[CSW][getRecordsById] getting records by id, idList: ${JSON.stringify(idList)}`);
+    this.logger.info(`[CSW][getRecordsById] idList: ${JSON.stringify(idList)}`);
 
     const getRecords = [];
     getRecords.push(...this.getAllowedDomainsOfCswEntities().map(async (domain) => this.cswClients[domain].instance.getRecordsById(idList, ctx)));
@@ -234,7 +228,7 @@ export class CSW {
   }
 
   public async getDomain(domain: string, recType: RecordType, ctx: IContext): Promise<string[]> {
-    this.logger.info(`[CSW][getDomain] getting domain ${domain}, for entity ${recType}`);
+    this.logger.info(`[CSW][getDomain] domain: ${domain}, entity: ${recType}`);
 
     const clientType = this.recordTypeToDomain(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);
@@ -290,7 +284,8 @@ export class CSW {
 
     try {
       return this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
-    } catch {
+    } catch (err) {
+      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
       throw this.cswError(domain);
     }
   }

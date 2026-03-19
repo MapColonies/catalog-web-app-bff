@@ -1,11 +1,11 @@
-import { Logger } from '@map-colonies/js-logger';
 import { AxiosRequestConfig } from 'axios';
-import { get } from 'lodash';
 import { IConfig } from 'config';
+import { get } from 'lodash';
 import { inject, singleton } from 'tsyringe';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { requestExecutor } from '../utils';
+import { requestExecutor, stringifyObject } from '../utils';
 import { SourceValidationParams } from './inputTypes';
 import { SourceValidation } from './sourceValidation';
 
@@ -17,8 +17,8 @@ export class SourceValidator {
     this.service = this.config.get('validationService.raster');
   }
 
-  public async validateSources(sourceData: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
-    this.logger.info(`[SourceValidator][validateSources] start validation for source ${sourceData.originDirectory}.`);
+  public async validateSources(params: SourceValidationParams, ctx: IContext): Promise<SourceValidation> {
+    this.logger.info(`[SourceValidator][validateSources] ${stringifyObject(params)}`);
 
     const response = await requestExecutor(
       {
@@ -26,7 +26,7 @@ export class SourceValidator {
         exposureType: this.service.exposureType,
       },
       'POST',
-      this.buildPayload(sourceData),
+      this.buildPayload(params),
       ctx
     );
 

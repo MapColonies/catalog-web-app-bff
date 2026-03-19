@@ -2,7 +2,9 @@
 import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from 'graphql-tools';
 import { container } from 'tsyringe';
-import { CallBack } from '../../common/constants';
+import { Logger } from '@map-colonies/js-logger';
+import { CallbackResponse, Services } from '../../common/constants';
+import { stringifyObject } from '../../utils';
 
 export const taskSubscriptionTypeDefs = `
   scalar parametersObject
@@ -48,11 +50,12 @@ export const TaskSubscriptionResolver: IResolvers = {
   Subscription: {
     taskUpdateDetails: {
       subscribe: (): AsyncIterator<PubSub> => {
-        const pubSub = container.resolve<PubSub>('PUBSUB');
+        const pubSub = container.resolve<PubSub>(Services.PUBSUB);
         return pubSub.asyncIterator('TASK_UPDATE');
       },
-      resolve: (payload: CallBack<Record<string, unknown>>): Record<string, unknown> => {
-        console.log('Subscription received payload:', payload);
+      resolve: (payload: CallbackResponse<Record<string, unknown>>): Record<string, unknown> => {
+        const logger = container.resolve<Logger>(Services.LOGGER);
+        logger.debug(`[PUBSUB][TASK_UPDATE] ${stringifyObject(payload)}`);
         return { ...payload };
       },
     },

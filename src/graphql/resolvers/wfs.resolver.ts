@@ -1,8 +1,10 @@
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
+import { extractErrorMessage } from '../../utils';
 import { WFS } from '../../wfs/WFS';
 import { WfsGetFeatureParams } from '../inputTypes';
 import { GetFeature, GetFeatureTypes, IFeatureTypesConfigs } from '../wfs';
@@ -11,12 +13,14 @@ const GEOMETRY_COLUMN = 'osm:geom';
 
 @Resolver()
 export class WfsResolver {
-  private readonly wfs: WFS;
+  private readonly logger: Logger;
   private readonly config: IConfig;
+  private readonly wfs: WFS;
 
   public constructor() {
-    this.wfs = container.resolve(WFS);
+    this.logger = container.resolve(Services.LOGGER);
     this.config = container.resolve(Services.CONFIG);
+    this.wfs = container.resolve(WFS);
   }
 
   @Query((type) => GetFeature)
@@ -26,8 +30,8 @@ export class WfsResolver {
     @Ctx()
     ctx: IContext
   ): Promise<GetFeature> {
-    const { pointCoordinates, typeName, count, dWithin } = data;
     try {
+      const { pointCoordinates, typeName, count, dWithin } = data;
       const getFeatureResponse = await this.wfs.getFeature(
         {
           pointCoordinates,
@@ -39,9 +43,10 @@ export class WfsResolver {
         ctx
       );
       return getFeatureResponse;
-    } catch (error) {
-      console.error('[WfsResolver][getFeature]', error);
-      throw new Error('Failed to retrieve WFS feature data');
+    } catch (err) {
+      const error = 'Failed to retrieve WFS feature data';
+      this.logger.error(`[WFS][getFeature][ERROR] ${error}: ${extractErrorMessage(err)}`);
+      throw new Error(error);
     }
   }
 
@@ -54,9 +59,10 @@ export class WfsResolver {
       const getFeatureTypesResponse = await this.wfs.getFeatureTypes(ctx);
       const featureTypesConfigs = this.getFeatureTypesConfigs(getFeatureTypesResponse);
       return { typesArr: getFeatureTypesResponse, featureConfigs: featureTypesConfigs };
-    } catch (error) {
-      console.error('[WfsResolver][getFeatureTypes]', error);
-      throw new Error('Failed to retrieve WFS feature types');
+    } catch (err) {
+      const error = 'Failed to retrieve WFS feature types';
+      this.logger.error(`[WFS][getFeatureTypes][ERROR] ${error}: ${extractErrorMessage(err)}`);
+      throw new Error(error);
     }
   }
 
@@ -80,10 +86,9 @@ export class WfsResolver {
       for (const [key, val] of Object.entries(defaultFeaturesConfigs)) {
         featureDescFromConfig[key] = { ...val, ...((featureTypesConfig[key] as Record<string, unknown> | undefined) ?? {}) };
       }
-
       return featureDescFromConfig;
-    } catch (e) {
-      console.error('[WfsResolver][getFeatureTypesConfigs][JSONParseError]', e);
+    } catch (err) {
+      this.logger.error(`[WFS][getFeatureTypesConfigs][ERROR] ${extractErrorMessage(err)}`);
       return defaultFeaturesConfigs;
     }
   }

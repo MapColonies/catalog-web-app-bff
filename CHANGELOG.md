@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.3...v4.0.4) (2026-03-19)
+
+
+### Bug Fixes
+
+* artifacts.json in build-and-push.yaml ([#286](https://github.com/MapColonies/catalog-web-app-bff/issues/286)) ([1a30a35](https://github.com/MapColonies/catalog-web-app-bff/commit/1a30a35f2ec95ef5b2a989b49b8e394d6e52915a))
+
+## [4.0.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.2...v4.0.3) (2026-03-19)
+
+
+### Bug Fixes
+
+* sync callback response type with raster-shared ([#284](https://github.com/MapColonies/catalog-web-app-bff/issues/284)) ([7d387e8](https://github.com/MapColonies/catalog-web-app-bff/commit/7d387e8ef2a662473c349f273092bb3dcdf42076))
+
+## [4.0.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.1...v4.0.2) (2026-03-18)
+
+
+### Bug Fixes
+
+* integer http status is missing from errors log ([#282](https://github.com/MapColonies/catalog-web-app-bff/issues/282)) ([a9f4455](https://github.com/MapColonies/catalog-web-app-bff/commit/a9f445586c9d412d49403df8ead99e26c64dde5e))
+
+## [4.0.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.0...v4.0.1) (2026-03-18)
+
+
+### Bug Fixes
+
+* liveness ([#277](https://github.com/MapColonies/catalog-web-app-bff/issues/277)) ([6cf3224](https://github.com/MapColonies/catalog-web-app-bff/commit/6cf32247f7128188bc960fe18ab0d351688305a2))
+* logger ([#279](https://github.com/MapColonies/catalog-web-app-bff/issues/279)) ([1c21cfc](https://github.com/MapColonies/catalog-web-app-bff/commit/1c21cfc6ed42a3d440a68c36ea2274fb700b8d7c))
+
 ## [4.0.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v3.0.0...v4.0.0) (2026-02-24)
 
 

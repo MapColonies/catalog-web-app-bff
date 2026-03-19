@@ -36,6 +36,7 @@ const app = getApp(tracing);
 const logger = container.resolve<Logger>(Services.LOGGER);
 
 const httpServer = createServer(app);
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 createTerminus(httpServer, { healthChecks: { '/liveness': async () => Promise.resolve() }, onSignal: container.resolve('onSignal') });
 const schema = makeExecutableSchema({
   typeDefs: taskSubscriptionTypeDefs,

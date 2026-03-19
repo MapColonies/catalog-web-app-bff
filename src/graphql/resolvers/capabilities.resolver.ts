@@ -1,10 +1,11 @@
-import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
+import { Logger } from '@map-colonies/js-logger';
 import { CapabilitiesManager } from '../../common/capabilities-manager/capabilities-manager';
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
+import { extractErrorMessage } from '../../utils';
 import { Capability } from '../capability';
 import { CapabilitiesLayersSearchParams } from '../inputTypes';
 
@@ -28,11 +29,10 @@ export class CapabilitiesResolver {
     ctx: IContext
   ): Promise<Capability[]> {
     try {
-      this.logger.info(`[CapabilitiesResolver][capabilities] fetching layers capabilities`);
       const capabilityList = await this.capabilitiesManager.getCapabilities(params, ctx);
       return capabilityList;
     } catch (err) {
-      this.logger.error(err as string);
+      this.logger.error(`[Capabilities][capabilities][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

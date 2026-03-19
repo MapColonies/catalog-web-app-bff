@@ -1,11 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
-import { Ingestion3DData, IngestionData, SourceValidationInputParams, SourceValidationParams } from '../../graphql/inputTypes';
-import { absolutePathToNfs } from '../../helpers/string';
-import { requestExecutor } from '../../utils';
-import { IConfig, IContext, IService } from '../interfaces';
-import { SourceValidation } from '../../graphql/sourceValidation';
 import { IngestionResultData } from '../../graphql/ingestion';
+import { Ingestion3DData, IngestionData, SourceValidationInputParams, SourceValidationParams } from '../../graphql/inputTypes';
+import { SourceValidation } from '../../graphql/sourceValidation';
+import { absolutePathToNfs } from '../../helpers/string';
+import { requestExecutor, stringifyObject } from '../../utils';
+import { IConfig, IContext, IService } from '../interfaces';
 import { IIngestionManagerService, ISourceInfoService } from './ingestion-manager.interface';
 
 export class IngestionManager3D implements IIngestionManagerService, ISourceInfoService {
@@ -16,7 +16,7 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
   }
 
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
-    // 1. 3d-gateway/models/validate
+    this.logger.info(`[Ingestion][3D][sourceInfo] ${stringifyObject(data)}`);
     const validateSourcesResp: AxiosResponse<SourceValidation> = (await requestExecutor(
       {
         url: `${this.service.url}/models/validate`,
@@ -30,6 +30,7 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
   }
 
   public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionResultData> {
+    this.logger.info(`[Ingestion][3D][ingest] ${stringifyObject(data)}`);
     await requestExecutor(
       {
         url: `${this.service.url}/models`,
@@ -52,9 +53,6 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
         ...metadata,
       },
     };
-
-    this.logger.info(`[IngestionManager3D][buildPayload] generated payload: ${JSON.stringify(payloadData)}.`);
-
     return {
       data: {
         ...payloadData,
@@ -67,9 +65,6 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
       modelPath: absolutePathToNfs(data.originDirectory),
       tilesetFilename: data.fileNames[0],
     };
-
-    this.logger.info(`[IngestionManager3D][buildValidationPayload] generated validation payload: ${JSON.stringify(payloadData)}.`);
-
     return {
       data: {
         ...payloadData,

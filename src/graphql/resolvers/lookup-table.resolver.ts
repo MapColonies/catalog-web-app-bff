@@ -7,7 +7,7 @@ import { zoomLevelToResolutionDeg, zoomLevelToResolutionMeter } from '@map-colon
 import { Services } from '../../common/constants';
 import { IContext, IService } from '../../common/interfaces';
 import { getDescriptors } from '../../helpers/entityDescriptor.helpers';
-import { requestExecutor } from '../../utils';
+import { extractErrorMessage, requestExecutor } from '../../utils';
 import { GetLookupTablesParams } from '../inputTypes';
 import { LookupOption, LookupTableData, LookupTableField } from '../lookupTablesData';
 
@@ -33,16 +33,17 @@ export class LookupTablesResolver {
     { lookupFields }: GetLookupTablesParams
   ): Promise<LookupTableData> {
     try {
+      this.logger.info('[LookupTables][getLookupTablesData]');
       const dictionary = await this.fetchLookupTablesData(ctx, lookupFields);
       return dictionary;
-    } catch (error) {
-      this.logger.error('[LookupTablesResolver][getLookupTablesData]', error);
-      throw new Error('Failed to fetch lookup tables data');
+    } catch (err) {
+      const error = 'Failed to fetch lookup tables data';
+      this.logger.error(`[LookupTables][getLookupTablesData][ERROR] ${error}: ${extractErrorMessage(err)}`);
+      throw new Error(error);
     }
   }
 
   private async fetchLookupTablesData(ctx: IContext, lookupFields?: LookupTableField[]): Promise<LookupTableData> {
-    this.logger.info('[LookupTablesResolver][fetchLookupTablesData] fetching lookup tables data');
     const requestedLookupTables = lookupFields ?? ([] as LookupTableField[]);
     const lookupTableField: LookupTableField[] = [...this.extractLookupFieldsFromDescriptors(), ...requestedLookupTables];
     const lookupKeyToExcludeFields = this.mapLookupKeyToExcludeFields(lookupTableField);
@@ -111,7 +112,6 @@ export class LookupTablesResolver {
         ) as Promise<AxiosResponse<LookupOption[]>>
       );
     }
-
     return promises;
   }
 
@@ -119,7 +119,6 @@ export class LookupTablesResolver {
     if (lookupExcludeFields.length === 0) {
       return {};
     }
-
     const excludeFieldsQuery = lookupExcludeFields.join(',');
     return {
       params: {
@@ -136,13 +135,11 @@ export class LookupTablesResolver {
         lookupMap.set(lookupTable, lookupExcludeFields ?? []);
       }
     }
-
     return lookupMap;
   }
 
   private extractLookupFieldsFromDescriptors(): LookupTableField[] {
     const descriptors = getDescriptors();
-
     return descriptors
       .map((e) =>
         e.categories
