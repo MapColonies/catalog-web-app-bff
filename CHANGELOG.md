@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.2...v4.0.3) (2026-03-19)
+
+
+### Bug Fixes
+
+* sync callback response type with raster-shared ([#284](https://github.com/MapColonies/catalog-web-app-bff/issues/284)) ([7d387e8](https://github.com/MapColonies/catalog-web-app-bff/commit/7d387e8ef2a662473c349f273092bb3dcdf42076))
+
 ## [4.0.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.0.1...v4.0.2) (2026-03-18)
 
 
