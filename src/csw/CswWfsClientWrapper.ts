@@ -80,6 +80,11 @@ export class CswWfsClientWrapper {
       const parsedEntitys = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[]);
       return {
         records: parsedEntitys,
+        cswQuerySummary: {
+          numberOfRecordsMatched: parsedEntitys.length,
+          nextRecord: 0,
+          numberOfRecordsReturned: parsedEntitys.length,
+        },
       };
     } catch (err) {
       this.logger.error(`[WFS][getRecords][ERROR] ${extractErrorMessage(err)}`);
