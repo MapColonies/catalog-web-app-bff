@@ -10,6 +10,7 @@ import { END, Services, START } from '../../common/constants';
 import { IngestionManager } from '../../common/ingestion-manager/ingestion-manager';
 import { IContext } from '../../common/interfaces';
 import { CSW } from '../../csw/csw';
+import { CSWCatalog, CSWCatalogs } from '../csw';
 import { extractErrorMessage } from '../../utils';
 import { RasterIngestion } from '../ingestion';
 import {
@@ -22,8 +23,6 @@ import {
   StringArray,
 } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
-import { CSWCatalogs } from '../csw';
-import { Domain } from '../domain';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
@@ -142,14 +141,9 @@ export class LayerMetadataMixedResolver {
         ],
       });
 
-      for (const domain of Object.keys(Domain) as (keyof typeof Domain)[]) {
-        const domainData = data[`_${domain}` as keyof CSWCatalogs];
-        if (domainData && domainData.records && domainData.records?.length > 0) {
-          return domainData.records[0];
-        }
-      }
+      const firstRecord = Object.values(data).find((d: CSWCatalog) => d?.records?.length && d?.records?.length > 0)?.records?.[0];
 
-      return null;
+      return firstRecord;
     } catch (err) {
       this.logger.error(`[CSW][getProduct][ERROR] ${extractErrorMessage(err)}`);
       throw err;

@@ -1,24 +1,17 @@
-import { Logger } from '@map-colonies/js-logger';
-import { FilterField, ResultType } from '@map-colonies/csw-client';
-import {
-  PycswLayerCatalogRecord,
-  Pycsw3DCatalogRecord,
-  PycswDemCatalogRecord,
-  PycswQuantizedMeshBestCatalogRecord,
-  VectorBestMetadata,
-  RecordType,
-} from '@map-colonies/mc-model-types';
-import { ProductType } from '@map-colonies/types';
-import { inject, singleton } from 'tsyringe';
 import { get } from 'lodash';
+import { inject, singleton } from 'tsyringe';
+import { FilterField, ResultType } from '@map-colonies/csw-client';
+import { Logger } from '@map-colonies/js-logger';
+import { PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDemCatalogRecord, VectorBestMetadata, RecordType } from '@map-colonies/mc-model-types';
+import { ProductType } from '@map-colonies/types';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
+import { CSWCatalog, CSWCatalogs } from '../graphql/csw';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
 import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
-import { CSWCatalog, CSWCatalogs } from '../graphql/csw';
 
 type SecondaryFilter = {
   recordType: RecordType;
@@ -67,7 +60,7 @@ export class CSW {
     this.cswClients['3D'] = {
       instance: new CswClientWrapper(
         'mc:MC3DRecord',
-        [...Pycsw3DCatalogRecord.getPyCSWMappings()], // check here if the mappings is correct and we should be taken from 3D only or from qmesh.
+        [...Pycsw3DCatalogRecord.getPyCSWMappings()],
         'http://schema.mapcolonies.com/3d',
         this.config.get('csw.3d')
       ),
@@ -208,13 +201,23 @@ export class CSW {
 
     const resolvedRecordsResponse = await Promise.all(
       entries.map(async ([domain, promise]) => {
-        const res = (await promise) as CSWCatalog;
-        return [domain, res] as [string, CSWCatalog];
+        try {
+          const res = (await promise) as CSWCatalog;
+          return [domain, res] as [string, CSWCatalog];
+        } catch (err) {
+          this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
+
+          const errorDomain = domain.slice(1) as Domain;
+          if ((get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType) === RecordType.RECORD_ALL) {
+            throw new Error(`Failed to fetch records for at least one of the catalogs (${errorDomain})`);
+          } else {
+            throw this.cswError(errorDomain);
+          }
+        }
       })
     );
 
     const resolvedCatalogs: CSWCatalogs = Object.fromEntries(resolvedRecordsResponse) as unknown as CSWCatalogs;
-
     return resolvedCatalogs;
   }
 
@@ -275,19 +278,13 @@ export class CSW {
     resultType?: ResultType,
     start?: number,
     end?: number,
-    filterOpt?: SearchOptions,
+    filterOpts?: SearchOptions,
     rasterOpts?: SearchOptions
   ): Promise<CSWCatalog> {
-    const baseOpts = domain === Domain.RASTER ? rasterOpts : filterOpt;
+    const baseOpts = domain === Domain.RASTER ? rasterOpts : filterOpts;
 
     const optionsForClient = this.entitiesFilter(this.cswClients[domain].entities.secondary, baseOpts);
-
-    try {
-      return this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
-    } catch (err) {
-      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
-      throw this.cswError(domain);
-    }
+    return this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
   }
 
   private cswError(domain: Domain): Error {
