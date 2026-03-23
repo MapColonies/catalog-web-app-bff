@@ -120,7 +120,9 @@ export class CSW {
   }
 
   public async getRecordsResponse(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalogs> {
-    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
+    this.logger.info(
+      `[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}, resultType: ${resultType}`
+    );
 
     /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
     const rasterOpts: SearchOptions = {
@@ -205,9 +207,8 @@ export class CSW {
           const res = (await promise) as CSWCatalog;
           return [domain, res] as [string, CSWCatalog];
         } catch (err) {
-          this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
-
           const errorDomain = domain.slice(1) as Domain;
+          this.logger.error(`[CSW][fetchRecords][ERROR] ${errorDomain} | ${extractErrorMessage(err)}`);
           if ((get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType) === RecordType.RECORD_ALL) {
             throw new Error(`Failed to fetch records for at least one of the catalogs (${errorDomain})`);
           } else {
