@@ -224,11 +224,12 @@ export class CSW {
       const optionsForClient = this.entitiesFilter(this.cswClients[domain].entities.secondary, baseOpts);
       return await this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
     } catch (err) {
-      throw this.cswError(domain);
+      throw this.cswError(domain, err);
     }
   }
 
-  private cswError(domain: Domain): Error {
+  private cswError(domain: Domain, error: unknown): Error {
+    this.logger.error(`[CSW][${domain}][ERROR] ${extractErrorMessage(error)}`);
     return new Error(`Failed to fetch records for catalog (${domain})`);
   }
 }
