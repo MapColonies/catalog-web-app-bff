@@ -64,6 +64,8 @@ export class CswWfsClientWrapper {
 
   // eslint-disable-next-line
   public async getRecords(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalog> {
+    this.logger.info(`[WFS][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
+
     if (resultType === ResultType.HITS) {
       return {
         records: [],

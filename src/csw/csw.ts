@@ -13,18 +13,18 @@ import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
-type SecondaryFilter = {
+interface SecondaryFilter {
   recordType: RecordType;
   include: boolean;
-};
+}
 
-type Entities = {
+interface Entities {
   main: RecordType;
   // If other record types exist in the same PYCSW,
   // you may want to retrieve them as well. They are duplicates of the
   // main record and are intended for viewing only.
   secondary: SecondaryFilter[];
-};
+}
 
 interface CswClient {
   instance: CswClientWrapper | CswWfsClientWrapper;
@@ -92,39 +92,11 @@ export class CSW {
     };
   }
 
-  private entitiesFilter(secondaryFilters: SecondaryFilter[], baseFilterOpt?: SearchOptions): SearchOptions | undefined {
-    const othersEntities = secondaryFilters.filter((sec) => {
-      return sec.recordType !== RecordType.RECORD_ALL;
-    });
-
-    const filtersExcludingType = baseFilterOpt?.filter?.filter((filter) => {
-      return filter.field !== 'mc:type';
-    });
-
-    const typeFilters = baseFilterOpt?.filter?.filter((filter) => {
-      return filter.field === 'mc:type';
-    });
-
-    const filterWithEntities = othersEntities.map((entity) => {
-      return {
-        field: 'mc:type',
-        [entity.include ? 'eq' : 'neq']: entity.recordType,
-        ...(entity.include ? { or: true } : {}),
-      };
-    }) as FilterField[];
-
-    const updatedFilter = {
-      ...baseFilterOpt,
-      filter: [...(typeFilters ?? []), ...filterWithEntities, ...(filtersExcludingType ?? [])],
-      ...(baseFilterOpt?.sort ? { sort: baseFilterOpt?.sort } : {}),
-    };
-
-    return updatedFilter;
-  }
-
   public async getRecordsResponse(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalogs> {
     this.logger.info(
-      `[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}, resultType: ${resultType}`
+      `[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}, resultType: ${JSON.stringify(
+        resultType ?? {}
+      )}`
     );
 
     /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
@@ -187,6 +159,36 @@ export class CSW {
       default:
         return Domain.RASTER;
     }
+  }
+
+  private entitiesFilter(secondaryFilters: SecondaryFilter[], baseFilterOpt?: SearchOptions): SearchOptions | undefined {
+    const othersEntities = secondaryFilters.filter((sec) => {
+      return sec.recordType !== RecordType.RECORD_ALL;
+    });
+
+    const filtersExcludingType = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field !== 'mc:type';
+    });
+
+    const typeFilters = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field === 'mc:type';
+    });
+
+    const filterWithEntities = othersEntities.map((entity) => {
+      return {
+        field: 'mc:type',
+        [entity.include ? 'eq' : 'neq']: entity.recordType,
+        ...(entity.include ? { or: true } : {}),
+      };
+    }) as FilterField[];
+
+    const updatedFilter = {
+      ...baseFilterOpt,
+      filter: [...(typeFilters ?? []), ...filterWithEntities, ...(filtersExcludingType ?? [])],
+      ...(baseFilterOpt?.sort ? { sort: baseFilterOpt.sort } : {}),
+    };
+
+    return updatedFilter;
   }
 
   private domainToRecordType(domain: Domain): RecordType {

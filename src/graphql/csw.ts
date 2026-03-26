@@ -11,29 +11,29 @@ const DOMAIN_VECTOR = `_${Domain.VECTOR}` as const;
 @ObjectType()
 export class CSWQuerySummary {
   @Field(() => Number)
-  numberOfRecordsMatched: number;
+  public numberOfRecordsMatched: number;
   @Field(() => Number)
-  numberOfRecordsReturned: number;
+  public numberOfRecordsReturned: number;
   @Field(() => Number)
-  nextRecord: number;
+  public nextRecord: number;
 }
 
 @ObjectType()
 export class CSWCatalog {
   @Field(() => [LayerMetadataMixedUnion])
-  records?: LayerMetadataUnionType[];
+  public records?: LayerMetadataUnionType[];
   @Field(() => CSWQuerySummary, { nullable: true })
-  cswQuerySummary?: CSWQuerySummary;
+  public cswQuerySummary?: CSWQuerySummary;
 }
 
 @ObjectType()
 export class CSWCatalogs {
   @Field(() => CSWCatalog, { nullable: true })
-  [DOMAIN_RASTER]?: CSWCatalog;
+  public [DOMAIN_RASTER]?: CSWCatalog;
   @Field(() => CSWCatalog, { nullable: true })
-  [DOMAIN_DEM]?: CSWCatalog;
+  public [DOMAIN_DEM]?: CSWCatalog;
   @Field(() => CSWCatalog, { nullable: true })
-  [DOMAIN_VECTOR]?: CSWCatalog;
+  public [DOMAIN_VECTOR]?: CSWCatalog;
   @Field(() => CSWCatalog, { nullable: true })
-  [DOMAIN_3D]?: CSWCatalog;
+  public [DOMAIN_3D]?: CSWCatalog;
 }

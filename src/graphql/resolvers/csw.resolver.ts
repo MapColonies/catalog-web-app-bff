@@ -141,7 +141,9 @@ export class LayerMetadataMixedResolver {
         ],
       });
 
-      const firstRecord = Object.values(data).find((d: CSWCatalog) => d?.records?.length && d?.records?.length > 0)?.records?.[0];
+      // eslint-disable-next-line
+      const firstRecord: LayerMetadataUnionType | null = Object.values(data).find((d: CSWCatalog) => d.records?.length && d.records.length > 0)
+        ?.records?.[0];
 
       return firstRecord;
     } catch (err) {

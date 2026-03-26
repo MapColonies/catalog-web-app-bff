@@ -26,10 +26,11 @@ export class CswClientWrapper {
   public async getRecords(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalog> {
     const cswClient = this.getCswClient(ctx);
 
+    /* eslint-disable */
     const response = await cswClient.GetRecords(this.outputSchema, resultType, start, end, opts);
-
     let data = response?.[this.typename];
-    let metadata = response.$;
+    const metadata = response.$;
+    /* eslint-disable */
 
     if (data === undefined) {
       return {
