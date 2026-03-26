@@ -23,7 +23,6 @@ type Entities = {
   // If other record types exist in the same PYCSW,
   // you may want to retrieve them as well. They are duplicates of the
   // main record and are intended for viewing only.
-  // secondary?: RecordType | RecordType[];
   secondary: SecondaryFilter[];
 };
 
@@ -65,7 +64,7 @@ export class CSW {
         secondary: [
           {
             recordType: RecordType.RECORD_DEM,
-            include: false,
+            include: true,
           },
         ],
       },
@@ -98,6 +97,14 @@ export class CSW {
       return sec.recordType !== RecordType.RECORD_ALL;
     });
 
+    const filtersExcludingType = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field !== 'mc:type';
+    });
+
+    const typeFilters = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field === 'mc:type';
+    });
+
     const filterWithEntities = othersEntities.map((entity) => {
       return {
         field: 'mc:type',
@@ -108,7 +115,7 @@ export class CSW {
 
     const updatedFilter = {
       ...baseFilterOpt,
-      filter: [...(baseFilterOpt?.filter ?? []), ...filterWithEntities],
+      filter: [...(typeFilters ?? []), ...filterWithEntities, ...(filtersExcludingType ?? [])],
       ...(baseFilterOpt?.sort ? { sort: baseFilterOpt?.sort } : {}),
     };
 
