@@ -27,7 +27,7 @@ export class CswClientWrapper {
     const cswClient = this.getCswClient(ctx);
 
     /* eslint-disable */
-    const response = await cswClient.GetRecords(this.outputSchema, resultType, start, end, opts);
+    const response = await cswClient.GetRecords(this.outputSchema, start, end, opts, resultType);
     let data = response?.[this.typename];
     const metadata = response.$;
     /* eslint-disable */
