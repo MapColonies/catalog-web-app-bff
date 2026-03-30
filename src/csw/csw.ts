@@ -92,7 +92,7 @@ export class CSW {
     };
   }
 
-  public async getRecordsResponse(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalogs> {
+  public async getRecordsResponse(ctx: IContext, opts?: SearchOptions, start?: number, end?: number, resultType?: ResultType): Promise<CSWCatalogs> {
     this.logger.info(
       `[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}, resultType: ${JSON.stringify(
         resultType ?? {}
@@ -124,7 +124,7 @@ export class CSW {
       const domain = this.recordTypeToDomain(recordType);
 
       returnedRecord = {
-        [`_${domain}`]: await this.fetchRecords(domain, ctx, resultType, start, end, opts, rasterOpts),
+        [`_${domain}`]: await this.fetchRecords(domain, ctx, opts, rasterOpts, start, end, resultType),
       };
     }
 
@@ -215,16 +215,16 @@ export class CSW {
   private async fetchRecords(
     domain: Domain,
     ctx: IContext,
-    resultType?: ResultType,
+    filterOpts?: SearchOptions,
+    rasterOpts?: SearchOptions,
     start?: number,
     end?: number,
-    filterOpts?: SearchOptions,
-    rasterOpts?: SearchOptions
+    resultType?: ResultType
   ): Promise<CSWCatalog> {
     const baseOpts = domain === Domain.RASTER ? rasterOpts : filterOpts;
     try {
       const optionsForClient = this.entitiesFilter(this.cswClients[domain].entities.secondary, baseOpts);
-      return await this.cswClients[domain].instance.getRecords(ctx, resultType, start, end, optionsForClient);
+      return await this.cswClients[domain].instance.getRecords(ctx, optionsForClient, start, end, resultType);
     } catch (err) {
       throw this.cswError(domain, err);
     }

@@ -23,7 +23,7 @@ export class CswClientWrapper {
     this.defaultRequestHandler = request;
   }
 
-  public async getRecords(ctx: IContext, resultType?: ResultType, start?: number, end?: number, opts?: SearchOptions): Promise<CSWCatalog> {
+  public async getRecords(ctx: IContext, opts?: SearchOptions, start?: number, end?: number, resultType?: ResultType): Promise<CSWCatalog> {
     const cswClient = this.getCswClient(ctx);
 
     /* eslint-disable */

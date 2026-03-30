@@ -62,17 +62,17 @@ export class LayerMetadataMixedResolver {
   public async search(
     @Ctx()
     ctx: IContext,
-    @Arg('resultType', () => ResultType, { nullable: true })
-    resultType?: ResultType,
+    @Arg('opts', { nullable: true })
+    opts?: SearchOptions,
     @Arg('start', { nullable: true })
     start?: number,
     @Arg('end', { nullable: true })
     end?: number,
-    @Arg('opts', { nullable: true })
-    opts?: SearchOptions
+    @Arg('resultType', () => ResultType, { nullable: true })
+    resultType?: ResultType
   ): Promise<CSWCatalogs> {
     try {
-      const data = await this.csw.getRecordsResponse(ctx, resultType, start, end, opts);
+      const data = await this.csw.getRecordsResponse(ctx, opts, start, end, resultType);
       return data;
     } catch (err) {
       this.logger.error(`[CSW][search][ERROR] ${extractErrorMessage(err)}`);
@@ -128,18 +128,23 @@ export class LayerMetadataMixedResolver {
     productType: ProductType
   ): Promise<LayerMetadataUnionType | null> {
     try {
-      const data = await this.csw.getRecordsResponse(ctx, undefined, START, END, {
-        filter: [
-          {
-            field: 'mc:productId',
-            eq: productId,
-          },
-          {
-            field: 'mc:productType',
-            eq: productType,
-          },
-        ],
-      });
+      const data = await this.csw.getRecordsResponse(
+        ctx,
+        {
+          filter: [
+            {
+              field: 'mc:productId',
+              eq: productId,
+            },
+            {
+              field: 'mc:productType',
+              eq: productType,
+            },
+          ],
+        },
+        START,
+        END
+      );
 
       // eslint-disable-next-line
       const firstRecord: LayerMetadataUnionType | null = Object.values(data).find((d: CSWCatalog) => d.records?.length && d.records.length > 0)
