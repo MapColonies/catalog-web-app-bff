@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
+import { BBOX as BBOXCswClient, FilterField as FilterFieldCswClient, ResultType, SortField as SortFieldCswClient } from '@map-colonies/csw-client';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
 import { GraphQLScalarType } from 'graphql';
@@ -20,6 +20,8 @@ enum RasterIngestionFilesTypeConfig {
 }
 
 registerEnumType(RasterIngestionFilesTypeConfig, { name: 'RasterIngestionFilesTypeConfig' });
+
+registerEnumType(ResultType, { name: 'ResultType' });
 
 @InputType()
 export class BBOX extends BBOXCswClient {

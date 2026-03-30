@@ -1,28 +1,34 @@
-import { get, intersection, size } from 'lodash';
+import { get } from 'lodash';
 import { inject, singleton } from 'tsyringe';
-import { FilterField } from '@map-colonies/csw-client';
+import { FilterField, ResultType } from '@map-colonies/csw-client';
 import { Logger } from '@map-colonies/js-logger';
-import {
-  PycswLayerCatalogRecord,
-  Pycsw3DCatalogRecord,
-  PycswDemCatalogRecord,
-  PycswQuantizedMeshBestCatalogRecord,
-  RecordType,
-  IPropPYCSWMapping,
-  VectorBestMetadata,
-} from '@map-colonies/mc-model-types';
+import { PycswLayerCatalogRecord, Pycsw3DCatalogRecord, PycswDemCatalogRecord, VectorBestMetadata, RecordType } from '@map-colonies/mc-model-types';
 import { ProductType } from '@map-colonies/types';
 import { CatalogRecordType, Services } from '../common/constants';
 import { IConfig, IContext } from '../common/interfaces';
+import { CSWCatalog, CSWCatalogs } from '../graphql/csw';
 import { Domain } from '../graphql/domain';
 import { SearchOptions } from '../graphql/inputTypes';
 import { extractErrorMessage } from '../utils';
 import { CswClientWrapper } from './cswClientWrapper';
 import { CswWfsClientWrapper } from './CswWfsClientWrapper';
 
+interface SecondaryFilter {
+  recordType: RecordType;
+  include: boolean;
+}
+
+interface Entities {
+  main: RecordType;
+  // If other record types exist in the same PYCSW,
+  // you may want to retrieve them as well. They are duplicates of the
+  // main record and are intended for viewing only.
+  secondary: SecondaryFilter[];
+}
+
 interface CswClient {
   instance: CswClientWrapper | CswWfsClientWrapper;
-  entities: RecordType[];
+  entities: Entities;
 }
 
 type CswClients = Record<Domain, CswClient>;
@@ -40,17 +46,28 @@ export class CSW {
         'http://schema.mapcolonies.com/raster',
         this.config.get('csw.raster')
       ),
-      entities: [RecordType.RECORD_RASTER],
+      entities: {
+        main: RecordType.RECORD_RASTER,
+        secondary: [],
+      },
     };
 
     this.cswClients['3D'] = {
       instance: new CswClientWrapper(
         'mc:MC3DRecord',
-        [...Pycsw3DCatalogRecord.getPyCSWMappings(), ...(PycswQuantizedMeshBestCatalogRecord.getPyCSWMappings() as IPropPYCSWMapping[])],
+        [...Pycsw3DCatalogRecord.getPyCSWMappings()],
         'http://schema.mapcolonies.com/3d',
         this.config.get('csw.3d')
       ),
-      entities: [RecordType.RECORD_3D],
+      entities: {
+        main: RecordType.RECORD_3D,
+        secondary: [
+          {
+            recordType: RecordType.RECORD_DEM,
+            include: true,
+          },
+        ],
+      },
     };
 
     this.cswClients.DEM = {
@@ -60,102 +77,65 @@ export class CSW {
         'http://schema.mapcolonies.com/dem',
         this.config.get('csw.dem')
       ),
-      entities: [RecordType.RECORD_DEM],
+      entities: {
+        main: RecordType.RECORD_DEM,
+        secondary: [],
+      },
     };
 
     this.cswClients.VECTOR = {
       instance: new CswWfsClientWrapper(VectorBestMetadata.getWFSMappings(), this.config.get('wfs')),
-      entities: [RecordType.RECORD_VECTOR],
+      entities: {
+        main: RecordType.RECORD_VECTOR,
+        secondary: [],
+      },
     };
   }
 
-  public async getRecords(ctx: IContext, start?: number, end?: number, opts?: SearchOptions): Promise<CatalogRecordType[]> {
-    this.logger.info(`[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
-
-    const getCatalogs: Promise<CatalogRecordType[]>[] = [];
-    const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
-    const newOpts: SearchOptions = {
-      filter:
-        typeFilterIdx > NOT_FOUND
-          ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            [...opts?.filter?.filter((item) => item.field !== 'mc:type')]
-          : opts?.filter
-          ? [...opts.filter]
-          : undefined,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      sort: opts?.sort ? [...opts.sort] : undefined,
-    };
+  public async getRecordsResponse(ctx: IContext, opts?: SearchOptions, start?: number, end?: number, resultType?: ResultType): Promise<CSWCatalogs> {
+    this.logger.info(
+      `[CSW][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}, resultType: ${JSON.stringify(
+        resultType ?? {}
+      )}`
+    );
 
     /* TODO: remove when ORTHOPHOTO_HISTORY will be revealed in UI in proper place */
-    const rasterOpts = {
+    const rasterOpts: SearchOptions = {
       filter: [
-        ...(newOpts.filter as FilterField[]).map((filterField) => {
-          return {
-            ...filterField,
-            field: filterField.field === 'mc:insertDate' ? 'mc:ingestionDate' : filterField.field,
-          };
-        }),
+        ...(opts?.filter?.map((filterField) => ({
+          ...filterField,
+          field: filterField.field === 'mc:insertDate' ? 'mc:ingestionDate' : filterField.field,
+        })) ?? []),
         {
           field: 'mc:productType',
           neq: ProductType.ORTHOPHOTO_HISTORY,
         },
       ],
-      sort: newOpts.sort,
+      sort: opts?.sort,
     };
+
+    let returnedRecord: CSWCatalogs = {};
+    const typeFilterIdx = opts?.filter?.findIndex((item) => item.field === 'mc:type') as number;
 
     if (typeFilterIdx > NOT_FOUND) {
       const fetchRecordType = get(opts?.filter, `[${typeFilterIdx}].eq`) as keyof typeof RecordType;
-      const catalog: Domain = this.recordTypeToEntity(RecordType[fetchRecordType]);
-      switch (RecordType[fetchRecordType]) {
-        case RecordType.RECORD_ALL:
-          getCatalogs.push(
-            ...this.getEntitiesCswInstances().map(async (client) => {
-              try {
-                return client.entities.includes(RecordType.RECORD_RASTER)
-                  ? await client.instance.getRecords(ctx, start, end, rasterOpts)
-                  : await client.instance.getRecords(ctx, start, end, newOpts);
-              } catch (err) {
-                throw this.cswError(client, err);
-              }
-            })
-          );
-          break;
-        case RecordType.RECORD_RASTER:
-          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, rasterOpts));
-          // this.addVectorRecord(getCatalogs, catalog, ctx, newOpts, opts, start, end);
-          break;
-        case RecordType.RECORD_3D:
-        case RecordType.RECORD_DEM:
-          getCatalogs.push(this.fetchRecords(this.cswClients[catalog].instance, catalog, ctx, start, end, newOpts));
-          // this.addVectorRecord(getCatalogs, catalog, ctx, newOpts, opts, start, end);
-          break;
-        case RecordType.RECORD_VECTOR:
-          getCatalogs.push(this.fetchRecords(this.cswClients[Domain.VECTOR].instance, catalog, ctx, start, end, newOpts));
-          break;
-      }
-    } else {
-      getCatalogs.push(
-        ...this.getEntitiesCswInstances().map(async (client) => {
-          try {
-            return await client.instance.getRecords(ctx, start, end, newOpts);
-          } catch (err) {
-            throw this.cswError(client, err);
-          }
-        })
-      );
+      const recordType = RecordType[fetchRecordType];
+
+      const domain = this.recordTypeToDomain(recordType);
+
+      returnedRecord = {
+        [`_${domain}`]: await this.fetchRecords(domain, ctx, opts, rasterOpts, start, end, resultType),
+      };
     }
 
-    const data = await Promise.all(getCatalogs);
-    return data.flat();
+    return returnedRecord;
   }
 
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
     this.logger.info(`[CSW][getRecordsById] idList: ${JSON.stringify(idList)}`);
 
     const getRecords = [];
-    getRecords.push(...this.getEntitiesCswInstances().map(async (client) => client.instance.getRecordsById(idList, ctx)));
+    getRecords.push(...this.getAllowedDomainsOfCswEntities().map(async (domain) => this.cswClients[domain].instance.getRecordsById(idList, ctx)));
     const data = await Promise.all(getRecords);
     return data.flat();
   }
@@ -163,29 +143,12 @@ export class CSW {
   public async getDomain(domain: string, recType: RecordType, ctx: IContext): Promise<string[]> {
     this.logger.info(`[CSW][getDomain] domain: ${domain}, entity: ${recType}`);
 
-    const clientType = this.recordTypeToEntity(recType);
+    const clientType = this.recordTypeToDomain(recType);
     const data = await this.cswClients[clientType].instance.getDomain(domain, ctx);
     return data;
   }
 
-  private addVectorRecord(
-    getCatalogs: Promise<CatalogRecordType[]>[],
-    catalog: Domain,
-    ctx: IContext,
-    searchOptions: SearchOptions,
-    opts?: SearchOptions,
-    start?: number,
-    end?: number
-  ): void {
-    const isIncludeVector = this.getEntitiesCswInstances().some((client) => client.entities.includes(RecordType.RECORD_VECTOR));
-    const filtersForCatalog = 1;
-
-    if (size(opts?.filter) > filtersForCatalog && isIncludeVector) {
-      getCatalogs.push(this.fetchRecords(this.cswClients[Domain.VECTOR].instance, catalog, ctx, start, end, searchOptions));
-    }
-  }
-
-  private recordTypeToEntity(recordType: RecordType): Domain {
+  private recordTypeToDomain(recordType: RecordType): Domain {
     switch (recordType) {
       case RecordType.RECORD_DEM:
         return Domain.DEM;
@@ -198,32 +161,77 @@ export class CSW {
     }
   }
 
-  private getEntitiesCswInstances(): CswClient[] {
-    const servedEntities = this.config.get<string>('servedEntityTypes').split(',');
-    return Object.values(this.cswClients).filter((cswClient) => {
-      return intersection(cswClient.entities, servedEntities).length > 0;
+  private entitiesFilter(secondaryFilters: SecondaryFilter[], baseFilterOpt?: SearchOptions): SearchOptions | undefined {
+    const othersEntities = secondaryFilters.filter((sec) => {
+      return sec.recordType !== RecordType.RECORD_ALL;
     });
+
+    const filtersExcludingType = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field !== 'mc:type';
+    });
+
+    const typeFilters = baseFilterOpt?.filter?.filter((filter) => {
+      return filter.field === 'mc:type';
+    });
+
+    const filterWithEntities = othersEntities.map((entity) => {
+      return {
+        field: 'mc:type',
+        [entity.include ? 'eq' : 'neq']: entity.recordType,
+        ...(entity.include ? { or: true } : {}),
+      };
+    }) as FilterField[];
+
+    const updatedFilter = {
+      ...baseFilterOpt,
+      filter: [...(typeFilters ?? []), ...filterWithEntities, ...(filtersExcludingType ?? [])],
+      ...(baseFilterOpt?.sort ? { sort: baseFilterOpt.sort } : {}),
+    };
+
+    return updatedFilter;
   }
 
-  private async fetchRecords(
-    instance: CswClientWrapper | CswWfsClientWrapper,
-    catalog: Domain,
-    ctx: IContext,
-    start?: number,
-    end?: number,
-    options?: SearchOptions
-  ): Promise<CatalogRecordType[]> {
-    try {
-      return await instance.getRecords(ctx, start, end, options);
-    } catch (err) {
-      this.logger.error(`[CSW][fetchRecords][ERROR] ${extractErrorMessage(err)}`);
-      throw new Error(`Failed to fetch ${catalog} records`);
+  private domainToRecordType(domain: Domain): RecordType {
+    switch (domain) {
+      case Domain.DEM:
+        return RecordType.RECORD_DEM;
+      case Domain['3D']:
+        return RecordType.RECORD_3D;
+      case Domain.VECTOR:
+        return RecordType.RECORD_VECTOR;
+      default:
+        return RecordType.RECORD_RASTER;
     }
   }
 
-  private cswError(client: CswClient, error: unknown): Error {
-    const catalog = this.recordTypeToEntity(client.entities[0]);
-    this.logger.error(`[CSW][${catalog}][ERROR] ${extractErrorMessage(error)}`);
-    return new Error(`Failed to fetch records for at least one of the catalogs (${catalog})`);
+  private getAllowedDomainsOfCswEntities(): Domain[] {
+    const servedEntities = this.config.get<string>('servedEntityTypes').split(',');
+    const allowedEntities = (Object.keys(this.cswClients) as (keyof CswClients)[]).filter((cswClient) => {
+      return servedEntities.includes(this.domainToRecordType(cswClient).toString());
+    });
+    return allowedEntities;
+  }
+
+  private async fetchRecords(
+    domain: Domain,
+    ctx: IContext,
+    filterOpts?: SearchOptions,
+    rasterOpts?: SearchOptions,
+    start?: number,
+    end?: number,
+    resultType?: ResultType
+  ): Promise<CSWCatalog> {
+    const baseOpts = domain === Domain.RASTER ? rasterOpts : filterOpts;
+    try {
+      const optionsForClient = this.entitiesFilter(this.cswClients[domain].entities.secondary, baseOpts);
+      return await this.cswClients[domain].instance.getRecords(ctx, optionsForClient, start, end, resultType);
+    } catch (err) {
+      throw this.cswError(domain, err);
+    }
+  }
+
+  private cswError(domain: Domain, error: unknown): Error {
+    this.logger.error(`[CSW][${domain}][ERROR] ${extractErrorMessage(error)}`);
+    return new Error(`Failed to fetch records for catalog (${domain})`);
   }
 }

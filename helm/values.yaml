@@ -105,6 +105,7 @@ env:
   responseCompressionEnabled: true
   requestPayloadLimit: 1mb
   basePath: bff
+  requestTimeout: 30000
   openapiFilePath: ./openapi3.yaml
   adminPassword: 123456
   cswRasterUrl: ''

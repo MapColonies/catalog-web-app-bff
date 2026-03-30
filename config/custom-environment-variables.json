@@ -22,6 +22,7 @@
     },
     "basePath": "BASE_PATH"
   },
+  "requestTimeout": "REQUEST_TIMEOUT",
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "accessToken": {
     "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
