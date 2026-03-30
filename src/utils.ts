@@ -16,9 +16,10 @@ axiosRetry(axios, {
   retries: 0,
 });
 
+const DEFAULT_TIMEOUT = 30000;
 const timeout = Number(config.get('requestTimeout'));
 const axiosInstance = axios.create({
-  timeout: isNaN(timeout) ? 30000 : timeout,
+  timeout: isNaN(timeout) ? DEFAULT_TIMEOUT : timeout,
   maxBodyLength: Infinity,
   maxContentLength: Infinity,
 });
