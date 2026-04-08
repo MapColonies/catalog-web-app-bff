@@ -22,7 +22,6 @@
     },
     "basePath": "BASE_PATH"
   },
-  "requestTimeout": "REQUEST_TIMEOUT",
   "servedEntityTypes": "SERVED_ENTITY_TYPES",
   "accessToken": {
     "attributeName": "ACCESS_TOKEN_ATTRIBUTE_NAME",
@@ -31,6 +30,7 @@
   },
   "rasterIngestionFilesStructure": "RASTER_INGESTION_FILES_STRUCTURE",
   "adminPassword": "ADMIN_PASSWORD",
+  "requestTimeout": "REQUEST_TIMEOUT",
   "csw": {
     "raster": {
       "url": "CSW_RASTER_URL"

@@ -15,7 +15,6 @@
   NODE_EXTRA_CA_CERTS: {{ printf "%s/%s" .path (first .data).key | quote }}
     {{- end }}
   {{- end }}
-  REQUEST_TIMEOUT: {{ quote .Values.env.requestTimeout }}
   SERVED_ENTITY_TYPES: {{ quote .Values.global.shared.servedEntityTypes }}
   ACCESS_TOKEN_ATTRIBUTE_NAME: {{ quote .Values.global.shared.accessToken.attributeName }}
   ACCESS_TOKEN_INJECTION_TYPE: {{ quote .Values.global.shared.accessToken.injectionType }}
@@ -24,6 +23,7 @@
   BASE_PATH: {{ quote .Values.env.basePath }}
   OPENAPI_FILE_PATH: {{ quote .Values.env.openapiFilePath }}
   ADMIN_PASSWORD: {{ quote .Values.env.adminPassword }}
+  REQUEST_TIMEOUT: {{ quote .Values.env.requestTimeout }}
   CSW_RASTER_URL: {{ quote .Values.env.cswRasterUrl }}
   CSW_3D_URL: {{ quote .Values.env.csw3DUrl }}
   CSW_DEM_URL: {{ quote .Values.env.cswDEMUrl }}
