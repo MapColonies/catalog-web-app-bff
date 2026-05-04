@@ -6,7 +6,7 @@ import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
 import { extractErrorMessage } from '../../utils';
-import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData } from '../inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobResumeData, JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 
 @Resolver()
@@ -72,6 +72,22 @@ export class JobResolver {
   }
 
   @Mutation((type) => String)
+  public async jobAbort(
+    @Arg('jobAbortParams')
+    jobAbortParams: JobActionParams,
+    @Ctx()
+    ctx: IContext
+  ): Promise<string> {
+    try {
+      await this.jobManager.abortJobHandler(jobAbortParams, ctx);
+      return 'ok';
+    } catch (err) {
+      this.logger.error(`[JobManager][jobAbort][ERROR] ${extractErrorMessage(err)}`);
+      throw err;
+    }
+  }
+
+  @Mutation((type) => String)
   public async jobRetry(
     @Arg('jobRetryParams')
     jobRetryParams: JobActionParams,
@@ -88,22 +104,24 @@ export class JobResolver {
   }
 
   @Mutation((type) => String)
-  public async jobAbort(
-    @Arg('jobAbortParams')
-    jobAbortParams: JobActionParams,
+  public async jobResume(
+    @Arg('jobResumeParams')
+    jobResumeParams: JobActionParams,
+    @Arg('data')
+    data: JobResumeData,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      await this.jobManager.abortJobHandler(jobAbortParams, ctx);
-      return 'ok';
+      const response = await this.jobManager.resumeJobHandler(jobResumeParams, data, ctx);
+      return response;
     } catch (err) {
-      this.logger.error(`[JobManager][jobAbort][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[JobManager][jobResume][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
 
-  @Query((type) => Job, { nullable: true })
+  @Query(() => Job, { nullable: true })
   public async activeJob(
     @Arg('activeJobParams')
     activeJobParams: ActiveJobFindParams,

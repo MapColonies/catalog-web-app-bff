@@ -241,6 +241,12 @@ export class JobActionParams {
 }
 
 @InputType()
+export class JobResumeData {
+  @Field({ nullable: false })
+  public approver: string;
+}
+
+@InputType()
 export class StringArray {
   @Field((type) => [String])
   public value: string[];

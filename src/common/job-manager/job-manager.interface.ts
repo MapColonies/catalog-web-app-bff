@@ -1,5 +1,5 @@
 import { RecordType } from '@map-colonies/mc-model-types';
-import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobResumeData, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { IContext } from '../interfaces';
 
@@ -12,6 +12,7 @@ export interface IJobManagerService {
   updateJobHandler: (id: string, params: JobUpdateData, ctx: IContext) => Promise<string>;
   abortJobHandler: (params: JobActionParams, ctx: IContext) => Promise<string>;
   resetJobHandler: (params: JobActionParams, ctx: IContext) => Promise<string>;
+  resumeJobHandler: (params: JobActionParams, data: JobResumeData, ctx: IContext) => Promise<string>;
   transformRecordsToEntity?: (records: (Job | Task)[] | Job | Task) => (Job | Task | null)[] | Job | Task | null;
   transformRecordToEntity: (record: Job | Task | null) => Job | Task | null;
 }

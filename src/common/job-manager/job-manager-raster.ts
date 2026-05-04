@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { ActiveJobFindParams, JobActionParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobResumeData } from '../../graphql/inputTypes';
 import { Job, Status } from '../../graphql/job';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -73,6 +73,30 @@ export default class JobManagerRaster extends JobManagerCommon {
       );
     } else {
       await super.resetJobHandler(params, ctx);
+    }
+    return 'ok';
+  }
+
+  public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Raster][resumeJobHandler] ${stringifyObject(params)}`);
+    if (this.shouldBeTreatedByRaster(params.type)) {
+      const service: IService = this.config.get('ingestionServices.raster');
+      await requestExecutor(
+        {
+          url: `${service.url}/ingestion/${params.id}/bypass-validation-errors`,
+          exposureType: service.exposureType,
+        },
+        'POST',
+        {
+          data: {
+            allowedValidationErrors: ['resolution'],
+            approver: data.approver,
+          },
+        },
+        ctx
+      );
+    } else {
+      await super.resumeJobHandler(params, data, ctx);
     }
     return 'ok';
   }

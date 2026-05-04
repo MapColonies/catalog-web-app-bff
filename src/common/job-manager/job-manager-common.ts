@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobResumeData, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -113,6 +113,24 @@ export default class JobManagerCommon implements IJobManagerService {
       {
         data: {
           newExpirationDate: undefined,
+        },
+      },
+      ctx
+    );
+    return 'ok';
+  }
+
+  public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Common][resumeJobHandler] ${stringifyObject(params)}`);
+    await requestExecutor(
+      {
+        url: `${this.service.url}/jobs/${params.id}/resume`,
+        exposureType: this.service.exposureType,
+      },
+      'POST',
+      {
+        data: {
+          ...data,
         },
       },
       ctx
