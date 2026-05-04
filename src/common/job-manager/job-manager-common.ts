@@ -120,6 +120,7 @@ export default class JobManagerCommon implements IJobManagerService {
     return 'ok';
   }
 
+  // eslint-disable-next-line
   public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
     this.logger.info(`[JobManager][Common][resumeJobHandler] ${stringifyObject(params)}`);
     throw new Error('NOT IMPLEMENTED');
