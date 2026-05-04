@@ -6,7 +6,7 @@ import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { JobManager } from '../../common/job-manager/job-manager';
 import { extractErrorMessage } from '../../utils';
-import { ActiveJobFindParams, JobActionParams, JobResumeData, JobsSearchParams, JobUpdateData } from '../inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobApproveAndResumeData, JobsSearchParams, JobUpdateData } from '../inputTypes';
 import { Job } from '../job';
 
 @Resolver()
@@ -104,19 +104,19 @@ export class JobResolver {
   }
 
   @Mutation((type) => String)
-  public async jobResume(
-    @Arg('jobResumeParams')
-    jobResumeParams: JobActionParams,
+  public async jobApproveAndResume(
+    @Arg('jobApproveAndResumeParams')
+    jobApproveAndResumeParams: JobActionParams,
     @Arg('data')
-    data: JobResumeData,
+    data: JobApproveAndResumeData,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
     try {
-      const response = await this.jobManager.resumeJobHandler(jobResumeParams, data, ctx);
+      const response = await this.jobManager.approveAndResumeJobHandler(jobApproveAndResumeParams, data, ctx);
       return response;
     } catch (err) {
-      this.logger.error(`[JobManager][jobResume][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[JobManager][jobApproveAndResume][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

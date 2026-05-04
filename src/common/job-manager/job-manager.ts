@@ -2,7 +2,14 @@ import { isArray } from 'lodash';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Domain } from '../../graphql/domain';
-import { ActiveJobFindParams, JobActionParams, JobResumeData, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import {
+  ActiveJobFindParams,
+  JobActionParams,
+  JobApproveAndResumeData,
+  JobsSearchParams,
+  JobUpdateData,
+  TasksSearchParams,
+} from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
@@ -83,10 +90,10 @@ export class JobManager implements JobManagerType {
     return response;
   }
 
-  public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
+  public async approveAndResumeJobHandler(params: JobActionParams, data: JobApproveAndResumeData, ctx: IContext): Promise<string> {
     const jobManagerServiceType = this.convertStringToJobManagerServiceType(params.domain);
     const jobManagerInstance = this.getManagerInstance(jobManagerServiceType);
-    const response = await jobManagerInstance.resumeJobHandler(params, data, ctx);
+    const response = await jobManagerInstance.approveAndResumeJobHandler(params, data, ctx);
     return response;
   }
 

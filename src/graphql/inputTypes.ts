@@ -241,7 +241,7 @@ export class JobActionParams {
 }
 
 @InputType()
-export class JobResumeData {
+export class JobApproveAndResumeData {
   @Field({ nullable: false })
   public approver: string;
 }

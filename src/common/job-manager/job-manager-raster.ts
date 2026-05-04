@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { ActiveJobFindParams, JobActionParams, JobResumeData } from '../../graphql/inputTypes';
+import { ActiveJobFindParams, JobActionParams, JobApproveAndResumeData } from '../../graphql/inputTypes';
 import { Job, Status } from '../../graphql/job';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -77,8 +77,8 @@ export default class JobManagerRaster extends JobManagerCommon {
     return 'ok';
   }
 
-  public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
-    this.logger.info(`[JobManager][Raster][resumeJobHandler] ${stringifyObject(params)}`);
+  public async approveAndResumeJobHandler(params: JobActionParams, data: JobApproveAndResumeData, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Raster][approveAndResumeJobHandler] ${stringifyObject(params)}`);
     if (this.shouldBeTreatedByRaster(params.type)) {
       const service: IService = this.config.get('ingestionServices.raster');
       await requestExecutor(
@@ -96,7 +96,7 @@ export default class JobManagerRaster extends JobManagerCommon {
         ctx
       );
     } else {
-      await super.resumeJobHandler(params, data, ctx);
+      await super.approveAndResumeJobHandler(params, data, ctx);
     }
     return 'ok';
   }
