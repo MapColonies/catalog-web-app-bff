@@ -122,7 +122,8 @@ export default class JobManagerCommon implements IJobManagerService {
 
   public async resumeJobHandler(params: JobActionParams, data: JobResumeData, ctx: IContext): Promise<string> {
     this.logger.info(`[JobManager][Common][resumeJobHandler] ${stringifyObject(params)}`);
-    await requestExecutor(
+    throw new Error('NOT IMPLEMENTED');
+    /*await requestExecutor(
       {
         url: `${this.service.url}/jobs/${params.id}/resume`,
         exposureType: this.service.exposureType,
@@ -135,7 +136,7 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-    return 'ok';
+    return 'ok';*/
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
