@@ -1,6 +1,13 @@
 import { isEmpty } from 'lodash';
 import { Logger } from '@map-colonies/js-logger';
-import { ActiveJobFindParams, JobActionParams, JobsSearchParams, JobUpdateData, TasksSearchParams } from '../../graphql/inputTypes';
+import {
+  ActiveJobFindParams,
+  JobActionParams,
+  JobApproveAndResumeData,
+  JobsSearchParams,
+  JobUpdateData,
+  TasksSearchParams,
+} from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -118,6 +125,12 @@ export default class JobManagerCommon implements IJobManagerService {
       ctx
     );
     return 'ok';
+  }
+
+  // eslint-disable-next-line
+  public async approveAndResumeJobHandler(params: JobActionParams, data: JobApproveAndResumeData, ctx: IContext): Promise<string> {
+    this.logger.info(`[JobManager][Common][approveAndResumeJobHandler] ${stringifyObject(params)}`);
+    throw new Error('NOT IMPLEMENTED');
   }
 
   public async getTasks(params: TasksSearchParams, ctx: IContext): Promise<Task[]> {
