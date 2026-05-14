@@ -17,6 +17,7 @@ import { PolygonPartsWfsResolver } from './resolvers/polygon-parts-wfs.resolver'
 import { UserLoginResolver } from './resolvers/user-login.resolver';
 import { SourceValidationResolver } from './resolvers/source-validation.resolver';
 import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver';
+import { DummyForTypesGenerationResolver } from './resolvers/dummy-for-types-on-client.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
@@ -37,6 +38,7 @@ export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> 
     PolygonPartsWfsResolver,
     UserLoginResolver,
     SourceValidationResolver,
+    DummyForTypesGenerationResolver,
   ];
 }
 
