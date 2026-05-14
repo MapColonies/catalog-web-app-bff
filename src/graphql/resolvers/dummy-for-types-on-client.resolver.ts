@@ -2,15 +2,11 @@ import { Query, Resolver } from 'type-graphql';
 import { DummyForTypesOnClient } from '../dummy-for-types-on-client';
 
 @Resolver()
-export class DummyForTypesGenerationResolver {
+export class DummyForTypesOnClientResolver {
   public constructor() {}
 
   @Query(() => DummyForTypesOnClient, { nullable: true })
-  public async dummyForTypesGeneration(): Promise<DummyForTypesOnClient> {
-    try {
-      return {} as DummyForTypesOnClient;
-    } catch (err) {
-      throw err;
-    }
+  public async dummyForTypesOnClient(): Promise<DummyForTypesOnClient> {
+    return {} as DummyForTypesOnClient;
   }
 }
