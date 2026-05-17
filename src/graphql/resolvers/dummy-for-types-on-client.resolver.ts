@@ -15,6 +15,7 @@ export class DummyForTypesOnClientResolver {
   @Query(() => DummyForTypesOnClient, { nullable: true })
   public async dummyForTypesOnClient(): Promise<DummyForTypesOnClient> {
     this.logger.info('Fetching dummy data for types on client');
-    return await Promise.resolve({} as DummyForTypesOnClient);
+    const data = await Promise.resolve({} as DummyForTypesOnClient);
+    return data;
   }
 }
