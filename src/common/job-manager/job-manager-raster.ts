@@ -12,9 +12,9 @@ export enum RasterIngestionJobType {
 }
 
 export enum RasterJobType {
-  NEW = RasterIngestionJobType.NEW,
-  UPDATE = RasterIngestionJobType.UPDATE,
-  SWAP_UPDATE = RasterIngestionJobType.SWAP_UPDATE,
+  NEW = 'Ingestion_New',
+  UPDATE = 'Ingestion_Update',
+  SWAP_UPDATE = 'Ingestion_Swap_Update',
   TILES_SEEDING = 'TilesSeeding',
   EXPORT = 'Export',
 }
