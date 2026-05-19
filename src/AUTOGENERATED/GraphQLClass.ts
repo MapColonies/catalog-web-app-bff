@@ -6,7 +6,7 @@ import { ResamplingMethod } from "@map-colonies/mc-utils";
 import { RecordType, UndulationModel, DEMDataType, NoDataValue } from "@map-colonies/mc-model-types";
 import { ProductType, RecordStatus, Transparency } from "@map-colonies/types";
 import { ProviderType } from "@map-colonies/mc-model-types/Schema/models/layerMetadata/decorators/property/shp.decorator";
-import { RasterIngestionJobType } from "../common/job-manager/job-manager-raster";
+import { RasterIngestionJobType, RasterJobType } from "../common/job-manager/job-manager-raster";
 
 @InputType()
 export class LinkInput {
@@ -839,7 +839,7 @@ const DEMDataTypeRegister = registerEnumType(DEMDataType, {name: "DEMDataType"})
 const NoDataValueRegister = registerEnumType(NoDataValue, {name: "NoDataValue"});
 const ResamplingMethodRegister = registerEnumType(ResamplingMethod, {name: "ResamplingMethod"});
 
-export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue, ProviderType, RasterIngestionJobType };
+export const enumUnionValues = { RecordType, ProductType, Transparency, RecordStatus, UndulationModel, DEMDataType, NoDataValue, ProviderType, RasterIngestionJobType, RasterJobType };
 export type EnumUnionKeys = keyof typeof enumUnionValues;
 const enumsNames = Object.keys(enumUnionValues);
 

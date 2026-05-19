@@ -102,7 +102,7 @@ export const urlHandler = (service: IService): string => {
 
 export const addRasterJobActions = (job: Job): void => {
   if (job.domain === Domain.RASTER) {
-    const isRestorable = Object.values(RasterIngestionJobType).includes(job.type as RasterIngestionJobType); // Important: job.parameters === null, getJobs API excludes parameters field
+    const isRestorable = Object.values(RasterIngestionJobType).includes(job.type as RasterIngestionJobType);
     job.availableActions = {
       ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
       ...(isRestorable ? { isRestorable: true } : {}),

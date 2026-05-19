@@ -11,6 +11,14 @@ export enum RasterIngestionJobType {
   SWAP_UPDATE = 'Ingestion_Swap_Update',
 }
 
+export enum RasterJobType {
+  NEW = RasterIngestionJobType.NEW,
+  UPDATE = RasterIngestionJobType.UPDATE,
+  SWAP_UPDATE = RasterIngestionJobType.SWAP_UPDATE,
+  TILES_SEEDING = 'TilesSeeding',
+  EXPORT = 'Export',
+}
+
 export default class JobManagerRaster extends JobManagerCommon {
   public constructor(config: IConfig, logger: Logger) {
     super(config, logger);
