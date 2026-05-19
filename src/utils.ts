@@ -7,7 +7,7 @@ import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from './common/constants';
 import { IContext, IService } from './common/interfaces';
-import { RasterJobTypeEnum } from './common/job-manager/job-manager-raster';
+import { RasterJobType } from './common/job-manager/job-manager-raster';
 import { Domain } from './graphql/domain';
 import { Job } from './graphql/job';
 
@@ -102,7 +102,7 @@ export const urlHandler = (service: IService): string => {
 
 export const addRasterJobActions = (job: Job): void => {
   if (job.domain === Domain.RASTER) {
-    const isRestorable = job.type === RasterJobTypeEnum.NEW || job.type === RasterJobTypeEnum.UPDATE || job.type === RasterJobTypeEnum.SWAP_UPDATE; // Important: job.parameters === null, getJobs API excludes parameters field
+    const isRestorable = Object.values(RasterJobType).includes(job.type as RasterJobType); // Important: job.parameters === null, getJobs API excludes parameters field
     job.availableActions = {
       ...(job.availableActions ?? { isResumable: false, isAbortable: false }),
       ...(isRestorable ? { isRestorable: true } : {}),
