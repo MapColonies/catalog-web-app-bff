@@ -5,10 +5,18 @@ import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import JobManagerCommon from './job-manager-common';
 
+export enum RasterIngestionJobType {
+  NEW = 'Ingestion_New',
+  UPDATE = 'Ingestion_Update',
+  SWAP_UPDATE = 'Ingestion_Swap_Update',
+}
+
 export enum RasterJobType {
   NEW = 'Ingestion_New',
   UPDATE = 'Ingestion_Update',
   SWAP_UPDATE = 'Ingestion_Swap_Update',
+  TILES_SEEDING = 'TilesSeeding',
+  EXPORT = 'Export',
 }
 
 export default class JobManagerRaster extends JobManagerCommon {
@@ -28,7 +36,7 @@ export default class JobManagerRaster extends JobManagerCommon {
         data: {
           ...params,
           statuses: [Status.Pending, Status.InProgress, Status.Suspended, Status.Failed],
-          types: Object.values(RasterJobType),
+          types: Object.values(RasterIngestionJobType),
           shouldReturnTasks: false,
           shouldReturnAvailableActions: true,
         },
@@ -102,6 +110,6 @@ export default class JobManagerRaster extends JobManagerCommon {
   }
 
   private shouldBeTreatedByRaster(type: string): boolean {
-    return Object.values(RasterJobType).includes(type as RasterJobType);
+    return Object.values(RasterIngestionJobType).includes(type as RasterIngestionJobType);
   }
 }
