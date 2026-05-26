@@ -121,7 +121,7 @@ export class CswWfsClientWrapper {
     throw new Error('NOT IMPLEMENTED');
   }
 
-  public transformRecordsToEntity = async (wfsArray: Record<string, unknown>[], ctx: IContext): Promise<VectorBestRecord[]> => {
+  private transformRecordsToEntity = async (wfsArray: Record<string, unknown>[], ctx: IContext): Promise<VectorBestRecord[]> => {
     const {
       isId,
       isType,
