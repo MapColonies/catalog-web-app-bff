@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.1...v4.1.2) (2026-05-28)
+
+
+### Bug Fixes
+
+* eslint error ([#300](https://github.com/MapColonies/catalog-web-app-bff/issues/300)) ([154d2ee](https://github.com/MapColonies/catalog-web-app-bff/commit/154d2eed9b3255889f1c5337d19710ecf852bc9b))
+* pass ctx to requestExecutor in CswWfcClientWrapper ( MAPCO-10669 ) ([#298](https://github.com/MapColonies/catalog-web-app-bff/issues/298)) ([804d3e6](https://github.com/MapColonies/catalog-web-app-bff/commit/804d3e6f36f849a647a4f7b05b52b34ac69f9b72))
+
 ## [4.1.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.0...v4.1.1) (2026-05-19)
 
 
