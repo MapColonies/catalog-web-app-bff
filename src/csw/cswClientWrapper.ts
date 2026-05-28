@@ -73,7 +73,7 @@ export class CswClientWrapper {
     return parsedData;
   }
 
-  public transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
+  private transformRecordsToEntity = (cswArray: CatalogRecordType[]): CatalogRecordType[] => {
     const { isDate, isDiscrete, isKeywords, isLayerPolygonParts, isLinks, isSensor, isRegion, isProductVersion, isBoolean, isFootprint } = fieldTypes;
 
     const cswParsedArray = transform(

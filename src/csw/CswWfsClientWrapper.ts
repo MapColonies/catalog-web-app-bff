@@ -81,15 +81,20 @@ export class CswWfsClientWrapper {
 
     const getCapabilitesRequest: WFSPayload = wfsClient200.GetCapabilitiesRequest();
 
-    const response: AxiosResponse = (await this.requestExecutor(getCapabilitesRequest.baseUrl, getCapabilitesRequest.method, {
-      params: getCapabilitesRequest.params,
-      headers: getCapabilitesRequest.headers,
-    } as AxiosRequestConfig)) as AxiosResponse;
+    const response: AxiosResponse = (await this.requestExecutor(
+      getCapabilitesRequest.baseUrl,
+      getCapabilitesRequest.method,
+      {
+        params: getCapabilitesRequest.params,
+        headers: getCapabilitesRequest.headers,
+      } as AxiosRequestConfig,
+      ctx
+    )) as AxiosResponse;
 
     const data = wfsClient200.xmlToJson(response.data);
 
     try {
-      const parsedEntities = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[]);
+      const parsedEntities = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[], ctx);
       return {
         records: parsedEntities,
         cswQuerySummary: {
@@ -116,7 +121,7 @@ export class CswWfsClientWrapper {
     throw new Error('NOT IMPLEMENTED');
   }
 
-  public transformRecordsToEntity = async (wfsArray: Record<string, unknown>[]): Promise<VectorBestRecord[]> => {
+  private transformRecordsToEntity = async (wfsArray: Record<string, unknown>[], ctx: IContext): Promise<VectorBestRecord[]> => {
     const {
       isId,
       isType,
@@ -137,7 +142,7 @@ export class CswWfsClientWrapper {
 
     const wfsParsedArray = await Promise.all(
       wfsArray.map(async (wfsFeature) => {
-        const metadata = await this.getLayerData(wfsFeature.metadataUrl as string, titles, wfsFeature.title as string);
+        const metadata = await this.getLayerData(wfsFeature.metadataUrl as string, titles, wfsFeature.title as string, ctx);
 
         const props = this.wfsMappings.map((wfsMapping) => wfsMapping.prop);
         const newFeature: Record<string, unknown> = {};
@@ -255,15 +260,20 @@ export class CswWfsClientWrapper {
     return wfsParsedArray as unknown as VectorBestRecord[];
   };
 
-  private async getLayerData(url: string, layerNames: string[], layerName: string): Promise<IMetadata> {
+  private async getLayerData(url: string, layerNames: string[], layerName: string, ctx: IContext): Promise<IMetadata> {
     const wfsClient200: WfsClient = this.getWfsClient();
     const describeFeatureTypeRequest: WFSPayload = wfsClient200.DescribeFeatureTypeRequest(layerNames);
 
     if (url) {
       // Case 1: Direct link provided – fetch and cache
-      const res = (await this.requestExecutor(url, 'GET', {
-        headers: describeFeatureTypeRequest.headers,
-      })) as AxiosResponse;
+      const res = (await this.requestExecutor(
+        url,
+        'GET',
+        {
+          headers: describeFeatureTypeRequest.headers,
+        },
+        ctx
+      )) as AxiosResponse;
 
       const metadata = res.data as IMetadata;
       this.layersData[layerName] = metadata;
@@ -273,10 +283,15 @@ export class CswWfsClientWrapper {
       return this.layersData[layerName];
     } else {
       // Case 3: Fetch via DescribeFeatureType
-      const response: AxiosResponse = (await this.requestExecutor(describeFeatureTypeRequest.baseUrl, describeFeatureTypeRequest.method, {
-        params: describeFeatureTypeRequest.params,
-        headers: describeFeatureTypeRequest.headers,
-      })) as AxiosResponse;
+      const response: AxiosResponse = (await this.requestExecutor(
+        describeFeatureTypeRequest.baseUrl,
+        describeFeatureTypeRequest.method,
+        {
+          params: describeFeatureTypeRequest.params,
+          headers: describeFeatureTypeRequest.headers,
+        },
+        ctx
+      )) as AxiosResponse;
 
       const describeFeatureType = response.data as IDescribeFeatureType;
       const features = describeFeatureType.featureTypes;
@@ -300,9 +315,9 @@ export class CswWfsClientWrapper {
     }
   }
 
-  private async requestExecutor(url: string, method: string, params: AxiosRequestConfig): Promise<unknown> {
+  private async requestExecutor(url: string, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<unknown> {
     try {
-      return await requestExecutor(this.service, method, params, null as unknown as IContext);
+      return await requestExecutor(this.service, method, params, ctx);
     } catch (err) {
       throw new Error('Failed to execute request to WFS service. Service is unavailable');
     }
