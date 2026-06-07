@@ -193,6 +193,7 @@ export interface IGetFeatureOptionsByFeature {
 
 export interface IGetFeatureResponse {
   type: string;
+  bbox: number[];
   features: Feature[];
   totalFeatures: number;
   numberMatched: number;

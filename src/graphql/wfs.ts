@@ -27,6 +27,9 @@ export class GetFeature {
   @Field((type) => String, { nullable: true })
   public type?: string;
 
+  @Field((type) => [Number], { nullable: true })
+  public bbox?: number[];
+
   @Field((type) => [WfsFeature], { nullable: true })
   public features?: Feature[];
 
