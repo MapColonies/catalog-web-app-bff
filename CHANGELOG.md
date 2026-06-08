@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.2...v4.1.3) (2026-06-07)
+
+
+### Bug Fixes
+
+* add bbox field to  response ([#301](https://github.com/MapColonies/catalog-web-app-bff/issues/301)) ([70fdcae](https://github.com/MapColonies/catalog-web-app-bff/commit/70fdcaeecb07a3fbb9b26c2b02325fbf8667d4d7))
+
 ## [4.1.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.1...v4.1.2) (2026-05-28)
 
 
