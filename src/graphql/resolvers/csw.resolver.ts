@@ -24,12 +24,19 @@ import {
 } from '../inputTypes';
 import { StringArrayObjectType } from '../simpleTypes';
 
+const PRODUCT_TYPE_3D = [
+  ProductType.PHOTO_REALISTIC,
+  ProductType.PHOTO_REALISTIC_BEST,
+  ProductType.SEMANTIC,
+  ProductType.SEMANTIC_MESH,
+  ProductType.POINT_CLOUD,
+];
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, LayerDemRecord, VectorBestRecord, QuantizedMeshBestRecord] as const,
   resolveType: (value) => {
-    if (value.productType === ProductType.PHOTO_REALISTIC_3D) {
+    if (PRODUCT_TYPE_3D.includes(value.productType)) {
       return Layer3DRecord;
     } else if ('resolutionMeter' in (value as LayerDemRecord)) {
       return LayerDemRecord;
