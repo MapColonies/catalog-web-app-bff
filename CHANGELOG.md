@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.3...v4.2.0) (2026-06-25)
+
+
+### Features
+
+* support 3d sr ([#303](https://github.com/MapColonies/catalog-web-app-bff/issues/303)) ([012b1df](https://github.com/MapColonies/catalog-web-app-bff/commit/012b1df81374f887c4bcea97a3d1ae6596708296))
+
 ## [4.1.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.2...v4.1.3) (2026-06-07)
 
 
