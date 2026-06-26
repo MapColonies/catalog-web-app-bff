@@ -19,9 +19,7 @@ export class PolygonPartsWFS {
     this.logger.info(`[PolygonPartsWFS][getFeature] ${stringifyObject(options)}`);
     const wfsClient = this.getWfsClient(ctx);
     try {
-      // TODO service.wfsFeatureType should be recieved or calculated due to naming convension (REMOVE OVERRIDE)
-      // ----- polygon_parts:{lowercase(productId)}_{lowercase(productType)}
-      const res = await wfsClient.getFeatureByFeature({ ...options /*, typeName: 'polygon_parts:orthophoto_best_orthophotobest' */ });
+      const res = await wfsClient.getFeatureByFeature({ ...options });
       return res as IGetFeatureResponse;
     } catch (err) {
       const error = 'Failed to retrieve Polygon Parts feature data';

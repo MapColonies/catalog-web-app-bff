@@ -17,7 +17,8 @@ import {
   Ingestion3DData,
   IngestionDemData,
   IngestionRasterData,
-  RecordDeletePartial,
+  RecordDelete3D,
+  RecordDeleteRaster,
   RecordUpdatePartial,
   SearchOptions,
   StringArray,
@@ -265,9 +266,9 @@ export class LayerMetadataMixedResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
-  public async deleteLayer(
+  public async delete3DLayer(
     @Arg('data')
-    data: RecordDeletePartial,
+    data: RecordDelete3D,
     @Ctx()
     ctx: IContext
   ): Promise<string> {
@@ -275,7 +276,24 @@ export class LayerMetadataMixedResolver {
       await this.catalogManager.deleteLayer(data, ctx);
       return 'ok';
     } catch (err) {
-      this.logger.error(`[CSW][deleteLayer][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[CSW][delete3DLayer][ERROR] ${extractErrorMessage(err)}`);
+      throw err;
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation((type) => String)
+  public async deleteRasterLayer(
+    @Arg('data')
+    data: RecordDeleteRaster,
+    @Ctx()
+    ctx: IContext
+  ): Promise<string> {
+    try {
+      await this.catalogManager.deleteLayer(data, ctx);
+      return 'ok';
+    } catch (err) {
+      this.logger.error(`[CSW][deleteRasterLayer][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

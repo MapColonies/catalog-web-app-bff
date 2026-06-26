@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordDelete3D, RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
@@ -40,18 +40,19 @@ export class CatalogManager3D implements ICatalogManagerService {
     return record;
   }
 
-  public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info(`[CatalogManager][3D][deleteLayer] ${stringifyObject(record)}`);
+  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<boolean> {
+    const data = dataParam as RecordDelete3D;
+    this.logger.info(`[CatalogManager][3D][deleteLayer] ${stringifyObject(data)}`);
     await requestExecutor(
       {
-        url: `${this.service.url}/models/${record.id}`,
+        url: `${this.service.url}/models/${data.id}`,
         exposureType: this.service.exposureType,
       },
       'DELETE',
       {},
       ctx
     );
-    return record;
+    return true;
   }
 
   private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {

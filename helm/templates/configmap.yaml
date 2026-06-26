@@ -23,6 +23,7 @@
   BASE_PATH: {{ quote .Values.env.basePath }}
   OPENAPI_FILE_PATH: {{ quote .Values.env.openapiFilePath }}
   ADMIN_PASSWORD: {{ quote .Values.env.adminPassword }}
+  DELETE_LAYER_APPROVAL_CODE: {{ quote .Values.env.deleteLayerApprovalCode }}
   REQUEST_TIMEOUT: {{ quote .Values.env.requestTimeout }}
   CSW_RASTER_URL: {{ quote .Values.env.cswRasterUrl }}
   CSW_3D_URL: {{ quote .Values.env.csw3DUrl }}
