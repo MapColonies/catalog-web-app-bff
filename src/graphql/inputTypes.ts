@@ -112,10 +112,10 @@ export class RecordDeleteRaster {
   public type: RecordType;
 
   @Field({ nullable: false })
-  approverName: string;
+  public approverName: string;
 
   @Field({ nullable: false })
-  approvalCode: string;
+  public approvalCode: string;
 }
 
 @InputType()
