@@ -115,7 +115,8 @@ export class ServerBuilder {
     this.serverInstance.use(
       '/graphql',
       expressMiddleware(server, {
-        context: async ({ req }): Promise<IContext> => ({ requestHeaders: req.headers }),
+        // eslint-disable-next-line @typescript-eslint/promise-function-async
+        context: ({ req }): Promise<IContext> => Promise.resolve({ requestHeaders: req.headers }),
       })
     );
   }
