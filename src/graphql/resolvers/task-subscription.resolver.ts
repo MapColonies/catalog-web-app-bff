@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { PubSub } from 'graphql-subscriptions';
-import { IResolvers } from 'graphql-tools';
+import { IResolvers } from '@graphql-tools/utils';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { CallbackResponse, Services } from '../../common/constants';
@@ -49,9 +49,10 @@ export const TaskSubscriptionResolver: IResolvers = {
   },
   Subscription: {
     taskUpdateDetails: {
-      subscribe: (): AsyncIterator<PubSub> => {
+      subscribe: (): AsyncIterableIterator<unknown> => {
         const pubSub = container.resolve<PubSub>(Services.PUBSUB);
-        return pubSub.asyncIterator('TASK_UPDATE');
+        // graphql-subscriptions v3 renamed `asyncIterator` to `asyncIterableIterator`.
+        return pubSub.asyncIterableIterator('TASK_UPDATE');
       },
       resolve: (payload: CallbackResponse<Record<string, unknown>>): Record<string, unknown> => {
         const logger = container.resolve<Logger>(Services.LOGGER);
