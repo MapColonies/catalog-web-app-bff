@@ -1,12 +1,14 @@
 import * as fs from 'fs';
 import path from 'path';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@as-integrations/express4';
+import { unwrapResolverError } from '@apollo/server/errors';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import { middleware as OpenApiMiddleware } from 'express-openapi-validator';
-import { GraphQLError, printSchema } from 'graphql';
+import { GraphQLFormattedError, printSchema } from 'graphql';
 import { get, isEmpty } from 'lodash';
 import { LevelWithSilent } from 'pino';
 import { inject, injectable } from 'tsyringe';
@@ -31,10 +33,10 @@ export class ServerBuilder {
     this.openapiSpecFolder = serverBasePath ? '/tmp' : '';
   }
 
-  public build(): express.Application {
+  public async build(): Promise<express.Application> {
     this.registerPreRoutesMiddleware();
     this.buildRoutes();
-    this.setupGraphQL();
+    await this.setupGraphQL();
     this.registerPostRoutesMiddleware();
 
     return this.serverInstance;
@@ -83,18 +85,17 @@ export class ServerBuilder {
     this.serverInstance.use(this.config.get<string>('openapiConfig.basePath'), openapiRouter.getRouter());
   }
 
-  private setupGraphQL(): void {
+  private async setupGraphQL(): Promise<void> {
     const resolvers = getResolvers();
     const schema = buildSchemaSync({ resolvers });
-    const server = new ApolloServer({
+    const server = new ApolloServer<IContext>({
       schema,
-      context: ({ req }): IContext => ({
-        requestHeaders: req.headers,
-      }),
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      formatError: (formattedError: GraphQLError) => {
-        const serverResponse = get(formattedError, 'extensions.exception.response') as Record<string, unknown>;
-        if (get(formattedError, 'extensions.exception.isAxiosError') === true && !isEmpty(serverResponse.data)) {
+      // Apollo Server 4/5 removed `extensions.exception`; unwrap the resolver error to read the original (axios) error.
+      formatError: (formattedError, error): GraphQLFormattedError => {
+        const originalError = unwrapResolverError(error);
+        const serverResponse = get(originalError, 'response') as Record<string, unknown> | undefined;
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (get(originalError, 'isAxiosError') === true && serverResponse !== undefined && !isEmpty(serverResponse.data)) {
           const resMessage = (get(serverResponse, 'data.message') as string | undefined) ?? '';
           return {
             ...formattedError,
@@ -103,13 +104,21 @@ export class ServerBuilder {
               status: serverResponse.status,
               statusText: serverResponse.statusText,
             },
-          };
+          } as GraphQLFormattedError;
         }
         return formattedError;
       },
     });
+    // Apollo Server 4/5 requires an explicit start() before the express middleware can be mounted.
+    await server.start();
     this.logger.info(`Started GraphQL server with schema: ${printSchema(schema)}`);
-    server.applyMiddleware({ app: this.serverInstance });
+    this.serverInstance.use(
+      '/graphql',
+      expressMiddleware(server, {
+        // eslint-disable-next-line @typescript-eslint/promise-function-async
+        context: ({ req }): Promise<IContext> => Promise.resolve({ requestHeaders: req.headers }),
+      })
+    );
   }
 
   private registerPostRoutesMiddleware(): void {

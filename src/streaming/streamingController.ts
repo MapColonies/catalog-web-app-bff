@@ -9,8 +9,6 @@ import { Services } from '../common/constants';
 import { StorageExplorerManager } from '../common/storage-explorer-manager/storage-explorer-manager';
 import { extractErrorMessage } from '../utils';
 
-export type GetStreamer = Stream;
-
 @injectable()
 export class StreamingController {
   private readonly logger: Logger;
@@ -164,3 +162,5 @@ export class StreamingController {
     );
   }
 }
+
+export type GetStreamer = Stream;
