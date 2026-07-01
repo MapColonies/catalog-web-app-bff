@@ -1,15 +1,17 @@
 import { AxiosRequestConfig } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordDeleteData, RecordDeleteRaster, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
 export class CatalogManagerRaster implements ICatalogManagerService {
   private readonly service: IService;
+  private readonly deleteLayerApprovalCode: string;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('catalogServices.raster');
+    this.deleteLayerApprovalCode = this.config.get('deleteLayerApprovalCode');
   }
 
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
@@ -41,9 +43,31 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(record)}`);
+  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<boolean> {
+    const data = dataParam as RecordDeleteRaster;
+    this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(data)}`);
+
+    if (data.approvalCode === this.deleteLayerApprovalCode) {
+      return Promise.reject('The code is right, but the service is unimplemented');
+    }
+
     return Promise.reject('Unimplemented service');
+
+    // await requestExecutor(
+    //   {
+    //     url: `${this.service.url}/models/${data.id}`,
+    //     exposureType: this.service.exposureType,
+    //   },
+    //   'DELETE',
+    //   {
+    //     data: {
+    //       approverName: data.approverName,
+    //       approvalCode: data.approvalCode
+    //     }
+    //   },
+    //   ctx
+    // );
+    // return true;
   }
 
   private buildPayload(data: RecordUpdatePartial, isMetadata = false): AxiosRequestConfig {

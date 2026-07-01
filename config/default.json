@@ -31,6 +31,7 @@
   },
   "rasterIngestionFilesStructureConfig": "{\"data\": {\"allowedExt\": [\".gpkg\"],\"selectableExt\": [\".gpkg\"],\"relativeToAOIDirPath\": \"./data\",\"producerFileName\": \"*\",\"selectablePattern\": \"*\"},\"product\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"Product\",\"selectablePattern\": \"Product\"},\"shapeMetadata\": {\"allowedExt\": [\".shp\", \".shx\", \".dbf\", \".prj\", \".sbn\", \".sbx\", \".xml\", \".cpg\", \".qix\"],\"selectableExt\": [\".shp\"],\"relativeToAOIDirPath\": \"./shape\",\"producerFileName\": \"ShapeMetadata\",\"selectablePattern\": \"ShapeMetadata\"}}",
   "adminPassword": "123456",
+  "deleteLayerApprovalCode": "654321",
   "requestTimeout": 30000,
   "csw": {
     "raster": {

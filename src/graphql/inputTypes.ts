@@ -95,12 +95,27 @@ export class RecordUpdatePartial {
 }
 
 @InputType()
-export class RecordDeletePartial {
+export class RecordDelete3D {
   @Field({ nullable: false })
   public id: string;
 
   @Field((type) => RecordType, { nullable: false })
   public type: RecordType;
+}
+
+@InputType()
+export class RecordDeleteRaster {
+  @Field({ nullable: false })
+  public id: string;
+
+  @Field((type) => RecordType, { nullable: false })
+  public type: RecordType;
+
+  @Field({ nullable: false })
+  public approverName: string;
+
+  @Field({ nullable: false })
+  public approvalCode: string;
 }
 
 @InputType()
@@ -473,5 +488,7 @@ export class SourceGPKGValidationParams {
 export type SourceValidationInputParams = SourceValidationParams | SourceGPKGValidationParams;
 
 export type IngestionData = IngestionDemData | Ingestion3DData | IngestionRasterData;
+
+export type RecordDeleteData = RecordDelete3D | RecordDeleteRaster;
 
 export { RasterIngestionFilesTypeConfig };

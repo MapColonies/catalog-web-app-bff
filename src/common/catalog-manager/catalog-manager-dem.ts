@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
@@ -24,8 +24,8 @@ export class CatalogManagerDem implements ICatalogManagerService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(record)}`);
+  public async deleteLayer(data: RecordDeleteData /* should be specific data type, like RecordDeleteDEM */, ctx: IContext): Promise<boolean> {
+    this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(data)}`);
     return Promise.reject('Unimplemented service');
   }
 }
