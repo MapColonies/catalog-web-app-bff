@@ -41,13 +41,20 @@ const pycsw3DCatalogRecordAspects = {
       order: 9,
     },
   },
+  productSubType: {
+    label: 'field-names.3d.productSubType',
+    order: 6,
+    isBriefField: {
+      order: 10,
+    },
+  },
   description: {
     label: 'field-names.3d.description',
     order: 112,
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 12,
+      order: 13,
     },
   },
   creationDate: {
@@ -57,7 +64,7 @@ const pycsw3DCatalogRecordAspects = {
   },
   updateDate: {
     label: 'field-names.3d.updateDate',
-    order: 6,
+    order: 7,
     dateGranularity: DateGranularity.DATE_AND_TIME,
   },
   sourceDateStart: {
@@ -84,11 +91,11 @@ const pycsw3DCatalogRecordAspects = {
   },
   minResolutionMeter: {
     label: 'field-names.3d.minResolutionMeter',
-    order: 7,
+    order: 8,
   },
   maxResolutionMeter: {
     label: 'field-names.3d.maxResolutionMeter',
-    order: 8,
+    order: 9,
   },
   maxAccuracyCE90: {
     label: 'field-names.3d.maxAccuracyCE90',
@@ -154,7 +161,7 @@ const pycsw3DCatalogRecordAspects = {
     order: 100,
     fullWidth: true,
     isBriefField: {
-      order: 10,
+      order: 11,
     },
     // enumValues: {
     //   dictionary: {
@@ -190,10 +197,10 @@ const pycsw3DCatalogRecordAspects = {
   },
   productSource: {
     label: 'field-names.3d.productSource',
-    order: 9,
+    order: 10,
     fullWidth: true,
     isBriefField: {
-      order: 11,
+      order: 12,
     },
   },
   productStatus: {

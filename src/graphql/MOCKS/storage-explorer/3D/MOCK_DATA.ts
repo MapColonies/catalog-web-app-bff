@@ -153,7 +153,7 @@ export const MOCK_FILE: Layer3DRecord = {
   sourceDateStart: new Date('2021-10-13T14:05:22.089Z'),
   sourceDateEnd: new Date('2021-10-14T14:00:22.089Z'),
   productId: 'JAKSHD-2122K-ASDKGBV-4KD4S9X',
-  productType: ProductType.PHOTO_REALISTIC_3D,
+  productType: ProductType.PHOTO_REALISTIC,
   srsName: 'WGS84GEO',
   id: '123456',
   sensors: ['VIS'],

@@ -148,6 +148,8 @@ export class Layer3DRecordInput {
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
     @Field({ nullable: true })
+    public productSubType?: string;
+    @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
     public creationDate?: Date;
@@ -515,6 +517,8 @@ export class Layer3DRecord {
     public productVersion?: string;
     @Field((type) => ProductType, { nullable: false })
     public productType: ProductType;
+    @Field({ nullable: true })
+    public productSubType?: string;
     @Field({ nullable: true })
     public description?: string;
     @Field({ nullable: true })
