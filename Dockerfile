@@ -10,9 +10,9 @@ RUN if [ -d patches ] && [ "$(ls -A patches 2>/dev/null)" ]; then npm run patch:
 RUN npm run build
 
 
-FROM node:24.0.0-alpine3.21 AS production
+FROM node:24.0.0-slim AS production
 
-RUN apk add dumb-init
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV=production
 ENV SERVER_PORT=8080
@@ -20,8 +20,6 @@ ENV SERVER_PORT=8080
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
-
-RUN npm ci --only=production --unsafe-perm
 
 COPY --chown=node:node --from=build /tmp/buildApp/dist .
 COPY --chown=node:node --from=build /tmp/buildApp/node_modules ./node_modules
