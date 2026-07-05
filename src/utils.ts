@@ -114,7 +114,7 @@ export const addRasterJobActions = (job: Job): void => {
 export const stringifyObject = (obj: any): string => {
   /* eslint-enable */
   return _.map(obj, (value, key) => {
-    return `${key}: ${JSON.stringify(value)}`;
+    return `${String(key)}: ${JSON.stringify(value)}`;
   })
     .join(', ')
     .replace(/\\*"/g, "'")
@@ -130,7 +130,7 @@ export const extractErrorMessage = (err: unknown): string => {
       status = String(get(httpError, 'response.status', ''));
       message = get(httpError, 'response.data.message', undefined) ?? get(httpError, 'response.statusText');
     } else if (!isEmpty(get(err, 'message'))) {
-      message = get(err, 'message') as string;
+      message = get(err, 'message') as string | undefined;
     }
   }
   const errorMessage = message ?? String(err);

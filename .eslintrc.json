@@ -12,5 +12,19 @@
         "argsIgnorePattern": "type|of"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/graphql/**/*.ts"],
+      "rules": {
+        "import/exports-last": "off"
+      }
+    },
+    {
+      "files": ["src/graphql/resolvers/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "parameterProperties": "off" } }]
+      }
+    }
+  ]
 }
