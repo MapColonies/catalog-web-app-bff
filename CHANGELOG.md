@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.3...v4.2.4) (2026-07-07)
+
+
+### Bug Fixes
+
+* raster keywords as part of ingestion ([#312](https://github.com/MapColonies/catalog-web-app-bff/issues/312)) ([6e40a2b](https://github.com/MapColonies/catalog-web-app-bff/commit/6e40a2b05b609821bd893826dd46c73586d9f7d7))
+
 ## [4.2.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.2...v4.2.3) (2026-07-05)
 
 
