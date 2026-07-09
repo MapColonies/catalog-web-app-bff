@@ -28,6 +28,7 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return xmlToCapabilities(idList, response.data);
   }
 

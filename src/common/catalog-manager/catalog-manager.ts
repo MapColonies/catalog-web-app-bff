@@ -42,6 +42,7 @@ export class CatalogManager implements ICatalogManagerService {
 
   private getManagerInstance(recordType: RecordType): ICatalogManagerService {
     let catalogManagerInstance: ICatalogManagerService;
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
         catalogManagerInstance = this.catalogServices.DEM;

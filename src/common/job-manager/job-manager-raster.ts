@@ -3,6 +3,7 @@ import { ActiveJobFindParams, JobActionParams, JobApproveAndResumeData } from '.
 import { Job, Status } from '../../graphql/job';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import JobManagerCommon from './job-manager-common';
 
 export enum RasterIngestionJobType {

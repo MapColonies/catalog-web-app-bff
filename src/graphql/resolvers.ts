@@ -19,7 +19,7 @@ import { SourceValidationResolver } from './resolvers/source-validation.resolver
 import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver';
 import { DummyForTypesOnClientResolver } from './resolvers/dummy-for-types-on-client.resolver';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function getResolvers(): NonEmptyArray<Function> {
   return [
     LayerMetadataMixedResolver,

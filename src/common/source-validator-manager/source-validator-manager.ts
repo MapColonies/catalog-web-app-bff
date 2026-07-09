@@ -32,6 +32,7 @@ export class SourceValidatorManager implements ISourceInfoService {
   private getManagerInstance(recordType: RecordType): ISourceInfoService {
     let catalogManagerInstance: ISourceInfoService;
 
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
         catalogManagerInstance = this.ingestionServices.DEM;

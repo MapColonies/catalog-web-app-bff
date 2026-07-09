@@ -3,7 +3,6 @@ import { IngestionData, SourceValidationInputParams } from '../../graphql/inputT
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { IContext } from '../interfaces';
 
-// eslint-disable-next-line import/exports-last
 export interface IIngestionManagerService {
   ingest: (data: IngestionData, ctx: IContext) => Promise<IngestionResultData>;
   updateGeopkg?: (data: IngestionData, ctx: IContext) => Promise<IngestionResultData | null>;

@@ -48,7 +48,7 @@ export const LayerMetadataMixedUnion = createUnionType({
       return LayerRasterRecord;
     }
   },
-}) as LayerMetadataUnionType;
+});
 
 @Resolver()
 export class LayerMetadataMixedResolver {
@@ -64,7 +64,6 @@ export class LayerMetadataMixedResolver {
     this.ingestionManager = container.resolve(IngestionManager);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => CSWCatalogs)
   public async search(
     @Ctx()
@@ -87,7 +86,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [LayerMetadataMixedUnion])
   public async searchById(
     @Arg('idList', { nullable: false })
@@ -104,7 +102,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => StringArrayObjectType)
   public async getDomain(
     @Arg('domain', { nullable: false })
@@ -153,9 +150,10 @@ export class LayerMetadataMixedResolver {
         END
       );
 
-      // eslint-disable-next-line
-      const firstRecord: LayerMetadataUnionType | null = Object.values(data).find((d: CSWCatalog) => d.records?.length && d.records.length > 0)
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+      const firstRecord: LayerMetadataUnionType | null = Object.values(data).find((d: CSWCatalog) => d.records != undefined && d.records.length > 0)
         ?.records?.[0];
+      /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
       return firstRecord;
     } catch (err) {
@@ -164,7 +162,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateStatus(
     @Arg('data')
@@ -181,7 +178,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async updateMetadata(
     @Arg('data')
@@ -198,7 +194,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => RasterIngestion)
   public async startRasterIngestion(
     @Arg('data')
@@ -214,7 +209,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => RasterIngestion)
   public async startRasterUpdateGeopkg(
     @Arg('data')
@@ -236,7 +230,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async start3DIngestion(
     @Arg('data')
@@ -253,7 +246,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async startDemIngestion(
     @Arg('data')
@@ -270,7 +262,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async deleteLayer(
     @Arg('data')

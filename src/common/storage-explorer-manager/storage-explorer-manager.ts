@@ -86,6 +86,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   private getManagerInstance(recordType: RecordType): IStorageExplorerManagerService {
     let storageExplorerManagerInstance: IStorageExplorerManagerService;
 
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
         storageExplorerManagerInstance = this.explorerServices['3D'];
@@ -105,6 +106,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const SHOULD_SPECIAL_TREAT_FIELD = true;
 
     for (const [fieldName, val] of Object.entries(metadata)) {
+      // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
       switch (SHOULD_SPECIAL_TREAT_FIELD) {
         case isDate(fieldName):
           metadataWithFakeId[fieldName] = new Date(val as string);

@@ -2,6 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import axiosRetry from 'axios-retry';
 import config from 'config';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _, { get, isEmpty } from 'lodash';
 import { container } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';

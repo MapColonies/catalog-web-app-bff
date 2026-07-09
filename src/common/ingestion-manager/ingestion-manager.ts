@@ -79,6 +79,7 @@ export class IngestionManager implements IIngestionManagerService {
   private getManagerInstance(recordType: RecordType): IIngestionManagerService {
     let catalogManagerInstance: IIngestionManagerService;
 
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
         catalogManagerInstance = this.ingestionServices.DEM;

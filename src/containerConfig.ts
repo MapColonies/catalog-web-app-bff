@@ -1,9 +1,8 @@
 import { container } from 'tsyringe';
 import config from 'config';
 import { PubSub } from 'graphql-subscriptions';
-import { logMethod } from '@map-colonies/telemetry';
+import { logMethod, Tracing, Metrics } from '@map-colonies/telemetry';
 import jsLogger, { LoggerOptions } from '@map-colonies/js-logger';
-import { Tracing, Metrics } from '@map-colonies/telemetry';
 import { Services } from './common/constants';
 
 function registerExternalValues(tracing: Tracing): void {

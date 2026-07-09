@@ -44,6 +44,7 @@ export class ExportLayerManager implements IExportLayerManagerService {
 
   private getManagerInstance(recordType: RecordType): IExportLayerManagerService {
     let exportLayerManagerInstance: IExportLayerManagerService;
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
         exportLayerManagerInstance = this.exportServices['3D'];

@@ -149,6 +149,7 @@ export class CSW {
   }
 
   private recordTypeToDomain(recordType: RecordType): Domain {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (recordType) {
       case RecordType.RECORD_DEM:
         return Domain.DEM;
@@ -192,6 +193,7 @@ export class CSW {
   }
 
   private domainToRecordType(domain: Domain): RecordType {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (domain) {
       case Domain.DEM:
         return RecordType.RECORD_DEM;

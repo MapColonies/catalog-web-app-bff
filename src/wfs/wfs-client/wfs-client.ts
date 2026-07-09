@@ -114,7 +114,6 @@ class WfsClient {
       request: 'GetFeature',
       method: 'POST',
       config: {
-        // eslint-disable-next-line
         headers: { 'Content-Type': 'application/xml' },
         data: XML_BODY_TEMPLATE,
       },
@@ -161,7 +160,6 @@ class WfsClient {
       request: 'GetFeature',
       method: 'POST',
       config: {
-        // eslint-disable-next-line
         headers: { 'Content-Type': 'application/xml' },
         data: XML_BODY_TEMPLATE,
       },

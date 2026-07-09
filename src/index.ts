@@ -1,5 +1,4 @@
-/* eslint-disable import/first */
-// this import must be called before the first import of tsyring
+// this import must be called before the first import of tsyringe
 import 'reflect-metadata';
 import { createServer } from 'http';
 import config from 'config';
@@ -17,12 +16,12 @@ import { DEFAULT_SERVER_PORT, IGNORED_INCOMING_TRACE_ROUTES, IGNORED_OUTGOING_TR
 import { getWSResolvers } from './graphql/resolvers';
 import { taskSubscriptionTypeDefs } from './graphql/resolvers/task-subscription.resolver';
 
+import { getApp } from './app';
+
 const tracing = new Tracing('app_tracer', [
   new HttpInstrumentation({ ignoreOutgoingUrls: IGNORED_OUTGOING_TRACE_ROUTES, ignoreIncomingPaths: IGNORED_INCOMING_TRACE_ROUTES }),
   // new ExpressInstrumentation(),
 ]);
-
-import { getApp } from './app';
 
 interface IServerConfig {
   port: string;
@@ -38,7 +37,7 @@ async function bootstrap(): Promise<void> {
   const logger = container.resolve<Logger>(Services.LOGGER);
 
   const httpServer = createServer(app);
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   createTerminus(httpServer, { healthChecks: { '/liveness': async () => Promise.resolve() }, onSignal: container.resolve('onSignal') });
   const schema = makeExecutableSchema({
     typeDefs: taskSubscriptionTypeDefs,

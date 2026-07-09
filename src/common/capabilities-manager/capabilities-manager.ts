@@ -31,6 +31,7 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
   private getManagerInstance(recordType: RecordType): ICapabilitiesManagerInstance {
     let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
 
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (RecordType[recordType]) {
       default:
         capabilitiesManagerInstance = this.mapServices.RASTER;

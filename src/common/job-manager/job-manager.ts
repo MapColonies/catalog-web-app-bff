@@ -14,7 +14,9 @@ import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import JobManagerCommon from './job-manager-common';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import JobManagerRaster from './job-manager-raster';
 import { IJobManagerService } from './job-manager.interface';
 
@@ -38,6 +40,7 @@ export class JobManager implements JobManagerType {
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     const jobsData = await this.jobrServices.COMMON.getJobs(ctx, params);
     jobsData.forEach((job) => {
+      // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
       switch (job.domain) {
         case Domain.RASTER:
           addRasterJobActions(job);
@@ -108,6 +111,7 @@ export class JobManager implements JobManagerType {
   }
 
   private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
     if (str === JobManagerServiceType.RASTER) {
       return JobManagerServiceType.RASTER;
     } else {
@@ -117,9 +121,9 @@ export class JobManager implements JobManagerType {
 
   private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
     switch (jobManagerServiceType) {
-      case 'COMMON':
+      case JobManagerServiceType.COMMON:
         return this.jobrServices.COMMON;
-      case 'RASTER':
+      case JobManagerServiceType.RASTER:
         return this.jobrServices.RASTER;
       default:
         return this.jobrServices.COMMON;

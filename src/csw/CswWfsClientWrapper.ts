@@ -62,7 +62,6 @@ export class CswWfsClientWrapper {
     this.service = config;
   }
 
-  // eslint-disable-next-line
   public async getRecords(ctx: IContext, opts?: SearchOptions, start?: number, end?: number, resultType?: ResultType): Promise<CSWCatalog> {
     this.logger.info(`[WFS][getRecords] options: ${JSON.stringify(opts)}, start: ${String(start ?? '')}, end: ${String(end ?? '')}`);
 
@@ -87,10 +86,11 @@ export class CswWfsClientWrapper {
       {
         params: getCapabilitesRequest.params,
         headers: getCapabilitesRequest.headers,
-      } as AxiosRequestConfig,
+      },
       ctx
     )) as AxiosResponse;
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = wfsClient200.xmlToJson(response.data);
 
     try {
@@ -151,6 +151,7 @@ export class CswWfsClientWrapper {
           const key = props[i];
           const capabilitiesKey = this.wfsMappings.find((wfsMapping) => wfsMapping.prop === key)?.capabilitiesMapping?.xmlElement;
 
+          // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
           switch (true) {
             case isId(key): {
               newFeature[key] = wfsFeature.title;
@@ -318,7 +319,7 @@ export class CswWfsClientWrapper {
   private async requestExecutor(url: string, method: string, params: AxiosRequestConfig, ctx: IContext): Promise<unknown> {
     try {
       return await requestExecutor(this.service, method, params, ctx);
-    } catch (err) {
+    } catch {
       throw new Error('Failed to execute request to WFS service. Service is unavailable');
     }
   }

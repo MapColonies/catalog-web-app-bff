@@ -1,4 +1,4 @@
-/* eslint-disable import/exports-last, @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars */
 import { GraphQLScalarType } from 'graphql';
 import { ObjectType, Field, registerEnumType } from 'type-graphql';
 import { ProductType } from '@map-colonies/types';

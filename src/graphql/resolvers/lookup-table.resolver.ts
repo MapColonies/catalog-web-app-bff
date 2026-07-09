@@ -71,7 +71,7 @@ export class LookupTablesResolver {
         };
       }
       return Promise.resolve<AxiosResponse<LookupOption[]>>({
-        data: resArr as LookupOption[],
+        data: resArr,
         status: 200,
         statusText: '',
         headers: {},

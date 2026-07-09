@@ -5,6 +5,7 @@ import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
 import { requestExecutor } from '../utils';
 import { IGetFeatureOptions, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import WfsClient from './wfs-client/wfs-client';
 
 @singleton()

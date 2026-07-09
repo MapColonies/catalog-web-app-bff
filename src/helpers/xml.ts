@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { convertToJson, getTraversalObj } from 'fast-xml-parser';
@@ -27,6 +27,7 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
       tileMatrixSet.TileMatrix.map((tileMatrix: { [x: string]: any }) => String(tileMatrix['ows:Identifier']))
     );
   });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const layerList = jsonObj?.Capabilities?.Contents?.Layer?.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
   const capabilityList: Capability[] = layerList?.map((layer: { [x: string]: any }) => ({
     id: layer['ows:Identifier'],

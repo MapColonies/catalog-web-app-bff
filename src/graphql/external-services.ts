@@ -1,7 +1,6 @@
 import { RecordType } from '@map-colonies/mc-model-types';
 import { Field, ObjectType, registerEnumType } from 'type-graphql';
 
-// eslint-disable-next-line import/exports-last
 export enum ServiceType {
   PYCSW = 'PYCSW',
   MAP_SERVER = 'MAP_SERVER',
