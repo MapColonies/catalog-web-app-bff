@@ -106,7 +106,7 @@ const pycswLayerCatalogRecordAspects = {
     fullWidth: true,
     rows: 4,
     isBriefField: {
-      order: 13,
+      order: 14,
     },
   },
   sensors: {
@@ -216,6 +216,9 @@ const pycswLayerCatalogRecordAspects = {
     label: 'field-names.raster.keywords',
     order: 108,
     fullWidth: true,
+    isBriefField: {
+      order: 13,
+    },
   },
   productSubType: {
     label: 'field-names.raster.productSubType',
