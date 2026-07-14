@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ObjectType, registerEnumType } from 'type-graphql';
 import { RasterIngestionJobType, RasterJobType } from '../common/job-manager/job-manager-raster';
 
