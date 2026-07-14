@@ -43,15 +43,21 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): IExportLayerManagerService {
-    switch (recordType) {
-      case RecordType.RECORD_DEM:
-        return this.exportServices.DEM;
+    let exportLayerManagerInstance: IExportLayerManagerService;
+    switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
-        return this.exportServices['3D'];
+        exportLayerManagerInstance = this.exportServices['3D'];
+        break;
+      case RecordType.RECORD_DEM:
+        exportLayerManagerInstance = this.exportServices['DEM'];
+        break;
       case RecordType.RECORD_RASTER:
-        return this.exportServices.RASTER;
+        exportLayerManagerInstance = this.exportServices['RASTER'];
+        break;
       default:
-        throw new Error(`Unsupported record type: ${recordType}`);
+        exportLayerManagerInstance = this.exportServices.RASTER;
+        break;
     }
+    return exportLayerManagerInstance;
   }
 }

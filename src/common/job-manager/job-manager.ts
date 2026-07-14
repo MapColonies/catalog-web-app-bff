@@ -41,13 +41,13 @@ export class JobManager implements JobManagerType {
     const jobsData = await this.jobrServices.COMMON.getJobs(ctx, params);
     jobsData.forEach((job) => {
       switch (job.domain) {
-        case Domain['3D']:
-          break;
         case Domain.RASTER:
           addRasterJobActions(job);
           break;
+        case Domain['3D']:
+          break;
         default:
-          throw new Error(`Unsupported job domain: ${job.domain}`);
+          break;
       }
     });
     return jobsData;

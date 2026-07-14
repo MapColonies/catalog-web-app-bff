@@ -41,15 +41,18 @@ export class CatalogManager implements ICatalogManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): ICatalogManagerService {
-    switch (recordType) {
+    let catalogManagerInstance: ICatalogManagerService;
+    switch (RecordType[recordType]) {
       case RecordType.RECORD_DEM:
-        return this.catalogServices.DEM;
+        catalogManagerInstance = this.catalogServices.DEM;
+        break;
       case RecordType.RECORD_3D:
-        return this.catalogServices['3D'];
-      case RecordType.RECORD_RASTER:
-        return this.catalogServices.RASTER;
+        catalogManagerInstance = this.catalogServices['3D'];
+        break;
       default:
-        throw new Error(`Unsupported record type: ${recordType}`);
+        catalogManagerInstance = this.catalogServices.RASTER;
+        break;
     }
+    return catalogManagerInstance;
   }
 }

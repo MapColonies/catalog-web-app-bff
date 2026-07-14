@@ -84,14 +84,18 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): IStorageExplorerManagerService {
-    switch (recordType) {
+    let storageExplorerManagerInstance: IStorageExplorerManagerService;
+
+    switch (RecordType[recordType]) {
       case RecordType.RECORD_3D:
-        return this.explorerServices['3D'];
-      case RecordType.RECORD_RASTER:
-        return this.explorerServices.RASTER;
+        storageExplorerManagerInstance = this.explorerServices['3D'];
+        break;
       default:
-        throw new Error(`Unsupported record type: ${recordType}`);
+        storageExplorerManagerInstance = this.explorerServices.RASTER;
+        break;
     }
+
+    return storageExplorerManagerInstance;
   }
 
   private transformMetadataJsonToEntity(metadata: CatalogRecordType): CatalogRecordType {

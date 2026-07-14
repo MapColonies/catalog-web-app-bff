@@ -29,11 +29,14 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): ICapabilitiesManagerInstance {
-    switch (recordType) {
-      case RecordType.RECORD_RASTER:
-        return this.mapServices.RASTER;
+    let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
+
+    switch (RecordType[recordType]) {
       default:
-        throw new Error(`Unsupported record type: ${recordType}`);
+        capabilitiesManagerInstance = this.mapServices.RASTER;
+        break;
     }
+
+    return capabilitiesManagerInstance;
   }
 }
