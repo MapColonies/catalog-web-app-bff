@@ -14,9 +14,7 @@ import { Job, Task } from '../../graphql/job';
 import { addRasterJobActions } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import JobManagerCommon from './job-manager-common';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import JobManagerRaster from './job-manager-raster';
 import { IJobManagerService } from './job-manager.interface';
 

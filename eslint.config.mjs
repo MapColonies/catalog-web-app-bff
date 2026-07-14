@@ -20,6 +20,7 @@ export default [
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of' }],
       '@typescript-eslint/switch-exhaustiveness-check': 'off',
       '@typescript-eslint/prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/naming-convention': 'off',
     },
   },
   {

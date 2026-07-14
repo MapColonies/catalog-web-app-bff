@@ -2,7 +2,6 @@ import { container } from 'tsyringe';
 import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import DemHeightsManager from '../../common/dem-heights-manager/dem-heights-manager';
 import { IContext } from '../../common/interfaces';
 import { extractErrorMessage } from '../../utils';

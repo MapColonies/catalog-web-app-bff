@@ -31,7 +31,6 @@ const PRODUCT_TYPE_3D = [
   ProductType.SEMANTIC_MESH,
   ProductType.POINT_CLOUD,
 ];
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const LayerMetadataMixedUnion = createUnionType({
   name: 'LayerMetadataMixed',
   types: () => [Layer3DRecord, LayerRasterRecord, LayerDemRecord, VectorBestRecord, QuantizedMeshBestRecord] as const,
