@@ -40,15 +40,14 @@ export class JobManager implements JobManagerType {
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     const jobsData = await this.jobrServices.COMMON.getJobs(ctx, params);
     jobsData.forEach((job) => {
-      // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
       switch (job.domain) {
+        case Domain['3D']:
+          break;
         case Domain.RASTER:
           addRasterJobActions(job);
           break;
-        case Domain['3D']:
-          break;
         default:
-          break;
+          throw new Error(`Unsupported job domain: ${job.domain}`);
       }
     });
     return jobsData;

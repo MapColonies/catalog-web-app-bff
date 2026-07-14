@@ -149,7 +149,6 @@ export class CSW {
   }
 
   private recordTypeToDomain(recordType: RecordType): Domain {
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (recordType) {
       case RecordType.RECORD_DEM:
         return Domain.DEM;
@@ -193,7 +192,6 @@ export class CSW {
   }
 
   private domainToRecordType(domain: Domain): RecordType {
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (domain) {
       case Domain.DEM:
         return RecordType.RECORD_DEM;
@@ -201,8 +199,10 @@ export class CSW {
         return RecordType.RECORD_3D;
       case Domain.VECTOR:
         return RecordType.RECORD_VECTOR;
-      default:
+      case Domain.RASTER:
         return RecordType.RECORD_RASTER;
+      default:
+        throw new Error(`Unsupported domain: ${domain}`);
     }
   }
 

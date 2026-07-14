@@ -151,7 +151,6 @@ export class CswWfsClientWrapper {
           const key = props[i];
           const capabilitiesKey = this.wfsMappings.find((wfsMapping) => wfsMapping.prop === key)?.capabilitiesMapping?.xmlElement;
 
-          // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
           switch (true) {
             case isId(key): {
               newFeature[key] = wfsFeature.title;

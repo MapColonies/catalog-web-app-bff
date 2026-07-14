@@ -29,15 +29,11 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): ICapabilitiesManagerInstance {
-    let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
-
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-    switch (RecordType[recordType]) {
+    switch (recordType) {
+      case RecordType.RECORD_RASTER:
+        return this.mapServices.RASTER;
       default:
-        capabilitiesManagerInstance = this.mapServices.RASTER;
-        break;
+        throw new Error(`Unsupported record type: ${recordType}`);
     }
-
-    return capabilitiesManagerInstance;
   }
 }

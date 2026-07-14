@@ -43,22 +43,15 @@ export class ExportLayerManager implements IExportLayerManagerService {
   }
 
   private getManagerInstance(recordType: RecordType): IExportLayerManagerService {
-    let exportLayerManagerInstance: IExportLayerManagerService;
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-    switch (RecordType[recordType]) {
-      case RecordType.RECORD_3D:
-        exportLayerManagerInstance = this.exportServices['3D'];
-        break;
+    switch (recordType) {
       case RecordType.RECORD_DEM:
-        exportLayerManagerInstance = this.exportServices['DEM'];
-        break;
+        return this.exportServices.DEM;
+      case RecordType.RECORD_3D:
+        return this.exportServices['3D'];
       case RecordType.RECORD_RASTER:
-        exportLayerManagerInstance = this.exportServices['RASTER'];
-        break;
+        return this.exportServices.RASTER;
       default:
-        exportLayerManagerInstance = this.exportServices.RASTER;
-        break;
+        throw new Error(`Unsupported record type: ${recordType}`);
     }
-    return exportLayerManagerInstance;
   }
 }

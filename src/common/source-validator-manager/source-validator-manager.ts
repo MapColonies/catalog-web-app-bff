@@ -30,21 +30,15 @@ export class SourceValidatorManager implements ISourceInfoService {
   }
 
   private getManagerInstance(recordType: RecordType): ISourceInfoService {
-    let catalogManagerInstance: ISourceInfoService;
-
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-    switch (RecordType[recordType]) {
+    switch (recordType) {
       case RecordType.RECORD_DEM:
-        catalogManagerInstance = this.ingestionServices.DEM;
-        break;
+        return this.ingestionServices.DEM;
       case RecordType.RECORD_3D:
-        catalogManagerInstance = this.ingestionServices['3D'];
-        break;
+        return this.ingestionServices['3D'];
+      case RecordType.RECORD_RASTER:
+        return this.ingestionServices.RASTER;
       default:
-        catalogManagerInstance = this.ingestionServices.RASTER;
-        break;
+        throw new Error(`Unsupported record type: ${recordType}`);
     }
-
-    return catalogManagerInstance;
   }
 }
