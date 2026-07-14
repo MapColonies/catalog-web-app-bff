@@ -202,7 +202,7 @@ export class CSW {
       case Domain.RASTER:
         return RecordType.RECORD_RASTER;
       default:
-        throw new Error(`Unsupported domain: ${domain}`);
+        throw new Error(`Unsupported domain: ${String(domain)}`);
     }
   }
 
