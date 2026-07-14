@@ -43,7 +43,6 @@ export class CatalogManagerRaster implements ICatalogManagerService {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
     this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(record)}`);
-    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     return Promise.reject('Unimplemented service');
   }
 

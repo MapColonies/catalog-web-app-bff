@@ -14,21 +14,18 @@ export class CatalogManagerDem implements ICatalogManagerService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     this.logger.info(`[CatalogManager][DEM][updateStatus] ${stringifyObject(record)}`);
-    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     return Promise.reject('Unimplemented service');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     this.logger.info(`[CatalogManager][DEM][updateMetadata] ${stringifyObject(record)}`);
-    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     return Promise.reject('Unimplemented service');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
     this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(record)}`);
-    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     return Promise.reject('Unimplemented service');
   }
 }

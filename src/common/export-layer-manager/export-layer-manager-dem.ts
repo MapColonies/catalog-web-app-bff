@@ -29,7 +29,6 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }
@@ -43,7 +42,6 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
     });
   }

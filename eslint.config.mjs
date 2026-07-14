@@ -19,6 +19,7 @@ export default [
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of' }],
       '@typescript-eslint/switch-exhaustiveness-check': 'off',
+      '@typescript-eslint/prefer-promise-reject-errors': 'off',
     },
   },
   {
