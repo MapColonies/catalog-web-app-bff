@@ -15,7 +15,6 @@ export enum Services {
   CONFIG = 'IConfig',
   PUBSUB = 'PUBSUB',
   TRACER = 'TRACER',
-  METER = 'METER',
 }
 
 export type CatalogRecordType = LayerMetadataUnionType;

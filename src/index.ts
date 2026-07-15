@@ -8,20 +8,24 @@ import { container } from 'tsyringe';
 import { WebSocketServer } from 'ws';
 import { createTerminus } from '@godaddy/terminus';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
-//import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 import { Logger } from '@map-colonies/js-logger';
-import { Tracing } from '@map-colonies/telemetry';
+import { Tracing } from '@map-colonies/tracing';
 import { DEFAULT_SERVER_PORT, IGNORED_INCOMING_TRACE_ROUTES, IGNORED_OUTGOING_TRACE_ROUTES, Services } from './common/constants';
 import { getWSResolvers } from './graphql/resolvers';
 import { taskSubscriptionTypeDefs } from './graphql/resolvers/task-subscription.resolver';
 
 import { getApp } from './app';
 
-const tracing = new Tracing('app_tracer', [
-  new HttpInstrumentation({ ignoreOutgoingUrls: IGNORED_OUTGOING_TRACE_ROUTES, ignoreIncomingPaths: IGNORED_INCOMING_TRACE_ROUTES }),
-  // new ExpressInstrumentation(),
-]);
+const tracing = new Tracing({
+  autoInstrumentationsConfigMap: {
+    '@opentelemetry/instrumentation-http': {
+      ignoreIncomingRequestHook: (request): boolean =>
+        IGNORED_INCOMING_TRACE_ROUTES.some((route) => request.url !== undefined && route.test(request.url)),
+      ignoreOutgoingRequestHook: (request): boolean =>
+        IGNORED_OUTGOING_TRACE_ROUTES.some((route) => typeof request.path === 'string' && route.test(request.path)),
+    },
+  },
+});
 
 interface IServerConfig {
   port: string;
