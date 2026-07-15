@@ -42,32 +42,27 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     return record;
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<boolean> {
     const data = dataParam as RecordDeleteRaster;
     this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(data)}`);
 
     if (data.approvalCode === this.deleteLayerApprovalCode) {
-      return Promise.reject('The code is right, but the service is unimplemented');
+      await requestExecutor(
+        {
+          url: `${this.service.url}/models/${data.id}`,
+          exposureType: this.service.exposureType,
+        },
+        'DELETE',
+        {
+          data: {
+            id: data.id,
+            approverName: data.approverName,
+          },
+        },
+        ctx
+      );
     }
-
-    return Promise.reject('Unimplemented service');
-
-    // await requestExecutor(
-    //   {
-    //     url: `${this.service.url}/models/${data.id}`,
-    //     exposureType: this.service.exposureType,
-    //   },
-    //   'DELETE',
-    //   {
-    //     data: {
-    //       approverName: data.approverName,
-    //       approvalCode: data.approvalCode
-    //     }
-    //   },
-    //   ctx
-    // );
-    // return true;
+    return true;
   }
 
   private buildPayload(data: RecordUpdatePartial, isMetadata = false): AxiosRequestConfig {
