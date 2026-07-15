@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { get } from 'lodash';
 import { container } from 'tsyringe';
 import bboxPolygon from '@turf/bbox-polygon';
-import { BBox } from '@turf/helpers/dist/js/lib/geojson';
+import { BBox } from '@turf/helpers';
 import { ResultType } from '@map-colonies/csw-client';
 import { Logger } from '@map-colonies/js-logger';
 import { IPropWFSMapping } from '@map-colonies/mc-model-types';

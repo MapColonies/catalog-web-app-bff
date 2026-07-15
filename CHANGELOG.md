@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.3...v4.2.4) (2026-07-07)
+
+
+### Bug Fixes
+
+* raster keywords as part of ingestion ([#312](https://github.com/MapColonies/catalog-web-app-bff/issues/312)) ([6e40a2b](https://github.com/MapColonies/catalog-web-app-bff/commit/6e40a2b05b609821bd893826dd46c73586d9f7d7))
+
+## [4.2.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.2...v4.2.3) (2026-07-05)
+
+
+### Bug Fixes
+
+* gdal dlopen error ([001cc3b](https://github.com/MapColonies/catalog-web-app-bff/commit/001cc3bdece9e93c2b51ab534cc871a74cad7694))
+
+## [4.2.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.1...v4.2.2) (2026-07-05)
+
+
+### Bug Fixes
+
+* deployment ([1b7dbc3](https://github.com/MapColonies/catalog-web-app-bff/commit/1b7dbc37c7fd83a7da5ef057cccc1bede0868413))
+
+## [4.2.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.0...v4.2.1) (2026-07-05)
+
+
+### Bug Fixes
+
+* test ([#307](https://github.com/MapColonies/catalog-web-app-bff/issues/307)) ([089cbaf](https://github.com/MapColonies/catalog-web-app-bff/commit/089cbaf2b868deaf6f4851b269ab51288cc7528a))
+
 ## [4.2.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.1.3...v4.2.0) (2026-06-25)
 
 

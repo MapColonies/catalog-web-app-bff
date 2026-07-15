@@ -4,9 +4,9 @@ import { Tracing } from '@map-colonies/telemetry';
 import { registerExternalValues } from './containerConfig';
 import { ServerBuilder } from './serverBuilder';
 
-function getApp(tracing: Tracing): Application {
+async function getApp(tracing: Tracing): Promise<Application> {
   registerExternalValues(tracing);
-  const app = container.resolve(ServerBuilder).build();
+  const app = await container.resolve(ServerBuilder).build();
   return app;
 }
 

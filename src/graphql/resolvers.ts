@@ -20,7 +20,7 @@ import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver
 import { DummyForTypesOnClientResolver } from './resolvers/dummy-for-types-on-client.resolver';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function getResolvers(): NonEmptyArray<Function> | NonEmptyArray<string> {
+export function getResolvers(): NonEmptyArray<Function> {
   return [
     LayerMetadataMixedResolver,
     EntityDescriptorResolver,

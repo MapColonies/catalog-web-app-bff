@@ -19,7 +19,7 @@ export default function searchMockData(path: string, mockData: Record<string, Fi
     path = path.slice(0, omitLastIdx);
   }
 
-  const selected = (mockData as Record<string, unknown>)[path] as typeof rootDir[0];
+  const selected = (mockData as Record<string, unknown>)[path] as (typeof rootDir)[0];
 
   if (typeof selected !== 'undefined' && 'childrenIds' in selected) {
     const childs = selected.childrenIds?.map((child) => {
