@@ -111,7 +111,7 @@ env:
   basePath: bff
   openapiFilePath: ./openapi3.yaml
   adminPassword: ''
-  requestTimeout: 30000
+  requestTimeout: 25000
   cswRasterUrl: ''
   csw3DUrl: ''
   cswDEMUrl: ''
