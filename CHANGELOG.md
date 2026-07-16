@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.5](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.4...v4.2.5) (2026-07-16)
+
+
+### Helm Changes
+
+* decrease request timeout default value from 30000 to 25000 ms ([dd4590f](https://github.com/MapColonies/catalog-web-app-bff/commit/dd4590f36d7124d9506d3fd209dc29093c6e0d00))
+
 ## [4.2.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.3...v4.2.4) (2026-07-07)
 
 
