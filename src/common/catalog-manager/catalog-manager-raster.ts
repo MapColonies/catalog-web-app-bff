@@ -55,7 +55,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
         'DELETE',
         {
           data: {
-            approverName: data.approverName,
+            approver: data.approverName,
           },
         },
         ctx
