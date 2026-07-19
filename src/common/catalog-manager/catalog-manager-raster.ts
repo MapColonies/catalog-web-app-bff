@@ -42,7 +42,7 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     return record;
   }
 
-  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<boolean> {
+  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
     const data = dataParam as RecordDeleteRaster;
     this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(data)}`);
 
@@ -60,8 +60,9 @@ export class CatalogManagerRaster implements ICatalogManagerService {
         },
         ctx
       );
+    } else {
+      throw new Error('BFF: Wrong Approval Code');
     }
-    return true;
   }
 
   private buildPayload(data: RecordUpdatePartial, isMetadata = false): AxiosRequestConfig {

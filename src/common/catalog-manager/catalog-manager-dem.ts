@@ -24,7 +24,7 @@ export class CatalogManagerDem implements ICatalogManagerService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async deleteLayer(data: RecordDeleteData /* should be specific data type, like RecordDeleteDEM */, ctx: IContext): Promise<boolean> {
+  public async deleteLayer(data: RecordDeleteData /* should be specific data type, like RecordDeleteDEM */, ctx: IContext): Promise<void> {
     this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(data)}`);
     return Promise.reject('Unimplemented service');
   }
