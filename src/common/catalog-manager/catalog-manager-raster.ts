@@ -49,13 +49,12 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     if (data.approvalCode === this.deleteLayerApprovalCode) {
       await requestExecutor(
         {
-          url: `${this.service.url}/models/${data.id}`,
+          url: `${this.service.url}/ingestion/${data.id}`,
           exposureType: this.service.exposureType,
         },
         'DELETE',
         {
           data: {
-            id: data.id,
             approverName: data.approverName,
           },
         },
