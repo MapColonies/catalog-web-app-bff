@@ -39,7 +39,6 @@ export class StreamingController {
         ctx
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Object.entries(response.headers).forEach(([key, value]) => {
         res.setHeader(key, value as string);
       });
@@ -75,7 +74,6 @@ export class StreamingController {
         ctx
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Object.entries(response.headers).forEach(([key, value]) => {
         res.setHeader(key, value as string);
       });
@@ -128,7 +126,6 @@ export class StreamingController {
         try {
           const chunks: Buffer[] = [];
           for await (const chunk of data) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             chunks.push(chunk);
           }
           const buffer = Buffer.concat(chunks);

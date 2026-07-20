@@ -147,7 +147,6 @@ export class TaskResolver {
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this.groupsMapToArray(groups, REMOVE_KEYS);
   };
 }

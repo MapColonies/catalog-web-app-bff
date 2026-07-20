@@ -26,7 +26,6 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
       tileMatrixSet.TileMatrix.map((tileMatrix: { [x: string]: any }) => String(tileMatrix['ows:Identifier']))
     );
   });
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const layerList = jsonObj?.Capabilities?.Contents?.Layer?.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
   const capabilityList: Capability[] = layerList?.map((layer: { [x: string]: any }) => ({
     id: layer['ows:Identifier'],

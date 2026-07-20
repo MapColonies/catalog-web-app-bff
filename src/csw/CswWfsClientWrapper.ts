@@ -90,7 +90,6 @@ export class CswWfsClientWrapper {
       ctx
     )) as AxiosResponse;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const data = wfsClient200.xmlToJson(response.data);
 
     try {
