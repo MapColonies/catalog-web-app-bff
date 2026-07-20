@@ -116,6 +116,7 @@ env:
   csw3DUrl: ''
   cswDEMUrl: ''
   catalogServiceRasterUrl: ''
+  deleteLayerApprovalCode: ''
   catalogService3DUrl: ''
   catalogServiceDEMUrl: NOT_IMPLEMENTED
   ingestionServiceRasterUrl: ''

@@ -2,7 +2,7 @@ import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { Domain } from '../../graphql/domain';
-import { RecordDeletePartial, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { CatalogManager3D } from './catalog-manager-3d';
@@ -34,10 +34,9 @@ export class CatalogManager implements ICatalogManagerService {
     return updatedData;
   }
 
-  public async deleteLayer(record: RecordDeletePartial, ctx: IContext): Promise<RecordDeletePartial> {
-    const catalogManagerInstance = this.getManagerInstance(record.type);
-    const deletedLayer = await catalogManagerInstance.deleteLayer(record, ctx);
-    return deletedLayer;
+  public async deleteLayer(data: RecordDeleteData, ctx: IContext): Promise<void> {
+    const catalogManagerInstance = this.getManagerInstance(data.type);
+    await catalogManagerInstance.deleteLayer(data, ctx);
   }
 
   private getManagerInstance(recordType: RecordType): ICatalogManagerService {

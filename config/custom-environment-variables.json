@@ -30,6 +30,7 @@
   },
   "rasterIngestionFilesStructure": "RASTER_INGESTION_FILES_STRUCTURE",
   "adminPassword": "ADMIN_PASSWORD",
+  "deleteLayerApprovalCode": "654321",
   "requestTimeout": "REQUEST_TIMEOUT",
   "csw": {
     "raster": {
