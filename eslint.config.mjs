@@ -22,6 +22,7 @@ export default [
       '@typescript-eslint/prefer-promise-reject-errors': 'off',
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     },
   },
   {

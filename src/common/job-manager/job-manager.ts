@@ -108,7 +108,6 @@ export class JobManager implements JobManagerType {
   }
 
   private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
     if (str === JobManagerServiceType.RASTER) {
       return JobManagerServiceType.RASTER;
     } else {

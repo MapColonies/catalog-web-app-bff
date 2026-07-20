@@ -58,7 +58,6 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
 }
 
 function arrangeCategories(categories: CategoryConfig[]): CategoryConfig[] {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
   const fromIndex = categories.findIndex((cat) => cat.category === FIRST_CATEGORY);
   const category = categories[fromIndex];
   const arrangedArr = [...categories];
