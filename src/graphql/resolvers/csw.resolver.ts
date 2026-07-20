@@ -150,10 +150,9 @@ export class LayerMetadataMixedResolver {
         END
       );
 
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-      const firstRecord: LayerMetadataUnionType | null = Object.values(data).find((d: CSWCatalog) => d.records != undefined && d.records.length > 0)
-        ?.records?.[0];
-      /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+      const catalogs = Object.values(data) as CSWCatalog[];
+      const catalog = catalogs.find((d): d is CSWCatalog & { records: LayerMetadataUnionType[] } => Array.isArray(d.records) && d.records.length > 0);
+      const firstRecord = catalog?.records[0] ?? null;
 
       return firstRecord;
     } catch (err) {
