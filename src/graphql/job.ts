@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GraphQLScalarType } from 'graphql';
 import { ObjectType, Field, registerEnumType } from 'type-graphql';
 import { ProductType } from '@map-colonies/types';
@@ -144,5 +143,5 @@ export class Job {
   public availableActions?: AvailableActions;
 }
 
-const ProductTypeRegister = registerEnumType(ProductType, { name: 'ProductType' }); // lgtm [js/unused-local-variable]
-const StatusRegister = registerEnumType(Status, { name: 'Status' }); // lgtm [js/unused-local-variable]
+registerEnumType(ProductType, { name: 'ProductType' }); // lgtm [js/unused-local-variable]
+registerEnumType(Status, { name: 'Status' }); // lgtm [js/unused-local-variable]
