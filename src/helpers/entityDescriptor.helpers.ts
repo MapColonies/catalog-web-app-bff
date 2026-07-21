@@ -14,7 +14,7 @@ import categoriesTranslation from '../common/ui-aspects/category.trsanslation';
 import { CategoryConfig, EntityDescriptor, FieldConfig, FilterableFieldConfig } from '../graphql/entityDescriptor';
 import { Group, groupBy } from './group-by';
 
-const FIRST_CATEGORY = 'MAIN';
+const FIRST_CATEGORY = FieldCategory.MAIN;
 
 function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComplexType?: string): FieldConfig {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
