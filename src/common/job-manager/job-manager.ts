@@ -109,7 +109,7 @@ export class JobManager implements JobManagerType {
   }
 
   private convertStringToJobManagerServiceType(str: string): JobManagerServiceType {
-    if (str === JobManagerServiceType.RASTER) {
+    if (str === (JobManagerServiceType.RASTER as string)) {
       return JobManagerServiceType.RASTER;
     } else {
       return JobManagerServiceType.COMMON;
