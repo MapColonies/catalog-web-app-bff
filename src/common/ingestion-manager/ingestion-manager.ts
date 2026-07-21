@@ -40,7 +40,6 @@ export class IngestionManager implements IIngestionManagerService {
     return null;
   }
 
-  /* eslint-disable */
   private cleanAutoGenerateField(record: IngestionData): IngestionData {
     const cleanRecord: IngestionData = { ...record };
 
@@ -74,7 +73,6 @@ export class IngestionManager implements IIngestionManagerService {
 
     return cleanRecord;
   }
-  /* eslint-enable */
 
   private getManagerInstance(recordType: RecordType): IIngestionManagerService {
     let catalogManagerInstance: IIngestionManagerService;

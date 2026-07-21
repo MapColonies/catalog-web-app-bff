@@ -86,10 +86,12 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
 
     if (targetFileType != undefined) {
       filteredRes = res.filter((file) => {
-        return fileConfig?.allowedExt.some((ext) => {
-          const isExist = path.extname(file.name) === ext || file.isDir;
-          return isExist;
-        });
+        return (
+          fileConfig?.allowedExt.some((ext) => {
+            const isExist = path.extname(file.name) === ext || file.isDir;
+            return isExist;
+          }) ?? false
+        );
       });
     }
 
