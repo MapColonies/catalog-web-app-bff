@@ -44,9 +44,9 @@ export class IngestionManager implements IIngestionManagerService {
     const cleanRecord: IngestionData = { ...record };
 
     const recordTypeToPycswMap: Record<string, typeof PycswLayerCatalogRecord | typeof Pycsw3DCatalogRecord | typeof PycswDemCatalogRecord> = {
-      RECORD_RASTER: PycswLayerCatalogRecord,
-      RECORD_3D: Pycsw3DCatalogRecord,
-      RECORD_DEM: PycswDemCatalogRecord,
+      [RecordType.RECORD_RASTER]: PycswLayerCatalogRecord,
+      [RecordType.RECORD_3D]: Pycsw3DCatalogRecord,
+      [RecordType.RECORD_DEM]: PycswDemCatalogRecord,
     };
 
     const { categories: recordDescriptorCategories } = buildDescriptor(recordTypeToPycswMap[record.type as string]);

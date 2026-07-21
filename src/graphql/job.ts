@@ -4,6 +4,7 @@ import { ProductType } from '@map-colonies/types';
 
 export const parametersObject = new GraphQLScalarType({ name: 'parametersObject' });
 
+/* eslint-disable @typescript-eslint/naming-convention -- member names are the public GraphQL enum values (registerEnumType); renaming breaks existing clients */
 export enum Status {
   Pending = 'Pending',
   InProgress = 'In-Progress',
@@ -13,6 +14,7 @@ export enum Status {
   Aborted = 'Aborted',
   Suspended = 'Suspended',
 }
+/* eslint-enable @typescript-eslint/naming-convention */
 
 @ObjectType()
 export class Task {

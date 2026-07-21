@@ -2,6 +2,7 @@ import { ProductType } from '@map-colonies/types';
 import { Job, Status } from '../../../job';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable @typescript-eslint/naming-convention -- mock properties mirror an external raster-metadata provider's field names */
 const MOCK_JOBS: Job[] = [
   // {
   //   id: 'b10eda3c-cc87-4607-bbbe-36df81a4a5a4',
