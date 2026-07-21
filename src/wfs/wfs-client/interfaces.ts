@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Feature } from 'geojson';
 
 interface IDescribeFeatureElement {

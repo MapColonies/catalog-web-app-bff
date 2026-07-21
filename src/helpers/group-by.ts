@@ -1,5 +1,5 @@
 /* eslint-disable */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 // @ts-nocheck
 export const resolveProperty = (obj: any, property: string): any =>
   property.split('.').reduce((result, prop) => (result ? result[prop] : undefined), obj);

@@ -34,7 +34,7 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
       ...filterableConfig,
       validation: {
         ...(filterableConfig.validation ?? {}),
-        pattern: restFieldConfigProps.validation?.find((validation) => validation.pattern)?.pattern,
+        pattern: restFieldConfigProps.validation?.find((validation) => validation.pattern != undefined && validation.pattern !== '')?.pattern,
       },
     } as FilterableFieldConfig;
   }
@@ -43,11 +43,11 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
   return {
     fieldName: prop,
     label: '**** NO TRANSLATION KEY ****',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
     ...uiAspectFieldConfig,
     ...restFieldConfigProps,
     validation: [...(get(uiAspectFieldConfig, 'validation', []) as []), ...(get(restFieldConfigProps, 'validation', []) as [])],
-    // eslint-disable-next-line
+
     isRequired:
       restFieldConfigProps.validation !== undefined &&
       // eslint-disable-next-line

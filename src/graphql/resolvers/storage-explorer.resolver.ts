@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IConfig } from 'config';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, FieldResolver, Root, Ctx } from 'type-graphql';

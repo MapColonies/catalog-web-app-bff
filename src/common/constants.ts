@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import he from 'he';
+import { decode } from 'he';
 import { Status } from '../graphql/job';
 import { LayerMetadataUnionType } from '../graphql/resolvers/csw.resolver';
 
@@ -18,7 +15,6 @@ export enum Services {
   CONFIG = 'IConfig',
   PUBSUB = 'PUBSUB',
   TRACER = 'TRACER',
-  METER = 'METER',
 }
 
 export type CatalogRecordType = LayerMetadataUnionType;
@@ -90,8 +86,8 @@ export const xmlParserOptions = {
     name === 'ResourceURL' ||
     name === 'TileMatrixLimits' ||
     name === 'TileMatrixSet',
-  attrValueProcessor: (val: string): string => he.decode(val, { isAttributeValue: true }),
-  tagValueProcessor: (val: string): string => he.decode(val),
+  attrValueProcessor: (val: string): string => decode(val, { isAttributeValue: true }),
+  tagValueProcessor: (val: string): string => decode(val),
   alwaysCreateTextNode: false,
 };
 

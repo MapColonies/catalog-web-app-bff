@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { container } from 'tsyringe';
 import { Resolver, Query } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
@@ -16,7 +15,6 @@ export class EntityDescriptorResolver {
     this.logger = container.resolve(Services.LOGGER);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [EntityDescriptor])
   public async entityDescriptors(): Promise<EntityDescriptor[]> {
     try {

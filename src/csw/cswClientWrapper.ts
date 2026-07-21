@@ -49,7 +49,6 @@ export class CswClientWrapper {
   public async getRecordsById(idList: string[], ctx: IContext): Promise<CatalogRecordType[]> {
     const cswClient = this.getCswClient(ctx);
 
-    // eslint-disable-next-line
     let data = (await cswClient.GetRecordsById(this.outputSchema, idList))?.[this.typename];
     if (data === undefined) {
       return [];
@@ -62,7 +61,6 @@ export class CswClientWrapper {
   public async getDomain(domain: string, ctx: IContext): Promise<string[]> {
     const cswClient = this.getCswClient(ctx);
 
-    // eslint-disable-next-line
     let domainResp = (await cswClient.GetDomain(domain))?.['csw:GetDomainResponse'];
     if (domainResp === undefined) {
       return [];
@@ -89,14 +87,12 @@ export class CswClientWrapper {
 
           switch (SHOULD_SPECIAL_TREAT_FIELD) {
             case isFootprint(key): {
-              // eslint-disable-next-line
               return JSON.parse(val as string);
             }
             case isLayerPolygonParts(key): {
               switch (recordType) {
                 case RecordType.RECORD_RASTER:
                 case RecordType.RECORD_DEM:
-                  // eslint-disable-next-line
                   return JSON.parse(val as string);
                 default:
                   return {};
@@ -105,7 +101,6 @@ export class CswClientWrapper {
             case isDiscrete(key): {
               switch (recordType) {
                 case RecordType.RECORD_RASTER:
-                  // eslint-disable-next-line
                   return JSON.parse(val as string);
                 default:
                   return undefined;
@@ -113,7 +108,7 @@ export class CswClientWrapper {
             }
             case isLinks(key): {
               const linksArr = Array.isArray(val) ? val : [val];
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
               const processedLinks = linksArr.map((item: any): Link => {
                 return {
                   protocol: get(item, '$.scheme') as string,
@@ -143,7 +138,7 @@ export class CswClientWrapper {
               // Python booleans notations are capitalized, we should parse it to JS notation.
               if (typeof val === 'string') {
                 const isBooleanValue = ['True', 'False'].includes(val);
-                // eslint-disable-next-line @typescript-eslint/naming-convention
+
                 const pythonBooleanStringMap: Record<string, boolean> = { True: true, False: false };
 
                 if (isBooleanValue) {
@@ -161,7 +156,7 @@ export class CswClientWrapper {
       },
       []
     );
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
     //@ts-ignore
     return cswParsedArray;
   };

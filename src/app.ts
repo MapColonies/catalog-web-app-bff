@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Application } from 'express';
-import { Tracing } from '@map-colonies/telemetry';
+import { Tracing } from '@map-colonies/tracing';
 import { registerExternalValues } from './containerConfig';
 import { ServerBuilder } from './serverBuilder';
 

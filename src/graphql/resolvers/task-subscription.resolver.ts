@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { PubSub } from 'graphql-subscriptions';
 import { IResolvers } from '@graphql-tools/utils';
 import { container } from 'tsyringe';

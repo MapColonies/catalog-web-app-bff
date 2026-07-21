@@ -44,7 +44,7 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('[Streaming][getZipShapefile][ERROR]', streamErr.message);
+        this.logger.error('[Streaming][getZipShapefile][ERROR]: %s', streamErr.message);
         res.destroy(streamErr);
       });
 
@@ -79,7 +79,7 @@ export class StreamingController {
       });
 
       response.data.on('error', (streamErr) => {
-        this.logger.error('[Streaming][getStreamFile][ERROR]', streamErr.message);
+        this.logger.error('[Streaming][getStreamFile][ERROR]: %s', streamErr.message);
         res.destroy(streamErr);
       });
 
@@ -133,7 +133,7 @@ export class StreamingController {
 
           errorMessage = (parsed.message as string | undefined) ?? JSON.stringify(parsed);
         } catch (streamParseErr) {
-          this.logger.error('[Streaming][parse][ERROR]', streamParseErr);
+          this.logger.error({ err: streamParseErr }, '[Streaming][parse][ERROR]');
           errorMessage = 'Unexpected response stream received';
         }
       } else if (typeof data === 'string') {

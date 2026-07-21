@@ -45,7 +45,7 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     const result = (!isEmpty(res.data) ? res.data : []) as Job[];
     return result;
   }
@@ -65,7 +65,7 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     const result = (!isEmpty(res.data) ? res.data : []) as Job;
     return result;
   }
@@ -91,7 +91,7 @@ export default class JobManagerCommon implements IJobManagerService {
       },
       ctx
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
     return 'ok';
   }
 

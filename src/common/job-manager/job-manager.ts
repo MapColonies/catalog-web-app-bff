@@ -117,9 +117,9 @@ export class JobManager implements JobManagerType {
 
   private getManagerInstance(jobManagerServiceType: JobManagerServiceType): IJobManagerService {
     switch (jobManagerServiceType) {
-      case 'COMMON':
+      case JobManagerServiceType.COMMON:
         return this.jobrServices.COMMON;
-      case 'RASTER':
+      case JobManagerServiceType.RASTER:
         return this.jobrServices.RASTER;
       default:
         return this.jobrServices.COMMON;

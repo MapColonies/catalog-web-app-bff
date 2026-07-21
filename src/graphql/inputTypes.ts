@@ -55,7 +55,7 @@ export class FilterField extends FilterFieldCswClient {
   public gteq?: string;
   @Field({ nullable: true })
   public lteq?: string;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   @Field((type) => [String, String], { nullable: true })
   public in?: [string, string];
   @Field({ nullable: true })
@@ -73,11 +73,9 @@ export class SortField extends SortFieldCswClient {
 
 @InputType()
 export class SearchOptions {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [FilterField], { nullable: true })
   public filter?: FilterField[];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field((type) => [SortField], { nullable: true })
   public sort?: SortField[];
 }

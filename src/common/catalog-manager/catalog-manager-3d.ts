@@ -41,7 +41,7 @@ export class CatalogManager3D implements ICatalogManagerService {
   }
 
   public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
-    const data = dataParam as RecordDelete3D;
+    const data = dataParam;
     this.logger.info(`[CatalogManager][3D][deleteLayer] ${stringifyObject(data)}`);
     await requestExecutor(
       {

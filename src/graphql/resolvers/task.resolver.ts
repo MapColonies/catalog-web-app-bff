@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IConfig } from 'config';
-import moment from 'moment';
+import moment, { max, min } from 'moment';
 import { container } from 'tsyringe';
 import { Resolver, Query, Arg, Ctx } from 'type-graphql';
 import { Logger } from '@map-colonies/js-logger';
@@ -25,7 +25,6 @@ export class TaskResolver {
     this.jobManager = container.resolve(JobManager);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((type) => [TasksGroup])
   public async tasks(
     @Arg('params', { nullable: true })
@@ -88,12 +87,12 @@ export class TaskResolver {
       };
 
       for (const { created, updated } of taskGroup) {
-        dates.createdDates.push(moment(created as Date));
-        dates.updatedDates.push(moment(updated as Date));
+        dates.createdDates.push(moment(created));
+        dates.updatedDates.push(moment(updated));
       }
 
-      dates.minDate = moment.min(dates.createdDates as unknown as moment.Moment[]);
-      dates.maxDate = moment.max(dates.updatedDates as unknown as moment.Moment[]);
+      dates.minDate = min(dates.createdDates);
+      dates.maxDate = max(dates.updatedDates);
 
       const groupRepresentor: TasksGroup = taskGroup[0];
 

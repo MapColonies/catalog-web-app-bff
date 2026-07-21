@@ -84,7 +84,7 @@ export class WfsResolver {
       const featureTypesConfig = JSON.parse(this.config.get('wfsServicesConfig')) as IFeatureTypesConfigs;
       const featureDescFromConfig: IFeatureTypesConfigs = {};
       for (const [key, val] of Object.entries(defaultFeaturesConfigs)) {
-        featureDescFromConfig[key] = { ...val, ...((featureTypesConfig[key] as Record<string, unknown> | undefined) ?? {}) };
+        featureDescFromConfig[key] = { ...val, ...(featureTypesConfig[key] ?? {}) };
       }
       return featureDescFromConfig;
     } catch (err) {

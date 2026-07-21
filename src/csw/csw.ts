@@ -199,8 +199,10 @@ export class CSW {
         return RecordType.RECORD_3D;
       case Domain.VECTOR:
         return RecordType.RECORD_VECTOR;
-      default:
+      case Domain.RASTER:
         return RecordType.RECORD_RASTER;
+      default:
+        throw new Error(`[BFF][CSW][domainToRecordType] Unsupported domain: ${String(domain)}`);
     }
   }
 

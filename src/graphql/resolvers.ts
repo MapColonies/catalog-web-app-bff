@@ -1,4 +1,5 @@
 import { NonEmptyArray } from 'type-graphql';
+import type { ClassType } from 'type-graphql';
 import { IResolvers } from '@graphql-tools/utils';
 import { CapabilitiesResolver } from './resolvers/capabilities.resolver';
 import { LayerMetadataMixedResolver } from './resolvers/csw.resolver';
@@ -19,8 +20,7 @@ import { SourceValidationResolver } from './resolvers/source-validation.resolver
 import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver';
 import { DummyForTypesOnClientResolver } from './resolvers/dummy-for-types-on-client.resolver';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function getResolvers(): NonEmptyArray<Function> {
+export function getResolvers(): NonEmptyArray<ClassType> {
   return [
     LayerMetadataMixedResolver,
     EntityDescriptorResolver,
