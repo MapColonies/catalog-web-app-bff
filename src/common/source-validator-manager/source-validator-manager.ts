@@ -33,15 +33,16 @@ export class SourceValidatorManager implements ISourceInfoService {
     let catalogManagerInstance: ISourceInfoService;
 
     switch (RecordType[recordType]) {
-      case RecordType.RECORD_DEM:
-        catalogManagerInstance = this.ingestionServices.DEM;
-        break;
       case RecordType.RECORD_3D:
         catalogManagerInstance = this.ingestionServices['3D'];
         break;
-      default:
+      case RecordType.RECORD_RASTER:
         catalogManagerInstance = this.ingestionServices.RASTER;
         break;
+      case RecordType.RECORD_DEM:
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][SourceValidatorManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
 
     return catalogManagerInstance;

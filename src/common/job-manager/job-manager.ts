@@ -44,6 +44,7 @@ export class JobManager implements JobManagerType {
           break;
         case Domain['3D']:
           break;
+        case undefined:
         default:
           break;
       }

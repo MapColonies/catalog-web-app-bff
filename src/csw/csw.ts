@@ -156,8 +156,11 @@ export class CSW {
         return Domain['3D'];
       case RecordType.RECORD_VECTOR:
         return Domain.VECTOR;
-      default:
+      case RecordType.RECORD_RASTER:
         return Domain.RASTER;
+      case RecordType.RECORD_ALL:
+      default:
+        throw new Error(`[BFF][CSW][recordTypeToDomain]: Requested type ${recordType} not mapped to any domain`);
     }
   }
 

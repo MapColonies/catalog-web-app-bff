@@ -54,9 +54,9 @@ export class ExportLayerManager implements IExportLayerManagerService {
       case RecordType.RECORD_RASTER:
         exportLayerManagerInstance = this.exportServices['RASTER'];
         break;
-      default:
-        exportLayerManagerInstance = this.exportServices.RASTER;
-        break;
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][ExportLayerManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
     return exportLayerManagerInstance;
   }

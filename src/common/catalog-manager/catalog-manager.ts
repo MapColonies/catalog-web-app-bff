@@ -48,9 +48,12 @@ export class CatalogManager implements ICatalogManagerService {
       case RecordType.RECORD_3D:
         catalogManagerInstance = this.catalogServices['3D'];
         break;
-      default:
+      case RecordType.RECORD_RASTER:
         catalogManagerInstance = this.catalogServices.RASTER;
         break;
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][CatalogManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
     return catalogManagerInstance;
   }
