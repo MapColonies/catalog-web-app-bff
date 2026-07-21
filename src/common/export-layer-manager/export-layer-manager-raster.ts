@@ -1,5 +1,6 @@
 import { IConfig } from 'config';
 import { Logger } from '@map-colonies/js-logger';
+import { UNIMPLEMENTED_SERVICE } from '../../constants';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -19,7 +20,7 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][Raster][getEstimatedSize] ${stringifyObject(data)}`);
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
+      setTimeout(() => reject(new Error(`[BFF][ExportLayerManagerRaster][getEstimatedSize] ${UNIMPLEMENTED_SERVICE}`)), TIMEOUT);
     });
   }
 
