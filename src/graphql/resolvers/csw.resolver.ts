@@ -277,7 +277,6 @@ export class LayerMetadataMixedResolver {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((type) => String)
   public async deleteRasterLayer(
     @Arg('data')

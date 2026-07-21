@@ -40,7 +40,6 @@ export class IngestionManager implements IIngestionManagerService {
     return null;
   }
 
-  /* eslint-disable */
   private cleanAutoGenerateField(record: IngestionData): IngestionData {
     const cleanRecord: IngestionData = { ...record };
 
@@ -74,7 +73,6 @@ export class IngestionManager implements IIngestionManagerService {
 
     return cleanRecord;
   }
-  /* eslint-enable */
 
   private getManagerInstance(recordType: RecordType): IIngestionManagerService {
     let catalogManagerInstance: IIngestionManagerService;
@@ -86,9 +84,12 @@ export class IngestionManager implements IIngestionManagerService {
       case RecordType.RECORD_3D:
         catalogManagerInstance = this.ingestionServices['3D'];
         break;
-      default:
+      case RecordType.RECORD_RASTER:
         catalogManagerInstance = this.ingestionServices.RASTER;
         break;
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][IngestionManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
 
     return catalogManagerInstance;

@@ -32,9 +32,14 @@ export class CapabilitiesManager implements ICapabilitiesManagerService {
     let capabilitiesManagerInstance: ICapabilitiesManagerInstance;
 
     switch (RecordType[recordType]) {
-      default:
+      case RecordType.RECORD_RASTER:
         capabilitiesManagerInstance = this.mapServices.RASTER;
         break;
+      case RecordType.RECORD_3D:
+      case RecordType.RECORD_DEM:
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][CapabilitiesManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
 
     return capabilitiesManagerInstance;

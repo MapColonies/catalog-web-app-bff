@@ -90,9 +90,13 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
       case RecordType.RECORD_3D:
         storageExplorerManagerInstance = this.explorerServices['3D'];
         break;
-      default:
+      case RecordType.RECORD_RASTER:
         storageExplorerManagerInstance = this.explorerServices.RASTER;
         break;
+      case RecordType.RECORD_DEM:
+      case RecordType.RECORD_VECTOR:
+      case RecordType.RECORD_ALL:
+        throw new Error(`[BFF][StorageExplorerManager][getManagerInstance]: Requested instance ${RecordType[recordType]} not supported`);
     }
 
     return storageExplorerManagerInstance;
@@ -105,6 +109,7 @@ export class StorageExplorerManager implements IStorageExplorerManagerService {
     const SHOULD_SPECIAL_TREAT_FIELD = true;
 
     for (const [fieldName, val] of Object.entries(metadata)) {
+      // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check -- switch(true) guard idiom; case is a boolean-returning predicate, not a literal member
       switch (SHOULD_SPECIAL_TREAT_FIELD) {
         case isDate(fieldName):
           metadataWithFakeId[fieldName] = new Date(val as string);

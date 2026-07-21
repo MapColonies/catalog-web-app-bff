@@ -150,6 +150,7 @@ export class CswWfsClientWrapper {
           const key = props[i];
           const capabilitiesKey = this.wfsMappings.find((wfsMapping) => wfsMapping.prop === key)?.capabilitiesMapping?.xmlElement;
 
+          // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check -- switch(true) guard idiom; cases are boolean-returning predicates, not literal members
           switch (true) {
             case isId(key): {
               newFeature[key] = wfsFeature.title;
