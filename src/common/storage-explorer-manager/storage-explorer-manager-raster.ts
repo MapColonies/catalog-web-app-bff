@@ -224,7 +224,6 @@ export class StorageExplorerManagerRaster implements IStorageExplorerManagerServ
     return res.data as AxiosResponse;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<LayerRasterRecord> {
     this.logger.info(`[StorageExplorer][Raster][resolveMetadataAsModel] ${stringifyObject({ metadata })}`);
 

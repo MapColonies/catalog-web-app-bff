@@ -21,7 +21,6 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
     this.service = this.config.get('exportLayerServices.dem');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][DEM][getEstimatedSize] ${stringifyObject(data)}`);
 
@@ -34,7 +33,6 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
     this.logger.info(`[ExportLayer][DEM][getFreeDiskSpace] ${stringifyObject(data)}`);
 
@@ -47,7 +45,6 @@ export class ExportLayerManagerDEM implements IExportLayerManagerService {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
     this.logger.info(`[ExportLayer][DEM][triggerExportTask] ${stringifyObject(data)}`);
 

@@ -44,7 +44,6 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
   }
 
   private buildPayload(data: Ingestion3DData): AxiosRequestConfig {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...metadata } = data.metadata;
     const payloadData = {
       modelPath: absolutePathToNfs(data.directory),

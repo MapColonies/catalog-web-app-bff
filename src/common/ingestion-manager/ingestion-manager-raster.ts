@@ -89,7 +89,6 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
   }
 
   private buildPayload(data: IngestionRasterData): AxiosRequestConfig {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...metadata } = data.metadata;
     const payloadData = {
       inputFiles: {
