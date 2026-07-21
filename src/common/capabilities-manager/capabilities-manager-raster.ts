@@ -28,7 +28,7 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     // MOCK DATA - start
     // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
     // MOCK DATA - end
-    return xmlToCapabilities(idList, response.data);
+    return xmlToCapabilities(idList, response.data as string);
   }
 
   private injectWmts(urlString: string): string {

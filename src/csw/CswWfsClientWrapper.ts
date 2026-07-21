@@ -90,7 +90,7 @@ export class CswWfsClientWrapper {
       ctx
     )) as AxiosResponse;
 
-    const data = wfsClient200.xmlToJson(response.data);
+    const data = wfsClient200.xmlToJson(response.data as string);
 
     try {
       const parsedEntities = await this.transformRecordsToEntity(data.featureTypeList as Record<string, unknown>[], ctx);

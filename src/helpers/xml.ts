@@ -4,6 +4,7 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/naming-convention -- field names dictated by the OGC WMTS capabilities XML schema */
 import { convertToJson, getTraversalObj } from 'fast-xml-parser';
 import { xmlParserOptions } from '../common/constants';

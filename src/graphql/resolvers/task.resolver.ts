@@ -125,7 +125,7 @@ export class TaskResolver {
     const GROUPING_KEYS = ['type', 'status', 'reason'];
     const REMOVE_KEYS = ['attempts', 'id'];
 
-    const groups = new Map();
+    const groups = new Map<string, Task[]>();
 
     for (const task of tasksArr) {
       let groupKey: { [key: string]: string } | string = {};
@@ -142,7 +142,7 @@ export class TaskResolver {
       if (!groups.has(groupKey)) {
         groups.set(groupKey, [task]);
       } else {
-        const currentGroup = groups.get(groupKey);
+        const currentGroup = groups.get(groupKey) ?? [];
         groups.set(groupKey, [...currentGroup, task]);
       }
     }

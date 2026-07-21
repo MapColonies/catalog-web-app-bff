@@ -7,8 +7,7 @@ export interface IUIDisplayAspect {
   icon?: string;
 }
 
-// eslint-disable-next-line
-export function updateDictionary(propName: string, type: any): Record<string, IUIDisplayAspect> {
+export function updateDictionary(propName: string, type: object): Record<string, IUIDisplayAspect> {
   const dictionary: Record<string, IUIDisplayAspect> = {};
   for (const value of enumKeys<object>(type)) {
     dictionary[value] = {
