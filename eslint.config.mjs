@@ -1,5 +1,6 @@
 import jestConfig from '@map-colonies/eslint-config/jest';
 import tsBaseConfig from '@map-colonies/eslint-config/ts-base';
+import { namingConventions } from '@map-colonies/eslint-config/ts-base';
 
 export default [
   {
@@ -18,9 +19,25 @@ export default [
     rules: {
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of' }],
-      '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+      '@typescript-eslint/naming-convention': [
+        ...namingConventions,
+        {
+          selector: 'import',
+          modifiers: ['default'],
+          format: ['camelCase', 'PascalCase'],
+          leadingUnderscore: 'allow',
+        },
+        {
+          selector: 'variable',
+          format: ['PascalCase'],
+          filter: {
+            regex: '^.*(Union|Resolver)$',
+            match: true,
+          },
+        },
+      ],
     },
   },
   {

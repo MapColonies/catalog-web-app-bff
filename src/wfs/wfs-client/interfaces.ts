@@ -1,5 +1,6 @@
 import { Feature } from 'geojson';
 
+/* eslint-disable @typescript-eslint/naming-convention -- shape dictated by the Jsonix XML-binding library output for WFS DescribeFeatureType, field names can't be renamed */
 interface IDescribeFeatureElement {
   TYPE_NAME?: string;
   name?: string;
@@ -69,6 +70,7 @@ export interface IDescribeFeatureResponse {
   name?: Name;
   value?: Value;
 }
+/* eslint-enable @typescript-eslint/naming-convention */
 
 export interface IRequestExecutor {
   (url: string, method: string, params: Record<string, unknown>): Promise<unknown>;

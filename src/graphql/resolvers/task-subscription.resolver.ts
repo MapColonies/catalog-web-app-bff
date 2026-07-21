@@ -42,6 +42,7 @@ export const taskSubscriptionTypeDefs = `
   }
 `;
 
+/* eslint-disable @typescript-eslint/naming-convention -- keys must match the IResolvers/SDL root type names (Query, Subscription) and the `_empty` placeholder field declared in taskSubscriptionTypeDefs */
 export const TaskSubscriptionResolver: IResolvers = {
   Query: {
     _empty: (): string => 'This is a placeholder query',
@@ -61,3 +62,4 @@ export const TaskSubscriptionResolver: IResolvers = {
     },
   },
 };
+/* eslint-enable @typescript-eslint/naming-convention */
