@@ -1,5 +1,6 @@
 import { IConfig } from 'config';
 import { Logger } from '@map-colonies/js-logger';
+import { UNIMPLEMENTED_SERVICE } from '../../constants';
 import { EstimatedSize, FreeDiskSpace, TriggerExportTask } from '../../graphql/export-layer';
 import { GetExportEstimatedSizeInput, GetFreeDiskSpaceInput, TriggerExportTaskInput } from '../../graphql/inputTypes';
 import {
@@ -29,7 +30,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
+      setTimeout(() => reject(new Error(`[BFF][ExportLayerManager3D][getEstimatedSize] ${UNIMPLEMENTED_SERVICE}`)), TIMEOUT);
     });
   }
 
@@ -42,7 +43,7 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     // return res;
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject('NOT IMPLEMENTED'), TIMEOUT);
+      setTimeout(() => reject(new Error(`[BFF][ExportLayerManager3D][getFreeDiskSpace] ${UNIMPLEMENTED_SERVICE}`)), TIMEOUT);
     });
   }
 

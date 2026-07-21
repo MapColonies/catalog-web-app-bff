@@ -18,7 +18,6 @@ export default [
     rules: {
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of' }],
-      '@typescript-eslint/prefer-promise-reject-errors': 'off',
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-enum-comparison': 'off',
