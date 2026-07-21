@@ -39,8 +39,8 @@ export class StreamingController {
         ctx
       );
 
-      Object.entries(response.headers).forEach(([key, value]) => {
-        res.setHeader(key, value as string);
+      Object.entries(response.headers as Record<string, string>).forEach(([key, value]) => {
+        res.setHeader(key, value);
       });
 
       response.data.on('error', (streamErr) => {
@@ -74,8 +74,8 @@ export class StreamingController {
         ctx
       );
 
-      Object.entries(response.headers).forEach(([key, value]) => {
-        res.setHeader(key, value as string);
+      Object.entries(response.headers as Record<string, string>).forEach(([key, value]) => {
+        res.setHeader(key, value);
       });
 
       response.data.on('error', (streamErr) => {
@@ -126,7 +126,7 @@ export class StreamingController {
         try {
           const chunks: Buffer[] = [];
           for await (const chunk of data) {
-            chunks.push(chunk);
+            chunks.push(chunk as Buffer);
           }
           const buffer = Buffer.concat(chunks);
           const parsed: Record<string, unknown> = JSON.parse(buffer.toString('utf-8')) as Record<string, unknown>;
