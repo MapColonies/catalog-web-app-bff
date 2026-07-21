@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.5...v4.3.0) (2026-07-21)
+
+
+### Features
+
+* add new api to delete raster record ([#305](https://github.com/MapColonies/catalog-web-app-bff/issues/305)) ([6522938](https://github.com/MapColonies/catalog-web-app-bff/commit/652293891723e3e4389d88b6ccd844dccdd057b5))
+
+
+### Bug Fixes
+
+* bff packages upgrade ([#311](https://github.com/MapColonies/catalog-web-app-bff/issues/311)) ([cf2e4be](https://github.com/MapColonies/catalog-web-app-bff/commit/cf2e4be6a8773f310ca2642dc606eccb12d6ebc4))
+* eslint no unsafe argument ([#319](https://github.com/MapColonies/catalog-web-app-bff/issues/319)) ([4085b4f](https://github.com/MapColonies/catalog-web-app-bff/commit/4085b4f2a91c352a02fb98383e7e9dcbff57cff2))
+* eslint no unsafe enum comparison ([#320](https://github.com/MapColonies/catalog-web-app-bff/issues/320)) ([bc5374b](https://github.com/MapColonies/catalog-web-app-bff/commit/bc5374b56571587531b4c58e3fd02171771ce8f8))
+* eslint no unused vars ([#321](https://github.com/MapColonies/catalog-web-app-bff/issues/321)) ([951a5c2](https://github.com/MapColonies/catalog-web-app-bff/commit/951a5c206b8b0e56009844a7a6bab4241fc22e14))
+* naming convension ([#318](https://github.com/MapColonies/catalog-web-app-bff/issues/318)) ([6c09a4f](https://github.com/MapColonies/catalog-web-app-bff/commit/6c09a4f011d25f7384f1d3872e7e67e18f09b5e9))
+* promise rejection with error object ([#317](https://github.com/MapColonies/catalog-web-app-bff/issues/317)) ([5c4a37a](https://github.com/MapColonies/catalog-web-app-bff/commit/5c4a37a54f6c5919db41651d3e0bc92d9ed4bf4e))
+* switch code refactored with throws ([#316](https://github.com/MapColonies/catalog-web-app-bff/issues/316)) ([667b0ef](https://github.com/MapColonies/catalog-web-app-bff/commit/667b0efd1788e1bd0b154bf06ec91a6bca8d8a7c))
+
 ## [4.2.5](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.2.4...v4.2.5) (2026-07-16)
 
 
