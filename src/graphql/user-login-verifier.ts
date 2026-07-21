@@ -17,7 +17,6 @@ export class UserLoginVerifier {
     this.adminPwd = this.config.get('adminPassword');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async verifyAdmin(userData: UserLoginParams, ctx?: IContext): Promise<IUserLogin> {
     this.logger.info(`[UserLoginVerifier][verifyAdmin]`);
     const isAdminVerified = this.adminPwd === userData.userPassword;

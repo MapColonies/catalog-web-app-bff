@@ -16,7 +16,6 @@ export class ExportLayerManagerRaster implements IExportLayerManagerService {
     this.service = this.config.get('exportLayerServices.raster');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][Raster][getEstimatedSize] ${stringifyObject(data)}`);
     return new Promise((resolve, reject) => {

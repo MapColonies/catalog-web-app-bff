@@ -17,8 +17,7 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of' }],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'type|of|ctx', ignoreRestSiblings: true }],
       '@typescript-eslint/naming-convention': [
         ...namingConventions,
         {

@@ -21,7 +21,6 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     this.serviceURL = this.config.get('exportLayerServices.3d.url');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getEstimatedSize(data: GetExportEstimatedSizeInput, ctx: IContext): Promise<EstimatedSize> {
     this.logger.info(`[ExportLayer][3D][getEstimatedSize] ${stringifyObject(data)}`);
 
@@ -34,7 +33,6 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async getFreeDiskSpace(data: GetFreeDiskSpaceInput, ctx: IContext): Promise<FreeDiskSpace> {
     this.logger.info(`[ExportLayer][3D][getFreeDiskSpace] ${stringifyObject(data)}`);
 
@@ -47,7 +45,6 @@ export class ExportLayerManager3D implements IExportLayerManagerService {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async triggerExportTask(data: TriggerExportTaskInput, ctx: IContext): Promise<TriggerExportTask> {
     this.logger.info(`[ExportLayer][3D][triggerExportTask] ${stringifyObject(data)}`);
 

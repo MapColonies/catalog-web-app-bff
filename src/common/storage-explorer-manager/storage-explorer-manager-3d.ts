@@ -150,7 +150,6 @@ export class StorageExplorerManager3D implements IStorageExplorerManagerService 
     return res.data as AxiosResponse;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolveMetadataAsModel({ metadata }: ExplorerResolveMetadataAsModel, ctx: IContext): Promise<Layer3DRecord> {
     this.logger.info(`[StorageExplorer][3D][resolveMetadataAsModel] ${stringifyObject({ metadata })}`);
 

@@ -108,13 +108,11 @@ export class CswWfsClientWrapper {
     }
   }
 
-  // eslint-disable-next-line
   public getRecordsById(idList: string[], ctx: IContext): CatalogRecordType[] {
     this.logger.info(`[WFS][getRecordsById] idList: ${JSON.stringify(idList)}`);
     throw new Error('NOT IMPLEMENTED');
   }
 
-  // eslint-disable-next-line
   public getDomain(domain: string, ctx: IContext): string[] {
     this.logger.info(`[WFS][getDomain] domain: ${domain}`);
     throw new Error('NOT IMPLEMENTED');
