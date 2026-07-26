@@ -47,9 +47,10 @@ export class CatalogManagerRaster implements ICatalogManagerService {
     this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(data)}`);
 
     if (data.approvalCode === this.deleteLayerApprovalCode) {
+      const ingestionService: IService = this.config.get('ingestionServices.raster');
       await requestExecutor(
         {
-          url: `${this.service.url}/ingestion/${data.id}`,
+          url: `${ingestionService.url}/ingestion/${data.id}`,
           exposureType: this.service.exposureType,
         },
         'DELETE',
