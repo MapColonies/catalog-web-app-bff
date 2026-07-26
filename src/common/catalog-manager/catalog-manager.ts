@@ -2,7 +2,7 @@ import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { RecordType } from '@map-colonies/mc-model-types';
 import { Domain } from '../../graphql/domain';
-import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
 import { CatalogManager3D } from './catalog-manager-3d';

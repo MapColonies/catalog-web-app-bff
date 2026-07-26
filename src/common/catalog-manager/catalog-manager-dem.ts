@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { UNIMPLEMENTED_SERVICE } from '../../constants';
-import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';

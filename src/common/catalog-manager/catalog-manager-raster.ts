@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordDeleteData, RecordDeleteRaster, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';

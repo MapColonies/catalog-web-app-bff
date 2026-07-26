@@ -1,4 +1,4 @@
-import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { IContext } from '../interfaces';
 
 export interface ICatalogManagerService {
