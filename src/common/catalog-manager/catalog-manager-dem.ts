@@ -21,9 +21,4 @@ export class CatalogManagerDem implements ICatalogManagerService {
     this.logger.info(`[CatalogManager][DEM][updateMetadata] ${stringifyObject(record)}`);
     return Promise.reject(new Error(`[BFF][CatalogManagerDem][updateMetadata] ${UNIMPLEMENTED_SERVICE}`));
   }
-
-  public async deleteLayer(data: RecordDeleteData /* should be specific data type, like RecordDeleteDEM */, ctx: IContext): Promise<void> {
-    this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(data)}`);
-    return Promise.reject(new Error(`[BFF][CatalogManagerDem][deleteLayer] ${UNIMPLEMENTED_SERVICE}`));
-  }
 }

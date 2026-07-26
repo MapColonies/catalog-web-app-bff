@@ -1,7 +1,14 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
 import { RasterIngestion } from '../../graphql/ingestion';
-import { IngestionData, IngestionRasterData, SourceGPKGValidationParams, SourceValidationInputParams } from '../../graphql/inputTypes';
+import {
+  IngestionData,
+  IngestionRasterData,
+  RecordDeleteData,
+  RecordDeleteRaster,
+  SourceGPKGValidationParams,
+  SourceValidationInputParams,
+} from '../../graphql/inputTypes';
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { absoluteToRelativePath } from '../../helpers/string';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -10,9 +17,11 @@ import { IIngestionManagerService, ISourceInfoService } from './ingestion-manage
 
 export class IngestionManagerRaster implements IIngestionManagerService, ISourceInfoService {
   private readonly service: IService;
+  private readonly deleteLayerApprovalCode: string;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('ingestionServices.raster');
+    this.deleteLayerApprovalCode = this.config.get('deleteLayerApprovalCode');
   }
 
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
@@ -86,6 +95,29 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     return {
       jobId: result.data.jobId,
     };
+  }
+
+  public async delete(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
+    const data = dataParam as RecordDeleteRaster;
+    this.logger.info(`[Ingestion][Raster][delete] ${stringifyObject(data)}`);
+
+    if (data.approvalCode !== this.deleteLayerApprovalCode) {
+      throw new Error('[BFF][IngestionManagerRaster][delete] Wrong Approval Code');
+    }
+
+    await requestExecutor(
+      {
+        url: `${this.service.url}/ingestion/${data.id}`,
+        exposureType: this.service.exposureType,
+      },
+      'DELETE',
+      {
+        data: {
+          approver: data.approverName,
+        },
+      },
+      ctx
+    );
   }
 
   private buildPayload(data: IngestionRasterData): AxiosRequestConfig {

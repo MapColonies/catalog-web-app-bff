@@ -40,20 +40,6 @@ export class CatalogManager3D implements ICatalogManagerService {
     return record;
   }
 
-  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
-    const data = dataParam;
-    this.logger.info(`[CatalogManager][3D][deleteLayer] ${stringifyObject(data)}`);
-    await requestExecutor(
-      {
-        url: `${this.service.url}/models/${data.id}`,
-        exposureType: this.service.exposureType,
-      },
-      'DELETE',
-      {},
-      ctx
-    );
-  }
-
   private buildPayload(data: RecordUpdatePartial): AxiosRequestConfig {
     const payloadData = {
       ...data.partialRecordData,

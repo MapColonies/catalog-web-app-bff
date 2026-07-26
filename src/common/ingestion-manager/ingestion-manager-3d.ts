@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
 import { IngestionResultData } from '../../graphql/ingestion';
-import { Ingestion3DData, IngestionData, SourceValidationInputParams, SourceValidationParams } from '../../graphql/inputTypes';
+import { Ingestion3DData, IngestionData, RecordDeleteData, SourceValidationInputParams, SourceValidationParams } from '../../graphql/inputTypes';
 import { SourceValidation } from '../../graphql/sourceValidation';
 import { absolutePathToNfs } from '../../helpers/string';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -41,6 +41,19 @@ export class IngestionManager3D implements IIngestionManagerService, ISourceInfo
       ctx
     );
     return data as IngestionResultData;
+  }
+
+  public async delete(data: RecordDeleteData, ctx: IContext): Promise<void> {
+    this.logger.info(`[Ingestion][3D][delete] ${stringifyObject(data)}`);
+    await requestExecutor(
+      {
+        url: `${this.service.url}/models/${data.id}`,
+        exposureType: this.service.exposureType,
+      },
+      'DELETE',
+      {},
+      ctx
+    );
   }
 
   private buildPayload(data: Ingestion3DData): AxiosRequestConfig {

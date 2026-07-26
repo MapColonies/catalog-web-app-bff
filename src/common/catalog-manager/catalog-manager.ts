@@ -34,11 +34,6 @@ export class CatalogManager implements ICatalogManagerService {
     return updatedData;
   }
 
-  public async deleteLayer(data: RecordDeleteData, ctx: IContext): Promise<void> {
-    const catalogManagerInstance = this.getManagerInstance(data.type);
-    await catalogManagerInstance.deleteLayer(data, ctx);
-  }
-
   private getManagerInstance(recordType: RecordType): ICatalogManagerService {
     let catalogManagerInstance: ICatalogManagerService;
     switch (RecordType[recordType]) {
