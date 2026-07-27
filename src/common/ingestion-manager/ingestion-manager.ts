@@ -42,7 +42,7 @@ export class IngestionManager implements IIngestionManagerService {
 
   public async delete(data: RecordDeleteData, ctx: IContext): Promise<void> {
     const catalogManagerInstance = this.getManagerInstance(data.type);
-    await catalogManagerInstance.delete(data, ctx);
+    await catalogManagerInstance.delete?.(data, ctx);
   }
 
   private cleanAutoGenerateField(record: IngestionData): IngestionData {

@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { UNIMPLEMENTED_SERVICE } from '../../constants';
-import { IngestionData, RecordDeleteData } from '../../graphql/inputTypes';
+import { IngestionData } from '../../graphql/inputTypes';
 import { IngestionResultData } from '../../graphql/ingestion';
 import { stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -16,10 +16,5 @@ export class IngestionManagerDem implements IIngestionManagerService {
   public async ingest(data: IngestionData, ctx: IContext): Promise<IngestionResultData> {
     this.logger.info(`[Ingestion][DEM][ingest] ${stringifyObject(data)}`);
     return Promise.reject(new Error(`[BFF][IngestionManagerDem][ingest] ${UNIMPLEMENTED_SERVICE}`));
-  }
-
-  public async delete(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
-    this.logger.info(`[Ingestion][DEM][delete] ${stringifyObject(dataParam)}`);
-    return Promise.reject(new Error(`[BFF][IngestionManagerDem][delete] ${UNIMPLEMENTED_SERVICE}`));
   }
 }

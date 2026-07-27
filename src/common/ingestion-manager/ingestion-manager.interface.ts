@@ -6,7 +6,7 @@ import { IContext } from '../interfaces';
 export interface IIngestionManagerService {
   ingest: (data: IngestionData, ctx: IContext) => Promise<IngestionResultData>;
   updateGeopkg?: (data: IngestionData, ctx: IContext) => Promise<IngestionResultData | null>;
-  delete: (data: RecordDeleteData, ctx: IContext) => Promise<void>;
+  delete?: (data: RecordDeleteData, ctx: IContext) => Promise<void>;
 }
 
 export interface ISourceInfoService {
