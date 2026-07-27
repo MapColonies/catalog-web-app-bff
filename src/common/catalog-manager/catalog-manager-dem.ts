@@ -1,6 +1,6 @@
 import { Logger } from '@map-colonies/js-logger';
 import { UNIMPLEMENTED_SERVICE } from '../../constants';
-import { RecordDeleteData, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
@@ -20,10 +20,5 @@ export class CatalogManagerDem implements ICatalogManagerService {
   public async updateMetadata(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
     this.logger.info(`[CatalogManager][DEM][updateMetadata] ${stringifyObject(record)}`);
     return Promise.reject(new Error(`[BFF][CatalogManagerDem][updateMetadata] ${UNIMPLEMENTED_SERVICE}`));
-  }
-
-  public async deleteLayer(data: RecordDeleteData /* should be specific data type, like RecordDeleteDEM */, ctx: IContext): Promise<void> {
-    this.logger.info(`[CatalogManager][DEM][deleteLayer] ${stringifyObject(data)}`);
-    return Promise.reject(new Error(`[BFF][CatalogManagerDem][deleteLayer] ${UNIMPLEMENTED_SERVICE}`));
   }
 }

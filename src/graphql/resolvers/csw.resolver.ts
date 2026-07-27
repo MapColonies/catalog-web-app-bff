@@ -269,7 +269,7 @@ export class LayerMetadataMixedResolver {
     ctx: IContext
   ): Promise<string> {
     try {
-      await this.catalogManager.deleteLayer(data, ctx);
+      await this.ingestionManager.delete(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(`[CSW][delete3DLayer][ERROR] ${extractErrorMessage(err)}`);
@@ -285,7 +285,7 @@ export class LayerMetadataMixedResolver {
     ctx: IContext
   ): Promise<string> {
     try {
-      await this.catalogManager.deleteLayer(data, ctx);
+      await this.ingestionManager.delete(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(`[CSW][deleteRasterLayer][ERROR] ${extractErrorMessage(err)}`);

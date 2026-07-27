@@ -4,7 +4,7 @@ import { Pycsw3DCatalogRecord, PycswDemCatalogRecord, PycswLayerCatalogRecord, R
 import { Domain } from '../../graphql/domain';
 import { FieldConfig } from '../../graphql/entityDescriptor';
 import { IngestionResultData } from '../../graphql/ingestion';
-import { IngestionData } from '../../graphql/inputTypes';
+import { IngestionData, RecordDeleteData } from '../../graphql/inputTypes';
 import { buildDescriptor } from '../../helpers/entityDescriptor.helpers';
 import { Services } from '../constants';
 import { IConfig, IContext } from '../interfaces';
@@ -38,6 +38,11 @@ export class IngestionManager implements IIngestionManagerService {
       return updatedData;
     }
     return null;
+  }
+
+  public async delete(data: RecordDeleteData, ctx: IContext): Promise<void> {
+    const catalogManagerInstance = this.getManagerInstance(data.type);
+    await catalogManagerInstance.delete?.(data, ctx);
   }
 
   private cleanAutoGenerateField(record: IngestionData): IngestionData {

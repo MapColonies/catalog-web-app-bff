@@ -1,17 +1,15 @@
 import { AxiosRequestConfig } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
-import { RecordDeleteData, RecordDeleteRaster, RecordUpdatePartial } from '../../graphql/inputTypes';
+import { RecordUpdatePartial } from '../../graphql/inputTypes';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICatalogManagerService } from './catalog-manager.interface';
 
 export class CatalogManagerRaster implements ICatalogManagerService {
   private readonly service: IService;
-  private readonly deleteLayerApprovalCode: string;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('catalogServices.raster');
-    this.deleteLayerApprovalCode = this.config.get('deleteLayerApprovalCode');
   }
 
   public async updateStatus(record: RecordUpdatePartial, ctx: IContext): Promise<RecordUpdatePartial> {
@@ -40,29 +38,6 @@ export class CatalogManagerRaster implements ICatalogManagerService {
       ctx
     );
     return record;
-  }
-
-  public async deleteLayer(dataParam: RecordDeleteData, ctx: IContext): Promise<void> {
-    const data = dataParam as RecordDeleteRaster;
-    this.logger.info(`[CatalogManager][Raster][deleteLayer] ${stringifyObject(data)}`);
-
-    if (data.approvalCode === this.deleteLayerApprovalCode) {
-      await requestExecutor(
-        {
-          url: `${this.service.url}/ingestion/${data.id}`,
-          exposureType: this.service.exposureType,
-        },
-        'DELETE',
-        {
-          data: {
-            approver: data.approverName,
-          },
-        },
-        ctx
-      );
-    } else {
-      throw new Error('BFF: Wrong Approval Code');
-    }
   }
 
   private buildPayload(data: RecordUpdatePartial, isMetadata = false): AxiosRequestConfig {
