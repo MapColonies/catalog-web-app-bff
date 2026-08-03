@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.3.2...v4.3.3) (2026-08-03)
+
+
+### Bug Fixes
+
+* helm sync with infra ([#327](https://github.com/MapColonies/catalog-web-app-bff/issues/327)) ([9fa6d8e](https://github.com/MapColonies/catalog-web-app-bff/commit/9fa6d8ed1247d86d8d67b541780d65cc6abd9ac5))
+
 ## [4.3.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.3.1...v4.3.2) (2026-07-28)
 
 
