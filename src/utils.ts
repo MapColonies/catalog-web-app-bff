@@ -121,6 +121,12 @@ export const stringifyObject = (obj: any): string => {
     .replace(/data:\s*'(.*)>'/, 'data: "$1>"');
 };
 
+export const parseCommaSeparatedList = (value: unknown): string[] =>
+  String(value ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+
 export const extractErrorMessage = (err: unknown): string => {
   let message;
   let status;

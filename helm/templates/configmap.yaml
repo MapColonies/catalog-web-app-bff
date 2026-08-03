@@ -44,6 +44,8 @@
   EXPORT_LAYER_DEM_URL: {{  quote .Values.env.exportLayerDEMUrl }}
   JOB_SERVICE_COMMON_URL: {{ quote .Values.env.jobManagerServiceCommonUrl }}
   JOB_SERVICE_TYPES: {{ quote .Values.env.jobManagerServiceTypes }}
+  JOB_SERVICE_INTERNALS: {{ quote .Values.env.jobManagerServiceInternals }}
+  JOB_SERVICE_B2B: {{ quote .Values.env.jobManagerServiceB2B }}
   LOOKUP_TABLES_SERVICE_URL: {{ quote .Values.env.lookupTablesServiceUrl }}
   SERVICE_DISCOVERY_URL: {{ quote .Values.env.serviceDiscoveryUrl }}
   PYCSW-RECORD_RASTER-URL: {{ quote .Values.env.externalServices.pycswRecordRasterUrl }}

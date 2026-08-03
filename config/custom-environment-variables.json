@@ -95,7 +95,9 @@
     "common": {
       "url": "JOB_SERVICE_COMMON_URL"
     },
-    "types": "JOB_SERVICE_TYPES"
+    "types": "JOB_SERVICE_TYPES",
+    "internals": "JOB_SERVICE_INTERNALS",
+    "b2b": "JOB_SERVICE_B2B"
   },
   "lookupTablesService": {
     "url": "LOOKUP_TABLES_SERVICE_URL"
