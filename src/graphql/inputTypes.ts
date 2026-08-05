@@ -198,6 +198,12 @@ export class JobsSearchParams {
 
   @Field((type) => Date, { nullable: true })
   public tillDate?: Date;
+
+  @Field({ nullable: true })
+  public includeInternals?: boolean;
+
+  @Field({ nullable: true })
+  public includeB2B?: boolean;
 }
 
 @InputType()
