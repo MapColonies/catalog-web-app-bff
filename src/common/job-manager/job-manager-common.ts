@@ -10,7 +10,7 @@ import {
 } from '../../graphql/inputTypes';
 import { Job, Task } from '../../graphql/job';
 // import MOCK_JOBS from '../../graphql/MOCKS/job-manager/common/MOCK_JOBS';
-import { requestExecutor, stringifyObject } from '../../utils';
+import { parseCommaSeparatedList, requestExecutor, stringifyObject } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { IJobManagerService } from './job-manager.interface';
 
@@ -23,6 +23,7 @@ export default class JobManagerCommon implements IJobManagerService {
 
   public async getJobs(ctx: IContext, params?: JobsSearchParams): Promise<Job[]> {
     this.logger.info(`[JobManager][Common][getJobs] ${stringifyObject(params)}`);
+    const { includeInternals, includeB2B, ...restParams } = params ?? {};
     const res = await requestExecutor(
       {
         url: `${this.service.url}/jobs/find`,
@@ -31,13 +32,10 @@ export default class JobManagerCommon implements IJobManagerService {
       'POST',
       {
         data: {
-          ...params,
+          ...restParams,
           fromDate: (params?.fromDate as Date).toISOString(),
           tillDate: (params?.tillDate as Date).toISOString(),
-          types: String(this.config.get('jobServices.types') ?? '')
-            .split(',')
-            .map((s) => s.trim())
-            .filter((s) => s.length > 0),
+          types: this.getEffectiveJobTypes(includeInternals, includeB2B),
           shouldReturnTasks: false,
           shouldReturnAvailableActions: true,
           shouldExcludeParameters: true,
@@ -179,4 +177,12 @@ export default class JobManagerCommon implements IJobManagerService {
         }, {} as Job | Task)
       : null;
   };
+
+  private getEffectiveJobTypes(includeInternals?: boolean, includeB2B?: boolean): string[] {
+    const baseTypes = parseCommaSeparatedList(this.config.get('jobServices.types'));
+    const internalTypes =
+      includeInternals === true && this.config.has('jobServices.internals') ? parseCommaSeparatedList(this.config.get('jobServices.internals')) : [];
+    const b2bTypes = includeB2B === true && this.config.has('jobServices.b2b') ? parseCommaSeparatedList(this.config.get('jobServices.b2b')) : [];
+    return [...new Set([...baseTypes, ...internalTypes, ...b2bTypes])];
+  }
 }
