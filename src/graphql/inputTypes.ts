@@ -373,6 +373,18 @@ export class WfsPolygonPartsGetFeatureParams {
 }
 
 @InputType()
+export class RasterBackupParams {
+  @Field((type) => String, { nullable: false })
+  public productId!: string;
+
+  @Field((type) => String, { nullable: false })
+  public productVersion!: string;
+
+  @Field((type) => ProductType, { nullable: false })
+  public productType!: ProductType;
+}
+
+@InputType()
 export class LookupTableFieldInput implements LookupTableField {
   @Field((type) => String, { nullable: true })
   public lookupTable?: string;
