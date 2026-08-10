@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.3.3...v4.4.0) (2026-08-10)
+
+
+### Features
+
+* job manager b2b and internal jobs (MAPCO-11314) ([#329](https://github.com/MapColonies/catalog-web-app-bff/issues/329)) ([950ff94](https://github.com/MapColonies/catalog-web-app-bff/commit/950ff9467a45cc7add372fc567a02cf6d284e01d))
+
 ## [4.3.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.3.2...v4.3.3) (2026-08-03)
 
 
