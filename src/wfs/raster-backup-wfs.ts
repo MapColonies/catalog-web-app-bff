@@ -3,6 +3,7 @@ import path from 'path';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
+import { GeojsonFeatureCollection } from '../graphql/export-layer';
 import { RasterBackupParams } from '../graphql/inputTypes';
 import { GetFeature } from '../graphql/wfs';
 import { stringifyObject } from '../utils';
@@ -25,10 +26,10 @@ export class RasterBackupWFS {
     return Promise.resolve(parsed.data.getPolygonPartsFeature);
   }
 
-  public async getOuterPerimeter(params: RasterBackupParams): Promise<GetFeature> {
+  public async getOuterPerimeter(params: RasterBackupParams): Promise<GeojsonFeatureCollection> {
     this.logger.info(`[RasterBackupWFS][getOuterPerimeter] ${stringifyObject(params)}`);
     const raw = fs.readFileSync(OUTER_PERIMETER_MOCK_PATH, 'utf-8');
-    const parsed = JSON.parse(raw) as GetFeature;
+    const parsed = JSON.parse(raw) as GeojsonFeatureCollection;
     return Promise.resolve(parsed);
   }
 }
