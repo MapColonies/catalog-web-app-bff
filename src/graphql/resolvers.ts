@@ -15,6 +15,7 @@ import { WfsResolver } from './resolvers/wfs.resolver';
 import { DemHeightsResolver } from './resolvers/dem-heights.resolver';
 import { ServicesAvailabilityResolver } from './resolvers/services-availability.resolver';
 import { PolygonPartsWfsResolver } from './resolvers/polygon-parts-wfs.resolver';
+import { RasterBackupResolver } from './resolvers/raster-backup.resolver';
 import { UserLoginResolver } from './resolvers/user-login.resolver';
 import { SourceValidationResolver } from './resolvers/source-validation.resolver';
 import { TaskSubscriptionResolver } from './resolvers/task-subscription.resolver';
@@ -36,6 +37,7 @@ export function getResolvers(): NonEmptyArray<ClassType> {
     DemHeightsResolver,
     ServicesAvailabilityResolver,
     PolygonPartsWfsResolver,
+    RasterBackupResolver,
     UserLoginResolver,
     SourceValidationResolver,
     DummyForTypesOnClientResolver,
