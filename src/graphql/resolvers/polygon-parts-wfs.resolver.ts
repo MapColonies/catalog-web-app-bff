@@ -6,6 +6,7 @@ import { IContext } from '../../common/interfaces';
 import { extractErrorMessage } from '../../utils';
 import { PolygonPartsWFS } from '../../wfs/polygon-parts-wfs';
 import { RasterBackupWFS } from '../../wfs/raster-backup-wfs';
+import { GeojsonFeatureCollection } from '../export-layer';
 import { RasterBackupParams, WfsPolygonPartsGetFeatureParams } from '../inputTypes';
 import { GetFeature } from '../wfs';
 
@@ -59,11 +60,11 @@ export class PolygonPartsWfsResolver {
     }
   }
 
-  @Query((type) => GetFeature)
+  @Query((type) => GeojsonFeatureCollection)
   public async getRasterBackupOuterPerimeter(
     @Arg('data')
     data: RasterBackupParams
-  ): Promise<GetFeature> {
+  ): Promise<GeojsonFeatureCollection> {
     try {
       const getFeatureResponse = await this.rasterBackupWFS.getOuterPerimeter(data);
       return getFeatureResponse;
