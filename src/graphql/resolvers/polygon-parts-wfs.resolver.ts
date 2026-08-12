@@ -61,7 +61,7 @@ export class PolygonPartsWfsResolver {
   }
 
   @Query((type) => GeojsonFeatureCollection)
-  public async getChangesAreaOuterPerimeter(
+  public async getChangedAreaOuterPerimeter(
     @Arg('data')
     data: RasterBackupParams
   ): Promise<GeojsonFeatureCollection> {
@@ -69,7 +69,7 @@ export class PolygonPartsWfsResolver {
       const getGeojsonResponse = await this.rasterBackupWFS.getOuterPerimeter(data);
       return getGeojsonResponse;
     } catch (err) {
-      this.logger.error(`[PolygonPartsWFS][getChangesAreaOuterPerimeter][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[PolygonPartsWFS][getChangedAreaOuterPerimeter][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

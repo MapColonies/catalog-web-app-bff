@@ -9,6 +9,7 @@
   },
   "features": [
     {
+      "id": "OuterPerimeter",
       "type": "Feature",
       "properties": {
         "catalog_id": "10400100786D3E00",
