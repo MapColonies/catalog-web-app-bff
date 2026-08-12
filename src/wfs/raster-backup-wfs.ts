@@ -10,9 +10,11 @@ import { IContext, IService } from '../common/interfaces';
 import { GeojsonFeatureCollection } from '../graphql/export-layer';
 import { RasterBackupParams } from '../graphql/inputTypes';
 import { GetFeature } from '../graphql/wfs';
-import { extractErrorMessage, requestExecutor, stringifyObject } from '../utils';
-import { IGetFeatureOptionsByFeature, IWFSClientOptions } from './wfs-client/interfaces';
-import WfsClient from './wfs-client/wfs-client';
+import { extractErrorMessage, stringifyObject } from '../utils';
+import { IGetFeatureOptionsByFeature } from './wfs-client/interfaces';
+// import { createWfsClient } from './wfs-client-factory';
+
+// const UNAVAILABLE_ERROR = 'Failed to execute request to Raster Backup WFS service. Service is unavailable';
 
 const bboxesOverlap = (a: BBox, b: BBox): boolean => a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
 
@@ -38,8 +40,15 @@ export class RasterBackupWFS {
     return Promise.resolve(parsed);
   }
 
-  public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<GetFeature> {
+  public async getFeature(options: IGetFeatureOptionsByFeature, ctx: IContext): Promise<GetFeature> {
     this.logger.info(`[RasterBackupWFS][getFeature] ${stringifyObject(options)}`);
+    // const wfsClient = createWfsClient({
+    //   service: this.service,
+    //   logger: this.logger,
+    //   context: ctx,
+    //   logPrefix: 'RasterBackupWFS',
+    //   unavailableMessage: UNAVAILABLE_ERROR,
+    // });
     try {
       const raw = fs.readFileSync(POLYGON_PARTS_MOCK_PATH, 'utf-8');
       const parsed = JSON.parse(raw) as CapturedGetPolygonPartsFeatureResponse;
@@ -56,31 +65,12 @@ export class RasterBackupWFS {
         numberMatched: matchedFeatures.length,
         numberReturned: pageFeatures.length,
       });
-      // const wfsClient = this.getWfsClient(ctx);
       // const res = await wfsClient.getFeatureByFeature({ ...options });
-      // return res as IGetFeatureResponse;
+      // return res as GetFeature;
     } catch (err) {
       const error = 'Failed to retrieve Polygon Parts feature data';
       this.logger.error(`[RasterBackupWFS][getFeature][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(error);
     }
-  }
-
-  private getWfsClient(ctx?: IContext): WfsClient {
-    const wfsClientOptions: IWFSClientOptions = {
-      baseUrl: 'NOT_IN_USE.COM',
-      requestExecutor: async (url, method, params): Promise<unknown> => {
-        try {
-          return await requestExecutor(this.service, method, params, ctx as IContext);
-        } catch (err) {
-          const error = 'Failed to execute request to Polygon Parts WFS service. Service is unavailable';
-          this.logger.error(`[RasterBackupWFS][requestExecutor][ERROR] ${extractErrorMessage(err)}`);
-          throw new Error(error);
-        }
-      },
-    };
-
-    const wfsClient = new WfsClient(wfsClientOptions, this.logger);
-    return wfsClient;
   }
 }
