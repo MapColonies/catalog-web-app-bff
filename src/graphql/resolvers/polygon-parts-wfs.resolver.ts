@@ -47,15 +47,23 @@ export class PolygonPartsWfsResolver {
   }
 
   @Query((type) => GetFeature)
-  public async getRasterBackupPolygonParts(
+  public async getRasterBackupPolygonPartsFeature(
     @Arg('data')
-    data: RasterBackupParams
+    data: WfsPolygonPartsGetFeatureParams,
+    @Ctx()
+    ctx: IContext
   ): Promise<GetFeature> {
     try {
-      const getFeatureResponse = await this.rasterBackupWFS.getPolygonParts(data);
+      const getFeatureResponse = await this.rasterBackupWFS.getFeature(
+        {
+          ...data,
+          geomRefFieldName: GEOMETRY_COLUMN,
+        },
+        ctx
+      );
       return getFeatureResponse;
     } catch (err) {
-      this.logger.error(`[PolygonPartsWFS][getRasterBackupPolygonParts][ERROR] ${extractErrorMessage(err)}`);
+      this.logger.error(`[PolygonPartsWFS][getRasterBackupPolygonPartsFeature][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }
