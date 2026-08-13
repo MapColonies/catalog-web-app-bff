@@ -7,8 +7,6 @@ import { Logger } from '@map-colonies/js-logger';
 import turfBbox from '@turf/bbox';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { GeojsonFeatureCollection } from '../graphql/export-layer';
-import { RasterBackupParams } from '../graphql/inputTypes';
 import { GetFeature } from '../graphql/wfs';
 import { extractErrorMessage, stringifyObject } from '../utils';
 import { IGetFeatureOptionsByFeature } from './wfs-client/interfaces';
