@@ -3,9 +3,11 @@ import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
 import { Services } from '../common/constants';
 import { IContext, IService } from '../common/interfaces';
-import { extractErrorMessage, requestExecutor, stringifyObject } from '../utils';
-import { IGetFeatureOptionsByFeature, IGetFeatureResponse, IWFSClientOptions } from './wfs-client/interfaces';
-import WfsClient from './wfs-client/wfs-client';
+import { extractErrorMessage, stringifyObject } from '../utils';
+import { IGetFeatureOptionsByFeature, IGetFeatureResponse } from './wfs-client/interfaces';
+import { createWfsClient } from './wfs-client-factory';
+
+const UNAVAILABLE_ERROR = 'Failed to execute request to Polygon Parts WFS service. Service is unavailable';
 
 @singleton()
 export class PolygonPartsWFS {
@@ -15,9 +17,15 @@ export class PolygonPartsWFS {
     this.service = this.config.get('polygonParts');
   }
 
-  public async getFeature(options: IGetFeatureOptionsByFeature, ctx?: IContext): Promise<IGetFeatureResponse> {
+  public async getFeature(options: IGetFeatureOptionsByFeature, ctx: IContext): Promise<IGetFeatureResponse> {
     this.logger.info(`[PolygonPartsWFS][getFeature] ${stringifyObject(options)}`);
-    const wfsClient = this.getWfsClient(ctx);
+    const wfsClient = createWfsClient({
+      service: this.service,
+      logger: this.logger,
+      context: ctx,
+      logPrefix: 'PolygonPartsWFS',
+      unavailableMessage: UNAVAILABLE_ERROR,
+    });
     try {
       const res = await wfsClient.getFeatureByFeature({ ...options });
       return res as IGetFeatureResponse;
@@ -26,23 +34,5 @@ export class PolygonPartsWFS {
       this.logger.error(`[PolygonPartsWFS][getFeature][ERROR] ${extractErrorMessage(err)}`);
       throw new Error(error);
     }
-  }
-
-  private getWfsClient(ctx?: IContext): WfsClient {
-    const wfsClientOptions: IWFSClientOptions = {
-      baseUrl: 'NOT_IN_USE.COM',
-      requestExecutor: async (url, method, params): Promise<unknown> => {
-        try {
-          return await requestExecutor(this.service, method, params, ctx as IContext);
-        } catch (err) {
-          const error = 'Failed to execute request to Polygon Parts WFS service. Service is unavailable';
-          this.logger.error(`[PolygonPartsWFS][requestExecutor][ERROR] ${extractErrorMessage(err)}`);
-          throw new Error(error);
-        }
-      },
-    };
-
-    const wfsClient = new WfsClient(wfsClientOptions, this.logger);
-    return wfsClient;
   }
 }

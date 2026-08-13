@@ -56,6 +56,7 @@
   WFS_URL: {{ quote .Values.env.wfsUrl }}
   WFS_SERVICES_CONFIG: {{ quote .Values.env.wfsServicesConfig }}
   POLYGON_PARTS_URL: {{ quote .Values.env.polygonPartsUrl }}
+  RASTER_BACKUP_URL: {{ quote .Values.env.rasterBackupUrl }}
   DEM_HEIGHTS_URL: {{ quote .Values.env.demHeightsUrl }}
 {{- end }}
 

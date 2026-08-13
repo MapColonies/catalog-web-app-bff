@@ -123,6 +123,9 @@
   "polygonParts": {
     "url": "POLYGON_PARTS_URL"
   },
+  "rasterBackup": {
+    "url": "RASTER_BACKUP_URL"
+  },
   "demHeightsService": {
     "url": "DEM_HEIGHTS_URL"
   }
