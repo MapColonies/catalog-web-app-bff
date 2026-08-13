@@ -6,8 +6,7 @@ import { IContext } from '../../common/interfaces';
 import { extractErrorMessage } from '../../utils';
 import { PolygonPartsWFS } from '../../wfs/polygon-parts-wfs';
 import { RasterBackupWFS } from '../../wfs/raster-backup-wfs';
-import { GeojsonFeatureCollection } from '../export-layer';
-import { RasterBackupParams, WfsPolygonPartsGetFeatureParams } from '../inputTypes';
+import { WfsPolygonPartsGetFeatureParams } from '../inputTypes';
 import { GetFeature } from '../wfs';
 
 const GEOMETRY_COLUMN = 'footprint';
@@ -64,20 +63,6 @@ export class PolygonPartsWfsResolver {
       return getFeatureResponse;
     } catch (err) {
       this.logger.error(`[PolygonPartsWFS][getRasterBackupPolygonPartsFeature][ERROR] ${extractErrorMessage(err)}`);
-      throw err;
-    }
-  }
-
-  @Query((type) => GeojsonFeatureCollection)
-  public async getChangedAreaOuterPerimeter(
-    @Arg('data')
-    data: RasterBackupParams
-  ): Promise<GeojsonFeatureCollection> {
-    try {
-      const getGeojsonResponse = await this.rasterBackupWFS.getOuterPerimeter(data);
-      return getGeojsonResponse;
-    } catch (err) {
-      this.logger.error(`[PolygonPartsWFS][getChangedAreaOuterPerimeter][ERROR] ${extractErrorMessage(err)}`);
       throw err;
     }
   }

@@ -19,7 +19,6 @@ import { IGetFeatureOptionsByFeature } from './wfs-client/interfaces';
 const bboxesOverlap = (a: BBox, b: BBox): boolean => a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
 
 const POLYGON_PARTS_MOCK_PATH = path.join(__dirname, '../graphql/MOCKS/raster-backup/center_1st_WFS.geojson');
-const OUTER_PERIMETER_MOCK_PATH = path.join(__dirname, '../graphql/MOCKS/raster-backup/center_1st_footprint.geojson');
 
 interface CapturedGetPolygonPartsFeatureResponse {
   data: { getPolygonPartsFeature: GetFeature };
@@ -31,13 +30,6 @@ export class RasterBackupWFS {
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
     this.service = this.config.get('rasterBackup');
-  }
-
-  public async getOuterPerimeter(params: RasterBackupParams): Promise<GeojsonFeatureCollection> {
-    this.logger.info(`[RasterBackupWFS][getOuterPerimeter] ${stringifyObject(params)}`);
-    const raw = fs.readFileSync(OUTER_PERIMETER_MOCK_PATH, 'utf-8');
-    const parsed = JSON.parse(raw) as GeojsonFeatureCollection;
-    return Promise.resolve(parsed);
   }
 
   public async getFeature(options: IGetFeatureOptionsByFeature, ctx: IContext): Promise<GetFeature> {
