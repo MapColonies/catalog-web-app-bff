@@ -1,4 +1,4 @@
-import { Feature, Polygon } from 'geojson';
+import { Feature, MultiPolygon, Polygon } from 'geojson';
 import { compactXML } from '../../helpers/xml';
 import { OutputFormat, PropertyFilter } from './interfaces';
 
@@ -58,6 +58,54 @@ const getPolygonIntersectionFilter = (feature: Feature, geomRefFieldName: string
                 </gml:exterior>
             </gml:Polygon>
           </fes:Intersects>`;
+};
+
+const getMultiPolygonIntersectionFilter = (feature: Feature, geomRefFieldName: string) => {
+  const multipolygonCoords = (feature.geometry as MultiPolygon).coordinates;
+
+  const polygonMembersXml = multipolygonCoords
+    .map((polygon) => {
+      const exteriorCoords = polygon[0];
+
+      const exteriorPosList = exteriorCoords.map((coord) => coord.join(' ')).join(' ');
+
+      const interiorRingsXml = polygon
+        .slice(1)
+        .map((interiorRing) => {
+          const interiorPosList = interiorRing.map((coord) => coord.join(' ')).join(' ');
+
+          return `
+            <gml:interior>
+              <gml:LinearRing>
+                <gml:posList>${interiorPosList}</gml:posList>
+              </gml:LinearRing>
+            </gml:interior>`;
+        })
+        .join('');
+
+      return `
+        <gml:surfaceMember>
+          <gml:Polygon>
+            <gml:exterior>
+              <gml:LinearRing>
+                <gml:posList srsDimension="2">${exteriorPosList}</gml:posList>
+              </gml:LinearRing>
+            </gml:exterior>
+            ${interiorRingsXml}
+          </gml:Polygon>
+        </gml:surfaceMember>`;
+    })
+    .join('');
+
+  return `
+    <fes:Intersects>
+      <fes:ValueReference>${geomRefFieldName}</fes:ValueReference>
+      <gml:MultiSurface
+          srsName="EPSG:4326"
+          srsDimension="2">
+        ${polygonMembersXml}
+      </gml:MultiSurface>
+    </fes:Intersects>`;
 };
 
 const getPropertiesFilter = (filterProperties?: PropertyFilter[]) => {
@@ -147,6 +195,9 @@ export const getQueryFeatureXMLBody = (
       break;
     case 'Polygon':
       polygonIntersectionFilter = getPolygonIntersectionFilter(feature, geomRefFieldName);
+      break;
+    case 'MultiPolygon':
+      polygonIntersectionFilter = getMultiPolygonIntersectionFilter(feature, geomRefFieldName);
       break;
   }
 
