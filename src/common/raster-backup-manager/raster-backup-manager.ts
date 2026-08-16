@@ -9,7 +9,7 @@ import { RasterBackupParams } from '../../graphql/inputTypes';
 import { stringifyObject } from '../../utils';
 
 const METADATA_MOCK_PATH = path.join(__dirname, '../../graphql/MOCKS/raster-backup/Cyprus_backup-restore_metadata.json');
-const OUTER_PERIMETER_MOCK_PATH = path.join(__dirname, '../../graphql/MOCKS/raster-backup/center_1st_footprint.geojson');
+const OUTER_PERIMETER_MOCK_PATH = path.join(__dirname, '../../graphql/MOCKS/raster-backup/center_2st_footprint.geojson');
 
 type RasterBackupMetadataMock = Omit<LayerRasterRecord, 'id'>;
 
