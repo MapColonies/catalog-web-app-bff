@@ -28,6 +28,13 @@ export class RasterBackupManager {
     this.logger.info(`[RasterBackupManager][getOuterPerimeter] ${stringifyObject(params)}`);
     const raw = fs.readFileSync(OUTER_PERIMETER_MOCK_PATH, 'utf-8');
     const parsed = JSON.parse(raw) as GeojsonFeatureCollection;
+    // mst-gql on the client always requests `id` and treats a `null` id as an MST identifier
+    // resolution attempt, which throws. Features are not required to carry an `id` per the
+    // GeoJSON spec, so synthesize a stable one instead of relying on the source data for it.
+    parsed.features = parsed.features.map((feature, index) => ({
+      ...feature,
+      id: feature.id ?? `OuterPerimeter_${index}`,
+    }));
     return Promise.resolve(parsed);
   }
 }
