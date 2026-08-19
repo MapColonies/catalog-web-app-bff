@@ -101,7 +101,7 @@ const getMultiPolygonIntersectionFilter = (feature: Feature, geomRefFieldName: s
     <fes:Intersects>
       <fes:ValueReference>${geomRefFieldName}</fes:ValueReference>
       <gml:MultiSurface
-          srsName=${DEFAULT_SRS_NAME}>
+          srsName="${DEFAULT_SRS_NAME}">
         ${polygonMembersXml}
       </gml:MultiSurface>
     </fes:Intersects>`;
