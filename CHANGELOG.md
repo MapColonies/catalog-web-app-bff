@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.4.0...v4.5.0) (2026-08-19)
+
+
+### Features
+
+* wfs query by multiPolygon + mock data ([#334](https://github.com/MapColonies/catalog-web-app-bff/issues/334)) ([366bab1](https://github.com/MapColonies/catalog-web-app-bff/commit/366bab14107806d45a1c6ce31383bf060c5dc818))
+
+
+### Bug Fixes
+
+* fetch backup data mock (MAPCO-11306) ([#332](https://github.com/MapColonies/catalog-web-app-bff/issues/332)) ([126ad7e](https://github.com/MapColonies/catalog-web-app-bff/commit/126ad7e4bb7516ce61713c1ce9475c688b5ae7b3))
+* handle id prop on geo feature ([#335](https://github.com/MapColonies/catalog-web-app-bff/issues/335)) ([59f4d63](https://github.com/MapColonies/catalog-web-app-bff/commit/59f4d63d8818e52ae519d9448b73550c2778c346))
+* multiPolygon filter ([#336](https://github.com/MapColonies/catalog-web-app-bff/issues/336)) ([38526a2](https://github.com/MapColonies/catalog-web-app-bff/commit/38526a294638b765a0d1d121880e16c4197b8819))
+
 ## [4.4.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.3.3...v4.4.0) (2026-08-10)
 
 
