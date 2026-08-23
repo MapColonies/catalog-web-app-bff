@@ -20,7 +20,7 @@ export class RasterBackupManager {
   private readonly dataInterventionCredential: string;
 
   public constructor(@inject(Services.CONFIG) private readonly config: IConfig, @inject(Services.LOGGER) private readonly logger: Logger) {
-    this.service = this.config.get('rasterBackup');
+    this.service = this.config.get('ingestionServices.raster');
     this.dataInterventionCredential = this.config.get('deleteLayerApprovalCode');
   }
 
