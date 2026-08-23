@@ -1,0 +1,65 @@
+{
+  "classification": "6",
+  "productName": "Cyprus_BACKUP-RESTORE",
+  "description": null,
+  "srs": "4326",
+  "producerName": "IDFMU",
+  "imagingTimeBeginUTC": "2020-05-21T03:00:00.000Z",
+  "imagingTimeEndUTC": "2022-10-18T03:00:00.000Z",
+  "maxHorizontalAccuracyCE90": 8.5,
+  "minHorizontalAccuracyCE90": 8.5,
+  "sensors": [
+    "GE01",
+    "WV02",
+    "WV03"
+  ],
+  "region": [
+    "קפריסין"
+  ],
+  "productId": "Cyprus_BACKUP_RESTORE",
+  "productVersion": "2.0",
+  "productType": "Orthophoto",
+  "productSubType": null,
+  "srsName": "WGS84GEO",
+  "maxResolutionDeg": 0.001373291015625,
+  "minResolutionDeg": 0.001373291015625,
+  "maxResolutionMeter": 152.87,
+  "minResolutionMeter": 152.87,
+  "scale": null,
+  "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -180,
+          89.999999705239
+        ],
+        [
+          179.999999973572,
+          89.999999973572
+        ],
+        [
+          179.999999973572,
+          -89.999999973572
+        ],
+        [
+          -179.999999973572,
+          -89.999999973572
+        ],
+        [
+          -180,
+          89.999999705239
+        ]
+      ]
+    ],
+    "bbox": [
+      -180,
+      -89.999999973572,
+      179.999999973572,
+      89.999999973572
+    ]
+  },
+  "productStatus": "UNPUBLISHED",
+  "transparency": "TRANSPARENT",
+  "keywords": ""
+}
