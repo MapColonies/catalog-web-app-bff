@@ -18,10 +18,7 @@ export class RasterBackupResolver {
 
   public constructor() {
     this.logger = container.resolve(Services.LOGGER);
-    const config = container.resolve<IConfig>(Services.CONFIG);
-
     this.rasterBackupManager = container.resolve(RasterBackupManager);
-    this.ingestionManagerRaster = new IngestionManagerRaster(config, this.logger);
   }
 
   @Query((type) => LayerRasterRecord, { nullable: true })
@@ -60,7 +57,7 @@ export class RasterBackupResolver {
     ctx: IContext
   ): Promise<string> {
     try {
-      await this.ingestionManagerRaster.revert(data, ctx);
+      await this.rasterBackupManager.revert(data, ctx);
       return 'ok';
     } catch (err) {
       this.logger.error(`[RasterBackup][revertRasterLayer][ERROR] ${extractErrorMessage(err)}`);

@@ -18,11 +18,11 @@ import { IIngestionManagerService, ISourceInfoService } from './ingestion-manage
 
 export class IngestionManagerRaster implements IIngestionManagerService, ISourceInfoService {
   private readonly service: IService;
-  private readonly destructiveOperationApprovalCode: string;
+  private readonly deleteLayerApprovalCode: string;
 
   public constructor(private readonly config: IConfig, private readonly logger: Logger) {
     this.service = this.config.get('ingestionServices.raster');
-    this.destructiveOperationApprovalCode = this.config.get('deleteLayerApprovalCode');
+    this.deleteLayerApprovalCode = this.config.get('deleteLayerApprovalCode');
   }
 
   public async sourceInfo(data: SourceValidationInputParams, ctx: IContext): Promise<SourceValidation> {
@@ -102,7 +102,7 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
     const data = dataParam as RecordDeleteRaster;
     this.logger.info(`[Ingestion][Raster][delete] ${stringifyObject(data)}`);
 
-    if (data.approvalCode !== this.destructiveOperationApprovalCode) {
+    if (data.approvalCode !== this.deleteLayerApprovalCode) {
       throw new Error('[BFF][IngestionManagerRaster][delete] Wrong Approval Code');
     }
 
@@ -114,34 +114,6 @@ export class IngestionManagerRaster implements IIngestionManagerService, ISource
       'DELETE',
       {
         data: {
-          approver: data.approverName,
-        },
-      },
-      ctx
-    );
-  }
-
-  public async revert(data: RevertRasterLayerData, ctx: IContext): Promise<void> {
-    this.logger.info(`[Ingestion][Raster][revert] ${stringifyObject(data)}`);
-
-    if (data.approvalCode !== this.destructiveOperationApprovalCode) {
-      throw new Error('[BFF][IngestionManagerRaster][revert] Wrong Approval Code');
-    }
-
-    const MOCK_CONFLICTING_JOB_ID = 'b3df1d88-6c06-4995-849b-f2c9c022f079';
-    throw new Error(`Revert failed, job ${MOCK_CONFLICTING_JOB_ID} is already in progress`);
-
-    await requestExecutor(
-      {
-        url: `${this.service.url}/ingestion/restore`,
-        exposureType: this.service.exposureType,
-      },
-      'POST',
-      {
-        data: {
-          productId: data.productId,
-          productType: data.productType,
-          productVersion: data.productVersion,
           approver: data.approverName,
         },
       },
