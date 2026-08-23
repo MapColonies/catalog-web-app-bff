@@ -46,10 +46,10 @@ export class RasterBackupManager {
   }
 
   public async revert(data: RevertRasterLayerData, ctx: IContext): Promise<void> {
-    this.logger.info(`[Ingestion][Raster][revert] ${stringifyObject(data)}`);
+    this.logger.info(`[RasterBackupManager][revert] ${stringifyObject(data)}`);
 
     if (data.approvalCode !== this.dataInterventionCredential) {
-      throw new Error('[BFF][IngestionManagerRaster][revert] Wrong Approval Code');
+      throw new Error('[BFF][RasterBackupManager][revert] Wrong Approval Code');
     }
 
     const MOCK_CONFLICTING_JOB_ID = 'b3df1d88-6c06-4995-849b-f2c9c022f079';
