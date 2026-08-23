@@ -117,6 +117,27 @@ export class RecordDeleteRaster {
 }
 
 @InputType()
+export class RevertRasterLayerData {
+  @Field((type) => RecordType, { nullable: false })
+  public type!: RecordType;
+
+  @Field((type) => String, { nullable: false })
+  public productId!: string;
+
+  @Field((type) => ProductType, { nullable: false })
+  public productType!: ProductType;
+
+  @Field((type) => String, { nullable: false })
+  public productVersion!: string;
+
+  @Field((type) => String, { nullable: false })
+  public approverName!: string;
+
+  @Field((type) => String, { nullable: false })
+  public approvalCode!: string;
+}
+
+@InputType()
 export class IngestionDemData {
   @Field({ nullable: false })
   public directory: string;
