@@ -6,7 +6,6 @@ import {
   IngestionRasterData,
   RecordDeleteData,
   RecordDeleteRaster,
-  RevertRasterLayerData,
   SourceGPKGValidationParams,
   SourceValidationInputParams,
 } from '../../graphql/inputTypes';
