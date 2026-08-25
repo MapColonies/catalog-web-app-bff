@@ -86,13 +86,22 @@ export class TaskResolver {
         maxDate: null,
       };
 
-      for (const { created, updated } of taskGroup) {
+      const percentages: number[] = [];
+
+      for (const { created, updated, percentage } of taskGroup) {
         dates.createdDates.push(moment(created));
         dates.updatedDates.push(moment(updated));
+
+        if (typeof percentage === 'number') {
+          percentages.push(percentage);
+        }
       }
 
       dates.minDate = min(dates.createdDates);
       dates.maxDate = max(dates.updatedDates);
+
+      const averagePercentage =
+        percentages.length > 0 ? Math.round(percentages.reduce((total, current) => total + current, 0) / percentages.length) : undefined;
 
       const groupRepresentor: TasksGroup = taskGroup[0];
 
@@ -112,6 +121,8 @@ export class TaskResolver {
       // Convert moment back to Date Object
       groupRepresentor.created = dates.minDate.toDate();
       groupRepresentor.updated = dates.maxDate.toDate();
+
+      groupRepresentor.percentage = averagePercentage;
 
       groupsCopy.set(key, groupRepresentor as TasksGroup[]);
     });
