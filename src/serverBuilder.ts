@@ -114,6 +114,12 @@ export class ServerBuilder {
     this.logger.info(`Started GraphQL server with schema: ${printSchema(schema)}`);
     this.serverInstance.use(
       '/graphql',
+      bodyParser.json(this.config.get<bodyParser.Options>('server.request.payload')),
+      (req, _res, next) => {
+        // Apollo express integration expects req.body to exist even for requests with no JSON payload (e.g. browser GET).
+        req.body ??= {};
+        next();
+      },
       expressMiddleware(server, {
         // eslint-disable-next-line @typescript-eslint/promise-function-async
         context: ({ req }): Promise<IContext> => Promise.resolve({ requestHeaders: req.headers }),
