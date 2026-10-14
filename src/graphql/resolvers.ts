@@ -1,6 +1,7 @@
 import { NonEmptyArray } from 'type-graphql';
 import type { ClassType } from 'type-graphql';
 import { IResolvers } from '@graphql-tools/utils';
+import { BasemapResolver } from './resolvers/basemap.resolver';
 import { CapabilitiesResolver } from './resolvers/capabilities.resolver';
 import { LayerMetadataMixedResolver } from './resolvers/csw.resolver';
 import { EntityDescriptorResolver } from './resolvers/entity-descriptor.resolver';
@@ -41,6 +42,7 @@ export function getResolvers(): NonEmptyArray<ClassType> {
     UserLoginResolver,
     SourceValidationResolver,
     DummyForTypesOnClientResolver,
+    BasemapResolver,
   ];
 }
 
