@@ -6,11 +6,12 @@ import {
   BasemapExportPackage,
   BasemapLayerInput,
   BasemapLayerSourceInput,
-  BasemapLayerSourceType,
   CreateBasemapInput,
   ImportReview,
+  SourceTypeInput,
   UpdateBasemapInput,
 } from '../../graphql/basemap';
+import { Domain } from '../../graphql/domain';
 import { requestExecutor, stringifyObject } from '../../utils';
 import { Services } from '../constants';
 import { IConfig, IContext, IService } from '../interfaces';
@@ -22,7 +23,7 @@ interface IRestThumbnail {
 }
 
 type IRestLayerSource =
-  | { type: 'RASTER_RESOURCE'; productId: string; productType: string }
+  | { type: 'CATALOG_RESOURCE'; domain: Domain.RASTER; uniqueness: { productId: string; productType: string } }
   | { type: 'EXTERNAL'; details: { protocol: string; name: string; url: string } };
 
 interface IRestLayer {
@@ -170,12 +171,21 @@ export class BasemapManager {
 
   private toRestLayerSource(source: BasemapLayerSourceInput): IRestLayerSource {
     switch (source.type) {
-      case BasemapLayerSourceType.RASTER_RESOURCE:
-        if (source.productId === undefined || source.productType === undefined) {
-          throw new Error('BasemapLayerSourceInput of type RASTER_RESOURCE is missing productId/productType');
+      case SourceTypeInput.CATALOG_RESOURCE:
+        if (source.domain !== Domain.RASTER) {
+          throw new Error(
+            `BasemapLayerSourceInput of type CATALOG_RESOURCE has unsupported domain "${String(source.domain)}" - only RASTER is supported`
+          );
         }
-        return { type: 'RASTER_RESOURCE', productId: source.productId, productType: source.productType };
-      case BasemapLayerSourceType.EXTERNAL:
+        if (source.uniqueness === undefined) {
+          throw new Error('BasemapLayerSourceInput of type CATALOG_RESOURCE is missing uniqueness');
+        }
+        return {
+          type: 'CATALOG_RESOURCE',
+          domain: source.domain,
+          uniqueness: { productId: source.uniqueness.productId, productType: source.uniqueness.productType },
+        };
+      case SourceTypeInput.EXTERNAL:
         if (source.details === undefined) {
           throw new Error('BasemapLayerSourceInput of type EXTERNAL is missing details');
         }

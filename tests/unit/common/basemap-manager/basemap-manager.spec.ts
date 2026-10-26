@@ -1,7 +1,8 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
 import { BasemapManager } from '../../../../src/common/basemap-manager/basemap-manager';
-import { Basemap, BasemapLayerSourceType, CreateBasemapInput, ImportReview, UpdateBasemapInput } from '../../../../src/graphql/basemap';
+import { Basemap, CreateBasemapInput, ImportReview, SourceTypeInput, UpdateBasemapInput } from '../../../../src/graphql/basemap';
+import { Domain } from '../../../../src/graphql/domain';
 import { IConfig, IContext, IService } from '../../../../src/common/interfaces';
 import { requestExecutor } from '../../../../src/utils';
 
@@ -30,13 +31,13 @@ const SAMPLE_LAYERS = [
     id: 'layer-1',
     order: 0,
     opacity: 1,
-    source: { type: BasemapLayerSourceType.RASTER_RESOURCE, productId: 'prod-1', productType: 'OrthophotoHistory' },
+    source: { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: 'prod-1', productType: 'OrthophotoHistory' } },
   },
   {
     id: 'layer-2',
     order: 1,
     opacity: 0.5,
-    source: { type: BasemapLayerSourceType.EXTERNAL, details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles' } },
+    source: { type: SourceTypeInput.EXTERNAL, details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles' } },
   },
 ] as CreateBasemapInput['layers'];
 
@@ -105,7 +106,7 @@ describe('BasemapManager', () => {
           order: 0,
           opacity: 1,
           shouldBeUsedInModelDraping: undefined,
-          source: { type: 'RASTER_RESOURCE', productId: 'prod-1', productType: 'OrthophotoHistory' },
+          source: { type: 'CATALOG_RESOURCE', domain: 'RASTER', uniqueness: { productId: 'prod-1', productType: 'OrthophotoHistory' } },
         },
         {
           id: 'layer-2',
@@ -115,6 +116,21 @@ describe('BasemapManager', () => {
           source: { type: 'EXTERNAL', details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles' } },
         },
       ]);
+    });
+
+    it.each([
+      [
+        'an unsupported domain',
+        { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.VECTOR, uniqueness: { productId: 'p', productType: 'Orthophoto' } },
+        /only RASTER/,
+      ],
+      ['a missing uniqueness', { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.RASTER }, /missing uniqueness/],
+    ])('rejects a CATALOG_RESOURCE layer with %s before calling the basemap API', async (_label, source, expectedError) => {
+      mockedRequestExecutor.mockResolvedValueOnce(axiosRes({ url: 'http://blob/thumb.png', width: 128, height: 128 }));
+      const badInput = { ...input, layers: [{ id: 'l', order: 0, opacity: 1, source }] } as CreateBasemapInput;
+
+      await expect(manager.createBasemap(badInput, CTX)).rejects.toThrow(expectedError);
+      expect(mockedRequestExecutor).toHaveBeenCalledTimes(1); // thumbnail upload only - nothing persisted
     });
 
     it('propagates thumbnail upload failures and never attempts to persist the basemap', async () => {
