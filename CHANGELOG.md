@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.2...v4.5.3) (2026-10-25)
+
+
+### Bug Fixes
+
+* add new internaljobManager service type ([3e49dff](https://github.com/MapColonies/catalog-web-app-bff/commit/3e49dffc86fe8ca11a9f49e6cbcb8b735c955561))
+
 ## [4.5.2](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.1...v4.5.2) (2026-10-11)
 
 
