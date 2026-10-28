@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.3...v4.5.4) (2026-10-28)
+
+
+### Bug Fixes
+
+* support mclabels ([de25c1c](https://github.com/MapColonies/catalog-web-app-bff/commit/de25c1c151efa0f0fde696a8340b99c2ad1da2a3))
+
 ## [4.5.3](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.2...v4.5.3) (2026-10-25)
 
 
