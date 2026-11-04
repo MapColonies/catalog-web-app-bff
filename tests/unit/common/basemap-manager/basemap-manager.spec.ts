@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
 import { BasemapManager } from '../../../../src/common/basemap-manager/basemap-manager';
-import { Basemap, CreateBasemapInput, ImportReview, SourceTypeInput, UpdateBasemapInput } from '../../../../src/graphql/basemap';
+import { Basemap, CreateBasemapInput, ImportReview, SourceType, Status, UpdateBasemapInput } from '../../../../src/graphql/basemap';
 import { Domain } from '../../../../src/graphql/domain';
 import { IConfig, IContext, IService } from '../../../../src/common/interfaces';
 import { requestExecutor } from '../../../../src/utils';
@@ -24,20 +24,20 @@ function axiosRes<T>(data: T, headers: Record<string, string> = {}): AxiosRespon
   return { data, status: 200, statusText: 'OK', headers, config: {} };
 }
 
-const SAMPLE_BASEMAP = { id: '1', name: 'basemap-1' } as unknown as Basemap;
+const SAMPLE_BASEMAP = { id: '1', name: 'basemap-1', layers: [] } as unknown as Basemap;
 
 const SAMPLE_LAYERS = [
   {
     id: 'layer-1',
     order: 0,
     opacity: 1,
-    source: { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: 'prod-1', productType: 'OrthophotoHistory' } },
+    source: { type: SourceType.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: 'prod-1', productType: 'OrthophotoHistory' } },
   },
   {
     id: 'layer-2',
     order: 1,
     opacity: 0.5,
-    source: { type: SourceTypeInput.EXTERNAL, details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles' } },
+    source: { type: SourceType.EXTERNAL, details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles' } },
   },
 ] as CreateBasemapInput['layers'];
 
@@ -58,6 +58,50 @@ describe('BasemapManager', () => {
 
       expect(result).toEqual([SAMPLE_BASEMAP]);
       expect(mockedRequestExecutor).toHaveBeenCalledWith({ url: 'http://basemap-api/basemaps', exposureType: 'SERVICE' }, 'GET', {}, CTX);
+    });
+  });
+
+  describe('unknown productType in a returned catalog reference', () => {
+    const catalogLayer = (productType: string | null): Record<string, unknown> => ({
+      id: 'l1',
+      order: 0,
+      opacity: 1,
+      source: {
+        type: SourceType.CATALOG_RESOURCE,
+        domain: Domain.RASTER,
+        uniqueness: { productId: 'p', productType },
+        status: Status.UNRESOLVED,
+        layer: null,
+        capabilities: null,
+      },
+    });
+    const externalLayer = {
+      id: 'l2',
+      order: 1,
+      opacity: 1,
+      source: { type: SourceType.EXTERNAL, status: Status.RESOLVED, details: { protocol: 'XYZ', name: 'n', url: 'u' } },
+    };
+
+    it('is replaced by null (GraphQL cannot serialize it) while known values, nulls and external layers are untouched', async () => {
+      const basemap = {
+        id: '1',
+        name: 'b',
+        layers: [catalogLayer('NotARealProductType'), catalogLayer('Orthophoto'), catalogLayer(null), externalLayer],
+      };
+      mockedRequestExecutor.mockResolvedValueOnce(axiosRes([basemap]));
+
+      const [result] = await manager.getBasemaps(CTX);
+
+      expect(result.layers).toEqual([catalogLayer(null), catalogLayer('Orthophoto'), catalogLayer(null), externalLayer]);
+      expect(mockLogger.warn).toHaveBeenCalledTimes(1);
+    });
+
+    it('is also replaced in the import review', async () => {
+      mockedRequestExecutor.mockResolvedValueOnce(axiosRes({ name: 'imported', layers: [catalogLayer('NotARealProductType')] }));
+
+      const review = await manager.validateBasemapImport(Buffer.from('zip').toString('base64'), 'package.zip', CTX);
+
+      expect(review.layers).toEqual([catalogLayer(null)]);
     });
   });
 
@@ -121,16 +165,33 @@ describe('BasemapManager', () => {
     it.each([
       [
         'an unsupported domain',
-        { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.VECTOR, uniqueness: { productId: 'p', productType: 'Orthophoto' } },
+        { type: SourceType.CATALOG_RESOURCE, domain: Domain.VECTOR, uniqueness: { productId: 'p', productType: 'Orthophoto' } },
         /only RASTER/,
       ],
-      ['a missing uniqueness', { type: SourceTypeInput.CATALOG_RESOURCE, domain: Domain.RASTER }, /missing uniqueness/],
+      ['a missing uniqueness', { type: SourceType.CATALOG_RESOURCE, domain: Domain.RASTER }, /missing uniqueness/],
     ])('rejects a CATALOG_RESOURCE layer with %s before calling the basemap API', async (_label, source, expectedError) => {
       mockedRequestExecutor.mockResolvedValueOnce(axiosRes({ url: 'http://blob/thumb.png', width: 128, height: 128 }));
       const badInput = { ...input, layers: [{ id: 'l', order: 0, opacity: 1, source }] } as CreateBasemapInput;
 
       await expect(manager.createBasemap(badInput, CTX)).rejects.toThrow(expectedError);
       expect(mockedRequestExecutor).toHaveBeenCalledTimes(1); // thumbnail upload only - nothing persisted
+    });
+
+    it('forwards an incomplete uniqueness as-is - the basemap service stores it and returns the layer as UNRESOLVED', async () => {
+      mockedRequestExecutor
+        .mockResolvedValueOnce(axiosRes({ url: 'http://blob/thumb.png', width: 128, height: 128 }))
+        .mockResolvedValueOnce(axiosRes(SAMPLE_BASEMAP));
+      const partial = {
+        ...input,
+        layers: [
+          { id: 'l', order: 0, opacity: 1, source: { type: SourceType.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: null } } },
+        ],
+      } as CreateBasemapInput;
+
+      await manager.createBasemap(partial, CTX);
+
+      const body = mockedRequestExecutor.mock.calls[1][2].data as { layers: { source: unknown }[] };
+      expect(body.layers[0].source).toEqual({ type: 'CATALOG_RESOURCE', domain: 'RASTER', uniqueness: { productId: null, productType: undefined } });
     });
 
     it('propagates thumbnail upload failures and never attempts to persist the basemap', async () => {
@@ -254,7 +315,7 @@ describe('BasemapManager', () => {
 
   describe('validateBasemapImport', () => {
     it('forwards the decoded file as multipart/form-data and returns the review', async () => {
-      const review = { name: 'imported' } as unknown as ImportReview;
+      const review = { name: 'imported', layers: [] } as unknown as ImportReview;
       mockedRequestExecutor.mockResolvedValueOnce(axiosRes(review));
 
       const fileBase64 = Buffer.from('zip-bytes').toString('base64');

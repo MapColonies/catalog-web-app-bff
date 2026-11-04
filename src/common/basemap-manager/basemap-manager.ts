@@ -1,6 +1,7 @@
 import FormData from 'form-data';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
+import { ProductType } from '@map-colonies/types';
 import {
   Basemap,
   BasemapExportPackage,
@@ -8,7 +9,7 @@ import {
   BasemapLayerSourceInput,
   CreateBasemapInput,
   ImportReview,
-  SourceTypeInput,
+  SourceType,
   UpdateBasemapInput,
 } from '../../graphql/basemap';
 import { Domain } from '../../graphql/domain';
@@ -23,7 +24,7 @@ interface IRestThumbnail {
 }
 
 type IRestLayerSource =
-  | { type: 'CATALOG_RESOURCE'; domain: Domain.RASTER; uniqueness: { productId: string; productType: string } }
+  | { type: 'CATALOG_RESOURCE'; domain: Domain.RASTER; uniqueness: { productId?: string | null; productType?: string | null } }
   | { type: 'EXTERNAL'; details: { protocol: string; name: string; url: string } };
 
 interface IRestLayer {
@@ -42,6 +43,11 @@ interface IRestBasemapWriteInput {
   layers: IRestLayer[];
 }
 
+interface ILayersHolder {
+  layers: { id: string; source: unknown }[];
+}
+
+const KNOWN_PRODUCT_TYPES = new Set<string>(Object.values(ProductType));
 const DEFAULT_EXPORT_FILENAME = 'basemap.zip';
 const CONTENT_DISPOSITION_FILENAME_PATTERN = /filename="?([^";]+)"?/i;
 const SAFE_FILENAME_PATTERN = /^[\w.\- ]+\.zip$/i;
@@ -57,7 +63,7 @@ export class BasemapManager {
   public async getBasemaps(ctx: IContext): Promise<Basemap[]> {
     this.logger.info('[BasemapManager][getBasemaps]');
     const res = await requestExecutor({ url: `${this.service.url}/basemaps`, exposureType: this.service.exposureType }, 'GET', {}, ctx);
-    return res.data as Basemap[];
+    return (res.data as Basemap[]).map((basemap) => this.withRepresentableProductTypes(basemap));
   }
 
   public async getBasemap(id: string, ctx: IContext): Promise<Basemap> {
@@ -68,7 +74,7 @@ export class BasemapManager {
       {},
       ctx
     );
-    return res.data as Basemap;
+    return this.withRepresentableProductTypes(res.data as Basemap);
   }
 
   public async createBasemap(input: CreateBasemapInput, ctx: IContext): Promise<Basemap> {
@@ -76,7 +82,7 @@ export class BasemapManager {
     const thumbnail = await this.uploadThumbnail(input.thumbnailBase64, input.thumbnailContentType, ctx);
     const body = this.toRestWriteInput(input, thumbnail);
     const res = await requestExecutor({ url: `${this.service.url}/basemaps`, exposureType: this.service.exposureType }, 'POST', { data: body }, ctx);
-    return res.data as Basemap;
+    return this.withRepresentableProductTypes(res.data as Basemap);
   }
 
   public async updateBasemap(id: string, input: UpdateBasemapInput, ctx: IContext): Promise<Basemap> {
@@ -92,7 +98,7 @@ export class BasemapManager {
       { data: body },
       ctx
     );
-    return res.data as Basemap;
+    return this.withRepresentableProductTypes(res.data as Basemap);
   }
 
   public async deleteBasemap(id: string, ctx: IContext): Promise<string> {
@@ -131,7 +137,7 @@ export class BasemapManager {
       { data: form, headers: form.getHeaders() },
       ctx
     );
-    return res.data as ImportReview;
+    return this.withRepresentableProductTypes(res.data as ImportReview);
   }
 
   private async uploadThumbnail(thumbnailBase64: string, contentType: string, ctx: IContext): Promise<IRestThumbnail> {
@@ -171,7 +177,7 @@ export class BasemapManager {
 
   private toRestLayerSource(source: BasemapLayerSourceInput): IRestLayerSource {
     switch (source.type) {
-      case SourceTypeInput.CATALOG_RESOURCE:
+      case SourceType.CATALOG_RESOURCE:
         if (source.domain !== Domain.RASTER) {
           throw new Error(
             `BasemapLayerSourceInput of type CATALOG_RESOURCE has unsupported domain "${String(source.domain)}" - only RASTER is supported`
@@ -185,7 +191,7 @@ export class BasemapManager {
           domain: source.domain,
           uniqueness: { productId: source.uniqueness.productId, productType: source.uniqueness.productType },
         };
-      case SourceTypeInput.EXTERNAL:
+      case SourceType.EXTERNAL:
         if (source.details === undefined) {
           throw new Error('BasemapLayerSourceInput of type EXTERNAL is missing details');
         }
@@ -194,6 +200,26 @@ export class BasemapManager {
       default:
         throw new Error(`unknown BasemapLayerSourceInput type "${String(source.type)}"`);
     }
+  }
+
+  private withRepresentableProductTypes<T extends ILayersHolder>(holder: T): T {
+    return {
+      ...holder,
+      layers: holder.layers.map((layer) => {
+        const source = layer.source as { type?: unknown; uniqueness?: { productType?: string | null } };
+        const productType = source.uniqueness?.productType;
+        if (
+          source.type !== SourceType.CATALOG_RESOURCE ||
+          productType === undefined ||
+          productType === null ||
+          KNOWN_PRODUCT_TYPES.has(productType)
+        ) {
+          return layer;
+        }
+        this.logger.warn(`[BasemapManager] layer "${layer.id}" has an unknown productType "${productType}" - returned as null`);
+        return { ...layer, source: { ...source, uniqueness: { ...source.uniqueness, productType: null } } };
+      }),
+    };
   }
 
   private resolveExportFilename(headers: Record<string, string> | undefined): string {

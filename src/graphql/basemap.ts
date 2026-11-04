@@ -12,24 +12,17 @@ export enum ExternalProtocol {
 }
 registerEnumType(ExternalProtocol, { name: 'ExternalProtocol' });
 
-export enum SourceTypeInput {
+export enum SourceType {
   CATALOG_RESOURCE = 'CATALOG_RESOURCE',
   EXTERNAL = 'EXTERNAL',
 }
-registerEnumType(SourceTypeInput, { name: 'SourceTypeInput' });
+registerEnumType(SourceType, { name: 'SourceType' });
 
-export enum SourceTypeOutput {
-  RESOLVED_CATALOG_RESOURCE = 'RESOLVED_CATALOG_RESOURCE',
-  UNRESOLVED_CATALOG_RESOURCE = 'UNRESOLVED_CATALOG_RESOURCE',
-  EXTERNAL = 'EXTERNAL',
-}
-registerEnumType(SourceTypeOutput, { name: 'SourceTypeOutput' });
-
-export enum ImportReviewLayerStatus {
+export enum Status {
   RESOLVED = 'RESOLVED',
   UNRESOLVED = 'UNRESOLVED',
 }
-registerEnumType(ImportReviewLayerStatus, { name: 'ImportReviewLayerStatus' });
+registerEnumType(Status, { name: 'BasemapLayerStatus' });
 
 @ObjectType()
 export class BasemapThumbnail {
@@ -69,70 +62,63 @@ export class ExternalLayerDetails {
 
 @ObjectType()
 export class RasterUniqueness {
-  @Field({ nullable: false })
-  public productId: string;
+  @Field((type) => String, { nullable: true })
+  public productId?: string | null;
 
-  @Field((type) => ProductType, { nullable: false })
-  public productType: ProductType;
+  @Field((type) => ProductType, { nullable: true })
+  public productType?: ProductType | null;
 }
 
 @InputType()
 export class RasterUniquenessInput {
-  @Field({ nullable: false })
-  public productId: string;
+  @Field((type) => String, { nullable: true })
+  public productId?: string | null;
 
-  @Field((type) => ProductType, { nullable: false })
-  public productType: ProductType;
+  @Field((type) => ProductType, { nullable: true })
+  public productType?: ProductType | null;
 }
 
 @ObjectType()
 export class ExternalLayerSource {
-  @Field((type) => SourceTypeOutput, { nullable: false })
-  public type: SourceTypeOutput.EXTERNAL;
+  @Field((type) => SourceType, { nullable: false })
+  public type: SourceType.EXTERNAL;
+
+  @Field((type) => Status, { nullable: false })
+  public status: Status.RESOLVED;
 
   @Field((type) => ExternalLayerDetails, { nullable: false })
   public details: ExternalLayerDetails;
 }
 
 @ObjectType()
-export class ResolvedCatalogResourceSource {
-  @Field((type) => SourceTypeOutput, { nullable: false })
-  public type: SourceTypeOutput.RESOLVED_CATALOG_RESOURCE;
-
-  @Field((type) => Domain, { nullable: false })
-  public domain: Domain.RASTER;
-
-  @Field((type) => LayerRasterRecord, { nullable: false })
-  public layer: LayerRasterRecord;
-
-  @Field((type) => Capability, { nullable: false })
-  public capabilities: Capability;
-}
-
-@ObjectType()
-export class UnresolvedCatalogResourceSource {
-  @Field((type) => SourceTypeOutput, { nullable: false })
-  public type: SourceTypeOutput.UNRESOLVED_CATALOG_RESOURCE;
+export class CatalogResourceSource {
+  @Field((type) => SourceType, { nullable: false })
+  public type: SourceType.CATALOG_RESOURCE;
 
   @Field((type) => Domain, { nullable: false })
   public domain: Domain.RASTER;
 
   @Field((type) => RasterUniqueness, { nullable: false })
   public uniqueness: RasterUniqueness;
-}
 
-type BasemapLayerSourceOutput = ResolvedCatalogResourceSource | UnresolvedCatalogResourceSource | ExternalLayerSource;
+  @Field((type) => Status, { nullable: false })
+  public status: Status;
+
+  @Field((type) => LayerRasterRecord, { nullable: true })
+  public layer: LayerRasterRecord | null;
+
+  @Field((type) => Capability, { nullable: true })
+  public capabilities: Capability | null;
+}
 
 export const BasemapLayerSourceUnion = createUnionType({
   name: 'BasemapLayerSource',
-  types: () => [ResolvedCatalogResourceSource, UnresolvedCatalogResourceSource, ExternalLayerSource] as const,
-  resolveType: (value: BasemapLayerSourceOutput) => {
+  types: () => [CatalogResourceSource, ExternalLayerSource] as const,
+  resolveType: (value: CatalogResourceSource | ExternalLayerSource) => {
     switch (value.type) {
-      case SourceTypeOutput.RESOLVED_CATALOG_RESOURCE:
-        return ResolvedCatalogResourceSource;
-      case SourceTypeOutput.UNRESOLVED_CATALOG_RESOURCE:
-        return UnresolvedCatalogResourceSource;
-      case SourceTypeOutput.EXTERNAL:
+      case SourceType.CATALOG_RESOURCE:
+        return CatalogResourceSource;
+      case SourceType.EXTERNAL:
         return ExternalLayerSource;
     }
   },
@@ -179,8 +165,8 @@ export class Basemap {
 
 @InputType()
 export class BasemapLayerSourceInput {
-  @Field((type) => SourceTypeInput, { nullable: false })
-  public type: SourceTypeInput;
+  @Field((type) => SourceType, { nullable: false })
+  public type: SourceType;
 
   @Field((type) => Domain, { nullable: true })
   public domain?: Domain;
@@ -272,9 +258,6 @@ export class ImportReviewRoleConflict {
 
 @ObjectType()
 export class ImportReviewLayer {
-  @Field((type) => ImportReviewLayerStatus, { nullable: false })
-  public status: ImportReviewLayerStatus;
-
   @Field({ nullable: false })
   public id: string;
 
