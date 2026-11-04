@@ -6,7 +6,7 @@ import { CapabilitiesManager } from '../../common/capabilities-manager/capabilit
 import { Services } from '../../common/constants';
 import { IContext } from '../../common/interfaces';
 import { extractErrorMessage } from '../../utils';
-import { Capability } from '../capability';
+import { CapabilityType } from '../capability';
 import { CapabilitiesLayersSearchParams } from '../inputTypes';
 
 @Resolver()
@@ -21,13 +21,13 @@ export class CapabilitiesResolver {
     this.capabilitiesManager = container.resolve(CapabilitiesManager);
   }
 
-  @Query((type) => [Capability])
+  @Query((type) => [CapabilityType])
   public async capabilities(
     @Arg('params')
     params: CapabilitiesLayersSearchParams,
     @Ctx()
     ctx: IContext
-  ): Promise<Capability[]> {
+  ): Promise<CapabilityType[]> {
     try {
       const capabilityList = await this.capabilitiesManager.getCapabilities(params, ctx);
       return capabilityList;

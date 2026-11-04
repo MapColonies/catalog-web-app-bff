@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/naming-convention -- field names dictated by the OGC WMTS capabilities XML schema */
 import { convertToJson, getTraversalObj } from 'fast-xml-parser';
 import { xmlParserOptions } from '../common/constants';
-import { Capability, ResourceURL } from '../graphql/capability';
+import { CapabilityType, ResourceURLType } from '../graphql/capability';
 
 interface TileMatrixLimits {
   TileMatrix: string;
@@ -18,7 +18,7 @@ interface TileMatrixLimits {
   MaxTileCol: number;
 }
 
-export const xmlToCapabilities = (idList: string[], xmlData: string): Capability[] => {
+export const xmlToCapabilities = (idList: string[], xmlData: string): CapabilityType[] => {
   const traversalObj = getTraversalObj(xmlData, xmlParserOptions);
   const jsonObj = convertToJson(traversalObj, xmlParserOptions);
   const tileMatrixSetMap = new Map();
@@ -29,7 +29,7 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
     );
   });
   const layerList = jsonObj?.Capabilities?.Contents?.Layer?.filter((layer: { [x: string]: any }) => idList.includes(layer['ows:Identifier']));
-  const capabilityList: Capability[] = layerList?.map((layer: { [x: string]: any }) => ({
+  const capabilityList: CapabilityType[] = layerList?.map((layer: { [x: string]: any }) => ({
     id: layer['ows:Identifier'],
     style: layer.Style.map((style: { [x: string]: any }) => {
       const isDefault = style.attr?.isDefault;
@@ -49,7 +49,7 @@ export const xmlToCapabilities = (idList: string[], xmlData: string): Capability
         tileMatrixLabels,
       };
     }),
-    url: layer.ResourceURL.map((resourceURL: { attr: ResourceURL }) => resourceURL.attr).filter(
+    url: layer.ResourceURL.map((resourceURL: { attr: ResourceURLType }) => resourceURL.attr).filter(
       (resource: { resourceType: string }) => resource.resourceType === 'tile'
     ),
   }));

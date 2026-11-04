@@ -1,5 +1,5 @@
 import { Logger } from '@map-colonies/js-logger';
-import { Capability } from '../../graphql/capability';
+import { CapabilityType } from '../../graphql/capability';
 // import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
 import { xmlToCapabilities } from '../../helpers/xml';
 import { requestExecutor, stringifyObject } from '../../utils';
@@ -14,7 +14,7 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
     this.service = this.config.get('mapServices.raster');
   }
 
-  public async getCapabilities(idList: string[], ctx: IContext): Promise<Capability[]> {
+  public async getCapabilities(idList: string[], ctx: IContext): Promise<CapabilityType[]> {
     this.logger.info(`[Capabilities][Raster][getCapabilities] ${stringifyObject({ idList })}`);
     const response = await requestExecutor(
       {
