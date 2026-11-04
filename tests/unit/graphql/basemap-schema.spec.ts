@@ -19,8 +19,10 @@ const REST_BASEMAP = {
       order: 0,
       opacity: 1,
       source: {
-        type: 'RESOLVED_CATALOG_RESOURCE',
+        type: 'CATALOG_RESOURCE',
         domain: 'RASTER',
+        uniqueness: { productId: 'prod-1', productType: 'Orthophoto' },
+        status: 'RESOLVED',
         layer: { id: 'record-1', productId: 'prod-1', productType: 'Orthophoto', productName: 'France' },
         capabilities: {
           id: 'prod-1-Orthophoto',
@@ -35,13 +37,20 @@ const REST_BASEMAP = {
       id: 'unresolved',
       order: 1,
       opacity: 1,
-      source: { type: 'UNRESOLVED_CATALOG_RESOURCE', domain: 'RASTER', uniqueness: { productId: 'gone', productType: 'OrthophotoBest' } },
+      source: {
+        type: 'CATALOG_RESOURCE',
+        domain: 'RASTER',
+        uniqueness: { productId: 'gone', productType: 'OrthophotoBest' },
+        status: 'UNRESOLVED',
+        layer: null,
+        capabilities: null,
+      },
     },
     {
       id: 'external',
       order: 2,
       opacity: 0.5,
-      source: { type: 'EXTERNAL', details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles/{z}/{x}/{y}' } },
+      source: { type: 'EXTERNAL', status: 'RESOLVED', details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles/{z}/{x}/{y}' } },
     },
   ],
 };
@@ -53,9 +62,8 @@ const QUERY = `{
       id
       source {
         __typename
-        ... on ResolvedCatalogResourceSource { type domain layer { id productType } capabilities { id format } }
-        ... on UnresolvedCatalogResourceSource { type domain uniqueness { productId productType } }
-        ... on ExternalLayerSource { type details { protocol name url } }
+        ... on CatalogResourceSource { type domain status uniqueness { productId productType } layer { id productType } capabilities { id format } }
+        ... on ExternalLayerSource { type status details { protocol name url } }
       }
     }
   }
@@ -82,9 +90,11 @@ describe('Basemap GraphQL schema', () => {
             {
               id: 'resolved',
               source: {
-                __typename: 'ResolvedCatalogResourceSource',
-                type: 'RESOLVED_CATALOG_RESOURCE',
+                __typename: 'CatalogResourceSource',
+                type: 'CATALOG_RESOURCE',
                 domain: 'RASTER',
+                status: 'RESOLVED',
+                uniqueness: { productId: 'prod-1', productType: 'ORTHOPHOTO' },
                 layer: { id: 'record-1', productType: 'ORTHOPHOTO' },
                 capabilities: { id: 'prod-1-Orthophoto', format: ['image/jpeg'] },
               },
@@ -92,10 +102,13 @@ describe('Basemap GraphQL schema', () => {
             {
               id: 'unresolved',
               source: {
-                __typename: 'UnresolvedCatalogResourceSource',
-                type: 'UNRESOLVED_CATALOG_RESOURCE',
+                __typename: 'CatalogResourceSource',
+                type: 'CATALOG_RESOURCE',
                 domain: 'RASTER',
+                status: 'UNRESOLVED',
                 uniqueness: { productId: 'gone', productType: 'ORTHOPHOTO_BEST' },
+                layer: null,
+                capabilities: null,
               },
             },
             {
@@ -103,6 +116,7 @@ describe('Basemap GraphQL schema', () => {
               source: {
                 __typename: 'ExternalLayerSource',
                 type: 'EXTERNAL',
+                status: 'RESOLVED',
                 details: { protocol: 'XYZ', name: 'osm', url: 'http://tiles/{z}/{x}/{y}' },
               },
             },
