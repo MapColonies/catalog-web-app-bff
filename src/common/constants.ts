@@ -1,4 +1,3 @@
-import { decode } from 'he';
 import { Status } from '../graphql/job';
 import { LayerMetadataUnionType } from '../graphql/resolvers/csw.resolver';
 
@@ -59,36 +58,6 @@ export const fieldTypesVector = {
   isFeatureStructure: (fieldName: string): boolean => fieldName === 'featureStructure',
   isLinks: (fieldName: string): boolean => fieldName === 'links',
   isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
-};
-
-export const xmlParserOptions = {
-  attributeNamePrefix: '',
-  attrNodeName: 'attr',
-  textNodeName: '#text',
-  ignoreAttributes: false,
-  ignoreNameSpace: false,
-  allowBooleanAttributes: false,
-  parseNodeValue: true,
-  parseAttributeValue: false,
-  trimValues: true,
-  cdataTagName: '__cdata',
-  cdataPositionChar: '\\c',
-  parseTrueNumberOnly: false,
-  numParseOptions: {
-    hex: true,
-    leadingZeros: true,
-  },
-  arrayMode: (name: string): boolean =>
-    name === 'Layer' ||
-    name === 'Style' ||
-    name === 'Format' ||
-    name === 'TileMatrixSetLink' ||
-    name === 'ResourceURL' ||
-    name === 'TileMatrixLimits' ||
-    name === 'TileMatrixSet',
-  attrValueProcessor: (val: string): string => decode(val, { isAttributeValue: true }),
-  tagValueProcessor: (val: string): string => decode(val),
-  alwaysCreateTextNode: false,
 };
 
 export const statusMap: Record<Status, string> = {
