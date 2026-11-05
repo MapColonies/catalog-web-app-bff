@@ -103,6 +103,10 @@
       "url": "NOT_AVAILABLE"
     }
   },
+  "basemapServices": {
+    "url": "http://basemap-manager-url",
+    "exposureType": "SERVICE"
+  },
   "jobServices": {
     "common": {
       "url": "http://common-job-manager-url",

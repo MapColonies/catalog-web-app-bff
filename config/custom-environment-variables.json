@@ -91,6 +91,9 @@
       "url": "EXPORT_LAYER_DEM_URL"
     }
   },
+  "basemapServices": {
+    "url": "BASEMAP_SERVICE_URL"
+  },
   "jobServices": {
     "common": {
       "url": "JOB_SERVICE_COMMON_URL"
