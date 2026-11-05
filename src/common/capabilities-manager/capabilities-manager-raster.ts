@@ -1,8 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
+import { WmtsClient } from '@map-colonies/wmts-client';
 import { CapabilityType } from '../../graphql/capability';
-// import MAP_SERVICE_MOCK_RESPONSE from '../../graphql/MOCKS/get-capabilities/RASTER/MAP-PROXY';
-import { xmlToCapabilities } from '../../helpers/xml';
-import { requestExecutor, stringifyObject } from '../../utils';
+import { stringifyObject, urlHandler } from '../../utils';
 import { IConfig, IContext, IService } from '../interfaces';
 import { ICapabilitiesManagerInstance } from './capabilities-manager.interface';
 
@@ -16,19 +15,14 @@ export class CapabilitiesManagerRaster implements ICapabilitiesManagerInstance {
 
   public async getCapabilities(idList: string[], ctx: IContext): Promise<CapabilityType[]> {
     this.logger.info(`[Capabilities][Raster][getCapabilities] ${stringifyObject({ idList })}`);
-    const response = await requestExecutor(
-      {
-        url: this.injectWmts(this.service.url),
-        exposureType: this.service.exposureType,
-      },
-      'GET',
-      {},
-      ctx
+    // `this.logger` is typed against this (very old) BFF's own @map-colonies/js-logger major version; WmtsClient only
+    // calls the common pino debug/info/warn/error methods, which both versions implement identically at runtime.
+    const wmtsClient = new WmtsClient(
+      this.logger as unknown as ConstructorParameters<typeof WmtsClient>[0],
+      this.injectWmts(urlHandler(this.service))
     );
-    // MOCK DATA - start
-    // const response = await Promise.resolve(MAP_SERVICE_MOCK_RESPONSE);
-    // MOCK DATA - end
-    return xmlToCapabilities(idList, response.data as string, this.logger);
+    const capabilities = await wmtsClient.GetCapabilities();
+    return capabilities.filter((capability) => idList.includes(capability.id));
   }
 
   private injectWmts(urlString: string): string {

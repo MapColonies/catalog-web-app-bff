@@ -1,10 +1,10 @@
 import { Field, ObjectType } from 'type-graphql';
 import type {
-  Capability as CapabilityContract,
+  CapabilityWMTS as CapabilityContract,
   Style as StyleContract,
   TileMatrixSet as TileMatrixSetContract,
   ResourceURL as ResourceURLContract,
-} from '@map-colonies/types';
+} from '@map-colonies/wmts-client';
 
 @ObjectType('Style')
 export class StyleType implements StyleContract {
