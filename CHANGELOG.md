@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.4...v4.6.0) (2026-11-05)
+
+
+### Features
+
+* basemap management ([#345](https://github.com/MapColonies/catalog-web-app-bff/issues/345)) ([6d5d902](https://github.com/MapColonies/catalog-web-app-bff/commit/6d5d902ef379021e250bacc1ffab0e73333c609c))
+
+
+### Bug Fixes
+
+* capability type is shared ([#347](https://github.com/MapColonies/catalog-web-app-bff/issues/347)) ([fb446ef](https://github.com/MapColonies/catalog-web-app-bff/commit/fb446efb2319d6759a2379fee49a72e7205068dd))
+
 ## [4.5.4](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.3...v4.5.4) (2026-10-28)
 
 
