@@ -1,7 +1,7 @@
 import FormData from 'form-data';
 import { inject, singleton } from 'tsyringe';
 import { Logger } from '@map-colonies/js-logger';
-import { ProductType } from '@map-colonies/types';
+import { BasemapWriteInputSchema, ProductType } from '@map-colonies/types';
 import {
   Basemap,
   BasemapExportPackage,
@@ -48,6 +48,7 @@ interface ILayersHolder {
 }
 
 const KNOWN_PRODUCT_TYPES = new Set<string>(Object.values(ProductType));
+const WRITE_INPUT_VALIDATION_SCHEMA = BasemapWriteInputSchema.omit({ thumbnail: true });
 const DEFAULT_EXPORT_FILENAME = 'basemap.zip';
 const CONTENT_DISPOSITION_FILENAME_PATTERN = /filename="?([^";]+)"?/i;
 const SAFE_FILENAME_PATTERN = /^[\w.\- ]+\.zip$/i;
@@ -156,13 +157,21 @@ export class BasemapManager {
   }
 
   private toRestWriteInput(input: CreateBasemapInput | UpdateBasemapInput, thumbnail: IRestThumbnail): IRestBasemapWriteInput {
-    return {
+    const candidate: IRestBasemapWriteInput = {
       name: input.name,
       thumbnail,
       isCurrent: input.isCurrent,
       isForPreview: input.isForPreview,
       layers: input.layers.map((layer) => this.toRestLayer(layer)),
     };
+
+    const result = WRITE_INPUT_VALIDATION_SCHEMA.safeParse(candidate);
+    if (!result.success) {
+      const [issue] = result.error.issues;
+      const path = issue.path.join('.');
+      throw new Error(`basemap input failed validation${path.length > 0 ? ` at "${path}"` : ''}: ${issue.message}`);
+    }
+    return candidate;
   }
 
   private toRestLayer(layer: BasemapLayerInput): IRestLayer {
