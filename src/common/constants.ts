@@ -19,8 +19,6 @@ export enum Services {
 export type CatalogRecordType = LayerMetadataUnionType;
 
 export const fieldTypes = {
-  isFootprint: (fieldName: string): boolean => fieldName === 'footprint',
-  isLayerPolygonParts: (fieldName: string): boolean => fieldName === 'layerPolygonParts',
   isDate: (fieldName: string): boolean =>
     [
       'creationDate',
@@ -35,13 +33,6 @@ export const fieldTypes = {
       'imagingTimeBeginUTC',
       'imagingTimeEndUTC',
     ].includes(fieldName),
-  isDiscrete: (fieldName: string): boolean => fieldName === 'discretes',
-  isLinks: (fieldName: string): boolean => fieldName === 'links',
-  isKeywords: (fieldName: string): boolean => fieldName === 'keywords',
-  isSensor: (fieldName: string): boolean => ['sensorType', 'sensors'].includes(fieldName),
-  isBoolean: (fieldName: string): boolean => ['hasTerrain'].includes(fieldName),
-  isRegion: (fieldName: string): boolean => ['region'].includes(fieldName),
-  isProductVersion: (fieldName: string): boolean => fieldName === 'productVersion',
 };
 
 export const fieldTypesVector = {
