@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.6.0...v4.7.0) (2026-11-10)
+
+
+### Features
+
+* use adapter from csw-client ([#352](https://github.com/MapColonies/catalog-web-app-bff/issues/352)) ([23fbc88](https://github.com/MapColonies/catalog-web-app-bff/commit/23fbc8829aefb9d2751aa7f9107430906d5db5ff))
+
+
+### Bug Fixes
+
+* basemap management migration to zod ([#351](https://github.com/MapColonies/catalog-web-app-bff/issues/351)) ([d052da5](https://github.com/MapColonies/catalog-web-app-bff/commit/d052da533590f92726b5542006236079c52269bd))
+* use wmts-client instead of local logic ([#349](https://github.com/MapColonies/catalog-web-app-bff/issues/349)) ([7a9e610](https://github.com/MapColonies/catalog-web-app-bff/commit/7a9e6106d4ff2ee1c496c5b0a21540bdb7fc7247))
+
 ## [4.6.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.5.4...v4.6.0) (2026-11-05)
 
 
