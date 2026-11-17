@@ -1,7 +1,8 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from '@map-colonies/js-logger';
 import { BasemapManager } from '../../../../src/common/basemap-manager/basemap-manager';
-import { Basemap, CreateBasemapInput, ImportReview, SourceType, Status, UpdateBasemapInput } from '../../../../src/graphql/basemap';
+import { CapabilitiesManager } from '../../../../src/common/capabilities-manager/capabilities-manager';
+import { Basemap, CreateBasemapInput, ImportReview, ResourceResolutionStatus, SourceType, UpdateBasemapInput } from '../../../../src/graphql/basemap';
 import { Domain } from '../../../../src/graphql/domain';
 import { IConfig, IContext, IService } from '../../../../src/common/interfaces';
 import { requestExecutor } from '../../../../src/utils';
@@ -19,6 +20,7 @@ const CTX: IContext = { requestHeaders: {} };
 
 const mockConfig = { get: jest.fn().mockReturnValue(SERVICE) } as unknown as IConfig;
 const mockLogger = { info: jest.fn(), debug: jest.fn(), error: jest.fn(), warn: jest.fn() } as unknown as Logger;
+const mockCapabilitiesManager = { getCapabilities: jest.fn().mockResolvedValue([]) } as unknown as CapabilitiesManager;
 
 function axiosRes<T>(data: T, headers: Record<string, string> = {}): AxiosResponse<T> {
   return { data, status: 200, statusText: 'OK', headers, config: {} };
@@ -47,17 +49,40 @@ describe('BasemapManager', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockConfig.get = jest.fn().mockReturnValue(SERVICE);
-    manager = new BasemapManager(mockConfig, mockLogger);
+    manager = new BasemapManager(mockConfig, mockLogger, mockCapabilitiesManager);
   });
 
   describe('getBasemaps', () => {
-    it('GETs /basemaps and returns the list', async () => {
-      mockedRequestExecutor.mockResolvedValueOnce(axiosRes([SAMPLE_BASEMAP]));
-
+    it('returns the ported mock basemaps without hitting the REST API', async () => {
       const result = await manager.getBasemaps(CTX);
 
-      expect(result).toEqual([SAMPLE_BASEMAP]);
-      expect(mockedRequestExecutor).toHaveBeenCalledWith({ url: 'http://basemap-api/basemaps', exposureType: 'SERVICE' }, 'GET', {}, CTX);
+      expect(result.length).toBeGreaterThan(0);
+      expect(mockedRequestExecutor).not.toHaveBeenCalled();
+    });
+
+    it('fetches capabilities for every resolved catalog-resource layer and attaches them by WMTS link name', async () => {
+      const capability = { id: 'Cyprus_BACKUP_RESTORE-Orthophoto', style: [], format: [], tileMatrixSet: [], url: [] };
+      (mockCapabilitiesManager.getCapabilities as jest.Mock).mockResolvedValueOnce([capability]);
+
+      const [result] = await manager.getBasemaps(CTX);
+      const resolvedCatalogLayer = result.layers.find(
+        (layer) => layer.source.type === SourceType.CATALOG_RESOURCE && layer.source.status === ResourceResolutionStatus.RESOLVED
+      );
+
+      expect((mockCapabilitiesManager.getCapabilities as jest.Mock).mock.calls.length).toBeGreaterThan(0);
+      expect((resolvedCatalogLayer?.source as { capabilities?: unknown }).capabilities).toEqual(capability);
+    });
+
+    it('leaves capabilities undefined when the capabilities lookup fails, instead of throwing', async () => {
+      (mockCapabilitiesManager.getCapabilities as jest.Mock).mockRejectedValueOnce(new Error('wmts unreachable'));
+
+      const [result] = await manager.getBasemaps(CTX);
+      const resolvedCatalogLayer = result.layers.find(
+        (layer) => layer.source.type === SourceType.CATALOG_RESOURCE && layer.source.status === ResourceResolutionStatus.RESOLVED
+      );
+
+      expect((resolvedCatalogLayer?.source as { capabilities?: unknown }).capabilities).toBeUndefined();
+      expect(mockLogger.warn).toHaveBeenCalled();
     });
   });
 
@@ -70,7 +95,7 @@ describe('BasemapManager', () => {
         type: SourceType.CATALOG_RESOURCE,
         domain: Domain.RASTER,
         uniqueness: { productId: 'p', productType },
-        status: Status.UNRESOLVED,
+        status: ResourceResolutionStatus.UNRESOLVED,
         layer: null,
         capabilities: null,
       },
@@ -79,7 +104,7 @@ describe('BasemapManager', () => {
       id: 'l2',
       order: 1,
       opacity: 1,
-      source: { type: SourceType.EXTERNAL, status: Status.RESOLVED, details: { protocol: 'XYZ', name: 'n', url: 'u' } },
+      source: { type: SourceType.EXTERNAL, status: ResourceResolutionStatus.RESOLVED, details: { protocol: 'XYZ', name: 'n', url: 'u' } },
     };
 
     it('is replaced by null (GraphQL cannot serialize it) while known values, nulls and external layers are untouched', async () => {
@@ -88,9 +113,9 @@ describe('BasemapManager', () => {
         name: 'b',
         layers: [catalogLayer('NotARealProductType'), catalogLayer('Orthophoto'), catalogLayer(null), externalLayer],
       };
-      mockedRequestExecutor.mockResolvedValueOnce(axiosRes([basemap]));
+      mockedRequestExecutor.mockResolvedValueOnce(axiosRes(basemap));
 
-      const [result] = await manager.getBasemaps(CTX);
+      const result = await manager.getBasemap('1', CTX);
 
       expect(result.layers).toEqual([catalogLayer(null), catalogLayer('Orthophoto'), catalogLayer(null), externalLayer]);
       expect(mockLogger.warn).toHaveBeenCalledTimes(1);
@@ -200,17 +225,26 @@ describe('BasemapManager', () => {
       mockedRequestExecutor
         .mockResolvedValueOnce(axiosRes({ url: 'http://blob/thumb.png', width: 128, height: 128 }))
         .mockResolvedValueOnce(axiosRes(SAMPLE_BASEMAP));
-      const partial = {
+      const partial: CreateBasemapInput = {
         ...input,
         layers: [
-          { id: 'l', order: 0, opacity: 1, source: { type: SourceType.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: null } } },
+          {
+            id: 'l',
+            order: 0,
+            opacity: 1,
+            source: { type: SourceType.CATALOG_RESOURCE, domain: Domain.RASTER, uniqueness: { productId: undefined } },
+          },
         ],
-      } as CreateBasemapInput;
+      };
 
       await manager.createBasemap(partial, CTX);
 
       const body = mockedRequestExecutor.mock.calls[1][2].data as { layers: { source: unknown }[] };
-      expect(body.layers[0].source).toEqual({ type: 'CATALOG_RESOURCE', domain: 'RASTER', uniqueness: { productId: null, productType: undefined } });
+      expect(body.layers[0].source).toEqual({
+        type: 'CATALOG_RESOURCE',
+        domain: 'RASTER',
+        uniqueness: { productId: undefined, productType: undefined },
+      });
     });
 
     it('propagates thumbnail upload failures and never attempts to persist the basemap', async () => {
