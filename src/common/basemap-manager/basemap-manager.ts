@@ -2,7 +2,7 @@ import FormData from 'form-data';
 import { cloneDeep } from 'lodash';
 import { inject, singleton } from 'tsyringe';
 import {
-  BasemapWriteInputSchema,
+  // BasemapWriteInputSchema,
   type BasemapLayerInput as RestBasemapLayerInput,
   type BasemapThumbnail,
   type BasemapWriteInput as RestBasemapWriteInput,

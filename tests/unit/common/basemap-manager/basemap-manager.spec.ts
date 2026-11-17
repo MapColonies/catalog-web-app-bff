@@ -69,7 +69,7 @@ describe('BasemapManager', () => {
         (layer) => layer.source.type === SourceType.CATALOG_RESOURCE && layer.source.status === ResourceResolutionStatus.RESOLVED
       );
 
-      expect(mockCapabilitiesManager.getCapabilities).toHaveBeenCalled();
+      expect((mockCapabilitiesManager.getCapabilities as jest.Mock).mock.calls.length).toBeGreaterThan(0);
       expect((resolvedCatalogLayer?.source as { capabilities?: unknown }).capabilities).toEqual(capability);
     });
 
