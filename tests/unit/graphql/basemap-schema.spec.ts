@@ -78,7 +78,7 @@ describe('Basemap GraphQL schema', () => {
     schema = buildSchemaSync({ resolvers: [BasemapResolver] });
   });
 
-  it('resolves every output source variant by its type and serializes ProductType wire values to GraphQL enum names', async () => {
+  it('resolves every output source variant by its type, passing productType through as a plain string', async () => {
     const result = await graphql({ schema, source: QUERY, contextValue: { requestHeaders: {} } });
 
     expect(result.errors).toBeUndefined();
@@ -94,7 +94,7 @@ describe('Basemap GraphQL schema', () => {
                 type: 'CATALOG_RESOURCE',
                 domain: 'RASTER',
                 status: 'RESOLVED',
-                uniqueness: { productId: 'prod-1', productType: 'ORTHOPHOTO' },
+                uniqueness: { productId: 'prod-1', productType: 'Orthophoto' },
                 layer: { id: 'record-1', productType: 'ORTHOPHOTO' },
                 capabilities: { id: 'prod-1-Orthophoto', format: ['image/jpeg'] },
               },
@@ -106,7 +106,7 @@ describe('Basemap GraphQL schema', () => {
                 type: 'CATALOG_RESOURCE',
                 domain: 'RASTER',
                 status: 'UNRESOLVED',
-                uniqueness: { productId: 'gone', productType: 'ORTHOPHOTO_BEST' },
+                uniqueness: { productId: 'gone', productType: 'OrthophotoBest' },
                 layer: null,
                 capabilities: null,
               },
