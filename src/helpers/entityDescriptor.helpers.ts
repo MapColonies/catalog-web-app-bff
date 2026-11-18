@@ -1,5 +1,6 @@
 import { get } from 'lodash';
 import {
+  basemapModel,
   FieldCategory,
   IPropFieldConfigInfo,
   Pycsw3DCatalogRecord,
@@ -10,18 +11,20 @@ import {
   VectorBestMetadata,
 } from '@map-colonies/mc-model-types';
 import { pycswCatalogRecordUIAspects } from '../common/pycswRecord.ui-aspect';
+import { notCatalogRecordUIAspects } from '../common/notCatalogRecord.ui-aspect';
 import categoriesTranslation from '../common/ui-aspects/category.trsanslation';
 import { CategoryConfig, EntityDescriptor, FieldConfig, FilterableFieldConfig } from '../graphql/entityDescriptor';
 import { Group, groupBy } from './group-by';
 
 const FIRST_CATEGORY = FieldCategory.MAIN;
+const recordUIAspects = { ...pycswCatalogRecordUIAspects, ...notCatalogRecordUIAspects };
 
 function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComplexType?: string): FieldConfig {
   const { prop, complexType, category, subFields, ...restFieldConfigProps } = field;
   const fieldUIApect = fieldComplexType !== undefined ? `${fieldComplexType}.${prop}` : prop;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-  const uiAspectFieldConfig = pycswCatalogRecordUIAspects[recordType][fieldUIApect];
+  const uiAspectFieldConfig = recordUIAspects[recordType][fieldUIApect];
 
   // Field pattern validation from field config should be used for filters as well.
   // eslint-disable-next-line
@@ -38,8 +41,8 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
     } as FilterableFieldConfig;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const fieldConfig: FieldConfig = {
     fieldName: prop,
     label: '**** NO TRANSLATION KEY ****',
 
@@ -54,6 +57,16 @@ function buildField(field: IPropFieldConfigInfo, recordType: string, fieldComple
         ? true
         : restFieldConfigProps.isRequired ?? false,
   };
+
+  // Recurses to any depth (not just one level) - needed once a complex type's own fields are
+  // themselves complex (e.g. basemap's `layers[].source.uniqueness`/`.details`), which none of the
+  // other entities' field trees happened to exercise before.
+  if (subFields !== undefined) {
+    const complexTypeValue = complexType ? complexType.value.toLowerCase() : undefined;
+    fieldConfig.subFields = subFields.fields.map((subField) => buildField(subField, recordType, complexTypeValue));
+  }
+
+  return fieldConfig;
 }
 
 function arrangeCategories(categories: CategoryConfig[]): CategoryConfig[] {
@@ -67,6 +80,17 @@ function arrangeCategories(categories: CategoryConfig[]): CategoryConfig[] {
   return arrangedArr;
 }
 
+// `basemapModel` (a zod-backed `AnnotatedZodObject`, see `@map-colonies/mc-model-types`) has no PyCSW/
+// shapefile mappings - basemaps aren't sourced from CSW catalogs or shapefiles - so those two methods
+// are optional here, unlike on the decorator-based `Pycsw*`/`VectorBestMetadata`/`PolygonPartRecord`
+// classes below, which always implement them.
+interface DescriptorSource {
+  name: string;
+  getFieldConfigs: () => IPropFieldConfigInfo[];
+  getPyCSWMappings?: () => ReturnType<typeof PycswLayerCatalogRecord.getPyCSWMappings>;
+  getShpMappings?: () => ReturnType<typeof PycswLayerCatalogRecord.getShpMappings>;
+}
+
 export function buildDescriptor(
   recordType:
     | typeof PycswLayerCatalogRecord
@@ -75,10 +99,11 @@ export function buildDescriptor(
     | typeof VectorBestMetadata
     | typeof PycswQuantizedMeshBestCatalogRecord
     | typeof PolygonPartRecord
+    | DescriptorSource
 ): EntityDescriptor {
   const fieldConfigs = groupBy(recordType.getFieldConfigs(), { keys: ['category'] });
-  const recordCswMappings = recordType.getPyCSWMappings();
-  const recordShapeFileMappings = recordType.getShpMappings();
+  const recordCswMappings = recordType.getPyCSWMappings?.() ?? [];
+  const recordShapeFileMappings = recordType.getShpMappings?.() ?? [];
   const categoriesMapped = fieldConfigs.map((categoryInfo: Group) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const category = categoryInfo.key.category as FieldCategory;
@@ -98,10 +123,6 @@ export function buildDescriptor(
           .find((mapping) => mapping.prop === field.prop)
           ?.shapeFileMappings.map(({ provider, valuePath }) => ({ provider, valuePath }));
 
-        if (field.subFields !== undefined) {
-          const complexType = field.complexType ? field.complexType.value.toLowerCase() : undefined;
-          fieldConfig.subFields = field.subFields.fields.map((subField) => buildField(subField, recordType.name, complexType));
-        }
         return fieldConfig;
       }),
     };
@@ -123,5 +144,6 @@ export function getDescriptors(): EntityDescriptor[] {
     VectorBestMetadata,
     PycswQuantizedMeshBestCatalogRecord,
     PolygonPartRecord,
+    basemapModel,
   ].map((recordType) => buildDescriptor(recordType));
 }
