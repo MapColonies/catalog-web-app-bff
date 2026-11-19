@@ -42,6 +42,8 @@
   EXPORT_LAYER_RASTER_URL: {{  quote .Values.env.exportLayerRasterUrl }}
   EXPORT_LAYER_3D_URL: {{  quote .Values.env.exportLayer3DUrl }}
   EXPORT_LAYER_DEM_URL: {{  quote .Values.env.exportLayerDEMUrl }}
+  BASEMAP_SERVICE_URL: {{ quote .Values.env.basemapServiceUrl }}
+  DATA_SERVICE_URL: {{ quote .Values.env.dataServiceUrl }}
   JOB_SERVICE_COMMON_URL: {{ quote .Values.env.jobManagerServiceCommonUrl }}
   JOB_SERVICE_TYPES: {{ quote .Values.env.jobManagerServiceTypes }}
   JOB_SERVICE_INTERNALS: {{ quote .Values.env.jobManagerServiceInternals }}

@@ -91,8 +91,14 @@
       "url": "EXPORT_LAYER_DEM_URL"
     }
   },
-  "basemapServices": {
+  "basemapService": {
     "url": "BASEMAP_SERVICE_URL"
+  },
+  "dataService": {
+    "url": "DATA_SERVICE_URL"
+  },
+  "thumbnailUpload": {
+    "maxSizeBytes": "THUMBNAIL_MAX_SIZE_BYTES"
   },
   "jobServices": {
     "common": {
