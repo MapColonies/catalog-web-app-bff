@@ -44,6 +44,37 @@ const BASEMAP_CLASS_NAMES = new Set([
   'ExternalLayerDetails',
 ]);
 
+// code-generator maps every zod number to GraphQL `Float` and every zod string to `String`. Restore the
+// public GraphQL contract the basemap types had before generation:
+// - integer fields (`order`, thumbnail `width`/`height`) are `Int` - basemap-management rejects non-integers anyway;
+// - `RasterUniqueness[Input].productType` is the `ProductType` enum (GraphQL names like ORTHOPHOTO), consistent with
+//   `LayerRasterRecord.productType` in the same payload; type-graphql maps it to/from the REST wire values
+//   (e.g. "Orthophoto") that basemap-management stores and resolves against.
+// TODO: move these into mc-models' basemap annotations so no post-processing is needed.
+const INT_FIELD_PATTERN = /@Field\(\{ nullable: (true|false) \}\)(\s+)public (order|width|height)(\??): number;/g;
+const PRODUCT_TYPE_FIELD_PATTERN = /@Field\(\{ nullable: true \}\)(\s+)public productType\?: string;/g;
+const PRODUCT_TYPE_IMPORT = 'import { ProductType } from "@map-colonies/types";\n';
+// Unused by any resolver: the BFF's own `CreateBasemapInput`/`UpdateBasemapInput` (thumbnail as base64) are the write inputs.
+const UNUSED_INPUT_CLASSES = ['BasemapInput', 'BasemapThumbnailInput'];
+// The generator emits an empty `@Resolver(X) class XResolver {}` per class; they are never registered, and
+// `BasemapResolver` would collide by name with the real `graphql/resolvers/basemap.resolver.ts` via `export *`.
+const EMPTY_RESOLVER_PATTERN = /@Resolver\(\w+\)\nexport class \w+Resolver \{\n\}\n\n/g;
+
+function restoreGraphQLContract(generated) {
+  let result = generated
+    .replace(INT_FIELD_PATTERN, '@Field((type) => Int, { nullable: $1 })$2public $3$4: number;')
+    .replace(PRODUCT_TYPE_FIELD_PATTERN, '@Field((type) => ProductType, { nullable: true })$1public productType?: ProductType;')
+    .replace(EMPTY_RESOLVER_PATTERN, '')
+    .replace(
+      'import { InputType, ObjectType, Field, Resolver, registerEnumType, createUnionType } from "type-graphql";',
+      'import { InputType, ObjectType, Field, Int, registerEnumType, createUnionType } from "type-graphql";'
+    );
+  for (const className of UNUSED_INPUT_CLASSES) {
+    result = result.replace(new RegExp(`@InputType\\(\\)\\nexport class ${className} \\{\\n[\\s\\S]*?\\n\\}\\n\\n`), '');
+  }
+  return result;
+}
+
 const realGetMapping = classGraphqlDecorator.getGraphQLClassMapping;
 classGraphqlDecorator.getGraphQLClassMapping = () => realGetMapping().filter((graphQLClass) => BASEMAP_CLASS_NAMES.has(graphQLClass.name));
 
@@ -53,10 +84,11 @@ Generator.runOrDie(Projects.RASTER, Tasks.GRAPHQL, OUTPUT_PATH)
     generated = generated
       .replace(GENERATED_DOMAIN_IMPORT, '')
       .replace(/^const DomainRegister = registerEnumType\(Domain, \{name: "Domain"\}\);\n/m, '');
+    generated = restoreGraphQLContract(generated);
 
     const lines = generated.split('\n');
     const lastImportIndex = lines.reduce((last, line, idx) => (line.startsWith('import ') ? idx : last), -1);
-    lines.splice(lastImportIndex + 1, 0, CROSS_FILE_IMPORT.trimEnd(), BFF_DOMAIN_IMPORT.trimEnd());
+    lines.splice(lastImportIndex + 1, 0, CROSS_FILE_IMPORT.trimEnd(), BFF_DOMAIN_IMPORT.trimEnd(), PRODUCT_TYPE_IMPORT.trimEnd());
     fs.writeFileSync(OUTPUT_PATH, lines.join('\n'));
   })
   .catch((err) => {
