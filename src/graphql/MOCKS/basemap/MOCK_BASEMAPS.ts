@@ -913,7 +913,7 @@ export const MOCK_BASEMAPS = [
           capabilities: null,
           uniqueness: {
             productId: 'NOT_EXISTING_LAYER',
-            productType: 'ORTHOPHOTO' as ProductType,
+            productType: ProductType.ORTHOPHOTO,
           },
         },
       },
