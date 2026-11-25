@@ -24,7 +24,11 @@ export class ExternalLayerDetailsInput {
     public name: string;
     @Field({ nullable: false })
     public url: string;
+    @Field((type) => extrasObject, { nullable: true })
+    public extras?: Record<string, unknown>;
 }
+
+export const extrasObject = new GraphQLScalarType({ name: "extrasObject"});
 
 @InputType()
 export class BasemapLayerSourceInput {
@@ -78,6 +82,8 @@ export class ExternalLayerDetails {
     public name: string;
     @Field({ nullable: false })
     public url: string;
+    @Field((type) => extrasObject, { nullable: true })
+    public extras?: Record<string, unknown>;
 }
 
 @ObjectType()
