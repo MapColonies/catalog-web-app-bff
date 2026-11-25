@@ -855,10 +855,10 @@ export const MOCK_CAPABILITY = {
   ],
 } as unknown as CapabilityType;
 
-// Cast at the end rather than typing the const directly: `ExternalLayerDetailsSchema` is a
-// `.passthrough()` zod schema (extra wire fields like `attribution`/`matrixSet` are legitimately part
-// of the real entity), but the generated `ExternalLayerDetails` TS class only declares its three fixed
-// fields - ascribing `Basemap[]` directly to the literal would trip TS's excess-property check on them.
+// Cast at the end rather than typing the const directly: provider-specific wire fields like
+// `attribution`/`matrixSet` live under `details.extras` (an open `Record<string, unknown>`, per
+// `ExternalLayerDetailsSchema`'s own `extras` field) - ascribing `Basemap[]` directly to the literal
+// would trip TS's excess-property check on the nested `extras` object literals.
 export const MOCK_BASEMAPS = [
   {
     id: 'basemap-01',
@@ -882,7 +882,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'OpenStreetMap Standard',
             url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            attribution: '© OpenStreetMap contributors',
+            extras: { attribution: '© OpenStreetMap contributors' },
           },
         },
       },
@@ -1008,7 +1008,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'OpenTopoMap',
             url: 'https://tile.opentopomap.org/{z}/{x}/{y}.png',
-            attribution: '© OpenTopoMap contributors',
+            extras: { attribution: '© OpenTopoMap contributors' },
           },
         },
       },
@@ -1036,7 +1036,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'CartoDB Positron',
             url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-            attribution: '© OpenStreetMap contributors © CARTO',
+            extras: { attribution: '© OpenStreetMap contributors © CARTO' },
           },
         },
       },
@@ -1064,7 +1064,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'CartoDB Dark Matter',
             url: 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-            attribution: '© OpenStreetMap contributors © CARTO',
+            extras: { attribution: '© OpenStreetMap contributors © CARTO' },
           },
         },
       },
@@ -1092,7 +1092,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'Esri World Street Map',
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-            attribution: 'Esri and its data providers',
+            extras: { attribution: 'Esri and its data providers' },
           },
         },
       },
@@ -1121,7 +1121,7 @@ export const MOCK_BASEMAPS = [
             protocol: 'XYZ',
             name: 'Esri World Imagery',
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-            attribution: 'Esri and its data providers',
+            extras: { attribution: 'Esri and its data providers' },
           },
         },
       },
@@ -1284,10 +1284,12 @@ export const MOCK_BASEMAPS = [
             protocol: 'WMTS',
             name: 'Sample WMTS Layer',
             url: 'https://example.com/geoserver/gwc/service/wmts',
-            layer: 'workspace:sample_layer',
-            matrixSet: 'EPSG:3857',
-            format: 'image/png',
-            style: 'default',
+            extras: {
+              layer: 'workspace:sample_layer',
+              matrixSet: 'EPSG:3857',
+              format: 'image/png',
+              style: 'default',
+            },
           },
         },
       },
