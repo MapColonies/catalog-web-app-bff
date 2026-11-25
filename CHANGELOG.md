@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.1](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.7.0...v4.7.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* extarnal layer details with extras object prop ([#361](https://github.com/MapColonies/catalog-web-app-bff/issues/361)) ([561c243](https://github.com/MapColonies/catalog-web-app-bff/commit/561c243626ae6ca1f2322962c302443b4dbc0f92))
+
 ## [4.7.0](https://github.com/MapColonies/catalog-web-app-bff/compare/v4.6.0...v4.7.0) (2026-11-19)
 
 
