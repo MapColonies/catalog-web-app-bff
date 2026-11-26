@@ -246,6 +246,28 @@ describe('BasemapManager', () => {
 
     it.each([
       [
+        'provider-specific extras',
+        { attribution: '© OpenStreetMap contributors', subdomains: ['a', 'b'] },
+        { attribution: '© OpenStreetMap contributors', subdomains: ['a', 'b'] },
+      ],
+      ['null extras (omitted)', null, undefined],
+    ])('forwards an EXTERNAL layer with %s to the basemap API', async (_label, extras, expectedExtras) => {
+      mockedRequestExecutor.mockResolvedValueOnce(axiosRes('ok')).mockResolvedValueOnce(axiosRes(SAMPLE_BASEMAP));
+      const details = { protocol: 'XYZ', name: 'osm', url: 'http://tiles', extras };
+      const externalInput = {
+        ...input,
+        layers: [{ id: 'l', order: 0, opacity: 1, source: { type: SourceType.EXTERNAL, details } }],
+      } as CreateBasemapInput;
+
+      await manager.createBasemap(externalInput, CTX);
+
+      const sentDetails = (mockedRequestExecutor.mock.calls[1][2].data as { layers: { source: { details: Record<string, unknown> } }[] }).layers[0]
+        .source.details;
+      expect(sentDetails).toStrictEqual({ protocol: 'XYZ', name: 'osm', url: 'http://tiles', extras: expectedExtras });
+    });
+
+    it.each([
+      [
         'an unsupported domain',
         { type: SourceType.CATALOG_RESOURCE, domain: Domain.VECTOR, uniqueness: { productId: 'p', productType: 'Orthophoto' } },
         /only RASTER/,

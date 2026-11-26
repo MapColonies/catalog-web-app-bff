@@ -208,7 +208,15 @@ export class BasemapManager {
         if (source.details === undefined) {
           throw new Error('BasemapLayerSourceInput of type EXTERNAL is missing details');
         }
-        return { type: 'EXTERNAL', details: { protocol: source.details.protocol, name: source.details.name, url: source.details.url } };
+        return {
+          type: 'EXTERNAL',
+          details: {
+            protocol: source.details.protocol,
+            name: source.details.name,
+            url: source.details.url,
+            extras: source.details.extras ?? undefined,
+          },
+        };
       /* istanbul ignore next */
       default:
         throw new Error(`unknown BasemapLayerSourceInput type "${String(source.type)}"`);
